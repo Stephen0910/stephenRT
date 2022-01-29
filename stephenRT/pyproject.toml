@@ -1,7 +1,7 @@
 [tool.poetry]
-name = "gooseRT"
+name = "stephenRT"
 version = "0.1.0"
-description = "gooseRT"
+description = "stephenRT"
 authors = []
 readme = "README.md"
 
@@ -14,7 +14,7 @@ nb-cli = "^0.6.0"
 
 [tool.nonebot]
 plugins = []
-plugin_dirs = ["goosert/plugins"]
+plugin_dirs = ["stephenrt/plugins"]
 
 [build-system]
 requires = ["poetry_core>=1.0.0"]
