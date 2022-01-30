@@ -11,13 +11,14 @@
 
 from nonebot.adapters.onebot.v11 import Bot, GroupMessageEvent, Event
 from nonebot import on_message
-from config import get_config
+# from config import get_config
+import config
 import asyncpg
 import datetime
 
 msg_matcher = on_message()
 
-pgsql = get_config()
+pgsql = config.get_config()
 
 
 async def group_info(bot: Bot, groupId):
