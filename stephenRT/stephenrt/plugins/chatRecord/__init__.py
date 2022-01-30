@@ -12,13 +12,25 @@
 from nonebot.adapters.onebot.v11 import Bot, GroupMessageEvent, Event
 from nonebot import on_message
 # from config import get_config
-import config
+# import config
 import asyncpg
 import datetime
+import json
+import os
 
 msg_matcher = on_message()
 
-pgsql = config.get_config()
+# pgsql = config.get_config()
+
+
+
+def get_config():
+    up_dir = os.path.abspath(os.path.join(os.getcwd(), "../../"))
+    config_path = os.path.join(up_dir, "config.json")
+    with open(config_path, "r") as f:
+        config_content = json.load(f)
+        print(config_content, type(config_content))
+        return config_content
 
 
 async def group_info(bot: Bot, groupId):
