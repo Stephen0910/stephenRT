@@ -66,8 +66,8 @@ async def saveMsg(bot: Bot, event: GroupMessageEvent):
 """.format(msg.message_id, msg.sender.nickname, msg.sender.user_id, str(msg.message), msg.group_id,
            groupInfo["group_name"],
            msg.sender.card, msg_time, msg.self_id, msg.post_type)
-    # try:
-    await executeSql(sql)
-    # except:
-    #     print(sql)
-    #     await send_private(bot, pgsql["user_id"], sql)
+    try:
+        await executeSql(sql)
+    except:
+        print(sql)
+        await send_private(bot, pgsql["user_id"], sql)
