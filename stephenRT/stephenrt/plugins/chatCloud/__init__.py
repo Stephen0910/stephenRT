@@ -19,20 +19,19 @@ import jieba
 import asyncpg
 import time
 
-requireA = require("chatRecord")
-config = requireA.config
+# requireA = require("chatRecord")
+# config = requireA.config
 
-# words = on_command("words", rule=to_me(), aliases={"报告", "词云"}, priority=5)
 
-async def getRecord(group_id, day):
-    timestamp = time.time()
-    conn = await asyncpg.connect(user=config["user"], password=config["password"], database=config["database"],
-                                 host=config["host"])
-    day2second = timestamp - day*86400
-    selectSql = """SELECT message FROM "group" WHERE group_id = {0} and "timestamp" > {1}""".format(group_id, day2second)
-    contents = await conn.execute(selectSql)
-    await conn.close()
-    return contents
+# async def getRecord(group_id, day):
+#     timestamp = time.time()
+#     conn = await asyncpg.connect(user=config["user"], password=config["password"], database=config["database"],
+#                                  host=config["host"])
+#     day2second = timestamp - day*86400
+#     selectSql = """SELECT message FROM "group" WHERE group_id = {0} and "timestamp" > {1}""".format(group_id, day2second)
+#     contents = await conn.execute(selectSql)
+#     await conn.close()
+#     return contents
 
 
 # @words.handle()

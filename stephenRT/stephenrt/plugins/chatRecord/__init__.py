@@ -90,7 +90,7 @@ async def saveMsg(bot: Bot, event: GroupMessageEvent):
      "group_name", "group_card", "timestamp", "self_id", "post_type") 
      VALUES 
      ({0}, '{1}', {2}, '{3}', {4}, '{5}', '{6}', '{7}', {8}, '{9}');
-""".format(msg.message_id, str(msg.sender.nickname), msg.sender.user_id, str(msg.message), msg.group_id,
+""".format(msg.message_id, str(msg.sender.nickname), msg.sender.user_id, str(msg.message).replace("\'", "\""), msg.group_id,
            groupInfo["group_name"],
            msg.sender.card, msg_time, msg.self_id, msg.post_type)
     try:
