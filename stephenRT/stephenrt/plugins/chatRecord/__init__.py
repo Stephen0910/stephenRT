@@ -7,16 +7,15 @@
 # @Purpose  :
 # @Software : PyCharm
 # @Copyright:   (c) StephenZ 2022
-# @Licence  :     <@2020>
+# @Licence  :     <@2022>
 
 from nonebot.adapters.onebot.v11 import Bot, GroupMessageEvent, Event
 from nonebot import on_message
-# from config import get_config
-# import config
 import asyncpg
 import datetime
 import json
 import os
+from nonebot.plugin import export
 
 
 def get_config():
@@ -28,7 +27,7 @@ def get_config():
     config_path = os.path.join(up_dir, "config.json")
     with open(config_path, "r") as f:
         config_content = json.load(f)
-        print(config_content, type(config_content))
+        # print(config_content, type(config_content))
         return config_content
 
 
@@ -50,7 +49,7 @@ async def group_info(bot: Bot, groupId):
 
 async def executeSql(sql):
     """
-    异步执行sql
+    异步执行插入sql
     :param sql:
     :return:
     """
@@ -91,7 +90,7 @@ async def saveMsg(bot: Bot, event: GroupMessageEvent):
      "group_name", "group_card", "timestamp", "self_id", "post_type") 
      VALUES 
      ({0}, '{1}', {2}, '{3}', {4}, '{5}', '{6}', '{7}', {8}, '{9}');
-""".format(msg.message_id, msg.sender.nickname, msg.sender.user_id, str(msg.message), msg.group_id,
+""".format(msg.message_id, str(msg.sender.nickname), msg.sender.user_id, str(msg.message), msg.group_id,
            groupInfo["group_name"],
            msg.sender.card, msg_time, msg.self_id, msg.post_type)
     try:
@@ -99,3 +98,6 @@ async def saveMsg(bot: Bot, event: GroupMessageEvent):
     except:
         print(sql)
         await send_private(bot, pgsql["user_id"], sql)  # 如果保存失败，把sql发送到指定的qq号
+
+export = export()
+export.config = pgsql
