@@ -20,6 +20,10 @@ import os
 
 
 def get_config():
+    """
+    配置数据库信息和收取保存失败的qq号
+    :return:
+    """
     up_dir = os.path.abspath(os.path.join(os.getcwd(), "../../"))
     config_path = os.path.join(up_dir, "config.json")
     with open(config_path, "r") as f:
@@ -34,24 +38,48 @@ pgsql = get_config()
 
 
 async def group_info(bot: Bot, groupId):
+    """
+    获取群信息，可以获取群名
+    :param bot:
+    :param groupId:
+    :return:
+    """
     groupInfo = await bot.get_group_info(group_id=groupId)
     return groupInfo
 
 
 async def executeSql(sql):
+    """
+    异步执行sql
+    :param sql:
+    :return:
+    """
     conn = await asyncpg.connect(user=pgsql["user"], password=pgsql["password"], database=pgsql["database"],
                                  host=pgsql["host"])
-    print("conn:", conn)
+    # print("conn:", conn)
     await conn.execute(sql)
     await conn.close()
 
 
 async def send_private(bot: Bot, user_id, msg):
+    """
+    发送私聊信息
+    :param bot:
+    :param user_id:
+    :param msg:
+    :return:
+    """
     await bot.send_private_msg(user_id=user_id, message=str(msg))
 
 
 @msg_matcher.handle()
 async def saveMsg(bot: Bot, event: GroupMessageEvent):
+    """
+    保存群信息
+    :param bot:
+    :param event:
+    :return:
+    """
     msg = event
     print("msg:", msg)
     print(msg.get_message)
@@ -70,4 +98,4 @@ async def saveMsg(bot: Bot, event: GroupMessageEvent):
         await executeSql(sql)
     except:
         print(sql)
-        await send_private(bot, pgsql["user_id"], sql)
+        await send_private(bot, pgsql["user_id"], sql)  # 如果保存失败，把sql发送到指定的qq号
