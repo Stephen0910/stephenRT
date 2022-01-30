@@ -16,5 +16,5 @@ def get_config():
     config_path = os.path.join(up_dir, "config.json")
     with open(config_path, "r") as f:
         config_content = json.load(f)
-        # print(config_content, type(config_content))
+        print(config_content, type(config_content))
         return config_content
