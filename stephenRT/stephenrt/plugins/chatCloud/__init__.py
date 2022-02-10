@@ -9,23 +9,18 @@
 # @Copyright:   (c) StephenZ 2022
 # @Licence  :     <@2022>
 
-from nonebot.plugin import require
-from nonebot import on_command
-from nonebot.rule import to_me
-from nonebot.matcher import Matcher
-from nonebot.adapters import Message
-from nonebot.params import Arg, CommandArg, ArgPlainText
-import jieba
+# from nonebot.plugin import require
 import asyncpg
 from nonebot.adapters.onebot.v11 import PrivateMessageEvent, Bot
 from nonebot import on_message
 import time, datetime
+import stephenRT.stephenrt.privateCfg as cfg
 
-requireA = require("chatRecord")
-config = requireA.config
-print("config:", config)
+config = cfg.config_content
+
 
 private_matcher = on_message()
+
 
 async def getRecord(group_id, day):
     timestamp = int(time.time())
@@ -34,7 +29,7 @@ async def getRecord(group_id, day):
     day2second = timestamp - day*86400
     day2time = datetime.datetime.fromtimestamp(day2second)
     selectSql = """SELECT message FROM "group" WHERE group_id = {0} and "timestamp" > '{1}'""".format(group_id, day2time)
-    print(selectSql)
+    print("selectSql:", selectSql)
     contents = await conn.fetch(selectSql)
     await conn.close()
     return contents

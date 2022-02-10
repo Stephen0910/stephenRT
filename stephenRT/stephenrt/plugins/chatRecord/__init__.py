@@ -15,25 +15,24 @@ import asyncpg
 import datetime
 import json
 import os
-from nonebot.plugin import export
+import stephenRT.stephenrt.privateCfg as cfg
 
-
-def get_config():
-    """
-    配置数据库信息和收取保存失败的qq号
-    :return:
-    """
-    up_dir = os.path.abspath(os.path.join(os.getcwd(), "../../"))
-    config_path = os.path.join(up_dir, "config.json")
-    with open(config_path, "r") as f:
-        config_content = json.load(f)
-        # print(config_content, type(config_content))
-        return config_content
+# def get_config():
+#     """
+#     配置数据库信息和收取保存失败的qq号
+#     :return:
+#     """
+#     up_dir = os.path.abspath(os.path.join(os.getcwd(), "../../"))
+#     config_path = os.path.join(up_dir, "config.json")
+#     with open(config_path, "r") as f:
+#         config_content = json.load(f)
+#         # print(config_content, type(config_content))
+#         return config_content
 
 
 msg_matcher = on_message()
 
-pgsql = get_config()
+pgsql = cfg.config_content
 
 
 async def group_info(bot: Bot, groupId):
@@ -58,6 +57,22 @@ async def executeSql(sql):
     # print("conn:", conn)
     await conn.execute(sql)
     await conn.close()
+
+async def poolSave(sql):
+    """
+    连接池
+    :param sql:
+    :return:
+    """
+    pool = await asyncpg.create_pool(user=pgsql["user"], password=pgsql["password"], database=pgsql["database"],
+                                 host=pgsql["host"])
+    power = 2
+    for i in range(1, 1000):
+        async with pool.acquire() as con:
+            # await con.fetchval('select 2 ^ $1', power)
+            await con.execute(sql)
+    await pool.close()
+
 
 
 async def send_private(bot: Bot, user_id, msg):
@@ -94,12 +109,14 @@ async def saveMsg(bot: Bot, event: GroupMessageEvent):
            str(msg.message).replace("\'", "\""), msg.group_id,
            groupInfo["group_name"],
            str(msg.sender.card).replace("\'", "\""), msg_time, msg.self_id, msg.post_type)
+
+    # await poolSave(sql)
     try:
-        await executeSql(sql)
+        # await executeSql(sql)
+        await poolSave(sql)
     except:
         print(sql)
         await send_private(bot, pgsql["user_id"], sql)  # 如果保存失败，把sql发送到指定的qq号
 
-
-export = export()
-export.config = pgsql
+# export = export()
+# export.config = pgsql
