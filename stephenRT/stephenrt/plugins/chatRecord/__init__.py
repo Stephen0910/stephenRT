@@ -112,9 +112,10 @@ async def saveMsg(bot: Bot, event: GroupMessageEvent):
 
     # await poolSave(sql)
     try:
-        # await executeSql(sql)
-        await poolSave(sql)
+        await executeSql(sql)
+        # await poolSave(sql)
     except:
+        raise Exception("sql错误")
         print(sql)
         await send_private(bot, pgsql["user_id"], sql)  # 如果保存失败，把sql发送到指定的qq号
 
