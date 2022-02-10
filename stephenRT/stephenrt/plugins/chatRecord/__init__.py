@@ -12,10 +12,12 @@
 from nonebot.adapters.onebot.v11 import Bot, GroupMessageEvent, Event
 from nonebot import on_message
 import asyncpg
-import datetime
 import json
 import os
-import stephenRT.stephenrt.privateCfg as cfg
+import time, datetime, sys
+# import stephenRT.stephenrt.privateCfg as cfg
+sys.path.append("../../")
+import stephenrt.privateCfg as cfg
 
 # def get_config():
 #     """
