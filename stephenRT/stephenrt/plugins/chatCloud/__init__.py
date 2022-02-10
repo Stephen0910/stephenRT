@@ -13,9 +13,10 @@
 import asyncpg
 from nonebot.adapters.onebot.v11 import PrivateMessageEvent, Bot
 from nonebot import on_message
-import time, datetime
-import stephenRT.stephenrt.privateCfg as cfg
-
+import time, datetime, sys
+# import stephenRT.stephenrt.privateCfg as cfg
+sys.path.append("../../")
+import stephenrt.privateCfg as cfg
 config = cfg.config_content
 
 private_matcher = on_message()
