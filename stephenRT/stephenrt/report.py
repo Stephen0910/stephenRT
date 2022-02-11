@@ -14,11 +14,20 @@ import jieba
 from wordcloud import WordCloud
 import numpy as np
 from PIL import Image
-import re, os
+import re, os, sys
 
 # print(config_content)
 config = config_content
-fontPath = "C:/Windows/Fonts/msyh.ttc"
+
+# 系统不同字体路径不同
+platform = sys.platform
+print("platform:", platform)
+if platform == "win32":
+    fontPath = "C:/Windows/Fonts/msyh.ttc"
+else:
+    fontPath = "/etc/fonts/msyh.ttc"
+
+# mask蒙版底片
 imageMask = "wordcloud.png"
 
 
