@@ -14,7 +14,7 @@ import jieba
 from wordcloud import WordCloud
 import numpy as np
 from PIL import Image
-import re, os, sys
+import re, os, sys, datetime
 
 # print(config_content)
 config = config_content
@@ -51,6 +51,11 @@ class Report:
         msgs = self.cursor.fetchall()
         self.conn.close()
         return msgs
+
+    def normalTime(self, timestamp):
+        dateArray = datetime.datetime.utcfromtimestamp(timestamp + 8 * 3600)  # 时区加8)
+        msg_time = dateArray.strftime("%Y-%m-%d %H:%M:%S")
+        return msg_time
 
     def wordReport(self, group_id, timestamp):
         """
@@ -121,7 +126,7 @@ class Report:
                     player.append(word[2])
                     break
         print(top_player_list)
-        top_player_str = "统计聊天共{0}条\n{1}【发言Top3】：\n".format(words_lenth, top_word_str)
+        top_player_str = "从{2}到目前，统计聊天共{0}条\n{1}【发言Top3】：\n".format(words_lenth, top_word_str, self.normalTime(timestamp))
         for player in top_player_list:
             if player[2] == "":
                 name = player[3]

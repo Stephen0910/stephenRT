@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="3047aada-47d5-4ad8-a368-9e15af7b4bc7" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/stephenRT/stephenrt/report.py" beforeDir="false" afterPath="$PROJECT_DIR$/stephenRT/stephenrt/report.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -16,7 +15,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/stephenRT/stephenrt/plugins/chatCloud/__init__.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="645">
+            <state relative-caret-position="-3">
               <caret line="43" column="27" lean-forward="true" selection-start-line="43" selection-start-column="27" selection-end-line="43" selection-end-column="27" />
               <folding>
                 <element signature="e#274#288#0" expanded="true" />
@@ -29,7 +28,7 @@
         <entry file="file://$PROJECT_DIR$/stephenRT/stephenrt/report.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="360">
-              <caret line="24" column="33" selection-start-line="24" selection-start-column="16" selection-end-line="24" selection-end-column="33" />
+              <caret line="134" column="26" lean-forward="true" selection-start-line="134" selection-start-column="26" selection-end-line="134" selection-end-column="26" />
               <folding>
                 <element signature="e#234#272#0" expanded="true" />
               </folding>
@@ -40,8 +39,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/stephenRT/stephenrt/plugins/chatRecord/__init__.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="158">
-              <caret line="30" column="17" selection-start-line="30" selection-start-column="12" selection-end-line="30" selection-end-column="17" />
+            <state relative-caret-position="90">
+              <caret line="101" column="54" lean-forward="true" selection-start-line="101" selection-start-column="54" selection-end-line="101" selection-end-column="54" />
               <folding>
                 <element signature="e#237#306#0" expanded="true" />
               </folding>
@@ -325,23 +324,23 @@
       <workItem from="1643526849569" duration="14276000" />
       <workItem from="1644458697233" duration="4395000" />
       <workItem from="1644464623879" duration="37972000" />
-      <workItem from="1644566501597" duration="535000" />
+      <workItem from="1644566501597" duration="1314000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="66302000" />
+    <option name="totallyTimeSpent" value="67081000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-1928" y="-8" width="1936" height="1056" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.12646745" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.12646745" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32897604" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.39106753" />
+      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.39106753" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -521,16 +520,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/stephenRT/stephenrt/plugins/chatRecord/__init__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="158">
-          <caret line="30" column="17" selection-start-line="30" selection-start-column="12" selection-end-line="30" selection-end-column="17" />
-          <folding>
-            <element signature="e#237#306#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/stephenRT/stephenrt/privateCfg.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="285">
@@ -559,9 +548,19 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/stephenRT/stephenrt/plugins/chatRecord/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="90">
+          <caret line="101" column="54" lean-forward="true" selection-start-line="101" selection-start-column="54" selection-end-line="101" selection-end-column="54" />
+          <folding>
+            <element signature="e#237#306#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/stephenRT/stephenrt/plugins/chatCloud/__init__.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="645">
+        <state relative-caret-position="-3">
           <caret line="43" column="27" lean-forward="true" selection-start-line="43" selection-start-column="27" selection-end-line="43" selection-end-column="27" />
           <folding>
             <element signature="e#274#288#0" expanded="true" />
@@ -572,7 +571,7 @@
     <entry file="file://$PROJECT_DIR$/stephenRT/stephenrt/report.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="360">
-          <caret line="24" column="33" selection-start-line="24" selection-start-column="16" selection-end-line="24" selection-end-column="33" />
+          <caret line="134" column="26" lean-forward="true" selection-start-line="134" selection-start-column="26" selection-end-line="134" selection-end-column="26" />
           <folding>
             <element signature="e#234#272#0" expanded="true" />
           </folding>
