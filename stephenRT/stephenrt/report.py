@@ -16,7 +16,7 @@ import numpy as np
 from PIL import Image
 import re, os
 
-print(config_content)
+# print(config_content)
 config = config_content
 fontPath = "C:/Windows/Fonts/msyh.ttc"
 imageMask = "wordcloud.png"
@@ -29,6 +29,12 @@ class Report:
         self.cursor = self.conn.cursor()
 
     def getRecords(self, group_id, timestamp):
+        """
+        获取某群聊天记录
+        :param group_id:
+        :param timestamp:
+        :return:
+        """
         sql = """
         SELECT message, sender_id, sender_name, group_card FROM "group" WHERE "group_id" = {0} and "timestamp" > '{1}'
         """.format(group_id, timestamp)
@@ -45,8 +51,10 @@ class Report:
         :return:
         """
         words = self.getRecords(group_id, timestamp)
-        print("words:", words)
-        print("消息共{0}条".format(len(words)))
+        # print("words:", words)
+        words_lenth = len(words)
+        print("消息共{0}条".format(words_lenth))
+        # 处理关键词累计
         msgs = [word[0] for word in words]
         # 结巴分词将信息分词，并组成列表
         top_dic = {}
@@ -79,22 +87,70 @@ class Report:
         except:
             print("关键词不足")
             wordDict = dict(word_top)
-        return wordDict
+
+        print("wordDict:", wordDict)
+        # topword 前三统计
+        top_word = dict(sorted(wordDict.items(), key=lambda x: x[1], reverse=True)[:3])
+        top_word_str = "【关键词Top3】\n"
+        for key, value in top_word.items():
+            top_word_str = top_word_str + " " * 15 + "{0}: {1}次\n".format(key, value)
+
+        # 处理玩家发言累计
+        upplayer = {}
+        for word in words:
+            if word[1] not in upplayer:
+                upplayer[word[1]] = 1
+            else:
+                upplayer[word[1]] += 1
+        top_player = sorted(upplayer.items(), key=lambda x: x[1], reverse=True)[:3]
+        top_player_list = [list(x) for x in top_player]
+        print("top_player_list:", top_player_list)
+        for player in top_player_list:
+            for word in words:
+                if player[0] == word[1]:
+                    player.append(word[3])
+                    player.append(word[2])
+                    break
+        print(top_player_list)
+        top_player_str = "统计聊天共{0}条\n{1}【发言Top3】：\n".format(words_lenth, top_word_str)
+        for player in top_player_list:
+            if player[2] == "":
+                name = player[3]
+            else:
+                name = player[2]
+            id = player[0]
+            count = player[1]
+            top_player_str = top_player_str + " " * 15 + name + "({0})".format(id) + ":{0}条".format(count) + "\n"
+        print("top_player_str:", top_player_str)
+
+        return [wordDict, top_player_str]
 
     def createPic(self, group_id, timestamp):
-        # wc = WordCloud(font_path=font_path, margin=1, random_state=1, max_words=300, width=1000, height=700,
-        #                background_color='white').generate(self.wordReport(group_id, timestamp)[-1])
+        """
+        生成词云，报告
+        :param group_id:
+        :param timestamp:
+        :return:
+        """
+        info = self.wordReport(group_id, timestamp)
+        wordDict = info[0]
+        top_player = info[1]
         # 蒙版位置
         updir = os.path.abspath(os.path.join(os.getcwd(), "stephenrt"))
         maskPath = os.path.join(updir, "wordcloud.png")
         mask = np.array(Image.open(maskPath))
         wc = WordCloud(font_path=fontPath, mask=mask, background_color='white')
-        wordDict = self.wordReport(group_id, timestamp)
-        print("wordDict：", wordDict)
+        if len(wordDict) == 0:
+            print("没有信息")
+            return "信息太少或群号不正确，请检查"
         wc.generate_from_frequencies(wordDict)
-        savePath = os.path.join(updir, "pictures", "wordcloud_{0}.jpg".format(group_id))
+        savePath = os.path.join(updir, "pictures", "wordcloud_{0}.png".format(group_id))
         wc.to_file(savePath.format(group_id))
+        # 图片位置
+        imageInfo = f"[CQ:image,file=file:///" + os.path.join(os.getcwd(), savePath) + "]"
+        imageInfo = "file:///" + os.path.join(os.getcwd(), savePath)  # 以上图片信息
 
+        return [top_player, imageInfo]
 
-r = Report()
-r.createPic(135313433, "2022-02-9 9:43:43")
+# r = Report()
+# r.createPic(645286417, "2022-02-1 9:43:43")

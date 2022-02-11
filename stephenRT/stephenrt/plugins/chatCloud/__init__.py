@@ -16,7 +16,8 @@ from nonebot.rule import to_me
 from nonebot.matcher import Matcher
 from nonebot.adapters import Message
 from nonebot.params import Arg, CommandArg, ArgPlainText
-import time, datetime, sys
+import time, datetime, sys, datetime
+from nonebot.adapters.onebot.v11.message import MessageSegment
 
 # import stephenRT.stephenrt.privateCfg as cfg
 sys.path.append("../../")
@@ -50,9 +51,21 @@ async def getRecord(group_id, day):
 # 以下为命令触发
 dailyReport = on_command("report", rule=to_me(), aliases={"日报", "词云"}, priority=1)
 
+
 @dailyReport.handle()
 async def handle_first_receive(matcher: Matcher, args: Message = CommandArg()):
     plain_text = args.extract_plain_text()  # 首次发送命令时跟随的参数，例：/日报 上海，则args为上海
+    # test = "file:///D:\Code\inside\stephenRT\stephenRT\stephenrt\pictures\wordcloud_645286417.png".replace("\\", "/")
     if plain_text:
-        matcher.set_arg("day", args)  # 如果用户发送了参数则直接赋值
-        await dailyReport.send(plain_text)
+        day = 1
+        dateArray = datetime.datetime.utcfromtimestamp(time.time() - 86400 * day + 8 * 3600)  # 时区加8)
+        msg_time = dateArray.strftime("%Y-%m-%d %H:%M:%S")
+        checkTime = msg_time
+        print("checktime:", checkTime)
+        matcher.set_arg("group_id", args)  # 如果用户发送了参数则直接赋值
+        # await dailyReport.send(report_msg)
+        messages = report.Report().createPic(group_id=args, timestamp=checkTime)
+        print("message::::::::", messages)
+        await dailyReport.send(messages[0])
+        await dailyReport.send(message=MessageSegment.image(file=messages[1]))
+
