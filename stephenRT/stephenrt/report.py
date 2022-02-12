@@ -158,7 +158,7 @@ class Report:
             print("没有信息")
             return "信息太少或群号不正确，请检查"
         wc.generate_from_frequencies(wordDict)
-        savePath = os.path.join(updir, "pictures", "wordcloud_{0}.png".format(group_id))
+        savePath = os.path.join(updir, "pictures", "wordcloud_{0}.jpg".format(group_id))
         wc.to_file(savePath.format(group_id))
         # 图片位置
         imageInfo = f"[CQ:image,file=file:///" + os.path.join(os.getcwd(), savePath) + "]"
