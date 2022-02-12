@@ -52,7 +52,7 @@ async def getRecord(group_id, day):
 #     print(len(result))
 
 # 以下为命令触发
-dailyReport = on_command("report", rule=to_me(), aliases={"日报", "词云"}, priority=1)
+dailyReport = on_command("report", rule=to_me(), aliases={"日报", "词云", "查询"}, priority=1)
 
 
 # @dailyReport.handle()
@@ -81,14 +81,15 @@ async def dailyReportHandle(
         days: str = ArgPlainText("days"),
 ):
     if days.isdigit():
-        if 1 <= int(days) <= 10:
-            font_size = int(days)
-            dateArray = datetime.datetime.utcfromtimestamp(time.time() - 86400 * font_size + 8 * 3600)  # 时区加8)
+        if 1 <= int(days) <= 100:
+            selectDays = int(days)
+            dateArray = datetime.datetime.utcfromtimestamp(time.time() - 86400 * selectDays + 8 * 3600)  # 时区加8)
             msg_time = dateArray.strftime("%Y-%m-%d %H:%M:%S")
             # 获取群名
             groupName = await group_name(groupId)
             group_info = " " * 5 + "{0}({1})\n".format(groupName, groupId)
             messages = report.Report().createPic(group_id=groupId, timestamp=msg_time)
+            print("messages:", messages)
             await dailyReport.send(group_info + messages[0])
             await dailyReport.finish(message=MessageSegment.image(file=messages[1]))
         else:

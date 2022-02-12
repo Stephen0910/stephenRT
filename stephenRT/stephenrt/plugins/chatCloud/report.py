@@ -156,14 +156,13 @@ class Report:
         wc = WordCloud(font_path=fontPath, mask=mask, background_color='white')
         if len(wordDict) == 0:
             print("没有信息")
-            return "信息太少或群号不正确，请检查"
+            return ["信息太少或群号不正确，请检查","生成图片失败"]
         wc.generate_from_frequencies(wordDict)
         savePath = os.path.join(updir, "pictures", "wordcloud_{0}.jpg".format(group_id))
         wc.to_file(savePath.format(group_id))
         # 图片位置
         imageInfo = f"[CQ:image,file=file:///" + os.path.join(os.getcwd(), savePath) + "]"
         imageInfo = "file:///" + os.path.join(os.getcwd(), savePath)  # 以上图片信息
-
         return [top_player, imageInfo]
 
 # r = Report()

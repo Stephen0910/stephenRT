@@ -29,9 +29,13 @@ async def group_name(group_id):
     selectSql = """
     SELECT group_name FROM "group" WHERE group_id = {0} LIMIT 1;
     """.format(group_id)
-    groupName = await conn.fetchrow(selectSql)
+    try:
+        name = await conn.fetchrow(selectSql)
+        groupName = name["group_name"]
+    except:
+        groupName = "未查询到指定群名，检查群号"
     await conn.close()
-    return groupName["group_name"]
+    return groupName
 
 
 #
