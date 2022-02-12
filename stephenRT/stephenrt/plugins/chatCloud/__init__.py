@@ -24,8 +24,9 @@ sys.path.append("../../")
 import stephenrt.privateCfg as cfg
 import stephenrt.report as report
 
-config = cfg.config_content
+from stephenrt.plugins.chatCloud import timer
 
+config = cfg.config_content
 
 async def getRecord(group_id, day):
     timestamp = int(time.time())

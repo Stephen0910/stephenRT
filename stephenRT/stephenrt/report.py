@@ -107,7 +107,7 @@ class Report:
         top_word = dict(sorted(wordDict.items(), key=lambda x: x[1], reverse=True)[:3])
         top_word_str = "【关键词Top3】\n"
         for key, value in top_word.items():
-            top_word_str = top_word_str + " " * 15 + "{0}: {1}次\n".format(key, value)
+            top_word_str = top_word_str + "{0}: {1}次\n".format(key, value)
 
         # 处理玩家发言累计
         upplayer = {}
@@ -134,7 +134,7 @@ class Report:
                 name = player[2]
             id = player[0]
             count = player[1]
-            top_player_str = top_player_str + " " * 15 + name + "({0})".format(id) + ":{0}条".format(count) + "\n"
+            top_player_str = top_player_str + name + "({0})".format(id) + ":{0}条".format(count) + "\n"
         print("top_player_str:", top_player_str)
 
         return [wordDict, top_player_str]
