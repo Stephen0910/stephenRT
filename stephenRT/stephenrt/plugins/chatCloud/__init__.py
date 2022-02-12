@@ -94,4 +94,4 @@ async def dailyReportHandle(
         else:
             await dailyReport.finish("天数过大，查询结束")  # type: ignore
     else:
-        await report.finish("输入错误，重新试过")  # type: ignore
+        await dailyReport.finish("输入错误，重新开始")  # type: ignore

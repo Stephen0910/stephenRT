@@ -8,7 +8,7 @@
 # @Software : PyCharm
 # @Copyright:   (c) StephenZ 2022
 # @Licence  :     <@2022>
-from stephenRT.stephenrt.privateCfg import config_content
+from stephenrt.privateCfg import config_content
 import psycopg2
 import jieba
 from wordcloud import WordCloud
