@@ -10,7 +10,7 @@
 # @Licence  :     <@2022>
 
 from nonebot import require, get_bot
-import stephenrt.report as report
+from .report import *
 import stephenrt.privateCfg as cfg
 import datetime, time
 from nonebot.adapters.onebot.v11.message import MessageSegment

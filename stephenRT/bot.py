@@ -26,6 +26,7 @@ nonebot.load_builtin_plugins("single_session")
 # Please DO NOT modify this file unless you know what you are doing!
 # As an alternative, you should use command `nb` or modify `pyproject.toml` to load plugins
 nonebot.load_from_toml("pyproject.toml")
+# nonebot.load_plugin("nonebot_plugin_txt2img")
 
 
 # 定时器任务配置

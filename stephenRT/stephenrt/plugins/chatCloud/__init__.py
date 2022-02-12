@@ -11,18 +11,20 @@
 
 # from nonebot.plugin import require
 import asyncpg
-from nonebot import on_message, on_command
+from nonebot import on_command
 from nonebot.rule import to_me
 from nonebot.matcher import Matcher
 from nonebot.adapters import Message
 from nonebot.params import Arg, CommandArg, ArgPlainText
 import time, datetime, sys, datetime
 from nonebot.adapters.onebot.v11.message import MessageSegment
+from nonebot.params import ArgPlainText
 
 # import stephenRT.stephenrt.privateCfg as cfg
 sys.path.append("../../")
 import stephenrt.privateCfg as cfg
-import stephenrt.report as report
+from .report import *
+from .timer import group_name
 
 from stephenrt.plugins.chatCloud import timer
 
@@ -53,20 +55,43 @@ async def getRecord(group_id, day):
 dailyReport = on_command("report", rule=to_me(), aliases={"日报", "词云"}, priority=1)
 
 
-@dailyReport.handle()
-async def handle_first_receive(matcher: Matcher, args: Message = CommandArg()):
-    plain_text = args.extract_plain_text()  # 首次发送命令时跟随的参数，例：/日报 上海，则args为上海
-    # test = "file:///D:\Code\inside\stephenRT\stephenRT\stephenrt\pictures\wordcloud_645286417.png".replace("\\", "/")
-    if plain_text:
-        day = 1
-        dateArray = datetime.datetime.utcfromtimestamp(time.time() - 86400 * day + 8 * 3600)  # 时区加8)
-        msg_time = dateArray.strftime("%Y-%m-%d %H:%M:%S")
-        checkTime = msg_time
-        print("checktime:", checkTime)
-        matcher.set_arg("group_id", args)  # 如果用户发送了参数则直接赋值
-        # await dailyReport.send(report_msg)
-        messages = report.Report().createPic(group_id=args, timestamp=checkTime)
-        print("message::::::::", messages)
-        await dailyReport.send(messages[0])
-        await dailyReport.send(message=MessageSegment.image(file=messages[1]))
+# @dailyReport.handle()
+# async def handle_first_receive(matcher: Matcher, args: Message = CommandArg()):
+#     plain_text = args.extract_plain_text()  # 首次发送命令时跟随的参数，例：/日报 上海，则args为上海
+#     # test = "file:///D:\Code\inside\stephenRT\stephenRT\stephenrt\pictures\wordcloud_645286417.png".replace("\\", "/")
+#     if plain_text:
+#         day = 1
+#         dateArray = datetime.datetime.utcfromtimestamp(time.time() - 86400 * day + 8 * 3600)  # 时区加8)
+#         msg_time = dateArray.strftime("%Y-%m-%d %H:%M:%S")
+#         checkTime = msg_time
+#         print("checktime:", checkTime)
+#         matcher.set_arg("group_id", args)  # 如果用户发送了参数则直接赋值
+#         # await dailyReport.send(report_msg)
+#         messages = report.Report().createPic(group_id=args, timestamp=checkTime)
+#         print("message::::::::", messages)
+#         await dailyReport.send(messages[0])
+#         await dailyReport.finish(message=MessageSegment.image(file=messages[1]))
 
+
+
+@dailyReport.got("groupId", prompt="请输入群号")
+@dailyReport.got("days", prompt="请输入天数")
+async def dailyReportHandle(
+        groupId: str = ArgPlainText("groupId"),
+        days: str = ArgPlainText("days"),
+):
+    if days.isdigit():
+        if 1 <= int(days) <= 10:
+            font_size = int(days)
+            dateArray = datetime.datetime.utcfromtimestamp(time.time() - 86400 * font_size + 8 * 3600)  # 时区加8)
+            msg_time = dateArray.strftime("%Y-%m-%d %H:%M:%S")
+            # 获取群名
+            groupName = await group_name(groupId)
+            group_info = " " * 5 + "{0}({1})\n".format(groupName, groupId)
+            messages = report.Report().createPic(group_id=groupId, timestamp=msg_time)
+            await dailyReport.send(group_info + messages[0])
+            await dailyReport.finish(message=MessageSegment.image(file=messages[1]))
+        else:
+            await dailyReport.finish("天数过大，查询结束")  # type: ignore
+    else:
+        await report.finish("输入错误，重新试过")  # type: ignore
