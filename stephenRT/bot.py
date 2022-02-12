@@ -27,6 +27,7 @@ nonebot.load_builtin_plugins("single_session")
 # As an alternative, you should use command `nb` or modify `pyproject.toml` to load plugins
 nonebot.load_from_toml("pyproject.toml")
 
+
 # 定时器任务配置
 # nonebot.init(apscheduler_autostart=True)
 nonebot.init(apscheduler_autostart=True, apscheduler_config={
