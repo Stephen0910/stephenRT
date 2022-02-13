@@ -10,7 +10,8 @@
 # @Licence  :     <@2022>
 
 from nonebot import require, get_bot
-from .report import *
+# from .report import *
+from stephenrt.pulgins.chatCloud.report import report
 import stephenrt.privateCfg as cfg
 import datetime, time
 from nonebot.adapters.onebot.v11.message import MessageSegment
@@ -53,7 +54,7 @@ groups = [581529846, 135313433, 768887710, 672076603, 645286417, 790318000]
 # groups = [581529846]
 
 
-@scheduler.scheduled_job("cron", hour="23", minute=0, second=0)
+@scheduler.scheduled_job("cron", hour="*", minute="*", second=0)
 async def send_message():
     bot = get_bot()
     for group in groups:
