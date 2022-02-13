@@ -11,7 +11,7 @@
 
 from nonebot import require, get_bot
 # from .report import *
-from stephenrt.pulgins.chatCloud.report import report
+from stephenrt.plugins.chatCloud import report
 import stephenrt.privateCfg as cfg
 import datetime, time
 from nonebot.adapters.onebot.v11.message import MessageSegment
