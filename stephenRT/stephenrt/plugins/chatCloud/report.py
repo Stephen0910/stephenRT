@@ -44,15 +44,22 @@ class Report:
         :param timestamp:
         :return:
         """
-        sql = """
-        SELECT message, sender_id, sender_name, group_card FROM "group" WHERE "group_id" = {0} and "timestamp" > '{1}'
-        """.format(group_id, timestamp)
+        if re.match("\d+\d", str(group_id)):
+            print("输入的类型是数字")
+            sql = """SELECT message, sender_id, sender_name, group_card FROM "group" WHERE "group_id" = {0} and "timestamp" > '{1}'""".format(
+                group_id, timestamp)
+        else:
+            print("输入的类型是字符")
+            sql = """SELECT message, sender_id, sender_name, group_card FROM "group" WHERE "upper"(group_name) like "upper"('%{0}%') and "timestamp" > '{1}'""".format(
+                group_id, timestamp)
+        print("recordSql:", sql)
         self.cursor.execute(sql)
         msgs = self.cursor.fetchall()
         self.conn.close()
         return msgs
 
-    # def normalTime(self, timestamp):
+        # def normalTime(self, timestamp):
+
     #     dateArray = datetime.datetime.utcfromtimestamp(int(timestamp) + 8 * 3600)  # 时区加8)
     #     msg_time = dateArray.strftime("%Y-%m-%d %H:%M:%S")
     #     return msg_time
@@ -156,13 +163,13 @@ class Report:
         wc = WordCloud(font_path=fontPath, mask=mask, background_color='white')
         if len(wordDict) == 0:
             print("没有信息")
-            return ["信息太少或群号不正确，请检查","生成图片失败"]
+            return ["信息太少或群号不正确，请检查", "生成图片失败"]
         wc.generate_from_frequencies(wordDict)
         savePath = os.path.join(updir, ".pictures", "wordcloud_{0}.jpg".format(group_id))
         wc.to_file(savePath.format(group_id))
         # 图片位置
-        imageInfo = f"[CQ:image,file=file:///" + os.path.join(os.getcwd(), savePath) + "]"
         imageInfo = "file:///" + os.path.join(os.getcwd(), savePath)  # 以上图片信息
+        # imageInfo = os.path.join(os.getcwd(), savePath)
         return [top_player, imageInfo]
 
 # r = Report()

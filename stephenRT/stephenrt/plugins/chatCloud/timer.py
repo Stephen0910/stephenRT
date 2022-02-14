@@ -16,6 +16,19 @@ import stephenrt.privateCfg as cfg
 import datetime, time
 from nonebot.adapters.onebot.v11.message import MessageSegment
 import asyncpg
+import re
+
+
+async def getGroup(key):
+    conn = await asyncpg.connect(user=config["user"], password=config["password"], database=config["database"],
+                                 host=config["host"])
+    selectSql = """SELECT DISTINCT group_id, group_name FROM "group" WHERE "upper"(group_name) like "upper"('%{0}%') ORDER BY group_name;""".format(
+        key)
+    print(selectSql)
+    contents = await conn.fetch(selectSql)
+    await conn.close()
+    print("grouoooooo:", contents)
+    return contents
 
 
 # 导入对象
@@ -33,8 +46,8 @@ async def group_name(group_id):
     try:
         name = await conn.fetchrow(selectSql)
         groupName = name["group_name"]
-    except:
-        groupName = "未查询到指定群名，检查群号"
+    except Exception as e:
+        groupName = e
     await conn.close()
     return groupName
 
@@ -48,8 +61,10 @@ async def group_name(group_id):
 # scheduler.add_job(run_every_2_hour, "interval", days=1, id="2")
 # print("定时器触发成功")
 
-groups = [581529846, 135313433, 768887710, 672076603, 645286417, 790318000]
+checkGroups = [768887710, 581529846, 135313433, "羽毛球"]
 
+
+# nonebot,home,手游
 
 # groups = [581529846]
 
@@ -57,18 +72,25 @@ groups = [581529846, 135313433, 768887710, 672076603, 645286417, 790318000]
 @scheduler.scheduled_job("cron", hour=23, minute=0, second=0)
 async def send_message():
     bot = get_bot()
-    for group in groups:
-        day = 1
-        groupName = await group_name(group)
-        dateArray = datetime.datetime.utcfromtimestamp(time.time() - 86400 * day + 8 * 3600)  # 时区加8)
-        checkTime = dateArray.strftime("%Y-%m-%d %H:%M:%S")
+    day = 1
+    dateArray = datetime.datetime.utcfromtimestamp(time.time() - 86400 * day + 8 * 3600)  # 时区加8)
+    checkTime = dateArray.strftime("%Y-%m-%d %H:%M:%S")
+    for group in checkGroups:
+        print("发送：", group)
+        if re.match("\d+\d", str(group)):
+            groupName = await group_name(group)
+
+            group_info = " " * 5 + "{0}({1})\n".format(groupName, group)
+            messages = report.Report().createPic(group_id=group, timestamp=checkTime)
+        else:
+            groups = await getGroup(key=group)
+            groups_str = ""
+            for group_info in groups:
+                groups_str = groups_str + group_info["group_name"] + str(group_info["group_id"])
+            group_info = "({0})相关：".format(group) + groups_str + "\n"
         messages = report.Report().createPic(group_id=group, timestamp=checkTime)
-        group_info = " " * 5 + "{0}({1})\n".format(groupName, group)
-        can_send_image = await bot.can_send_image()
-        print("是否可发送图片:", can_send_image["yes"])
         await bot.send_private_msg(user_id=281016636, message=group_info + messages[0])
         await bot.send_private_msg(user_id=281016636, message=MessageSegment.image(file=messages[1]))
-        time.sleep(3)
 
 # scheduler.add_job(send_message, "interval", days=1, id="xxx")
 # print("定时器触发成功")
