@@ -79,7 +79,7 @@ async def checkMessage(bot: Bot, event: GroupMessageEvent):
     content = str(msg.message)
     # print("msg:", msg)
     for word in sens:
-        if word in content:
+        if word in content and "CQ" not in content:  # cq误报ma
             print("word:", word, len(word))
             print("content:", content, len(content))
             groupInfo = await group_info(bot, msg.group_id)
@@ -90,6 +90,6 @@ async def checkMessage(bot: Bot, event: GroupMessageEvent):
                 name = sender.card
             else:
                 name = sender.nickname
-            # if "羽毛球" in group_name:
+            # if "羽毛球" in group_name: # 这里要做权限隔离  不要所有都检测
             await send_private(bot, user_id=281016636,
                                msg="{0} {1} 发送敏感信息内容:【{2}】(敏感词:{3})".format(group_name, name, content, word))
