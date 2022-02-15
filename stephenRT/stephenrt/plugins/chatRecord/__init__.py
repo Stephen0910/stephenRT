@@ -15,6 +15,7 @@ import asyncpg
 import json
 import os
 import time, datetime, sys
+
 # import stephenRT.stephenrt.privateCfg as cfg
 sys.path.append("../../")
 import stephenrt.privateCfg as cfg
@@ -60,6 +61,7 @@ async def executeSql(sql):
     await conn.execute(sql)
     await conn.close()
 
+
 async def poolSave(sql):
     """
     连接池
@@ -67,14 +69,13 @@ async def poolSave(sql):
     :return:
     """
     pool = await asyncpg.create_pool(user=pgsql["user"], password=pgsql["password"], database=pgsql["database"],
-                                 host=pgsql["host"])
+                                     host=pgsql["host"])
     power = 2
     for i in range(1, 1000):
         async with pool.acquire() as con:
             # await con.fetchval('select 2 ^ $1', power)
             await con.execute(sql)
     await pool.close()
-
 
 
 async def send_private(bot: Bot, user_id, msg):

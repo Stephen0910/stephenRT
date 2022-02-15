@@ -9,6 +9,5 @@
 # @Copyright:   (c) StephenZ 2022
 # @Licence  :     <@2022>
 
-import requests
+from .sensitive import *
 
-url = 1
