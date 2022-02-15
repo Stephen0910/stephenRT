@@ -12,18 +12,17 @@
 from nonebot.adapters.onebot.v11 import Bot, GroupMessageEvent, Event
 from nonebot import on_message
 import os, sys
-import asyncpg
 
 sys.path.append("../../")
 import stephenrt.privateCfg as cfg
 
 config = cfg.config_content
-report_to = 281016636
+report_to = config["user_id"]
 
 
 def get_sens():
     rootdir = os.path.join(os.getcwd(), "stephenrt", "plugins", "Badminton", "mgc")
-    print("rootdir:", rootdir)
+    # print("rootdir:", rootdir)
     sens_words = []
     for root, dirs, files in os.walk(rootdir):
         for file in files:
@@ -35,14 +34,6 @@ def get_sens():
                 sens_words += [line.strip() for line in open(file_path, 'r', encoding='gbk').readlines()]
 
     return [sens for sens in sens_words if sens != ""]  # 避免有空
-
-
-# def get_sens_words():
-#     block_path = os.path.join(os.getcwd(), "stephenrt", "plugins", "Badminton", "sWords.txt")
-#     try:
-#         sens_words = [line.strip() for line in open(block_path, 'r', encoding='utf-8').readlines()]
-#
-#     return sens_words
 
 
 async def group_info(bot: Bot, groupId):
@@ -80,8 +71,8 @@ async def delete_msg(bot: Bot, msgid):
 msg_matcher = on_message()
 
 sens = get_sens()
-print(sens)
-print(len(sens))
+# print(sens)
+# print(len(sens))
 
 
 @msg_matcher.handle()
@@ -91,8 +82,8 @@ async def checkMessage(bot: Bot, event: GroupMessageEvent):
     # print("msg:", msg)
     for word in sens:
         if word in content and "CQ" not in content:  # cq误报ma
-            print("word:", word, len(word))
-            print("content:", content, len(content))
+            # print("word:", word, len(word))
+            # print("content:", content, len(content))
             groupInfo = await group_info(bot, msg.group_id)
             group_name = groupInfo["group_name"]
             sender = msg.sender
@@ -106,4 +97,4 @@ async def checkMessage(bot: Bot, event: GroupMessageEvent):
             await send_private(bot, user_id=report_to,
                                msg="{0} {1} 发送敏感信息内容:【{2}】(敏感词:{3})".format(group_name, name, content, word))
             # await delete_msg(bot, message_id) # 暂不启用
-            break  # 重复的脏字会导致发送两次
+            break  # 重复的脏字会导致发送两次修复
