@@ -97,15 +97,17 @@ class Report:
         jieba.load_userdict(get_user_dict_file())
         for msg in msgs:
             # 正则非贪婪模式 过滤CQ码
-            msg = re.sub('\[CQ:\w+,.+?\]', '', msg)
+            msg = re.sub('\[CQ:\w+,.+?\]', '', msg, flags=re.S)
             # 过滤URL
             msg = re.sub('(https?|ftp|file)://[-A-Za-z0-9+&@#/%?=~_|!:,.;]+[-A-Za-z0-9+&@#/%=~_|]', '', msg)
             # 过滤换行符
             msg = msg.replace("\n", "").replace("\r", "")
             # 特殊情况过滤
             msg = msg.replace('&#91;视频&#93;你的QQ暂不支持查看视频短片，请升级到最新版本后查看。', '')
-            if "亲爱的友友们" in msg:  #移除客服的开始结束语
-                break
+            if "亲爱的友友们" in msg in msg:  #移除客服的开始结束语
+                continue
+            # if "xml" in msg:
+            #     continue
             wordText = wordText + msg
             for word in jieba.cut(msg, cut_all=False):
                 if word not in top_dic.keys():
