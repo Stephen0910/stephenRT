@@ -18,7 +18,7 @@ sys.path.append("../../")
 import stephenrt.privateCfg as cfg
 
 config = cfg.config_content
-
+report_to = 281016636
 
 def get_sens():
     rootdir = os.path.join(os.getcwd(), "stephenrt", "plugins", "Badminton", "mgc")
@@ -67,11 +67,21 @@ async def send_private(bot: Bot, user_id, msg):
     await bot.send_private_msg(user_id=user_id, message=str(msg))
 
 
+async def delete_msg(bot: Bot, msgid):
+    try:
+        await bot.delete_msg(message_id=msgid)
+        print("撤回成功")
+    except Exception as e:
+        result = "撤回失败：{0}".format(e)
+        await send_private(bot, user_id=report_to, msg=result)
+
+
 msg_matcher = on_message()
 
 sens = get_sens()
 print(sens)
 print(len(sens))
+
 
 @msg_matcher.handle()
 async def checkMessage(bot: Bot, event: GroupMessageEvent):
@@ -86,10 +96,12 @@ async def checkMessage(bot: Bot, event: GroupMessageEvent):
             group_name = groupInfo["group_name"]
             sender = msg.sender
             # if "羽毛球" in group_name:
+            message_id = msg.message_id
             if sender.card != "":
                 name = sender.card
             else:
                 name = sender.nickname
             # if "羽毛球" in group_name: # 这里要做权限隔离  不要所有都检测
-            await send_private(bot, user_id=281016636,
+            await send_private(bot, user_id=report_to,
                                msg="{0} {1} 发送敏感信息内容:【{2}】(敏感词:{3})".format(group_name, name, content, word))
+            # await delete_msg(bot, message_id) # 暂不启用
