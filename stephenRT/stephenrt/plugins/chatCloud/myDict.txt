@@ -2,3 +2,5 @@
 nonebot 3 n
 bug 3 n
 米哈游 3 n
+go-cqhttp 3 n
+onebot 3 n

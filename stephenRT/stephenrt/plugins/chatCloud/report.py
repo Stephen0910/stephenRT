@@ -183,7 +183,7 @@ class Report:
         :param timestamp:
         :return:
         """
-        cloud_id = random.randint(1,9)
+        cloud_id = random.randint(1,8)
         print("random:", cloud_id)
         info = self.wordReport(group_id, timestamp)
         wordDict = info[0]
