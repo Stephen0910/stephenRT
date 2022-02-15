@@ -20,6 +20,7 @@ import stephenrt.privateCfg as cfg
 config = cfg.config_content
 report_to = 281016636
 
+
 def get_sens():
     rootdir = os.path.join(os.getcwd(), "stephenrt", "plugins", "Badminton", "mgc")
     print("rootdir:", rootdir)
@@ -105,3 +106,4 @@ async def checkMessage(bot: Bot, event: GroupMessageEvent):
             await send_private(bot, user_id=report_to,
                                msg="{0} {1} 发送敏感信息内容:【{2}】(敏感词:{3})".format(group_name, name, content, word))
             # await delete_msg(bot, message_id) # 暂不启用
+            continue  # 重复的脏字会导致发送两次
