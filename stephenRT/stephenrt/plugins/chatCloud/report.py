@@ -31,6 +31,19 @@ else:
 imageMask = "wordcloud.png"
 
 
+def get_user_dict_file():
+    # d = os.path.dirname(os.path.realpath(__file__))
+    user_path = os.path.join(os.getcwd(), "stephenrt", "plugins", "chatCloud", "myDict.txt")
+    return user_path
+
+
+def get_user_stop_file():
+    # d = os.path.dirname(os.path.realpath(__file__))
+    block_path = os.path.join(os.getcwd(), "stephenrt", "plugins", "chatCloud", "stopwords.txt")
+    stop_words = [line.strip() for line in open(block_path, 'r', encoding='utf-8').readlines()]
+    return stop_words
+
+
 class Report:
     def __init__(self):
         self.conn = psycopg2.connect(user=config["user"], password=config["password"], database=config["database"],
@@ -80,6 +93,8 @@ class Report:
         # 结巴分词将信息分词，并组成列表
         top_dic = {}
         wordText = ""
+        # 需要处理部分自定义词，避免切割
+        jieba.load_userdict(get_user_dict_file())
         for msg in msgs:
             # 正则非贪婪模式 过滤CQ码
             msg = re.sub('\[CQ:\w+,.+?\]', '', msg)
@@ -89,7 +104,8 @@ class Report:
             msg = msg.replace("\n", "").replace("\r", "")
             # 特殊情况过滤
             msg = msg.replace('&#91;视频&#93;你的QQ暂不支持查看视频短片，请升级到最新版本后查看。', '')
-
+            if "亲爱的友友们" in msg:  #移除客服的开始结束语
+                break
             wordText = wordText + msg
             for word in jieba.cut(msg, cut_all=False):
                 if word not in top_dic.keys():
@@ -102,17 +118,28 @@ class Report:
         for word in top_list:
             if len(word[0]) >= 2:
                 word_top.append(word)
-        # 取50个关键词，不够就取完
+
+        # 去除不统计的词，一般是无意义的
+        word_use = []
+        print("wordtop:", word_top)
+        uselesswords = get_user_stop_file()
+        print(uselesswords)
+        for word in word_top:
+            if word[0] in uselesswords:
+                pass
+            else:
+                word_use.append(word)
+
+
+        print("word_use:", word_use[:20])
+        # 取80个关键词，不够就取完
         try:
-            wordDict = dict(word_top[:80])
+            wordDict = dict(word_use[:80])
         except:
             print("关键词不足")
-            wordDict = dict(word_top)
-
-        print("wordDict:", wordDict)
         # topword 前三统计
-        top_word = dict(sorted(wordDict.items(), key=lambda x: x[1], reverse=True)[:3])
-        top_word_str = "【关键词Top3】\n"
+        top_word = dict(sorted(wordDict.items(), key=lambda x: x[1], reverse=True)[:5])
+        top_word_str = "【关键词Top5】\n"
         for key, value in top_word.items():
             top_word_str = top_word_str + "{0}: {1}次\n".format(key, value)
 
@@ -171,6 +198,7 @@ class Report:
         imageInfo = "file:///" + os.path.join(os.getcwd(), savePath)  # 以上图片信息
         # imageInfo = os.path.join(os.getcwd(), savePath)
         return [top_player, imageInfo]
+
 
 # r = Report()
 # r.createPic(645286417, "2022-02-1 9:43:43")

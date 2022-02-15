@@ -81,7 +81,7 @@ async def send_message():
             groupName = await group_name(group)
 
             group_info = " " * 5 + "{0}({1})\n".format(groupName, group)
-            messages = report.Report().createPic(group_id=group, timestamp=checkTime)
+            # messages = report.Report().createPic(group_id=group, timestamp=checkTime)
         else:
             groups = await getGroup(key=group)
             groups_str = ""
