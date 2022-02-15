@@ -15,6 +15,7 @@ from wordcloud import WordCloud
 import numpy as np
 from PIL import Image
 import re, os, sys, datetime
+import random
 
 # print(config_content)
 config = config_content
@@ -178,27 +179,28 @@ class Report:
     def createPic(self, group_id, timestamp):
         """
         生成词云，报告
-        :param group_id:
+        :param group_id: id或查询的信息
         :param timestamp:
         :return:
         """
+        cloud_id = random.randint(1,9)
+        print("random:", cloud_id)
         info = self.wordReport(group_id, timestamp)
         wordDict = info[0]
         top_player = info[1]
         # 蒙版位置
-        updir = os.path.abspath(os.path.join(os.getcwd(), "stephenrt"))
-        maskPath = os.path.join(updir, "wordcloud.png")
+        updir = os.path.abspath(os.path.join(os.getcwd(), "stephenrt", "cloud_base"))
+        maskPath = os.path.join(updir, "wordcloud{0}.png".format(cloud_id))
         mask = np.array(Image.open(maskPath))
         wc = WordCloud(font_path=fontPath, mask=mask, background_color='white')
         if len(wordDict) == 0:
             print("没有信息")
             return ["信息太少或群号不正确，请检查", "生成图片失败"]
         wc.generate_from_frequencies(wordDict)
-        savePath = os.path.join(updir, ".pictures", "wordcloud_{0}.jpg".format(group_id))
+        savePath = os.path.join(updir, ".output", "wordcloud_{0}.png".format(group_id))
         wc.to_file(savePath.format(group_id))
         # 图片位置
         imageInfo = "file:///" + os.path.join(os.getcwd(), savePath)  # 以上图片信息
-        # imageInfo = os.path.join(os.getcwd(), savePath)
         return [top_player, imageInfo]
 
 
