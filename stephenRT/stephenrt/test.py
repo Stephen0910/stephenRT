@@ -11,6 +11,6 @@
 
 import jieba
 
-a = "性能测试的重点是怎么把测试用例梳理出来，而不是白盒测试"
+a = "真是屌"
 for i in jieba.cut(a, cut_all=True):
     print(i)
