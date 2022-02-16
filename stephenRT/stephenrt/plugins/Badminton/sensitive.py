@@ -12,6 +12,7 @@
 from nonebot.adapters.onebot.v11 import Bot, GroupMessageEvent, Event
 from nonebot import on_message
 import os, sys
+import jieba
 
 sys.path.append("../../")
 import stephenrt.privateCfg as cfg
@@ -78,8 +79,10 @@ sens = get_sens()
 @msg_matcher.handle()
 async def checkMessage(bot: Bot, event: GroupMessageEvent):
     msg = event
-    content = str(msg.message)
+    or_msg = str(msg.message)
     # print("msg:", msg)
+    content = list(jieba.cut(or_msg, cut_all=True))  # 避免误报，使用分词
+    # print("分词content:", content)
     for word in sens:
         if word in content and "CQ" not in content:  # cq误报ma
             # print("word:", word, len(word))
@@ -95,6 +98,6 @@ async def checkMessage(bot: Bot, event: GroupMessageEvent):
                 name = sender.nickname
             # if "羽毛球" in group_name: # 这里要做权限隔离  不要所有都检测
             await send_private(bot, user_id=report_to,
-                               msg="{0} {1} 发送敏感信息内容:【{2}】(敏感词:{3})".format(group_name, name, content, word))
+                               msg="{0}|{1} 发送敏感内容:【{2}】(敏感词:{3})".format(group_name, name, or_msg, word))
             # await delete_msg(bot, message_id) # 暂不启用
             break  # 重复的脏字会导致发送两次修复
