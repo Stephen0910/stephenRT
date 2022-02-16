@@ -11,6 +11,6 @@
 
 import jieba
 
-a = "我在成都天府广场吃着肯德基"
+a = "性能测试的重点是怎么把测试用例梳理出来，而不是白盒测试"
 for i in jieba.cut(a, cut_all=True):
     print(i)

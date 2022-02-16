@@ -81,10 +81,10 @@ async def checkMessage(bot: Bot, event: GroupMessageEvent):
     msg = event
     or_msg = str(msg.message)
     # print("msg:", msg)
-    content = list(jieba.cut(or_msg, cut_all=True))  # 避免误报，使用分词
-    # print("分词content:", content)
+    content = list(jieba.cut(or_msg, cut_all=False))  # 避免误报，使用分词
+    print("分词content:", content)
     for word in sens:
-        if word in content and "CQ" not in content:  # cq误报ma
+        if word in content:  # cq误报ma
             # print("word:", word, len(word))
             # print("content:", content, len(content))
             groupInfo = await group_info(bot, msg.group_id)
