@@ -16,7 +16,7 @@ import stephenrt.privateCfg as cfg
 import datetime, time
 from nonebot.adapters.onebot.v11.message import MessageSegment
 import asyncpg
-import re
+import re, os
 
 
 async def getGroup(key):
@@ -29,6 +29,16 @@ async def getGroup(key):
     await conn.close()
     print("grouoooooo:", contents)
     return contents
+
+
+def deleteFile(filepath):
+    print("删除中。。。")
+    time.sleep(5)
+    if os.path.exists(filepath):  # 如果文件存在
+        os.remove(filepath)
+        print("删除成功")
+    else:
+        print('删除失败：no such file:%s' % filepath)  # 则返回文件不存在
 
 
 # 导入对象
@@ -90,7 +100,8 @@ async def send_message():
             group_info = "({0})相关：".format(group) + groups_str + "\n"
         messages = report.Report().createPic(group_id=group, timestamp=checkTime)
         await bot.send_private_msg(user_id=281016636, message=group_info + messages[0])
-        await bot.send_private_msg(user_id=281016636, message=MessageSegment.image(file=messages[1]))
+        await bot.send_private_msg(user_id=281016636, message=MessageSegment.image(file="file:///" + messages[1]))
+        deleteFile(messages[1])
 
 # scheduler.add_job(send_message, "interval", days=1, id="xxx")
 # print("定时器触发成功")

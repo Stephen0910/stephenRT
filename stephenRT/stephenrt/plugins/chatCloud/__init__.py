@@ -24,8 +24,7 @@ from nonebot.params import ArgPlainText
 sys.path.append("../../")
 import stephenrt.privateCfg as cfg
 from .report import *
-from .timer import group_name
-
+from .timer import group_name, deleteFile
 from stephenrt.plugins.chatCloud import timer
 
 config = cfg.config_content
@@ -53,7 +52,6 @@ async def getGroup(key):
     await conn.close()
     print("grouoooooo:", contents)
     return contents
-
 
 # 以下为命令触发
 dailyReport = on_command("report", rule=to_me(), aliases={"日报", "词云", "查询"}, priority=1)
@@ -83,10 +81,11 @@ async def dailyReportHandle(
                 group_info = "({0})相关：".format(groupId) + groups_str + "\n"
 
             messages = report.Report().createPic(group_id=groupId, timestamp=msg_time)
-            # print("messages:", messages[1])
+            print("messages:", messages[1])
             await dailyReport.send(group_info + messages[0])
-            await dailyReport.finish(message=MessageSegment.image(file=messages[1]))
-
+            await dailyReport.send(message=MessageSegment.image(file="file:///" + messages[1]))
+            deleteFile(messages[1])
+            await dailyReport.finish()
         else:
             await dailyReport.finish("天数过大，查询结束")  # type: ignore
     else:

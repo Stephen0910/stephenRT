@@ -201,7 +201,7 @@ class Report:
         savePath = os.path.join(updir, ".output", "wordcloud_{0}.png".format(group_id))
         wc.to_file(savePath.format(group_id))
         # 图片位置
-        imageInfo = "file:///" + os.path.join(os.getcwd(), savePath)  # 以上图片信息
+        imageInfo = os.path.join(os.getcwd(), savePath)  # 以上图片信息
         return [top_player, imageInfo]
 
 
