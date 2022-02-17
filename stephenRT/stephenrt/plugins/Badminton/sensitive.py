@@ -101,6 +101,6 @@ async def checkMessage(bot: Bot, event: GroupMessageEvent):
                 name = sender.nickname
             # if "羽毛球" in group_name: # 这里要做权限隔离  不要所有都检测
             await send_private(bot, user_id=report_to,
-                               msg="{0}|{1} 发送敏感内容:【{2}】(敏感词:{3})".format(group_name, name, or_msg, word))
+                               msg="{0}|{1} 发送敏感内容:【{2}】\n(敏感词:{3})".format(group_name, name, or_msg, word))
             # await delete_msg(bot, message_id) # 暂不启用
             break  # 重复的脏字会导致发送两次修复
