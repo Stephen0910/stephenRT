@@ -99,7 +99,9 @@ async def saveMsg(bot: Bot, event: GroupMessageEvent):
     """
     msg = event
     print("msg:", msg)
-    print(msg.get_message)
+    print("get_msg:", msg.get_message)
+    print("test_type：", msg.message_type)
+    # print(msg.message["type"])
     # await send_private(bot, user_id=281016636, msg=msg)
     groupInfo = await group_info(bot, groupId=msg.group_id)
     dateArray = datetime.datetime.utcfromtimestamp(msg.time + 8 * 3600)  # 时区加8)

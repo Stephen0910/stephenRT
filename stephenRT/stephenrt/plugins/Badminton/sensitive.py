@@ -23,6 +23,10 @@ report_to = config["user_id"]
 
 
 def get_sens():
+    """
+    获取屏蔽词
+    :return:
+    """
     rootdir = os.path.join(os.getcwd(), "stephenrt", "plugins", "Badminton", "mgc")
     # print("rootdir:", rootdir)
     sens_words = []
@@ -36,6 +40,12 @@ def get_sens():
                 sens_words += [line.strip() for line in open(file_path, 'r', encoding='gbk').readlines()]
 
     return [sens for sens in sens_words if sens != ""]  # 避免有空
+
+
+def get_white():
+    white_path = os.path.join(os.getcwd(), "stephenrt", "plugins", "Badminton", "white.txt")
+    # white = [line.strip() for line in open(white_path, 'r', encoding='utf-8').readlines()]
+    return white_path
 
 
 async def group_info(bot: Bot, groupId):
@@ -62,6 +72,12 @@ async def send_private(bot: Bot, user_id, msg):
 
 
 async def delete_msg(bot: Bot, msgid):
+    """
+    撤回消息
+    :param bot:
+    :param msgid:
+    :return:
+    """
     try:
         await bot.delete_msg(message_id=msgid)
         print("撤回成功")
@@ -73,6 +89,9 @@ async def delete_msg(bot: Bot, msgid):
 msg_matcher = on_message()
 
 sens = get_sens()
+white = get_white()
+
+
 # print(sens)
 # print(len(sens))
 
@@ -81,13 +100,14 @@ sens = get_sens()
 async def checkMessage(bot: Bot, event: GroupMessageEvent):
     msg = event
     or_msg = str(msg.message)
-    print("debug:", or_msg)
-    jieba_msg = re.sub('\[CQ:\w+,.+?\]', "", or_msg)
+    # print("debug:", or_msg)
+    jieba.load_userdict(get_white())  # 白名单词
+    jieba_msg = re.sub('\[CQ:\w+,.+?\]', "", or_msg)  # 图片等信息过滤
     content = list(jieba.cut(jieba_msg, cut_all=False))  # 避免误报，使用分词
     print("分词content:", content)
 
-    for word in sens:
-        if word in content:  # cq误报ma
+    for word in sens:  # word: 屏蔽词库  content: message的结巴分词列表
+        if word in content:
             # print("word:", word, len(word))
             # print("content:", content, len(content))
             groupInfo = await group_info(bot, msg.group_id)

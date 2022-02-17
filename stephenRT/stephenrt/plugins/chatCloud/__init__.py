@@ -30,28 +30,16 @@ from stephenrt.plugins.chatCloud import timer
 config = cfg.config_content
 
 
-# async def getRecord(group_id, day):
-#     timestamp = int(time.time())
-#     conn = await asyncpg.connect(user=config["user"], password=config["password"], database=config["database"],
-#                                  host=config["host"])
-#     day2second = timestamp - day * 86400
-#     day2time = datetime.datetime.fromtimestamp(day2second)
-#     selectSql = """SELECT message FROM "group" WHERE group_id = {0} and "timestamp" > '{1}'""".format(group_id,
-#                                                                                                       day2time)
-#     print("selectSql:", selectSql)
-#     contents = await conn.fetch(selectSql)
-#     await conn.close()
-#     return contents
-
 async def getGroup(key):
     conn = await asyncpg.connect(user=config["user"], password=config["password"], database=config["database"],
-                                     host=config["host"])
-    selectSql = """SELECT DISTINCT group_id, group_name FROM "group" WHERE "upper"(group_name) like "upper"('%{0}%') ORDER BY group_name;""".format(key)
+                                 host=config["host"])
+    selectSql = """SELECT DISTINCT group_id, group_name FROM "group" WHERE "upper"(group_name) like "upper"('%{0}%') ORDER BY group_name;""".format(
+        key)
     print(selectSql)
     contents = await conn.fetch(selectSql)
     await conn.close()
-    print("grouoooooo:", contents)
     return contents
+
 
 # 以下为命令触发
 dailyReport = on_command("report", rule=to_me(), aliases={"日报", "词云", "查询"}, priority=1)
