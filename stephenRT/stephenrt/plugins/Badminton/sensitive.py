@@ -13,6 +13,7 @@ from nonebot.adapters.onebot.v11 import Bot, GroupMessageEvent, Event
 from nonebot import on_message
 import os, sys
 import jieba
+import re
 
 sys.path.append("../../")
 import stephenrt.privateCfg as cfg
@@ -80,9 +81,11 @@ sens = get_sens()
 async def checkMessage(bot: Bot, event: GroupMessageEvent):
     msg = event
     or_msg = str(msg.message)
-    # print("msg:", msg)
-    content = list(jieba.cut(or_msg, cut_all=False))  # 避免误报，使用分词
+    print("debug:", or_msg)
+    jieba_msg = re.sub('\[CQ:\w+,.+?\]', "", or_msg)
+    content = list(jieba.cut(jieba_msg, cut_all=False))  # 避免误报，使用分词
     print("分词content:", content)
+
     for word in sens:
         if word in content:  # cq误报ma
             # print("word:", word, len(word))
