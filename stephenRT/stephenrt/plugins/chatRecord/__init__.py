@@ -15,6 +15,7 @@ import asyncpg
 import json
 import os
 import time, datetime, sys
+import re
 
 # import stephenRT.stephenrt.privateCfg as cfg
 sys.path.append("../../")
@@ -70,7 +71,6 @@ async def poolSave(sql):
     """
     pool = await asyncpg.create_pool(user=pgsql["user"], password=pgsql["password"], database=pgsql["database"],
                                      host=pgsql["host"])
-    power = 2
     for i in range(1, 1000):
         async with pool.acquire() as con:
             # await con.fetchval('select 2 ^ $1', power)
@@ -98,31 +98,38 @@ async def saveMsg(bot: Bot, event: GroupMessageEvent):
     :return:
     """
     msg = event
-    print("msg:", msg)
-    print("get_msg:", msg.get_message)
-    print("test_type：", msg.message_type)
+    # print("msg:", msg)
+    get_type = msg.get_type
+    print("get_type:", type(get_type), get_type)
+    try:
+        msg_type = str([x[2:] for x in re.findall("=\'text|=\'image|=\'json|=\'face", str(get_type))]).replace("'", "\"")
+    except Exception as e:
+        print(e)
+        msg_type = ""
+    print("msg_type:", msg_type, type(msg_type))
     # print(msg.message["type"])
     # await send_private(bot, user_id=281016636, msg=msg)
     groupInfo = await group_info(bot, groupId=msg.group_id)
     dateArray = datetime.datetime.utcfromtimestamp(msg.time + 8 * 3600)  # 时区加8)
     msg_time = dateArray.strftime("%Y-%m-%d %H:%M:%S")
     sql = """INSERT INTO "public"."group"("message_id", "sender_name", "sender_id", "message", "group_id",
-     "group_name", "group_card", "timestamp", "self_id", "post_type") 
+     "group_name", "group_card", "timestamp", "self_id", "post_type", "msg_type") 
      VALUES 
-     ({0}, '{1}', {2}, '{3}', {4}, '{5}', '{6}', '{7}', {8}, '{9}');
+     ({0}, '{1}', {2}, '{3}', {4}, '{5}', '{6}', '{7}', {8}, '{9}', '{10}');
 """.format(msg.message_id, str(msg.sender.nickname).replace("\'", "\""), msg.sender.user_id,
            str(msg.message).replace("\'", "\""), msg.group_id,
            groupInfo["group_name"],
-           str(msg.sender.card).replace("\'", "\""), msg_time, msg.self_id, msg.post_type)
+           str(msg.sender.card).replace("\'", "\""), msg_time, msg.self_id, msg.post_type, msg_type)
 
     # await poolSave(sql)
     try:
         await executeSql(sql)
         # await poolSave(sql)
-    except:
-        raise Exception("sql错误")
+    except Exception as e:
         print(sql)
-        await send_private(bot, pgsql["user_id"], sql)  # 如果保存失败，把sql发送到指定的qq号
+        await send_private(bot, pgsql["user_id"], e)  # 如果保存失败，把sql发送到指定的qq号
+
+
 
 # export = export()
 # export.config = pgsql
