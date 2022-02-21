@@ -8,6 +8,9 @@
 # @Software : PyCharm
 # @Copyright:   (c) StephenZ 2022
 # @Licence  :     <@2022>
+"""
+定时器，定时发送报告-》包括发言top3 关键词top5 词云
+"""
 
 from nonebot import require, get_bot
 # from .report import *

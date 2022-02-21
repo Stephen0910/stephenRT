@@ -97,6 +97,8 @@ class Report:
         # 需要处理部分自定义词，避免切割
         jieba.load_userdict(get_user_dict_file())
         for msg in msgs:
+            # 去除入群欢迎
+            msg = re.sub("大家好，我是.*?resid=104", "", msg, flags=re.S)
             # 正则非贪婪模式 过滤CQ码
             msg = re.sub('\[CQ:\w+,.+?\]', '', msg, flags=re.S)
             # 过滤URL
@@ -110,7 +112,7 @@ class Report:
             # if "xml" in msg:
             #     continue
             wordText = wordText + msg
-            for word in jieba.cut(msg, cut_all=False):
+            for word in set(jieba.cut(msg, cut_all=False)):  # 每句话只统计一次
                 if word not in top_dic.keys():
                     top_dic[word] = 1
                 else:

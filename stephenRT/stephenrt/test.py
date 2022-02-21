@@ -9,9 +9,11 @@
 # @Copyright:   (c) StephenZ 2022
 # @Licence  :     <@2022>
 
-a = """get_type: <class 'method'> <bound method Event.get_type of GroupMessageEvent(time=1645094566, self_id=2969505561, post_type='message', sub_type='normal', user_id=281016636, message_type='group', message_id=-743898255, message=[MessageSegment(type='text', data={'text': 'sf'}), MessageSegment(type='image', data={'file': 'ec8dbb7d08e81eddfb6c949faeeb9448.image', 'url': 'https://gchat.qpic.cn/gchatpic_new/281016636/755489024-3060637992-EC8DBB7D08E81EDDFB6C949FAEEB9448/0?term=3', 'subType': '1'}), MessageSegment(type='face', data={'id': '294'}), MessageSegment(type='text', data={'text': 'ff'})], raw_message='sf[CQ:image,file=ec8dbb7d08e81eddfb6c949faeeb9448.image,subType=1][CQ:face,id=294]ff', font=0, sender=Sender(user_id=281016636, nickname='张', sex='unknown', age=0, card='非机器人', area='', level='', role='owner', title=''), to_me=False, reply=None, group_id=755489024, anonymous=None, message_seq=2172)>
-"""
+a = """大家好，我是993。欢迎大家随时撩我~[CQ:xml,data=<?xml version="1.0" encoding="utf-8"?>
+<msg templateID="1" brief="大家好，我是993。欢迎大家随时撩我~" serviceID="104"><item layout="2"><picture cover=""/><title>新人入群</title></item><source/></msg>
+,resid=104"""
+
 import re
 
-b = [x[2:] for x in re.findall("=\'text|=\'image|=\'json|=\'face", a)]
+b = re.sub("大家好，我是.*?resid=104", "", a, flags=re.S)
 print(b)
