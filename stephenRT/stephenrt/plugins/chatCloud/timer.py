@@ -49,6 +49,8 @@ scheduler = require("nonebot_plugin_apscheduler").scheduler
 
 config = cfg.config_content
 
+user_id = config["user_id"]
+group_id = config["group_id"]
 
 async def group_name(group_id):
     conn = await asyncpg.connect(user=config["user"], password=config["password"], database=config["database"],
@@ -74,7 +76,8 @@ async def group_name(group_id):
 # scheduler.add_job(run_every_2_hour, "interval", days=1, id="2")
 # print("定时器触发成功")
 
-checkGroups = [768887710, 581529846, 135313433, "羽毛球"]
+# checkGroups = [768887710, 581529846, 135313433, "羽毛球"]
+checkGroups = ["球"]
 
 
 # nonebot,home,手游
@@ -102,8 +105,17 @@ async def send_message():
                 groups_str = groups_str + group_info["group_name"] + str(group_info["group_id"])
             group_info = "({0})相关：".format(group) + groups_str + "\n"
         messages = report.Report().createPic(group_id=group, timestamp=checkTime)
-        await bot.send_private_msg(user_id=281016636, message=group_info + messages[0])
-        await bot.send_private_msg(user_id=281016636, message=MessageSegment.image(file="file:///" + messages[1]))
+        # await bot.send_private_msg(user_id=281016636, message=group_info + messages[0])
+        # await bot.send_private_msg(user_id=281016636, message=MessageSegment.image(file="file:///" + messages[1]))
+        try:
+            await bot.send_group_msg(group_id=group_id, message=group_info + messages[0])
+            await bot.send_group_msg(group_id=group_id, message=MessageSegment.image(file="file:///" + messages[1]))
+        except Exception as e:
+            await bot.send_private_msg(user_id=user_id, messages=str(e))
+            await bot.send_private_msg(user_id=281016636, message=group_info + messages[0])
+            await bot.send_private_msg(user_id=281016636, message=MessageSegment.image(file="file:///" + messages[1]))
+
+
         deleteFile(messages[1])
 
 # scheduler.add_job(send_message, "interval", days=1, id="xxx")
