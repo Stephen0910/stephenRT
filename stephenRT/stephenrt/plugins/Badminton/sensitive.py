@@ -20,6 +20,8 @@ import stephenrt.privateCfg as cfg
 
 config = cfg.config_content
 report_to = config["user_id"]
+user_id = config["user_id"]
+group_id = config["group_id"]
 
 
 def get_sens():
@@ -120,7 +122,14 @@ async def checkMessage(bot: Bot, event: GroupMessageEvent):
             else:
                 name = sender.nickname
             # if "羽毛球" in group_name: # 这里要做权限隔离  不要所有都检测
+            send_message = "{0}|{1} 发送敏感内容:【{2}】\n(敏感词:{3})".format(group_name, name, or_msg, word)
             await send_private(bot, user_id=report_to,
                                msg="{0}|{1} 发送敏感内容:【{2}】\n(敏感词:{3})".format(group_name, name, or_msg, word))
+
+            try:
+                await bot.send_group_msg(group_id=group_id, message=send_message)
+            except Exception as e:
+                await bot.send_private_msg(user_id=user_id, message=str(e))
+                await bot.send_private_msg(user_id=user_id, message=str(send_message))
             # await delete_msg(bot, message_id) # 暂不启用
             break  # 重复的脏字会导致发送两次修复

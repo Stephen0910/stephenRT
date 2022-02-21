@@ -99,7 +99,7 @@ def projectCount(search_string):
     return [count, project]
 
 
-@scheduler.scheduled_job("cron", hour=23, minute=0, second=1)
+@scheduler.scheduled_job("cron", hour=20, minute=4, second=1)
 async def send_message():
     bot = get_bot()
     today = datetime.datetime.now().date().strftime('%Y-%m-%d')
@@ -113,7 +113,7 @@ async def send_message():
     change_no = '{:.2%}'.format((tTickets[0] - yTickets[0]) / yTickets[0])
     msg = "Zendesk 今日工单：{0}，昨日{1}， 同比{2} {3} \n".format(tTickets[0], yTickets[0], change, change_no)
     for project_data in tTickets[1]:
-        msg = msg + str(project_data) + "\n"
+        msg = msg + "{0}: {1}".format(project_data[0], project_data[1]) + "\n"
 
     # print(msg)
 

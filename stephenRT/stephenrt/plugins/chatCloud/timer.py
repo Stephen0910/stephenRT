@@ -52,6 +52,7 @@ config = cfg.config_content
 user_id = config["user_id"]
 group_id = config["group_id"]
 
+
 async def group_name(group_id):
     conn = await asyncpg.connect(user=config["user"], password=config["password"], database=config["database"],
                                  host=config["host"])
@@ -114,7 +115,6 @@ async def send_message():
             await bot.send_private_msg(user_id=user_id, messages=str(e))
             await bot.send_private_msg(user_id=281016636, message=group_info + messages[0])
             await bot.send_private_msg(user_id=281016636, message=MessageSegment.image(file="file:///" + messages[1]))
-
 
         deleteFile(messages[1])
 
