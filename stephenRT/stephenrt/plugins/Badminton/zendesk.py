@@ -99,7 +99,7 @@ def projectCount(search_string):
     return [count, project]
 
 
-@scheduler.scheduled_job("cron", hour=11, minute=15, second=2)
+@scheduler.scheduled_job("cron", hour=11, minute=21, second=10)
 async def send_message():
     bot = get_bot()
     today = datetime.datetime.now().date().strftime('%Y-%m-%d')
