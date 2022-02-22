@@ -99,7 +99,7 @@ def projectCount(search_string):
     return [count, project]
 
 
-@scheduler.scheduled_job("cron", hour=11, minute=41, second=0)
+@scheduler.scheduled_job("cron", hour=23, minute=0, second=0)
 async def send_message():
     bot = get_bot()
     today = datetime.datetime.now().date().strftime('%Y-%m-%d')
@@ -124,3 +124,5 @@ async def send_message():
         await bot.send_private_msg(user_id=user_id, message=str(msg))
 
 
+# scheduler.add_job(send_message, "interval", days=1, id="xxx")
+# print("定时器zendesk触发成功")

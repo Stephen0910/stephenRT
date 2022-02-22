@@ -86,7 +86,7 @@ checkGroups = ["球"]
 # groups = [581529846]
 
 
-@scheduler.scheduled_job("cron", hour=11, minute=40, second=0)
+@scheduler.scheduled_job("cron", hour=23, minute=1, second=0)
 async def send_message():
     bot = get_bot()
     day = 1
@@ -124,4 +124,4 @@ async def send_message():
         deleteFile(messages[1])
 
 # scheduler.add_job(send_message, "interval", days=1, id="xxx")
-# print("定时器触发成功")
+# print("定时器timer触发成功")
