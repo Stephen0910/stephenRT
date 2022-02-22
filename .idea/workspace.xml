@@ -1,12 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="3047aada-47d5-4ad8-a368-9e15af7b4bc7" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/stephenRT/stephenrt/plugins/Badminton/mgc/色情词库.txt" beforeDir="false" afterPath="$PROJECT_DIR$/stephenRT/stephenrt/plugins/Badminton/mgc/色情词库.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/stephenRT/stephenrt/plugins/Badminton/zendesk.py" beforeDir="false" afterPath="$PROJECT_DIR$/stephenRT/stephenrt/plugins/Badminton/zendesk.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/stephenRT/stephenrt/plugins/chatCloud/timer.py" beforeDir="false" afterPath="$PROJECT_DIR$/stephenRT/stephenrt/plugins/chatCloud/timer.py" afterDir="false" />
-    </list>
+    <list default="true" id="3047aada-47d5-4ad8-a368-9e15af7b4bc7" name="Default Changelist" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -75,8 +70,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/stephenRT/stephenrt/plugins/Badminton/sensitive.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="173">
-              <caret line="106" column="9" selection-start-line="106" selection-start-column="9" selection-end-line="106" selection-end-column="9" />
+            <state relative-caret-position="594">
+              <caret line="134" column="35" lean-forward="true" selection-start-line="134" selection-start-column="35" selection-end-line="134" selection-end-column="35" />
               <folding>
                 <element signature="e#238#307#0" expanded="true" />
               </folding>
@@ -435,12 +430,12 @@
       <workItem from="1644971230905" duration="12488000" />
       <workItem from="1645067144160" duration="19501000" />
       <workItem from="1645411112545" duration="27896000" />
-      <workItem from="1645500996671" duration="1635000" />
+      <workItem from="1645500996671" duration="2314000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="190889000" />
+    <option name="totallyTimeSpent" value="191568000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -810,8 +805,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/stephenRT/stephenrt/plugins/Badminton/sensitive.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="173">
-          <caret line="106" column="9" selection-start-line="106" selection-start-column="9" selection-end-line="106" selection-end-column="9" />
+        <state relative-caret-position="594">
+          <caret line="134" column="35" lean-forward="true" selection-start-line="134" selection-start-column="35" selection-end-line="134" selection-end-column="35" />
           <folding>
             <element signature="e#238#307#0" expanded="true" />
           </folding>

@@ -123,8 +123,8 @@ async def checkMessage(bot: Bot, event: GroupMessageEvent):
                 name = sender.nickname
             # if "羽毛球" in group_name: # 这里要做权限隔离  不要所有都检测
             send_message = "{0}|{1} 发送敏感内容:【{2}】\n(敏感词:{3})".format(group_name, name, or_msg, word)
-            await send_private(bot, user_id=report_to,
-                               msg="{0}|{1} 发送敏感内容:【{2}】\n(敏感词:{3})".format(group_name, name, or_msg, word))
+            # await send_private(bot, user_id=report_to,
+            #                    msg="{0}|{1} 发送敏感内容:【{2}】\n(敏感词:{3})".format(group_name, name, or_msg, word))
 
             try:
                 await bot.send_group_msg(group_id=group_id, message=send_message)
