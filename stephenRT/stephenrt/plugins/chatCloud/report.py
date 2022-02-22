@@ -200,7 +200,7 @@ class Report:
             print("没有信息")
             return ["信息太少或群号不正确，请检查", "生成图片失败"]
         wc.generate_from_frequencies(wordDict)
-        savePath = os.path.join(updir, ".output", "wordcloud_{0}.png".format(group_id))
+        savePath = os.path.join(updir, "output", "wordcloud_{0}.png".format(group_id))
         wc.to_file(savePath.format(group_id))
         # 图片位置
         imageInfo = os.path.join(os.getcwd(), savePath)  # 以上图片信息
