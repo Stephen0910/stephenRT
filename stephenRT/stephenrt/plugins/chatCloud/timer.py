@@ -113,11 +113,12 @@ async def send_message():
 
         except Exception as e:
             await bot.send_private_msg(user_id=user_id, messages=str(e))
+            await bot.send_private_msg(user_id=281016636, message=group_info + messages[0])
 
         try:
             await bot.send_group_msg(group_id=group_id, message=MessageSegment.image(file="file:///" + messages[1]))
         except Exception as e:
-            await bot.send_private_msg(user_id=281016636, message=group_info + messages[0])
+            await bot.send_private_msg(user_id=user_id, messages=str(e))
             await bot.send_private_msg(user_id=281016636, message=MessageSegment.image(file="file:///" + messages[1]))
 
         deleteFile(messages[1])
