@@ -15,7 +15,9 @@ import requests, json, re
 import datetime, time
 from nonebot.adapters.onebot.v11 import Bot
 from nonebot import get_bot, require
-
+from nonebot import on_command
+from nonebot.rule import to_me
+from nonebot.params import ArgPlainText
 import stephenrt.privateCfg as cfg
 
 scheduler = require("nonebot_plugin_apscheduler").scheduler
@@ -28,6 +30,8 @@ domain = config["zen_url"]
 user_id = config["user_id"]
 group_id = config["group_id"]
 
+today = datetime.datetime.now().date().strftime('%Y-%m-%d')
+yesterday = (datetime.datetime.now() + datetime.timedelta(days=-1)).date().strftime('%Y-%m-%d')
 
 def show_ticket(ticketId):
     """
@@ -58,15 +62,12 @@ def search_tickets(search_string):
     # print(params)
     interface = "/api/v2/search.json?"
     url = domain + interface + urlencode(params)
-    # print(url)
+    print("url:", url)
     response = session.get(url)
     if response.status_code != 200:
         result = 'Status:' + str(response.status_code) + 'Problem with the request. Exiting.'
     else:
         result = response.json()
-        count = result["count"]
-        # print("查询共{0}条".format(count))
-        # print(json.dumps(result))
     return result
 
 
@@ -76,15 +77,19 @@ def projectCount(search_string):
     :param search_string: 日期
     :return:
     """
-    search_result = search_tickets("created:" + search_string)
+    print("checkDay:", search_string)
+    search_result = search_tickets("created:" + str(search_string))
     results = search_result["results"]
-    print("_____", len(results))
+    # print(results)
+    # print("_____", len(results))
     project = {}
     count = 0
     for ticket in results:
         if ticket["result_type"] == "ticket":  # 还有部分是user的
+            # print(ticket)
             count += 1
             subject = ticket["subject"]
+            print("subject:", subject)
             if re.match("\[.*?\]", subject):
                 subject = re.search("\[.*?\]", subject).group()[1:-1]
             elif subject == "":
@@ -99,12 +104,10 @@ def projectCount(search_string):
     return [count, project]
 
 
-@scheduler.scheduled_job("cron", hour=23, minute=1, second=0)
+@scheduler.scheduled_job("cron", hour=18, minute=32, second=20)
 async def send_message():
     bot = get_bot()
-    today = datetime.datetime.now().date().strftime('%Y-%m-%d')
-    yesterday = (datetime.datetime.now() + datetime.timedelta(days=-1)).date().strftime('%Y-%m-%d')
-    print(today, yesterday)
+    # print(today, yesterday)
     # day = str(datetime.date.today())
     # 处理msg打印
     yTickets = projectCount(str(yesterday))
@@ -126,3 +129,21 @@ async def send_message():
 
 scheduler.add_job(send_message, "interval", days=1, id="2")
 print("定时器zendesk触发成功")
+
+
+# 以下为命令触发
+zendesk = on_command("zendesk", rule=to_me(), aliases={"工单", "zen", "zendesk查询"}, priority=1)
+@zendesk.got("checkDay", prompt="请输入日期如：{0}".format(today))
+async def zendeskReport(
+        checkDay: str = ArgPlainText("checkDay"),
+):
+    if re.match("^\d+-\d+-\d+$", checkDay):
+        tickets = projectCount(checkDay)
+        print("tickets:", tickets)
+        msg = "Zendesk 【{0}】工单: \n".format(checkDay)
+
+        for project_data in tickets[1]:
+            msg = msg + "{0}: {1}".format(project_data[0], project_data[1]) + "\n"
+        await zendesk.finish(msg)
+    else:
+        await zendesk.finish("输入错误，查询结束")
