@@ -104,7 +104,7 @@ def projectCount(search_string):
     return [count, project]
 
 
-@scheduler.scheduled_job("cron", hour=18, minute=32, second=20)
+@scheduler.scheduled_job("cron", hour=23, minute=2, second=20)
 async def send_message():
     bot = get_bot()
     # print(today, yesterday)
