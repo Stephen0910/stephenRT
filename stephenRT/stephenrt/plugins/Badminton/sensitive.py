@@ -91,11 +91,8 @@ async def delete_msg(bot: Bot, msgid):
 msg_matcher = on_message()
 
 sens = get_sens()
+# print("sens:", sens)
 white = get_white()
-
-
-# print(sens)
-# print(len(sens))
 
 
 @msg_matcher.handle()
@@ -104,8 +101,9 @@ async def checkMessage(bot: Bot, event: GroupMessageEvent):
     or_msg = str(msg.message)
     # print("debug:", or_msg)
     jieba.load_userdict(get_white())  # 白名单词
+    jieba.load_userdict(sens)
     jieba_msg = re.sub('\[CQ:\w+,.+?\]', "", or_msg)  # 图片等信息过滤
-    content = list(jieba.cut(jieba_msg, cut_all=False))  # 避免误报，使用分词
+    content = jieba.lcut(jieba_msg, cut_all=True)  # 避免误报，使用分词
     print("分词content:", content)
 
     for word in sens:  # word: 屏蔽词库  content: message的结巴分词列表
