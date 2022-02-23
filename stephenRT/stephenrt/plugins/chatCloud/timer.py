@@ -86,7 +86,7 @@ checkGroups = ["球"]
 # groups = [581529846]
 
 
-@scheduler.scheduled_job("cron", hour=23, minute=1, second=0)
+@scheduler.scheduled_job("cron", hour=16, minute=57, second=0)
 async def send_message():
     bot = get_bot()
     day = 1
