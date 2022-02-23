@@ -89,15 +89,19 @@ def projectCount(search_string):
             # print(ticket)
             count += 1
             subject = ticket["subject"]
-            print("subject:", subject)
-            if re.match("\[.*?\]", subject):
-                subject = re.search("\[.*?\]", subject).group()[1:-1]
-            elif subject == "":
-                subject = "无"
-            if subject in project.keys():
-                project[subject] += 1
+            try:
+                project_name = re.match("\[.*?\]", subject).group()[1:-1]
+            except:
+                project_name = "无项目"
+            print("subject:", project_name, ticket["id"])
+            # if re.match("\[.*?\]", subject):
+            #     subject = re.search("\[.*?\]", subject).group()[1:-1]
+            # elif subject == "":
+            #     subject = "无"
+            if project_name in project.keys():
+                project[project_name] += 1
             else:
-                project[subject] = 1
+                project[project_name] = 1
     project = sorted(project.items(), key=lambda x: x[1], reverse=True)
     # print(project)
     # print("总数：", count)
@@ -107,13 +111,11 @@ def projectCount(search_string):
 @scheduler.scheduled_job("cron", hour=23, minute=2, second=20)
 async def send_message():
     bot = get_bot()
-    # print(today, yesterday)
-    # day = str(datetime.date.today())
     # 处理msg打印
     yTickets = projectCount(str(yesterday))
     tTickets = projectCount(str(today))
     change = "增长" if tTickets[0] > yTickets[0] else "减少"
-    change_no = '{:.2%}'.format((tTickets[0] - yTickets[0]) / yTickets[0])
+    change_no = '{:.2%}'.format((abs(tTickets[0] - yTickets[0])) / yTickets[0])
     msg = "Zendesk 今日工单：{0}，昨日{1}， 同比{2} {3} \n".format(tTickets[0], yTickets[0], change, change_no)
     for project_data in tTickets[1]:
         msg = msg + "{0}: {1}".format(project_data[0], project_data[1]) + "\n"
@@ -140,7 +142,7 @@ async def zendeskReport(
     if re.match("^\d+-\d+-\d+$", checkDay):
         tickets = projectCount(checkDay)
         print("tickets:", tickets)
-        msg = "Zendesk 【{0}】工单: \n".format(checkDay)
+        msg = "Zendesk 【{0}】工单共计 {1}: \n".format(checkDay, tickets[0])
 
         for project_data in tickets[1]:
             msg = msg + "{0}: {1}".format(project_data[0], project_data[1]) + "\n"

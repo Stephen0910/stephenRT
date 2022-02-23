@@ -11,16 +11,7 @@
 
 import re
 
-msg = """大家好，我是李沐子。欢迎大家随时撩我~[CQ:xml,data=<?xml version="1.0" encoding="utf-8"?>
-<msg templateID="1" brief="大家好，我是李沐子。欢迎大家随时撩我~" serviceID="104"><item layout="2"><picture cover=""/><title>新人入群</title></item><source/></msg>
-,resid=104]"""
+msg = """[Badminton Blitz][GOOGLE][1b2f782081d44579a989695103632e50] - SUPPORT"""
 
-part = r"\[CQ:\w+.*?\s.*?\]"
-
-msg1 = re.findall(pattern=part, string=msg)
-print(msg1)
-print("\n\n")
-msg = re.sub(pattern=part, repl="", string=str(msg), flags=re.S)
-print(msg)
-
-
+project = re.match("\[.*?\]", msg).group()[1:-1]
+print(project)
