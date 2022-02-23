@@ -92,7 +92,7 @@ def projectCount(search_string):
             try:
                 project_name = re.match("\[.*?\]", subject).group()[1:-1]
             except:
-                project_name = "无项目"
+                project_name = "未获取项目"
             print("subject:", project_name, ticket["id"])
             # if re.match("\[.*?\]", subject):
             #     subject = re.search("\[.*?\]", subject).group()[1:-1]
@@ -108,7 +108,7 @@ def projectCount(search_string):
     return [count, project]
 
 
-@scheduler.scheduled_job("cron", hour=23, minute=2, second=20)
+@scheduler.scheduled_job("cron", hour=23, minute=1, second=0)
 async def send_message():
     bot = get_bot()
     # 处理msg打印
@@ -116,7 +116,7 @@ async def send_message():
     tTickets = projectCount(str(today))
     change = "增长" if tTickets[0] > yTickets[0] else "减少"
     change_no = '{:.2%}'.format((abs(tTickets[0] - yTickets[0])) / yTickets[0])
-    msg = "Zendesk 今日工单：{0}，昨日{1}， 同比{2} {3} \n".format(tTickets[0], yTickets[0], change, change_no)
+    msg = "【Zendesk】 今日工单：{0}，昨日{1}， 同比{2} {3} \n".format(tTickets[0], yTickets[0], change, change_no)
     for project_data in tTickets[1]:
         msg = msg + "{0}: {1}".format(project_data[0], project_data[1]) + "\n"
 
@@ -143,7 +143,6 @@ async def zendeskReport(
         tickets = projectCount(checkDay)
         print("tickets:", tickets)
         msg = "Zendesk 【{0}】工单共计 {1}: \n".format(checkDay, tickets[0])
-
         for project_data in tickets[1]:
             msg = msg + "{0}: {1}".format(project_data[0], project_data[1]) + "\n"
         await zendesk.finish(msg)
