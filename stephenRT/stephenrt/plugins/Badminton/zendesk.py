@@ -19,6 +19,7 @@ from nonebot import on_command
 from nonebot.rule import to_me
 from nonebot.params import ArgPlainText
 import stephenrt.privateCfg as cfg
+from nonebot.permission import SUPERUSER
 
 scheduler = require("nonebot_plugin_apscheduler").scheduler
 config = cfg.config_content
@@ -134,7 +135,7 @@ print("定时器zendesk触发成功")
 
 
 # 以下为命令触发
-zendesk = on_command("zendesk", rule=to_me(), aliases={"工单", "zen", "zendesk查询"}, priority=1)
+zendesk = on_command("zendesk", rule=to_me(), aliases={"工单", "zen", "zendesk查询"}, priority=1, permission=SUPERUSER)
 @zendesk.got("checkDay", prompt="请输入日期如：{0}".format(today))
 async def zendeskReport(
         checkDay: str = ArgPlainText("checkDay"),

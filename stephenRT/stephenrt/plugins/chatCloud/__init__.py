@@ -19,6 +19,7 @@ from nonebot.params import Arg, CommandArg, ArgPlainText
 import time, datetime, sys, datetime
 from nonebot.adapters.onebot.v11.message import MessageSegment
 from nonebot.params import ArgPlainText
+from nonebot.permission import SUPERUSER
 
 # import stephenRT.stephenrt.privateCfg as cfg
 sys.path.append("../../")
@@ -42,7 +43,7 @@ async def getGroup(key):
 
 
 # 以下为命令触发
-dailyReport = on_command("report", rule=to_me(), aliases={"日报", "词云", "查询"}, priority=1)
+dailyReport = on_command("report", rule=to_me(), aliases={"日报", "词云", "查询"}, priority=1, permission=SUPERUSER)
 
 
 @dailyReport.got("groupId", prompt="请输入群号或关键词")
