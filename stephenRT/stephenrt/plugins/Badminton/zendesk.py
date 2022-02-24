@@ -93,7 +93,7 @@ def projectCount(search_string):
                 project_name = re.match("\[.*?\]", subject).group()[1:-1]
             except:
                 project_name = "未获取项目"
-            print("subject:", project_name, ticket["id"])
+            # print("subject:", project_name, ticket["id"])
             # if re.match("\[.*?\]", subject):
             #     subject = re.search("\[.*?\]", subject).group()[1:-1]
             # elif subject == "":
@@ -108,7 +108,7 @@ def projectCount(search_string):
     return [count, project]
 
 
-@scheduler.scheduled_job("cron", hour=23, minute=1, second=0)
+@scheduler.scheduled_job("cron", hour=23, minute=1, second=20)
 async def send_message():
     bot = get_bot()
     # 处理msg打印
@@ -120,7 +120,7 @@ async def send_message():
     for project_data in tTickets[1]:
         msg = msg + "{0}: {1}".format(project_data[0], project_data[1]) + "\n"
 
-    # print(msg)
+    print(msg)
 
     try:
         await bot.send_group_msg(group_id=group_id, message=msg)
