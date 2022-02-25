@@ -141,7 +141,10 @@ async def zendeskReport(
         checkDay: str = ArgPlainText("checkDay"),
 ):
     if re.match("^\d+-\d+-\d+$", checkDay):
-        tickets = projectCount(checkDay)
+        try:
+            tickets = projectCount(checkDay)
+        except Exception as e:
+            await zendesk.finish("网络问题。 访问失败" + str(e))
         print("tickets:", tickets)
         msg = "Zendesk 【{0}】工单共计 {1}: \n".format(checkDay, tickets[0])
         for project_data in tickets[1]:
