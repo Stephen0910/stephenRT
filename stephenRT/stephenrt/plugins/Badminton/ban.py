@@ -62,7 +62,7 @@ def get_msg(user_id):
     insert = ["number_user_id", "id", "name", "anti_addiction_name", "level", "totalPayMoney", "rank",
               "plat_form",
               "publish_channel", "client_version", "modify_name", "device_id", "forbidden_speak",
-              "account_ban"]
+              "account_ban", "login_time"]
     msg = ""
     for key in insert:
         # msg = msg + key + "." * (maxlengh - len(key) + 3) + ":" + str(user_data[key]) + "\n"
@@ -106,7 +106,7 @@ async def handle_first_receive(matcher: Matcher, args: Message = CommandArg()):
         matcher.set_arg("user_id", args)  # 如果用户发送了参数则直接赋值
 
 
-@query.got("user_id", prompt="【{0}环境】输入查询的用户数字id，如 136246".format(env))
+@query.got("user_id", prompt="【{0}环境】输入查询的用户数字id，如 128928".format(env))
 async def handleuser(
         user_id: Message = Arg()
 ):
