@@ -21,7 +21,7 @@ from nonebot.permission import SUPERUSER
 
 config = cfg.config_content
 
-env = "test"  # 根据环境读取配置
+env = "Prod"  # 根据环境读取配置
 if env == "test":
     manager_base = config["manager_test"]
     user = config["manager_test_auth"]
@@ -59,7 +59,7 @@ def get_msg(user_id):
     if response["message"] != "Success":
         return response["message"]
     user_data = response["userList"][0]
-    insert = ["number_user_id", "id", "name", "anti_addiction_name", "level", "diamond_num", "gold_num", "rank",
+    insert = ["number_user_id", "id", "name", "anti_addiction_name", "level", "totalPayMoney", "rank",
               "plat_form",
               "publish_channel", "client_version", "modify_name", "device_id", "forbidden_speak",
               "account_ban"]
