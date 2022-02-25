@@ -176,7 +176,7 @@ class Report:
             top_player_str = top_player_str + name + "({0})".format(id) + ":{0}条".format(count) + "\n"
         print("top_player_str:", top_player_str)
 
-        return [wordDict, top_player_str]
+        return [wordDict, top_player_str, words_lenth]
 
     def createPic(self, group_id, timestamp):
         """
