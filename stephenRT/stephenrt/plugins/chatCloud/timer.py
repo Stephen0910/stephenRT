@@ -78,7 +78,7 @@ async def group_name(group_id):
 # print("定时器触发成功")
 
 # checkGroups = [768887710, 581529846, 135313433, "羽毛球"]
-checkGroups = ["羽毛球"]
+checkGroups = ["决战羽毛球"]
 
 
 # nonebot,home,手游
