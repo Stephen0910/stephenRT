@@ -59,9 +59,9 @@ def get_msg(user_id):
     if response["message"] != "Success":
         return response["message"]
     user_data = response["userList"][0]
-    insert = ["number_user_id", "id", "name", "anti_addiction_name", "level", "totalPayMoney", "rank",
+    insert = ["number_user_id", "id", "name", "modify_name", "anti_addiction_name", "level", "totalPayMoney", "rank",
               "plat_form",
-              "publish_channel", "client_version", "modify_name", "device_id", "forbidden_speak",
+              "publish_channel", "client_version", "device_id", "forbidden_speak",
               "account_ban", "login_time"]
     msg = ""
     for key in insert:
@@ -80,7 +80,7 @@ def ban_user(id, ban_time, reason):
     """
     payload = {
         "userId": id,
-        "forbidden_time": int(ban_time)*1440,
+        "forbidden_time": int(ban_time) * 1440,
         "template_id": template_id,
         "reason": reason
     }
@@ -149,7 +149,7 @@ async def banUser(
         keys = ["name", "level", "number_user_id", "rank"]
         infos = [user[key] for key in keys]
 
-        key_infos = json.dumps(dict(zip(keys,infos)))
+        key_infos = json.dumps(dict(zip(keys, infos)))
         await ban.send("请检查关键信息:" + str(key_infos))
 
         id = user["id"]
@@ -160,7 +160,6 @@ async def banUser(
             await ban.finish("禁言结果：" + str(result))
     else:
         await ban.finish(user_id.template("输入数字id错误，命令结束：" + user_id))
-
 
 # print(ban_user("60c06107e0b1c9c14bf303c081959296", 1, "test"))
 # print(search_user(136246))
