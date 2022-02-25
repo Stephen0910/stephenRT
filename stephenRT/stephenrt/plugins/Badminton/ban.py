@@ -74,13 +74,13 @@ def ban_user(id, ban_time, reason):
     """
     template_id暂时固定填8， 卖金币禁言3天
     :param user_id:
-    :param ban_time:
+    :param ban_time: 天数
     :param reason:
     :return:
     """
     payload = {
         "userId": id,
-        "forbidden_time": ban_time*3,
+        "forbidden_time": int(ban_time)*1440,
         "template_id": template_id,
         "reason": reason
     }
