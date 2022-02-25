@@ -16,5 +16,9 @@ config_path = os.path.join(up_dir, "config.json")
 
 global config_content
 
-with open(config_path, "r") as f:
-    config_content = json.load(f)
+try:
+    with open(config_path, "r", encoding="utf-8") as f:
+        config_content = json.load(f)
+except:
+    with open(config_path, "r", encoding="gbk") as f:
+        config_content = json.load(f)
