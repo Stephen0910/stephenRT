@@ -96,7 +96,7 @@ def ban_user(id, ban_time, reason):
     return json.loads(response.content)
 
 
-query = on_command("search", rule=to_me(), aliases={"find", "账号查询"}, priority=1, permission=SUPERUSER)
+query = on_command("search", rule=to_me(), aliases={"find", "账号查询"}, priority=1)
 
 
 @query.handle()
@@ -132,7 +132,7 @@ async def handle_first_receive(matcher: Matcher, args: Message = CommandArg()):
         matcher.set_arg("user_id", args)  # 如果用户发送了参数则直接赋值
 
 
-@ban.got("user_id", prompt="【{0}环境】输入禁言的用户数字id(如136246)".format(env)
+@ban.got("user_id", prompt="【{0}环境】输入禁言的用户数字id(如136246)".format(env))
 @ban.got("ban_time", prompt="禁言时长(天)")
 async def banUser(
         user_id: Message = Arg(),

@@ -26,7 +26,7 @@ help = on_command("help", rule=to_me(), aliases={"帮助", "菜单", "使用"}, 
 split_symbol = "⬤"
 msg = (
         "机器人功能(请@我 并加/命令呼出)：\n" + "{0}  zendesk工单统计(/zen /zendesk /工单)\n" +
-        "{0}  Q群聊天统计+词云(/report /日报 /词云)\n" + "{0}  敏感词检测（无呼出菜单，正检测羽毛球群，测试完成后接入撤回、禁言）\n" + "{0}  羽毛球查询(/find)、禁言(/ban)").format(
+        "{0}  Q群聊天统计+词云(/report /日报 /词云)\n" + "{0}  敏感词检测（未完成）\n" + "{0}  羽毛球查询(/find)、禁言(/ban 需添加权限)").format(
     split_symbol)
 
 
