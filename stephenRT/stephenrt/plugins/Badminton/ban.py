@@ -9,7 +9,7 @@
 # @Copyright:   (c) StephenZ 2022
 # @Licence  :     <@2022>
 
-import datetime, time, re, requests, json
+import time, re, requests, json
 import stephenrt.privateCfg as cfg
 from nonebot import on_command
 from nonebot.rule import to_me
