@@ -86,7 +86,7 @@ checkGroups = ["决战羽毛球"]
 # groups = [581529846]
 
 
-@scheduler.scheduled_job("cron", hour=23, minute=0, second=0)
+@scheduler.scheduled_job("cron", hour=9, minute=12, second=0)
 async def send_message():
     bot = get_bot()
     day = 1
@@ -110,7 +110,7 @@ async def send_message():
             group_info = "({0})相关：".format(group) + groups_str + "\n"
         messages = report.Report().createPic(group_id=group, timestamp=checkTime)
         todayCount = report.Report().wordReport(group_id=group, timestamp=checkTime)[2]
-        yesCount = report.Report().wordReport(group_id=group, timestamp=yescheck)[2]
+        yesCount = report.Report().wordReport(group_id=group, timestamp=yescheck)[2] - todayCount
         change = "增加" if todayCount > yesCount else "减少"
         change_rate = '{:.2%}'.format((abs(todayCount - yesCount)) / yesCount)
         compare = "今天总计：{0}, 昨天总计{1}, 同比{2} {3}\n".format(todayCount, yesCount, change, change_rate)
