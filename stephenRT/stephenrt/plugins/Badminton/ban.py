@@ -146,9 +146,8 @@ async def banUser(
         if result["message"] != "Success":
             await query.finish(result["message"])
         user = result["userList"][0]
-        keys = ["name", "level", "number_user_id", "rank"]
+        keys = ["name", "modify_name", "level", "number_user_id", "rank"]
         infos = [user[key] for key in keys]
-        infos["name"] = infos["modify_name"] if infos["modify_name"] != "" else infos["name"]
 
         key_infos = json.dumps(dict(zip(keys, infos)))
         await ban.send("请检查关键信息:" + str(key_infos))
