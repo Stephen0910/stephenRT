@@ -72,7 +72,7 @@ def get_msg(user_id):
 
 def ban_user(id, ban_time, reason):
     """
-    template_id暂时固定填8， 卖金币禁言3天
+    template_id暂时固定填8， 金币禁言3天
     :param user_id:
     :param ban_time: 天数
     :param reason:
@@ -163,3 +163,4 @@ async def banUser(
 
 # print(ban_user("60c06107e0b1c9c14bf303c081959296", 1, "test"))
 # print(search_user(136246))
+
