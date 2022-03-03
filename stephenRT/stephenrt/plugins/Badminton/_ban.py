@@ -241,10 +241,12 @@ async def handle_first_receive(matcher: Matcher, args: Message = CommandArg()):
     if plain_text:
         matcher.set_arg("user_id", args)  # 如果用户发送了参数则直接赋值
 
-temps = "禁言模板 :1-禁言90日处罚 2-禁言7日处罚 3-禁言24小时处罚 "
+
+temps = "禁言90日处罚/禁言7日处罚/禁言24小时处罚 "
+
 
 @ban.got("user_id", prompt="输入禁言的用户数字id(如136246)")
-@ban.got("ban_time", prompt="禁言天数 \n {0}".format(temps))
+@ban.got("ban_time", prompt="禁言天数: {0}".format(temps))
 async def banUser(
         user_id: str = ArgPlainText("user_id"),
         ban_time: int = ArgPlainText("ban_time")
