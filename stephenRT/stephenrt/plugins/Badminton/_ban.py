@@ -151,7 +151,7 @@ async def ban_user(id, ban_time, reason, env):
 
     base_url = manager_base + "/login"
     ban_url = manager_base + "/badmintonCn/user_search_forbidden"
-    if ban_time == "1":
+    if ban_time == "1" or ban_time == "0":
         template_id = 3  # 24h
     elif ban_time == "7":
         template_id = 2
