@@ -98,7 +98,7 @@ def transferMsg(response, long=True):
                 if user[key] != "" and user[key] is not None:
                     middle_dic[key] = user[key]
                     msg = msg + key + ":  " + str(user[key]) + "\n"
-            msg += "-" * 20
+            msg += "-" * 20 + "\n"
         logger.debug(msg)
         logger.debug(type(msg))
         return msg
