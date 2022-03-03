@@ -77,7 +77,7 @@ def transferMsg(response, long=True):
         # logger.debug(len(userList))
         if len(userList) > 5:
             userList = userList[:4]
-        if len(userList) > 1 or long == True:
+        if len(userList) < 2 or long == True:
             key_words = ["number_user_id", "id", "name", "modify_name", "anti_addiction_name", "level",
                          "rank",
                          "plat_form",
