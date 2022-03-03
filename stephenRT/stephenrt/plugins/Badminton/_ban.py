@@ -80,12 +80,12 @@ def transferMsg(response, long=True):
             userList = userList[:5]
         if len(userList) < 2:
             key_words = ["number_user_id", "id", "name", "modify_name", "anti_addiction_name", "level",
-                         "rank",
+                         "rank", "totalPayMoney",
                          "plat_form",
                          "publish_channel", "client_version", "forbidden_speak",
                          "account_ban", "login_time"]
         else:
-            key_words = ["number_user_id", "name", "modify_name", "level"]
+            key_words = ["number_user_id", "name", "modify_name","rank", "level"]
         # logger.debug("key_words:", key_words)
         # msg = "-" * 20 + "\n"
         msg = ""
@@ -95,7 +95,7 @@ def transferMsg(response, long=True):
                 if user[key] != "" and user[key] is not None:
                     middle_dic[key] = user[key]
                     msg = msg + key + ":  " + str(user[key]) + "\n"
-            # msg += "-" * 20
+            msg += "-" * 20
         logger.debug(msg)
         logger.debug(type(msg))
         return msg
