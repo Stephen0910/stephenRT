@@ -12,4 +12,4 @@
 from .sensitive import *
 # from .zendesk import *
 # from .ban import *
-from .ban import *
+from ._ban import *

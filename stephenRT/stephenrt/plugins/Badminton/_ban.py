@@ -10,7 +10,7 @@
 # @Licence  :     <@2022>
 
 
-import time, re, requests, json
+import time, re, requests, json, logging, logzero
 import stephenrt.privateCfg as cfg
 from nonebot import on_command
 from nonebot.rule import to_me
@@ -20,41 +20,28 @@ from nonebot.params import Arg, CommandArg, ArgPlainText
 from nonebot.permission import SUPERUSER
 from nonebot.adapters.onebot.v11 import MessageEvent
 from nonebot.params import Depends
-from nonebot.params import ArgStr
+from nonebot.params import ArgStr, LastReceived
+import asyncio
+from logzero import logger
 
+logzero.loglevel(logging.DEBUG)
 config = cfg.config_content
-
-# env = "test"  # 根据环境读取配置
-# if env == "test":
-#     manager_base = config["manager_test"]
-#     user = config["manager_test_auth"]
-#     template_id = 9
-# else:
-#     manager_base = config["manager_prod"]
-#     user = config["manager_prod_auth"]
-#     template_id = 8
-#
-# base_url = manager_base + "/login"
-# search_url = manager_base + "/badmintonCn/user_search_submit"
-# ban_url = manager_base + "/badmintonCn/user_search_forbidden"
 
 headers = {
     "Content-Type": "application/json"
 }
 
 
-def find_user(search_info, env):
-    # payload = 'keyword={0}&searchWay={1}'.format(user_id, searchWay)
+async def search_user(search_info, env):
     search_info = str(search_info)
     if env == "test":
-        print("测试环境")
+        logger.debug("search_user: 测试环境")
         manager_base = config["manager_test"]
         user = config["manager_test_auth"]
     else:
-        print("正式环境")
+        logger.debug("search_user: 正式环境")
         manager_base = config["manager_prod"]
         user = config["manager_prod_auth"]
-
     base_url = manager_base + "/login"
     search_url = manager_base + "/badmintonCn/user_search_submit"
     if re.match("\d+$", search_info):
@@ -64,46 +51,133 @@ def find_user(search_info, env):
     else:
         search_id = 3
     payload = {"keyword": search_info, "searchWay": search_id}
-    print("payload:", payload)
+    try:
+        with requests.session() as session:
+            session.post(url=base_url, json=user, headers=headers)
+            response = session.post(url=search_url, json=payload, headers=headers)
+    except Exception as e:
+        return str(e)
+    result = json.loads(response.content)
+    logger.error(search_id)
+    logger.error("result:" + json.dumps(result))
+    return result
+
+
+def transferMsg(response, long=True):
+    try:
+        status, userList, message = response["status"], response["userList"], response["message"]
+    except Exception:
+        error_msg = "解析响应错误:" + str(response)
+        logger.debug(error_msg)
+        return error_msg
+    if status != 200 or message != "Success":
+        return str(message)
+    else:
+        # logger.debug("userList:", userList)
+        # logger.debug(len(userList))
+        if len(userList) > 5:
+            userList = userList[:4]
+        if len(userList) > 1 or long == True:
+            key_words = ["number_user_id", "id", "name", "modify_name", "anti_addiction_name", "level",
+                         "rank",
+                         "plat_form",
+                         "publish_channel", "client_version", "forbidden_speak",
+                         "account_ban", "login_time"]
+        else:
+            key_words = ["number_user_id", "name", "modify_name", "level"]
+        # logger.debug("key_words:", key_words)
+        # msg = "-" * 20 + "\n"
+        msg = ""
+        for user in userList:
+            middle_dic = {}
+            for key in key_words:
+                if user[key] != "" and user[key] is not None:
+                    middle_dic[key] = user[key]
+                    msg = msg + key + ":  " + str(user[key]) + "\n"
+            # msg += "-" * 20
+        logger.debug(msg)
+        logger.debug(type(msg))
+        return msg
+
+
+def get_template(env):
+    """
+    获取模板
+    :param env:
+    :return:
+    """
+    payload = {}
+    if env == "test":
+        logger.debug("测试环境")
+        manager_base = config["manager_test"]
+        user = config["manager_test_auth"]
+    else:
+        logger.debug("正式环境")
+        manager_base = config["manager_prod"]
+        user = config["manager_prod_auth"]
+    base_url = manager_base + "/login"
+    template_url = manager_base + "/badmintonCn/user_search_get_template"
     try:
         session = requests.session()
         session.post(base_url, json=user, headers=headers)
-        response = session.post(url=search_url, json=payload, headers=headers)
+        response = session.post(url=template_url, json=payload, headers=headers)
     except Exception as e:
         return str(e)
     result = json.loads(response.content)
     return result
 
 
-def transferMsg(response, long=True):
-    print("res:\n", response)
-    print(type(response))
-    try:
-        status, userList, message = response["status"], response["userList"], response["message"]
-    except Exception as e:
-        print("e:", str(e))
-        return str(e)
-    if status != 200 or message != "Success":
-        return str(message)
+async def ban_user(id, ban_time, reason, env):
+    """
+    template_id
+    :param user_id:
+    :param ban_time: 天数
+    :param reason:
+    :return:
+    """
+    # env = "test"
+    if env == "test":
+        logger.debug("测试环境")
+        manager_base = config["manager_test"]
+        user = config["manager_test_auth"]
     else:
-        key_words = ["number_user_id", "id", "name", "modify_name", "anti_addiction_name", "level",
-                     "rank",
-                     "plat_form",
-                     "publish_channel", "client_version", "forbidden_speak",
-                     "account_ban", "login_time"]
-        users_words = ["number_user_id", "name", "modify_name"]
-        msg = ""
-        if len(userList) > 1 or long == False:
-            msg += "共查询获得数据：{0}条\n".format(len(userList))
-            for user in userList:
-                # user_data = [user[x] for x in key_words]
-                for key in users_words:
-                    msg = msg + key + ":  " + str(user[key]) + "\n"
-        else:
-            users = userList[0]
-            for key in key_words:
-                msg = msg + key + ":  " + str(users[key]) + "\n"
-        return msg
+        logger.debug("正式环境")
+        manager_base = config["manager_prod"]
+        user = config["manager_prod_auth"]
+
+    base_url = manager_base + "/login"
+    ban_url = manager_base + "/badmintonCn/user_search_forbidden"
+    if ban_time == "1":
+        template_id = 3  # 24h
+    elif ban_time == "7":
+        template_id = 2
+    elif ban_time == "90":
+        template_id = 1
+    elif ban_time == "8":
+        template_id = 8
+    else:
+        template_id = ""
+    if env == "test":
+        template_id = 9
+    payload = {
+        "userId": id,
+        "forbidden_time": str(int(ban_time) * 1440),
+        "template_id": template_id,
+        "reason": reason
+    }
+    try:
+        with requests.session() as session:
+            session.post(base_url, json=user, headers=headers)
+            response = session.post(url=ban_url, json=payload, headers=headers)
+    except Exception as e:
+        logger.debug(e)
+        return str(e)
+    # logger.info(json.dumps(user))
+
+    # logger.info(json.dumps(payload))
+
+    # logger.info(response.content)
+    return str(response.content)
 
 
 """测试服findt"""
@@ -124,13 +198,10 @@ async def hand_findt(
 ):
     env = "test"
     search_info = str(search_info)
-    search_ways = ["无", "数字ID", "用户ID", "昵称"]
-
-    response = find_user(search_info, env)
-    print("keyword:", search_info)
-
-    msg = transferMsg(response)
-    print("msg:", msg)
+    # response = find_user(search_info, env)
+    response = await search_user(search_info, env)
+    msg = transferMsg(response, long=True)
+    logger.debug("msg:", msg)
     # await find_test.send("(使用{0}查询)".format(search_ways[search_id]))
     await find_test.finish(message=msg)
 
@@ -153,76 +224,52 @@ async def hand_find(
 ):
     env = "prod"
     search_info = str(search_info)
-    response = find_user(str(search_info), env)
-    print("keyword:", search_info)
-
-    msg = transferMsg(response)
-    print("msg:", msg)
+    response = await search_user(str(search_info), env)
+    msg = transferMsg(response, long=True)
     # await find_test.send("(使用{0}查询)".format(search_ways[search_id]))
     await find_test.finish(message=msg)
 
 
 """禁言-仅正式服"""
 
-shut = on_command("jy", rule=to_me(), aliases={"ban", "shut"}, priority=1, permission=SUPERUSER)
+ban = on_command("ban", rule=to_me(), aliases={"jy", "shut"}, priority=1, permission=SUPERUSER)
 
 
-@shut.handle()
+@ban.handle()
 async def handle_first_receive(matcher: Matcher, args: Message = CommandArg()):
     plain_text = args.extract_plain_text()  # 首次发送命令时跟随的参数，例：/天气 上海，则args为上海
     if plain_text:
         matcher.set_arg("user_id", args)  # 如果用户发送了参数则直接赋值
-        # if re.match("\d+", str(args)):
-        #     await shut.finish("直接结束了")
 
+temps = "禁言模板 :1-禁言90日处罚 2-禁言7日处罚 3-禁言24小时处罚 "
 
-# 依赖注入 获取用户名和id
-async def depend(event: MessageEvent):  # 2.编写依赖函数
-    return {"uid": event.get_user_id(), "nickname": event.sender.nickname}
-
-
-@shut.got("user_id", prompt="【正式环境】输入禁言的用户数字id(如128928)")
+@ban.got("user_id", prompt="输入禁言的用户数字id(如136246)")
+@ban.got("ban_time", prompt="禁言天数 \n {0}".format(temps))
 async def banUser(
-        user_id: Message = Arg(),
-
+        user_id: str = ArgPlainText("user_id"),
+        ban_time: int = ArgPlainText("ban_time")
 ):
-    number_user_id = str(user_id)
-    if re.match("\d+$", number_user_id):
-        user_info = find_user(user_id, env="prod")
-        user_info = transferMsg(user_info, long=False)
-        checkmsg = "请检查关键信息：\n" + user_info + "\n"
-        print("checkmsg:", checkmsg)
+    env = "prod"
+    if re.match("\d+\d$", user_id):
+        result = await search_user(user_id, env)
+        print("result:", result)
+        if isinstance(result, str) or result["status"] != 200:
+            await ban.finish("查询错误：" + result)
+        if result["message"] != "Success":
+            await ban.finish(result["message"])
+        user = result["userList"][0]
+        keys = ["name", "modify_name", "level", "number_user_id", "rank"]
+        # infos = [user[key] for key in keys]
 
-        @shut.got("ban_time", prompt="{0}禁言时长(天)".format(checkmsg))
-        async def forbidden(
-                ban_time: str = ArgPlainText()
-        ):
-            await shut.finish(str(ban_time))
+        # key_infos = json.dumps(dict(zip(keys, infos)))
+        # await ban.send("请检查关键信息:" + str(key_infos))
+
+        id = user["id"]
+        now = str(time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()))
+        if re.match("\d+", str(ban_time)):
+            logger.error(id)
+            logger.error(ban_time)
+            result = await ban_user(id=id, ban_time=str(ban_time), reason="QQ禁" + now, env=env)
+            await ban.finish("禁言结果：" + str(result))
     else:
-        await shut.finish("会话结束，数字ID输入错误: {0}\n".format(number_user_id))
-
-        # await shut.finish(str(x))
-
-
-"""------------------------"""
-# def check_pw(user_id, pw):
-#     print(user_id, pw)
-#     pass
-#
-#
-# users = [1, 2, 3]
-# login = on_command("login", rule=to_me(), aliases={"lg"}, priority=1, permission=SUPERUSER)
-#
-#
-# @login.got("user", prompt="用户id")
-# @login.got("password", prompt="密码")
-# async def func1(
-#         user: str = ArgStr("user"),
-#         password: str = ArgStr("password")
-# ):
-#     if user not in users:
-#         await login.finish("没有账号")
-#     else:
-#         # 登陆流程pass
-#         check_pw(user, password)
-#         await login.finish("登陆ok")
+        await ban.finish(user_id.template("输入数字id错误，命令结束：" + user_id))

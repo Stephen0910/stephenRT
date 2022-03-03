@@ -122,7 +122,7 @@ async def handleuser(
         await query.finish("输入数字id错误，命令结束：" + user_id)
 
 
-ban = on_command("ban", rule=to_me(), aliases={"禁言", "shut"}, priority=1, permission=SUPERUSER)
+ban = on_command("ban", rule=to_me(), aliases={"jy", "shut"}, priority=1, permission=SUPERUSER)
 
 
 @ban.handle()

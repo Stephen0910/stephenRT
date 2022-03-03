@@ -8,3 +8,7 @@
 # @Software : PyCharm
 # @Copyright:   (c) StephenZ 2022
 # @Licence  :     <@2022>
+import re
+a = "sdfa12243dsf2fsdf444"
+num = re.sub("\D", "",  a)
+print(num)
