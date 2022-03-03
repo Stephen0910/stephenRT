@@ -76,6 +76,7 @@ def transferMsg(response, long=True):
         print("------------------", len(userList))
         # logger.debug("userList:", userList)
         # logger.debug(len(userList))
+        msg = "查询有{0}条数据\n".format(len(userList))
         if len(userList) > 6:
             userList = userList[:5]
         if len(userList) < 2:
@@ -87,7 +88,7 @@ def transferMsg(response, long=True):
             msg = ""
         else:
             key_words = ["number_user_id", "name", "modify_name","rank", "level"]
-            msg = "查询有{0}条数据\n".format(len(userList))
+
         # logger.debug("key_words:", key_words)
         # msg = "-" * 20 + "\n"
 
