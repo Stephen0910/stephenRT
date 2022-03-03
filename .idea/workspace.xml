@@ -17,7 +17,7 @@
         <entry file="file://$PROJECT_DIR$/stephenRT/stephenrt/plugins/Badminton/__init__.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="225">
-              <caret line="15" lean-forward="true" selection-start-line="15" selection-end-line="15" />
+              <caret line="15" selection-start-line="15" selection-end-line="15" />
               <folding>
                 <element signature="e#237#261#0" expanded="true" />
               </folding>
@@ -28,8 +28,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/stephenRT/stephenrt/plugins/Badminton/_ban.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="308">
-              <caret line="249" column="54" lean-forward="true" selection-start-line="249" selection-start-column="54" selection-end-line="249" selection-end-column="54" />
+            <state relative-caret-position="900">
+              <caret line="90" column="16" lean-forward="true" selection-start-line="90" selection-start-column="16" selection-end-line="90" selection-end-column="16" />
               <folding>
                 <element signature="e#234#283#0" expanded="true" />
               </folding>
@@ -384,11 +384,12 @@
       <workItem from="1646031805847" duration="37975000" />
       <workItem from="1646183355614" duration="33135000" />
       <workItem from="1646272976381" duration="17407000" />
+      <workItem from="1646298636744" duration="1298000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="352704000" />
+    <option name="totallyTimeSpent" value="354002000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -401,8 +402,9 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-1928" y="-8" width="1936" height="1056" extended-state="6" />
+    <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49837664" visible="true" weight="0.22411953" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49837664" visible="true" weight="0.22678763" />
       <window_info id="Structure" order="1" sideWeight="0.5016234" side_tool="true" weight="0.14887941" />
       <window_info id="Favorites" order="2" sideWeight="0.5016234" side_tool="true" weight="0.14887941" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -789,7 +791,7 @@
     <entry file="file://$PROJECT_DIR$/stephenRT/stephenrt/plugins/Badminton/__init__.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="225">
-          <caret line="15" lean-forward="true" selection-start-line="15" selection-end-line="15" />
+          <caret line="15" selection-start-line="15" selection-end-line="15" />
           <folding>
             <element signature="e#237#261#0" expanded="true" />
           </folding>
@@ -798,8 +800,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/stephenRT/stephenrt/plugins/Badminton/_ban.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="308">
-          <caret line="249" column="54" lean-forward="true" selection-start-line="249" selection-start-column="54" selection-end-line="249" selection-end-column="54" />
+        <state relative-caret-position="900">
+          <caret line="90" column="16" lean-forward="true" selection-start-line="90" selection-start-column="16" selection-end-line="90" selection-end-column="16" />
           <folding>
             <element signature="e#234#283#0" expanded="true" />
           </folding>

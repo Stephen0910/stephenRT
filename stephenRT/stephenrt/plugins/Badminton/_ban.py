@@ -84,11 +84,13 @@ def transferMsg(response, long=True):
                          "plat_form",
                          "publish_channel", "client_version", "forbidden_speak",
                          "account_ban", "login_time"]
+            msg = ""
         else:
             key_words = ["number_user_id", "name", "modify_name","rank", "level"]
+            msg = "查询有{0}条数据\n".format(len(userList))
         # logger.debug("key_words:", key_words)
         # msg = "-" * 20 + "\n"
-        msg = ""
+
         for user in userList:
             middle_dic = {}
             for key in key_words:
