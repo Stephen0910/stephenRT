@@ -73,11 +73,12 @@ def transferMsg(response, long=True):
     if status != 200 or message != "Success":
         return str(message)
     else:
+        print("------------------", len(userList))
         # logger.debug("userList:", userList)
         # logger.debug(len(userList))
-        if len(userList) > 5:
-            userList = userList[:4]
-        if len(userList) < 2 or long == True:
+        if len(userList) > 6:
+            userList = userList[:5]
+        if len(userList) < 2:
             key_words = ["number_user_id", "id", "name", "modify_name", "anti_addiction_name", "level",
                          "rank",
                          "plat_form",
@@ -242,7 +243,7 @@ async def handle_first_receive(matcher: Matcher, args: Message = CommandArg()):
         matcher.set_arg("user_id", args)  # 如果用户发送了参数则直接赋值
 
 
-temps = "禁言90日处罚/禁言7日处罚/禁言24小时处罚 "
+temps = "禁言90日处罚/禁言7日处罚/禁言1日处罚 "
 
 
 @ban.got("user_id", prompt="输入禁言的用户数字id(如136246)")
