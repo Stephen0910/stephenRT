@@ -58,8 +58,8 @@ async def search_user(search_info, env):
     except Exception as e:
         return str(e)
     result = json.loads(response.content)
-    logger.error(search_id)
-    logger.error("result:" + json.dumps(result))
+    logger.debug(search_id)
+    logger.debug("result:" + json.dumps(result))
     return result
 
 
@@ -73,7 +73,7 @@ def transferMsg(response, long=True):
     if status != 200 or message != "Success":
         return str(message)
     else:
-        print("------------------", len(userList))
+        # print("------------------", len(userList))
         # logger.debug("userList:", userList)
         # logger.debug(len(userList))
         msg = "查询有{0}条数据\n".format(len(userList))
@@ -151,6 +151,7 @@ async def ban_user(id, ban_time, reason, env):
 
     base_url = manager_base + "/login"
     ban_url = manager_base + "/badmintonCn/user_search_forbidden"
+    logger.error(ban_time)
     if ban_time == "1" or ban_time == "0":
         template_id = 3  # 24h
     elif ban_time == "7":
@@ -159,8 +160,6 @@ async def ban_user(id, ban_time, reason, env):
         template_id = 1
     elif ban_time == "3":
         template_id = 8
-    elif ban_time == "q":
-        return "放弃禁言"
     else:
         template_id = ""
     if env == "test":
@@ -255,9 +254,9 @@ temps = "禁言90日处罚/禁言7日处罚/禁言1日处罚/禁言3日金币处
 @ban.got("ban_time", prompt="禁言天数: {0}".format(temps))
 async def banUser(
         user_id: str = ArgPlainText("user_id"),
-        ban_time: int = ArgPlainText("ban_time")
+        ban_time: str = ArgPlainText("ban_time")
 ):
-    env = "prod"
+    env = "test"
     if re.match("\d+\d$", user_id):
         result = await search_user(user_id, env)
         print("result:", result)
@@ -266,7 +265,7 @@ async def banUser(
         if result["message"] != "Success":
             await ban.finish(result["message"])
         user = result["userList"][0]
-        keys = ["name", "modify_name", "level", "number_user_id", "rank"]
+        # keys = ["name", "modify_name", "level", "number_user_id", "rank"]
         # infos = [user[key] for key in keys]
 
         # key_infos = json.dumps(dict(zip(keys, infos)))
@@ -274,9 +273,11 @@ async def banUser(
 
         id = user["id"]
         now = str(time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()))
-        if re.match("\d+", str(ban_time)):
-            logger.error(id)
-            logger.error(ban_time)
+        if ban_time == "q":
+            await ban.finish("放弃禁言，会话结束")
+        if re.match("\d+", ban_time):
+            logger.debug(id)
+            logger.debug(ban_time)
             result = await ban_user(id=id, ban_time=str(ban_time), reason="QQ禁" + now, env=env)
             await ban.finish("禁言结果：" + str(result))
     else:
