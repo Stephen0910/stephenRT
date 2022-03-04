@@ -84,7 +84,7 @@ def transferMsg(response, long=True):
                          "rank", "totalPayMoney",
                          "plat_form",
                          "publish_channel", "client_version", "forbidden_speak",
-                         "account_ban", "login_time"]
+                         "account_ban","gold_num", "diamond_num", "login_time"]
             msg = ""
         else:
             key_words = ["number_user_id", "name", "modify_name","rank", "level"]
