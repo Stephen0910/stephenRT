@@ -159,6 +159,8 @@ async def ban_user(id, ban_time, reason, env):
         template_id = 1
     elif ban_time == "3":
         template_id = 8
+    elif ban_time == "q":
+        return "放弃禁言"
     else:
         template_id = ""
     if env == "test":
@@ -246,7 +248,7 @@ async def handle_first_receive(matcher: Matcher, args: Message = CommandArg()):
         matcher.set_arg("user_id", args)  # 如果用户发送了参数则直接赋值
 
 
-temps = "禁言90日处罚/禁言7日处罚/禁言1日处罚/禁言3日金币处罚 "
+temps = "禁言90日处罚/禁言7日处罚/禁言1日处罚/禁言3日金币处罚/q放弃 "
 
 
 @ban.got("user_id", prompt="输入禁言的用户数字id(如136246)")
