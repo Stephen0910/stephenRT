@@ -256,7 +256,7 @@ async def banUser(
         user_id: str = ArgPlainText("user_id"),
         ban_time: str = ArgPlainText("ban_time")
 ):
-    env = "test"
+    env = "prod"
     if re.match("\d+\d$", user_id):
         result = await search_user(user_id, env)
         print("result:", result)
