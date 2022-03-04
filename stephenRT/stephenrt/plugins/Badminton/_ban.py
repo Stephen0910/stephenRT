@@ -157,6 +157,8 @@ async def ban_user(id, ban_time, reason, env):
         template_id = 2
     elif ban_time == "90":
         template_id = 1
+    elif ban_time == "3":
+        template_id = 8
     else:
         template_id = ""
     if env == "test":
@@ -220,7 +222,7 @@ async def prod_receive(matcher: Matcher, args: Message = CommandArg()):
         matcher.set_arg("search_info", args)  # 如果用户发送了参数则直接赋值
 
 
-@find_prod.got("search_info", prompt="输入要查询的信息:")
+@find_prod.got("search_info", prompt="输入要查询的ID或名字或id")
 async def hand_find(
         search_info: Message = Arg()
 ):
@@ -244,7 +246,7 @@ async def handle_first_receive(matcher: Matcher, args: Message = CommandArg()):
         matcher.set_arg("user_id", args)  # 如果用户发送了参数则直接赋值
 
 
-temps = "禁言90日处罚/禁言7日处罚/禁言1日处罚 "
+temps = "禁言90日处罚/禁言7日处罚/禁言1日处罚/禁言3日金币处罚 "
 
 
 @ban.got("user_id", prompt="输入禁言的用户数字id(如136246)")
