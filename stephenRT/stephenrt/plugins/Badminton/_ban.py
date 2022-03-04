@@ -157,8 +157,6 @@ async def ban_user(id, ban_time, reason, env):
         template_id = 2
     elif ban_time == "90":
         template_id = 1
-    elif ban_time == "8":
-        template_id = 8
     else:
         template_id = ""
     if env == "test":
@@ -181,7 +179,7 @@ async def ban_user(id, ban_time, reason, env):
     # logger.info(json.dumps(payload))
 
     # logger.info(response.content)
-    return str(response.content)
+    return str(response.content).encode("utf-8")
 
 
 """测试服findt"""
