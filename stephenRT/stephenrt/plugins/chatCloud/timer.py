@@ -88,47 +88,48 @@ checkGroups = ["决战羽毛球"]
 
 @scheduler.scheduled_job("cron", hour=23, minute=0, second=0)
 async def send_message():
-    bot = get_bot()
-    day = 1
-    dateArray = datetime.datetime.utcfromtimestamp(time.time() - 86400 * day + 8 * 3600)  # 时区加8)
-    yesArray = datetime.datetime.utcfromtimestamp(time.time() - 86400 * (day + 1) + 8 * 3600)
-    checkTime = dateArray.strftime("%Y-%m-%d %H:%M:%S")
-    yescheck = yesArray.strftime("%Y-%m-%d %H:%M:%S")
-    print(checkTime)
-    for group in checkGroups:
-        print("发送：", group)
-        if re.match("\d+\d", str(group)):
-            groupName = await group_name(group)
+    # bot = get_bot()
+    # day = 1
+    # dateArray = datetime.datetime.utcfromtimestamp(time.time() - 86400 * day + 8 * 3600)  # 时区加8)
+    # yesArray = datetime.datetime.utcfromtimestamp(time.time() - 86400 * (day + 1) + 8 * 3600)
+    # checkTime = dateArray.strftime("%Y-%m-%d %H:%M:%S")
+    # yescheck = yesArray.strftime("%Y-%m-%d %H:%M:%S")
+    # print(checkTime)
+    # for group in checkGroups:
+    #     print("发送：", group)
+    #     if re.match("\d+\d", str(group)):
+    #         groupName = await group_name(group)
+    #
+    #         group_info = " " * 5 + "{0}({1})\n".format(groupName, group)
+    #         # messages = report.Report().createPic(group_id=group, timestamp=checkTime)
+    #     else:
+    #         groups = await getGroup(key=group)
+    #         groups_str = ""
+    #         for group_info in groups:
+    #             groups_str = groups_str + group_info["group_name"] + str(group_info["group_id"])
+    #         group_info = "({0})相关：".format(group) + groups_str + "\n"
+    #     messages = report.Report().createPic(group_id=group, timestamp=checkTime)
+    #     todayCount = report.Report().wordReport(group_id=group, timestamp=checkTime)[2]
+    #     yesCount = report.Report().wordReport(group_id=group, timestamp=yescheck)[2] - todayCount
+    #     change = "增加" if todayCount > yesCount else "减少"
+    #     change_rate = '{:.2%}'.format((abs(todayCount - yesCount)) / yesCount)
+    #     compare = "今天总计：{0}, 昨天总计{1}, 同比{2} {3}\n".format(todayCount, yesCount, change, change_rate)
+    #     group_info += compare
+    #     try:
+    #         await bot.send_group_msg(group_id=group_id, message=group_info + messages[0])
+    #
+    #     except Exception as e:
+    #         # await bot.send_private_msg(user_id=user_id, messages=str(e))
+    #         await bot.send_private_msg(user_id=281016636, message=group_info + messages[0] + compare)
+    #
+    #     try:
+    #         await bot.send_group_msg(group_id=group_id, message=MessageSegment.image(file="file:///" + messages[1]))
+    #     except Exception as e:
+    #         # await bot.send_private_msg(user_id=user_id, messages=str(e))
+    #         await bot.send_private_msg(user_id=281016636, message=MessageSegment.image(file="file:///" + messages[1]))
 
-            group_info = " " * 5 + "{0}({1})\n".format(groupName, group)
-            # messages = report.Report().createPic(group_id=group, timestamp=checkTime)
-        else:
-            groups = await getGroup(key=group)
-            groups_str = ""
-            for group_info in groups:
-                groups_str = groups_str + group_info["group_name"] + str(group_info["group_id"])
-            group_info = "({0})相关：".format(group) + groups_str + "\n"
-        messages = report.Report().createPic(group_id=group, timestamp=checkTime)
-        todayCount = report.Report().wordReport(group_id=group, timestamp=checkTime)[2]
-        yesCount = report.Report().wordReport(group_id=group, timestamp=yescheck)[2] - todayCount
-        change = "增加" if todayCount > yesCount else "减少"
-        change_rate = '{:.2%}'.format((abs(todayCount - yesCount)) / yesCount)
-        compare = "今天总计：{0}, 昨天总计{1}, 同比{2} {3}\n".format(todayCount, yesCount, change, change_rate)
-        group_info += compare
-        try:
-            await bot.send_group_msg(group_id=group_id, message=group_info + messages[0])
-
-        except Exception as e:
-            # await bot.send_private_msg(user_id=user_id, messages=str(e))
-            await bot.send_private_msg(user_id=281016636, message=group_info + messages[0] + compare)
-
-        try:
-            await bot.send_group_msg(group_id=group_id, message=MessageSegment.image(file="file:///" + messages[1]))
-        except Exception as e:
-            # await bot.send_private_msg(user_id=user_id, messages=str(e))
-            await bot.send_private_msg(user_id=281016636, message=MessageSegment.image(file="file:///" + messages[1]))
-
-        deleteFile(messages[1])
+        # deleteFile(messages[1])
+        pass
 
 scheduler.add_job(send_message, "interval", days=1, id="1")
 print("定时器timer触发成功")
