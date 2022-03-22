@@ -185,9 +185,35 @@ async def ban_user(id, ban_time, reason, env):
     return str(response.content).encode("utf-8")
 
 
+
+async def add_keyword(env, keyword):
+    if env == "test":
+        logger.debug("测试环境")
+        manager_base = config["manager_test"]
+        user = config["manager_test_auth"]
+    else:
+        logger.debug("正式环境")
+        manager_base = config["manager_prod"]
+        user = config["manager_prod_auth"]
+
+    base_url = manager_base + "/login"
+    key_url = manager_base + "/badmintonCn/add_forbidden_words"
+    payload = {
+        "word": str(keyword)
+    }
+    try:
+        with requests.session() as session:
+            session.post(base_url, json=user, headers=headers)
+            response = session.post(url=key_url, json=payload, headers=headers)
+    except Exception as e:
+        logger.debug(e)
+        return str(e)
+    return str(response.content).encode("utf-8")
+
+
 """测试服findt"""
 
-find_test = on_command("findt", rule=to_me(), aliases={"searcht"}, priority=1)
+find_test = on_command("findt", rule=to_me(), aliases={"searcht"}, priority=1, permission=SUPERUSER)
 
 
 @find_test.handle()
@@ -213,7 +239,7 @@ async def hand_findt(
 
 """正式服find"""
 
-find_prod = on_command("find", rule=to_me(), aliases={"searcht", "findp"}, priority=1)
+find_prod = on_command("find", rule=to_me(), aliases={"searcht", "findp"}, priority=1, permission=SUPERUSER)
 
 
 @find_prod.handle()
@@ -282,3 +308,20 @@ async def banUser(
             await ban.finish("禁言结果：" + str(result))
     else:
         await ban.finish(user_id.template("输入数字id错误，命令结束：" + user_id))
+
+
+"""关键字禁言"""
+
+addKey = on_command("addkey", rule=to_me(), aliases={"关键字", "keyban"}, priority=1, permission=SUPERUSER)
+
+
+@addKey.got("add_key", prompt="输入要禁言的关键字，需要大于5个字符")
+async def addkey(
+        add_key: str = ArgPlainText("add_key")
+):
+    env = "prod"
+    if len(add_key) <= 5:
+        await addKey.finish("关键字长度小于5，会话结束")
+    else:
+        result = await add_keyword(env=env, keyword=add_key)
+        await addKey.finish(str(result))
