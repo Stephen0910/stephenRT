@@ -63,7 +63,7 @@ def filter_chat(chats_list):
             if chat["sendType"] == "字符串" and len(chat["sendContent"]) > 10:
                 # print("疑似广告")
                 if "钻" in chat["sendContent"] and "S" in chat["sendContent"]:
-                    result = "疑似广告：\n" + str(chat["sendMan"]["numberUserId"]) + " " + chat["sendMan"]["name"] + " " + \
+                    result = "疑似广告：" + str(chat["sendMan"]["numberUserId"]) + " " + chat["sendMan"]["name"] + " " + \
                              chat["sendContent"].replace("\n", "")
                     return result
 
