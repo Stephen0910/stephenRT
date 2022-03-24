@@ -18,8 +18,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/stephenRT/stephenrt/plugins/Badminton/autoBan.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="349">
-              <caret line="79" column="41" selection-start-line="79" selection-start-column="41" selection-end-line="79" selection-end-column="41" />
+            <state relative-caret-position="289">
+              <caret line="67" column="66" lean-forward="true" selection-start-line="67" selection-start-column="66" selection-end-line="67" selection-end-column="66" />
               <folding>
                 <element signature="e#237#268#0" expanded="true" />
               </folding>
@@ -28,12 +28,12 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/stephenRT/stephenrt/plugins/chatRecord/__init__.py">
+        <entry file="file://$PROJECT_DIR$/stephenRT/stephenrt/plugins/Badminton/zendesk.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="652">
-              <caret line="91" column="12" selection-start-line="91" selection-start-column="1" selection-end-line="91" selection-end-column="12" />
+            <state relative-caret-position="175">
+              <caret line="126" column="18" selection-start-line="126" selection-start-column="18" selection-end-line="126" selection-end-column="64" />
               <folding>
-                <element signature="e#237#306#0" expanded="true" />
+                <element signature="e#237#271#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -63,6 +63,18 @@
           </provider>
         </entry>
       </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/stephenRT/stephenrt/plugins/chatCloud/__init__.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="187">
+              <caret line="31" lean-forward="true" selection-start-line="31" selection-end-line="31" />
+              <folding>
+                <element signature="e#274#288#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
     </leaf>
   </component>
   <component name="FileTemplateManagerImpl">
@@ -74,7 +86,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>主席</find>
       <find>松岛枫</find>
       <find>jpg</find>
       <find>png</find>
@@ -102,8 +113,9 @@
       <find>payload</find>
       <find>11111</find>
       <find>time</find>
-      <find>test</find>
       <find>searcht</find>
+      <find>test</find>
+      <find>send_group</find>
     </findStrings>
     <replaceStrings>
       <replace>logger.debug</replace>
@@ -113,9 +125,9 @@
       <dir>D:\Tools\python3\Lib\site-packages\nonebot_plugin_status</dir>
       <dir>D:\Tools\python3\Lib\site-packages</dir>
       <dir>D:\Tools\python3\Lib\site-packages\nonebot_plugin_picsearcher</dir>
-      <dir>D:\Code\inside\stephenRT\stephenRT\stephenrt</dir>
       <dir>D:\Tools\python3\Lib\site-packages\aiofiles-0.8.0-py3.7.egg</dir>
       <dir>D:\Code\inside\stephenRT\stephenRT\stephenrt\plugins</dir>
+      <dir>D:\Code\inside\stephenRT\stephenRT\stephenrt</dir>
     </dirStrings>
   </component>
   <component name="Git.Settings">
@@ -221,6 +233,14 @@
               <item name="stephenrt" type="462c0819:PsiDirectoryNode" />
               <item name="plugins" type="462c0819:PsiDirectoryNode" />
               <item name="Badminton" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="stephenRT" type="b2602c69:ProjectViewProjectNode" />
+              <item name="stephenRT" type="462c0819:PsiDirectoryNode" />
+              <item name="stephenRT" type="462c0819:PsiDirectoryNode" />
+              <item name="stephenrt" type="462c0819:PsiDirectoryNode" />
+              <item name="plugins" type="462c0819:PsiDirectoryNode" />
+              <item name="chatCloud" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="stephenRT" type="b2602c69:ProjectViewProjectNode" />
@@ -424,12 +444,12 @@
       <workItem from="1646970419023" duration="2684000" />
       <workItem from="1647932363937" duration="4049000" />
       <workItem from="1648088885773" duration="307000" />
-      <workItem from="1648093234075" duration="17399000" />
+      <workItem from="1648093234075" duration="17650000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="386423000" />
+    <option name="totallyTimeSpent" value="386674000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -442,14 +462,13 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-1928" y="-8" width="1936" height="1056" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49837664" visible="true" weight="0.22838847" />
       <window_info id="Structure" order="1" sideWeight="0.5016234" side_tool="true" weight="0.14887941" />
       <window_info id="Favorites" order="2" sideWeight="0.5016234" side_tool="true" weight="0.14887941" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32897604" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.39651415" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.39651415" />
       <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.4994664" weight="0.39978212" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -458,7 +477,7 @@
       <window_info anchor="bottom" id="Version Control" order="8" weight="0.32897604" />
       <window_info anchor="bottom" id="TemplateSupport.ToolWindow" order="9" sideWeight="0.50053364" side_tool="true" weight="0.39978212" />
       <window_info anchor="bottom" id="Database Changes" order="10" />
-      <window_info anchor="bottom" id="Terminal" order="11" weight="0.32461873" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="11" visible="true" weight="0.32461873" />
       <window_info anchor="bottom" id="Event Log" order="12" side_tool="true" />
       <window_info anchor="bottom" id="Python Console" order="13" weight="0.32897604" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
@@ -770,16 +789,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/stephenRT/stephenrt/plugins/chatCloud/__init__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="720">
-          <caret line="78" column="29" selection-start-line="78" selection-start-column="18" selection-end-line="78" selection-end-column="29" />
-          <folding>
-            <element signature="e#274#288#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/stephenRT/stephenrt/plugins/chatCloud/timer.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="403">
@@ -794,16 +803,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="179">
           <caret line="134" column="4" selection-start-line="134" selection-start-column="4" selection-end-line="134" selection-end-column="4" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/stephenRT/stephenrt/plugins/Badminton/zendesk.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1303">
-          <caret line="111" column="24" selection-start-line="111" selection-start-column="11" selection-end-line="111" selection-end-column="24" />
-          <folding>
-            <element signature="e#237#271#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -836,18 +835,38 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/stephenRT/stephenrt/plugins/chatRecord/__init__.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="652">
-          <caret line="91" column="12" selection-start-line="91" selection-start-column="1" selection-end-line="91" selection-end-column="12" />
+        <state relative-caret-position="-300">
+          <caret line="80" column="22" selection-start-line="80" selection-start-column="10" selection-end-line="80" selection-end-column="22" />
           <folding>
             <element signature="e#237#306#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/stephenRT/stephenrt/plugins/chatCloud/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="187">
+          <caret line="31" lean-forward="true" selection-start-line="31" selection-end-line="31" />
+          <folding>
+            <element signature="e#274#288#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/stephenRT/stephenrt/plugins/Badminton/zendesk.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="175">
+          <caret line="126" column="18" selection-start-line="126" selection-start-column="18" selection-end-line="126" selection-end-column="64" />
+          <folding>
+            <element signature="e#237#271#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/stephenRT/stephenrt/plugins/Badminton/autoBan.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="349">
-          <caret line="79" column="41" selection-start-line="79" selection-start-column="41" selection-end-line="79" selection-end-column="41" />
+        <state relative-caret-position="289">
+          <caret line="67" column="66" lean-forward="true" selection-start-line="67" selection-start-column="66" selection-end-line="67" selection-end-column="66" />
           <folding>
             <element signature="e#237#268#0" expanded="true" />
           </folding>
