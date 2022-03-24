@@ -239,7 +239,7 @@ async def hand_findt(
 
 """正式服find"""
 
-find_prod = on_command("find", rule=to_me(), aliases={"searcht", "findp"}, priority=1, permission=SUPERUSER)
+find_prod = on_command("find", rule=to_me(), aliases={"search", "findp"}, priority=1, permission=SUPERUSER)
 
 
 @find_prod.handle()
@@ -319,9 +319,12 @@ addKey = on_command("addkey", rule=to_me(), aliases={"关键字", "keyban"}, pri
 async def addkey(
         add_key: str = ArgPlainText("add_key")
 ):
-    env = "prod"
+    env = "test"
     if len(add_key) <= 5:
         await addKey.finish("关键字长度小于5，会话结束")
     else:
         result = await add_keyword(env=env, keyword=add_key)
         await addKey.finish(str(result))
+
+
+
