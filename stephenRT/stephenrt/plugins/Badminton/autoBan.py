@@ -127,7 +127,7 @@ async def shut_user():
     print(json.dumps(response))
     if response["status"] == 200:
         chats = response["data"]
-        result = test_chat(chats)
+        result = filter_chat(chats)
         if result and result not in sent:
             print(result)
             sent.append(result)
