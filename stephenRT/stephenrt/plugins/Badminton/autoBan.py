@@ -63,21 +63,22 @@ def filter_chat(chats_list):
             if chat["sendType"] == "字符串" and len(chat["sendContent"]) > 10:
                 # print("疑似广告")
                 if "钻" in chat["sendContent"] and "S" in chat["sendContent"]:
-                    result = "疑似广告：" + str(chat["sendMan"]["numberUserId"]) + " " + chat["sendMan"]["name"] + " " + \
+                    result = "chatRoom疑似广告：" + str(chat["sendMan"]["numberUserId"]) + " " + chat["sendMan"][
+                        "name"] + " " + \
                              chat["sendContent"].replace("\n", "")
                     return result
 
 
 def test_chat(chat_list):
     for chat in chat_list:
-        if "赞" in chat["sendContent"]:
+        if "pk" in chat["sendContent"].lower():
             return chat["sendContent"]
 
 
 async def send_message(msg):
     bot = get_bot()
     try:
-        await bot.send_private_msg(user_id=281016636, message=str(msg))
+        await bot.send_group_msg(group_id=792627520, message=str(msg))
     except Exception as e:
         await bot.send_private_msg(user_id=281016636, message=str(e))
 
@@ -102,6 +103,7 @@ async def main():
             if result and result not in sent:
                 print(result)
                 sent.append(result)
+                print(sent)
                 # try:
                 #     await bot.send_private_msg(user_id=281016636, message=str(result))
                 # except Exception as e:
@@ -117,6 +119,7 @@ async def main():
 matcher = on_metaevent()
 sent = []
 
+
 @matcher.handle()
 async def shut_user():
     bot = get_bot()
@@ -124,12 +127,13 @@ async def shut_user():
     print(json.dumps(response))
     if response["status"] == 200:
         chats = response["data"]
-        result = filter_chat(chats)
+        result = test_chat(chats)
         if result and result not in sent:
             print(result)
             sent.append(result)
             try:
-                await bot.send_private_msg(user_id=281016636, message=str(result))
+                # await bot.send_private_msg(user_id=281016636, message=str(result))
+                await bot.send_group_msg(group_id=792627520, message=str(result))
             except Exception as e:
-                await bot.send_private_msg(user_id=281016636, message=str(e))
+                await bot.send_private_msg(user_id=281016636, message=str(result) + str(e))
         # await asyncio.sleep(10)
