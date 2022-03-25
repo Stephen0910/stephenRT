@@ -58,7 +58,8 @@ async def get_chats():
 
 def filter_chat(chats_list):
     for chat in chats_list:
-        if re.match("boxer_", chat["sendMan"]["name"]) and chat["isJy"] == False and chat["isFh"] == False:
+        if re.match("boxer_", chat["sendMan"]["name"]):
+        # if re.match("boxer_", chat["sendMan"]["name"]) and chat["isJy"] == False and chat["isFh"] == False:
             if len(chat["sendContent"]) > 15:
                 # if "钻" or "砖" or "鉆" in chat["sendContent"] and "s" in chat["sendContent"].lower():
                 if re.search("鉆|钻|砖|钴", str(chat["sendContent"])) and "s" in str(chat["sendContent"]).lower():
@@ -75,7 +76,7 @@ def filter_chat(chats_list):
 
 def test_chat(chat_list):
     for chat in chat_list:
-        if "pk" in chat["sendContent"].lower():
+        if "部" in str(chat["sendContent"]).lower():
             return str(chat["sendMan"]["name"]) + "： " + str(chat["sendContent"])
 
 
@@ -140,7 +141,8 @@ async def shut_user():
             finally:
                 print("block_list:", block_list)
 
-    # if len(block_list) > 3:
+    if len(block_list) > 3:
+        pass
     #     block_list = block_list[:1]
 
 
