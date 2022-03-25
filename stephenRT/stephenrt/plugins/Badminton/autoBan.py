@@ -53,20 +53,21 @@ async def get_chats():
             response = session.post(url=chat_url, data=payload, headers=headers)
     except Exception as e:
         return str(e)
-    return json.loads(response.content)
+    return json.loads(response.content)  # 延迟1条 否则还没来的
 
 
 def filter_chat(chats_list):
-    for chat in chats_list:
+    for chat in chats_list[:-1]:  # 延迟1条避免还没来得及自动禁言
         # if re.match("boxer_", chat["sendMan"]["name"]):
-        if re.match("boxer_", chat["sendMan"]["name"]) and chat["isJy"] == False and chat["isFh"] == False:
-            if len(chat["sendContent"]) > 15:
-                # if "钻" or "砖" or "鉆" in chat["sendContent"] and "s" in chat["sendContent"].lower():
-                if re.search("鉆|钻|砖|钴", str(chat["sendContent"])) and "s" in str(chat["sendContent"]).lower():
-                    result = "chatRoom疑似广告：" + str(chat["sendMan"]["numberUserId"]) + " " + str(chat["sendMan"][
-                                                                                                    "name"]) + " " + str(
-                        chat["sendContent"]).replace("\n", "")
-                    return result
+        if re.match("boxer_", chat["sendMan"]["name"]):
+            if chat["isJy"] is False and chat["isFh"] is False:
+                if len(chat["sendContent"]) > 15:
+                    # if "钻" or "砖" or "鉆" in chat["sendContent"] and "s" in chat["sendContent"].lower():
+                    if re.search("鉆|钻|砖|钴", str(chat["sendContent"])) and "s" in str(chat["sendContent"]).lower():
+                        result = "chatRoom疑似广告：" + str(chat["sendMan"]["numberUserId"]) + " " + str(chat["sendMan"][
+                                                                                                        "name"]) + " " + str(
+                            chat["sendContent"]).replace("\n", "")
+                        return result
         elif re.match("3564837153|166345259|3569544846|万钻|万钴|万砖|万鉆", str(chat["sendMan"]["name"])):
             result = "chatRoom疑似广告：" + str(chat["sendMan"]["numberUserId"]) + " " + str(chat["sendMan"][
                                                                                             "name"]) + " " + str(
@@ -126,7 +127,6 @@ async def shut_user():
     bot = get_bot()
 
     response = await get_chats()
-    print(json.dumps(response))
     if response["status"] == 200:
         chats = response["data"]
         result = filter_chat(chats)
