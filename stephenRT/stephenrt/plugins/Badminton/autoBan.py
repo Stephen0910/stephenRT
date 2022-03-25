@@ -58,10 +58,10 @@ async def get_chats():
 
 def filter_chat(chats_list):
     for chat in chats_list:
-        if re.match("boxer_", chat["sendMan"]["name"]) and chat["isJy"] is False and chat["isFh"] is False:
-            if chat["sendType"] == "字符串" and len(chat["sendContent"]) > 15:
+        if re.match("boxer_", chat["sendMan"]["name"]) and chat["isJy"] == False and chat["isFh"] == False:
+            if len(chat["sendContent"]) > 15:
                 # if "钻" or "砖" or "鉆" in chat["sendContent"] and "s" in chat["sendContent"].lower():
-                if re.search("鉆|钻|砖|钴", chat["sendContent"]) and "s" in chat["sendContent"].lower():
+                if re.search("鉆|钻|砖|钴", str(chat["sendContent"])) and "s" in str(chat["sendContent"]).lower():
                     result = "chatRoom疑似广告：" + str(chat["sendMan"]["numberUserId"]) + " " + str(chat["sendMan"][
                                                                                                     "name"]) + " " + str(
                         chat["sendContent"]).replace("\n", "")
@@ -76,7 +76,7 @@ def filter_chat(chats_list):
 def test_chat(chat_list):
     for chat in chat_list:
         if "pk" in chat["sendContent"].lower():
-            return chat["sendContent"]
+            return str(chat["sendMan"]["name"]) + "： " + str(chat["sendContent"])
 
 
 async def send_message(msg):
@@ -117,26 +117,31 @@ async def main():
 
 
 matcher = on_metaevent()
-sent = []
 
+block_list = []
 
 @matcher.handle()
 async def shut_user():
     bot = get_bot()
+
     response = await get_chats()
     print(json.dumps(response))
     if response["status"] == 200:
         chats = response["data"]
         result = filter_chat(chats)
-        if result and result not in sent:
-            print(result)
-            sent.append(result)
-            if len(result) >= 50:
-                result = result[:3]
+        if result and result not in block_list:
+            print("检测到：", result)
+            block_list.append(result)
             try:
                 await bot.send_private_msg(user_id=281016636, message=str(result))
                 # await bot.send_group_msg(group_id=792627520, message=str(result))
             except Exception as e:
                 await bot.send_private_msg(user_id=281016636, message=str(result) + str(e))
+            finally:
+                print("block_list:", block_list)
+
+    # if len(block_list) > 3:
+    #     block_list = block_list[:1]
+
 
         # await asyncio.sleep(10)
