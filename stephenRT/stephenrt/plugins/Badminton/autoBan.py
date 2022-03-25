@@ -57,7 +57,7 @@ async def get_chats():
 
 
 def filter_chat(chats_list):
-    for chat in chats_list[:-1]:  # 延迟1条避免还没来得及自动禁言
+    for chat in chats_list[2:]:  # 延迟1条避免还没来得及自动禁言
         # if re.match("boxer_", chat["sendMan"]["name"]):
         if re.match("boxer_", chat["sendMan"]["name"]):
             if chat["isJy"] is False and chat["isFh"] is False:
@@ -141,8 +141,8 @@ async def shut_user():
             finally:
                 print("block_list:", block_list)
 
-    if len(block_list) > 3:
-        pass
+    # if len(block_list) > 3:
+    #     pass
     #     block_list = block_list[:1]
 
 
