@@ -68,7 +68,7 @@ def filter_chat(chats_list):
                                                                                                         "name"]) + " " + str(
                             chat["sendContent"]).replace("\n", "") + str(chat["isFh"]) + str(chat["isJy"])
                         return result
-        elif re.match("3564837153|166345259|3569544846|万钻|万钴|万砖|万鉆", str(chat["sendMan"]["name"])):
+        elif re.match("3564837153|166345259|3569544846|2927295662|万钻|万钴|万砖|万鉆", str(chat["sendMan"]["name"])):
             result = "chatRoom疑似广告：" + str(chat["sendMan"]["numberUserId"]) + " " + str(chat["sendMan"][
                                                                                             "name"]) + " " + str(
                 chat["sendContent"]).replace("\n", "")+ str(chat["isFh"]) + str(chat["isJy"])
@@ -134,8 +134,8 @@ async def shut_user():
             print("检测到：", result)
             block_list.append(result)
             try:
-                await bot.send_private_msg(user_id=281016636, message=str(result))
-                # await bot.send_group_msg(group_id=792627520, message=str(result))
+                # await bot.send_private_msg(user_id=281016636, message=str(result))
+                await bot.send_group_msg(group_id=792627520, message=str(result))
             except Exception as e:
                 await bot.send_private_msg(user_id=281016636, message=str(result) + str(e))
             finally:

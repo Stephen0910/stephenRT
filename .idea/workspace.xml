@@ -2,10 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="3047aada-47d5-4ad8-a368-9e15af7b4bc7" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/stephenRT/stephenrt/plugins/Tools/update.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/stephenRT/stephenrt/plugins/Tools/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/stephenRT/stephenrt/plugins/Tools/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/stephenRT/stephenrt/plugins/Tools/timestamp.py" beforeDir="false" afterPath="$PROJECT_DIR$/stephenRT/stephenrt/plugins/Tools/timestamp.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/stephenRT/stephenrt/plugins/Badminton/autoBan.py" beforeDir="false" afterPath="$PROJECT_DIR$/stephenRT/stephenrt/plugins/Badminton/autoBan.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -18,11 +15,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/stephenRT/stephenrt/plugins/Badminton/autoBan.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="319">
-              <caret line="146" selection-start-line="146" selection-end-line="146" />
+            <state relative-caret-position="-41">
+              <caret line="77" column="25" lean-forward="true" selection-start-line="77" selection-start-column="25" selection-end-line="77" selection-end-column="25" />
               <folding>
                 <element signature="e#237#268#0" expanded="true" />
               </folding>
@@ -108,11 +105,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/stephenRT/stephenrt/plugins/Tools/__init__.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="165">
-              <caret line="11" column="23" selection-start-line="11" selection-start-column="23" selection-end-line="11" selection-end-column="23" />
+              <caret line="11" column="23" lean-forward="true" selection-start-line="11" selection-start-column="23" selection-end-line="11" selection-end-column="23" />
             </state>
           </provider>
         </entry>
@@ -221,11 +218,11 @@
         <option value="$PROJECT_DIR$/stephenRT/stephenrt/plugins/Badminton/zendesk.py" />
         <option value="$PROJECT_DIR$/stephenRT/stephenrt/plugins/Badminton/_ban.py" />
         <option value="$PROJECT_DIR$/stephenRT/stephenrt/test.py" />
-        <option value="$PROJECT_DIR$/stephenRT/stephenrt/plugins/Badminton/autoBan.py" />
         <option value="$PROJECT_DIR$/stephenRT/stephenrt/plugins/Tools/timestamp.py" />
         <option value="$PROJECT_DIR$/stephenRT/stephenrt/plugins/Tools/update.py" />
         <option value="$PROJECT_DIR$/stephenRT/stephenrt/plugins/Badminton/__init__.py" />
         <option value="$PROJECT_DIR$/stephenRT/stephenrt/plugins/Tools/__init__.py" />
+        <option value="$PROJECT_DIR$/stephenRT/stephenrt/plugins/Badminton/autoBan.py" />
       </list>
     </option>
   </component>
@@ -471,12 +468,12 @@
       <workItem from="1646970419023" duration="2684000" />
       <workItem from="1647932363937" duration="4049000" />
       <workItem from="1648088885773" duration="307000" />
-      <workItem from="1648093234075" duration="31221000" />
+      <workItem from="1648093234075" duration="32004000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="400245000" />
+    <option name="totallyTimeSpent" value="401028000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -491,12 +488,12 @@
     <frame x="-1928" y="-8" width="1936" height="1056" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.49837664" visible="true" weight="0.22838847" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49837664" visible="true" weight="0.22838847" />
       <window_info id="Structure" order="1" sideWeight="0.5016234" side_tool="true" weight="0.14887941" />
       <window_info id="Favorites" order="2" sideWeight="0.5016234" side_tool="true" weight="0.14887941" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32897604" />
-      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.39651415" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.39651415" />
       <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.4994664" weight="0.39978212" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -840,16 +837,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/stephenRT/stephenrt/plugins/Badminton/autoBan.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="319">
-          <caret line="146" selection-start-line="146" selection-end-line="146" />
-          <folding>
-            <element signature="e#237#268#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/stephenRT/stephenrt/test.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="180">
@@ -900,7 +887,17 @@
     <entry file="file://$PROJECT_DIR$/stephenRT/stephenrt/plugins/Tools/__init__.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="165">
-          <caret line="11" column="23" selection-start-line="11" selection-start-column="23" selection-end-line="11" selection-end-column="23" />
+          <caret line="11" column="23" lean-forward="true" selection-start-line="11" selection-start-column="23" selection-end-line="11" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/stephenRT/stephenrt/plugins/Badminton/autoBan.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-41">
+          <caret line="77" column="25" lean-forward="true" selection-start-line="77" selection-start-column="25" selection-end-line="77" selection-end-column="25" />
+          <folding>
+            <element signature="e#237#268#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
