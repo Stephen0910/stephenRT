@@ -59,15 +59,18 @@ async def get_chats():
 def filter_chat(chats_list):
     for chat in chats_list:
         if re.match("boxer_", chat["sendMan"]["name"]) and chat["isJy"] is False and chat["isFh"] is False:
-            # print("4399未禁言")
-            if chat["sendType"] == "字符串" and len(chat["sendContent"]) > 10:
-                # print("疑似广告")
-                if "钻" or "砖" in chat["sendContent"] and "s" in chat["sendContent"].lower():
+            if chat["sendType"] == "字符串" and len(chat["sendContent"]) > 15:
+                # if "钻" or "砖" or "鉆" in chat["sendContent"] and "s" in chat["sendContent"].lower():
+                if re.search("鉆|钻|砖|钴", chat["sendContent"]) and "s" in chat["sendContent"].lower():
                     result = "chatRoom疑似广告：" + str(chat["sendMan"]["numberUserId"]) + " " + chat["sendMan"][
                         "name"] + " " + \
                              chat["sendContent"].replace("\n", "")
                     return result
-
+        elif re.match("3564837153|166345259|3569544846|万钻|万钴|万砖|万鉆", chat["sendMan"]["name"]):
+            result = "chatRoom疑似广告：" + str(chat["sendMan"]["numberUserId"]) + " " + chat["sendMan"][
+                "name"] + " " + \
+                     chat["sendContent"].replace("\n", "")
+            return result
 
 def test_chat(chat_list):
     for chat in chat_list:
@@ -112,9 +115,6 @@ async def main():
             # asyncio.sleep(10)
 
 
-# loop = asyncio.get_event_loop()
-# loop.run_until_complete(main())
-# loop.close()
 
 matcher = on_metaevent()
 sent = []

@@ -9,6 +9,6 @@
 # @Copyright:   (c) StephenZ 2022
 # @Licence  :     <@2022>
 import re
-a = "sdfa12243dsf2fsdf444"
-num = re.sub("\D", "",  a)
+a = "ssda钻石dsaf"
+num = re.search("鉆|钻|砖|钴", a)
 print(num)
