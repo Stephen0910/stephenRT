@@ -66,12 +66,12 @@ def filter_chat(chats_list):
                     if re.search("鉆|钻|砖|钴", str(chat["sendContent"])) and "s" in str(chat["sendContent"]).lower():
                         result = "chatRoom疑似广告：" + str(chat["sendMan"]["numberUserId"]) + " " + str(chat["sendMan"][
                                                                                                         "name"]) + " " + str(
-                            chat["sendContent"]).replace("\n", "")
+                            chat["sendContent"]).replace("\n", "") + str(chat["isFh"]) + str(chat["isJy"])
                         return result
         elif re.match("3564837153|166345259|3569544846|万钻|万钴|万砖|万鉆", str(chat["sendMan"]["name"])):
             result = "chatRoom疑似广告：" + str(chat["sendMan"]["numberUserId"]) + " " + str(chat["sendMan"][
                                                                                             "name"]) + " " + str(
-                chat["sendContent"]).replace("\n", "")
+                chat["sendContent"]).replace("\n", "")+ str(chat["isFh"]) + str(chat["isJy"])
             return result
 
 
