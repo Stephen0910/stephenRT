@@ -58,11 +58,11 @@ async def get_chats():
 
 def filter_chat(chats_list):
     for chat in chats_list:
-        if re.match("boxer_", chat["sendMan"]["name"]) and chat["isJy"] is False:
+        if re.match("boxer_", chat["sendMan"]["name"]) and chat["isJy"] is False and chat["isFh"] is False:
             # print("4399未禁言")
             if chat["sendType"] == "字符串" and len(chat["sendContent"]) > 10:
                 # print("疑似广告")
-                if "钻" in chat["sendContent"] and "S" in chat["sendContent"]:
+                if "钻" or "砖" in chat["sendContent"] and "s" in chat["sendContent"].lower():
                     result = "chatRoom疑似广告：" + str(chat["sendMan"]["numberUserId"]) + " " + chat["sendMan"][
                         "name"] + " " + \
                              chat["sendContent"].replace("\n", "")
@@ -131,9 +131,13 @@ async def shut_user():
         if result and result not in sent:
             print(result)
             sent.append(result)
+            if len(result) >= 50:
+                result = result[:3]
             try:
                 # await bot.send_private_msg(user_id=281016636, message=str(result))
                 await bot.send_group_msg(group_id=792627520, message=str(result))
             except Exception as e:
                 await bot.send_private_msg(user_id=281016636, message=str(result) + str(e))
+
+
         # await asyncio.sleep(10)

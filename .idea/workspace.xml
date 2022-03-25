@@ -18,8 +18,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/stephenRT/stephenrt/plugins/Badminton/autoBan.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="289">
-              <caret line="67" column="66" lean-forward="true" selection-start-line="67" selection-start-column="66" selection-end-line="67" selection-end-column="66" />
+            <state relative-caret-position="-365">
+              <caret line="70" lean-forward="true" selection-start-line="70" selection-end-line="70" />
               <folding>
                 <element signature="e#237#268#0" expanded="true" />
               </folding>
@@ -444,12 +444,12 @@
       <workItem from="1646970419023" duration="2684000" />
       <workItem from="1647932363937" duration="4049000" />
       <workItem from="1648088885773" duration="307000" />
-      <workItem from="1648093234075" duration="17650000" />
+      <workItem from="1648093234075" duration="18490000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="386674000" />
+    <option name="totallyTimeSpent" value="387514000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -462,6 +462,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-1928" y="-8" width="1936" height="1056" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49837664" visible="true" weight="0.22838847" />
       <window_info id="Structure" order="1" sideWeight="0.5016234" side_tool="true" weight="0.14887941" />
@@ -865,8 +866,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/stephenRT/stephenrt/plugins/Badminton/autoBan.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="289">
-          <caret line="67" column="66" lean-forward="true" selection-start-line="67" selection-start-column="66" selection-end-line="67" selection-end-column="66" />
+        <state relative-caret-position="-365">
+          <caret line="70" lean-forward="true" selection-start-line="70" selection-end-line="70" />
           <folding>
             <element signature="e#237#268#0" expanded="true" />
           </folding>
