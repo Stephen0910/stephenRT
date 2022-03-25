@@ -62,15 +62,16 @@ def filter_chat(chats_list):
             if chat["sendType"] == "字符串" and len(chat["sendContent"]) > 15:
                 # if "钻" or "砖" or "鉆" in chat["sendContent"] and "s" in chat["sendContent"].lower():
                 if re.search("鉆|钻|砖|钴", chat["sendContent"]) and "s" in chat["sendContent"].lower():
-                    result = "chatRoom疑似广告：" + str(chat["sendMan"]["numberUserId"]) + " " + chat["sendMan"][
-                        "name"] + " " + \
-                             chat["sendContent"].replace("\n", "")
+                    result = "chatRoom疑似广告：" + str(chat["sendMan"]["numberUserId"]) + " " + str(chat["sendMan"][
+                                                                                                    "name"]) + " " + str(
+                        chat["sendContent"]).replace("\n", "")
                     return result
-        elif re.match("3564837153|166345259|3569544846|万钻|万钴|万砖|万鉆", chat["sendMan"]["name"]):
-            result = "chatRoom疑似广告：" + str(chat["sendMan"]["numberUserId"]) + " " + chat["sendMan"][
-                "name"] + " " + \
-                     chat["sendContent"].replace("\n", "")
+        elif re.match("3564837153|166345259|3569544846|万钻|万钴|万砖|万鉆", str(chat["sendMan"]["name"])):
+            result = "chatRoom疑似广告：" + str(chat["sendMan"]["numberUserId"]) + " " + str(chat["sendMan"][
+                                                                                            "name"]) + " " + str(
+                chat["sendContent"]).replace("\n", "")
             return result
+
 
 def test_chat(chat_list):
     for chat in chat_list:
@@ -115,7 +116,6 @@ async def main():
             # asyncio.sleep(10)
 
 
-
 matcher = on_metaevent()
 sent = []
 
@@ -138,6 +138,5 @@ async def shut_user():
                 # await bot.send_group_msg(group_id=792627520, message=str(result))
             except Exception as e:
                 await bot.send_private_msg(user_id=281016636, message=str(result) + str(e))
-
 
         # await asyncio.sleep(10)
