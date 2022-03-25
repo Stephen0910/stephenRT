@@ -134,8 +134,8 @@ async def shut_user():
             print("检测到：", result)
             block_list.append(result)
             try:
-                # await bot.send_private_msg(user_id=281016636, message=str(result))
-                await bot.send_group_msg(group_id=792627520, message=str(result))
+                await bot.send_private_msg(user_id=281016636, message=str(result))
+                # await bot.send_group_msg(group_id=792627520, message=str(result))
             except Exception as e:
                 await bot.send_private_msg(user_id=281016636, message=str(result) + str(e))
             finally:
