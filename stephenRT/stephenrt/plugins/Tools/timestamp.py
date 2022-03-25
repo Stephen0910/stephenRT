@@ -15,9 +15,10 @@ from nonebot.rule import to_me
 from nonebot.matcher import Matcher
 from nonebot.adapters import Message
 from nonebot.params import Arg, CommandArg
+from nonebot.permission import SUPERUSER
 
 
-timeStamp = on_command("time", rule=to_me(), aliases={"ts", "时间戳"}, priority=1)
+timeStamp = on_command("time", rule=to_me(), aliases={"ts", "时间戳"}, priority=1, permission=SUPERUSER)
 
 
 @timeStamp.handle()
