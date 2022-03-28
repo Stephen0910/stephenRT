@@ -130,15 +130,15 @@ async def saveMsg(bot: Bot, event: GroupMessageEvent):
     # mem1 = str(bot.get_group_member_list(612610584))
     # mem2 = str(bot.get_group_member_list(310100922))
     # mem1 = await get_mems(bot, groupId=612610584)
-    mem2 = await get_mems(bot, groupId=310100922)
-
-    print("mmmmmmmmmmmmmmmmmm2:")
-    print(mem2)
-
-    test_file = "/home/a.txt"
-    if os.path.exists(test_file) is False:
-        with open(test_file, "a+") as f:
-            f.write(mem2)
+    # mem2 = await get_mems(bot, groupId=310100922)
+    #
+    # print("mmmmmmmmmmmmmmmmmm2:")
+    # print(mem2)
+    #
+    # test_file = "/home/a.txt"
+    # if os.path.exists(test_file) is False:
+    #     with open(test_file, "a+") as f:
+    #         f.write(mem2)
 
 
     try:

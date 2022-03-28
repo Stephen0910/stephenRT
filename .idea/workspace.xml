@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="3047aada-47d5-4ad8-a368-9e15af7b4bc7" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/stephenRT/stephenrt/plugins/Badminton/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/stephenRT/stephenrt/plugins/Badminton/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/stephenRT/stephenrt/plugins/chatRecord/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/stephenRT/stephenrt/plugins/chatRecord/__init__.py" afterDir="false" />
-    </list>
+    <list default="true" id="3047aada-47d5-4ad8-a368-9e15af7b4bc7" name="Default Changelist" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -31,8 +28,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/stephenRT/stephenrt/plugins/chatRecord/__init__.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="242">
-              <caret line="131" column="31" selection-start-line="131" selection-start-column="31" selection-end-line="131" selection-end-column="31" />
+            <state relative-caret-position="257">
+              <caret line="132" column="25" selection-start-line="132" selection-start-column="17" selection-end-line="132" selection-end-column="25" />
               <folding>
                 <element signature="e#237#306#0" expanded="true" />
               </folding>
@@ -409,12 +406,12 @@
       <workItem from="1648093234075" duration="32592000" />
       <workItem from="1648199721756" duration="1464000" />
       <workItem from="1648204275516" duration="130000" />
-      <workItem from="1648454834275" duration="1942000" />
+      <workItem from="1648454834275" duration="2262000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="405152000" />
+    <option name="totallyTimeSpent" value="405472000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -834,8 +831,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/stephenRT/stephenrt/plugins/chatRecord/__init__.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="242">
-          <caret line="131" column="31" selection-start-line="131" selection-start-column="31" selection-end-line="131" selection-end-column="31" />
+        <state relative-caret-position="257">
+          <caret line="132" column="25" selection-start-line="132" selection-start-column="17" selection-end-line="132" selection-end-column="25" />
           <folding>
             <element signature="e#237#306#0" expanded="true" />
           </folding>
