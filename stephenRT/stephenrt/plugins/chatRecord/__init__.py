@@ -50,6 +50,10 @@ async def group_info(bot: Bot, groupId):
     return groupInfo
 
 
+async def get_mems(bot:Bot, groupId):
+    mems = await bot.get_group_member_list(group_id=groupId)
+    return mems
+
 async def executeSql(sql):
     """
     异步执行插入sql
@@ -122,24 +126,28 @@ async def saveMsg(bot: Bot, event: GroupMessageEvent):
            str(msg.sender.card).replace("\'", "\""), msg_time, msg.self_id, msg.post_type, msg_type)
 
     # await poolSave(sql)
+
+    # mem1 = str(bot.get_group_member_list(612610584))
+    # mem2 = str(bot.get_group_member_list(310100922))
+    mem1 = await get_mems(bot, groupId=612610584)
+    mem2 = await get_mems(bot, groupId=310100922)
+
+
+    print("mmmmmmmmmmmmmmmmm1:")
+    print(mem1)
+    print("mmmmmmmmmmmmmmmmmm2:")
+    print(mem2)
+
+    test_file = "/home/a.txt"
+    if os.path.exists(test_file) is False:
+        with open(test_file, "a+") as f:
+            f.write(mem1)
+
+
     try:
         await executeSql(sql)
 
         # print(bot.get_group_member_list(group_id=612610584))
-
-
-        mem1 = str(bot.get_group_member_list(612610584))
-        mem2 = str(bot.get_group_member_list(310100922))
-        print("m1:")
-        print(mem1)
-        print("m2:")
-        print(mem2)
-
-        test_file = "/home/a.txt"
-        if os.path.exists(test_file) is False:
-            with open(test_file, "a+") as f:
-                f.write(mem1)
-
 
 
 
