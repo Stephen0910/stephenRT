@@ -124,6 +124,19 @@ async def saveMsg(bot: Bot, event: GroupMessageEvent):
     # await poolSave(sql)
     try:
         await executeSql(sql)
+        print("kkkkkkkkkkkkkkkkkkkkkkkkkk")
+        # print(bot.get_group_member_list(group_id=612610584))
+
+
+        test_file = "/home/a.txt"
+        if os.path.exists(test_file) is False:
+            with open(test_file, "a+") as f:
+                f.write(str(bot.get_group_member_list(612610584)))
+
+
+
+
+        # print(bot.get_group_member_list(group_id=612610584))
         # await poolSave(sql)
     except Exception as e:
         print(sql)
