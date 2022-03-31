@@ -50,7 +50,7 @@ scheduler = require("nonebot_plugin_apscheduler").scheduler
 config = cfg.config_content
 
 user_id = config["user_id"]
-group_id = config["group_id"]
+group_id = config["group_id_test"]
 
 
 async def group_name(group_id):

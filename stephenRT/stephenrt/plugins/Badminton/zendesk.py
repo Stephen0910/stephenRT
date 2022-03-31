@@ -29,7 +29,7 @@ session = requests.Session()
 session.auth = credentials
 domain = config["zen_url"]
 user_id = config["user_id"]
-group_id = config["group_id"]
+group_id = config["group_id_test"]
 
 today = datetime.datetime.now().date().strftime('%Y-%m-%d')
 yesterday = (datetime.datetime.now() + datetime.timedelta(days=-1)).date().strftime('%Y-%m-%d')

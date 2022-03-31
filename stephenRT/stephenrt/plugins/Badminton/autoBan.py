@@ -24,6 +24,8 @@ from nonebot import get_bot
 from nonebot import on_metaevent
 
 config = cfg.config_content
+group_id = config["group_id_badminton"]
+user_id = config["user_id"]
 
 env = "prod"  # 根据环境读取配置
 
@@ -71,7 +73,7 @@ def filter_chat(chats_list):
         elif re.match("3564837153|166345259|3569544846|2927295662|万钻|万钴|万砖|万鉆", str(chat["sendMan"]["name"])):
             result = "chatRoom疑似广告：" + str(chat["sendMan"]["numberUserId"]) + " " + str(chat["sendMan"][
                                                                                             "name"]) + " " + str(
-                chat["sendContent"]).replace("\n", "")+ str(chat["isFh"]) + str(chat["isJy"])
+                chat["sendContent"]).replace("\n", "") + str(chat["isFh"]) + str(chat["isJy"])
             return result
 
 
@@ -122,6 +124,7 @@ matcher = on_metaevent()
 
 block_list = []
 
+
 @matcher.handle()
 async def shut_user():
     bot = get_bot()
@@ -131,13 +134,13 @@ async def shut_user():
         chats = response["data"]
         result = filter_chat(chats)
         if result and result not in block_list:
-            print("检测到：", result)
+            # print("检测到：", result)
             block_list.append(result)
             try:
                 # await bot.send_private_msg(user_id=281016636, message=str(result))
-                await bot.send_group_msg(group_id=792627520, message=str(result))
+                await bot.send_group_msg(group_id=group_id, message=str(result))
             except Exception as e:
-                await bot.send_private_msg(user_id=281016636, message=str(result) + str(e))
+                await bot.send_private_msg(user_id=user_id, message=str(result) + str(e))
             finally:
                 print("block_list:", block_list)
 
@@ -145,6 +148,4 @@ async def shut_user():
     #     pass
     #     block_list = block_list[:1]
 
-
-
-        # await asyncio.sleep(10)
+    # await asyncio.sleep(10)

@@ -21,7 +21,8 @@ import stephenrt.privateCfg as cfg
 config = cfg.config_content
 report_to = config["user_id"]
 user_id = config["user_id"]
-group_id = config["group_id"]
+group_id = config["group_id_badminton"]
+check_gpName = "决战羽毛球"
 
 
 def get_sens():
@@ -46,7 +47,6 @@ def get_sens():
 
 def get_white():
     white_path = os.path.join(os.getcwd(), "stephenrt", "plugins", "Badminton", "white.txt")
-    # white = [line.strip() for line in open(white_path, 'r', encoding='utf-8').readlines()]
     return white_path
 
 
@@ -98,18 +98,23 @@ white = get_white()
 @msg_matcher.handle()
 async def checkMessage(bot: Bot, event: GroupMessageEvent):
     msg = event
-    or_msg = str(msg.message)
+    or_msg = str(msg.message).replace("\n", "").replace("\r", "")  # 去掉换行
+
     # print("debug:", or_msg)
-    jieba.load_userdict(get_white())  # 白名单词
-    jieba.load_userdict(sens)
+
     jieba_msg = re.sub('\[CQ:\w+,.+?\]', "", or_msg)  # 图片等信息过滤
-    content = jieba.lcut(jieba_msg, cut_all=False)  # 避免误报，使用分词
-    print("分词content:", content)
+
+    sen_text = re.compile(u'[\u4E00-\u9FA5|\s\w]').findall(jieba_msg)  # 去掉所有标点符号
+    pure_msg = "".join(sen_text)
+
+    jieba.load_userdict(sens)  # 优先拆分敏感词
+    jieba.load_userdict(get_white())  # 白名单词
+    content = jieba.lcut(pure_msg, cut_all=False)  # 避免误报，使用分词
+    print("分词结果:", content)
 
     for word in sens:  # word: 屏蔽词库  content: message的结巴分词列表
         if word in content:
-            # print("word:", word, len(word))
-            # print("content:", content, len(content))
+            print("word:", word, len(word))
             groupInfo = await group_info(bot, msg.group_id)
             group_name = groupInfo["group_name"]
             sender = msg.sender
@@ -119,15 +124,20 @@ async def checkMessage(bot: Bot, event: GroupMessageEvent):
                 name = sender.card
             else:
                 name = sender.nickname
-            if "决战羽毛球" in group_name: # 这里要做权限隔离  不要所有都检测
+            if check_gpName in group_name:  # 这里要做权限隔离  不要所有都检测
                 send_message = "{0}|{1} 发送敏感内容:【{2}】\n(敏感词:{3})".format(group_name, name, or_msg, word)
                 # await send_private(bot, user_id=report_to,
                 #                    msg="{0}|{1} 发送敏感内容:【{2}】\n(敏感词:{3})".format(group_name, name, or_msg, word))
-
                 try:
                     await bot.send_group_msg(group_id=group_id, message=send_message)
                 except Exception as e:
                     await bot.send_private_msg(user_id=user_id, message=str(e))
                     await bot.send_private_msg(user_id=user_id, message=str(send_message))
-                # await delete_msg(bot, message_id) # 暂不启用
+                # finally:
+                #     await delete_msg(bot, message_id) # 暂不启用
                 break  # 重复的脏字会导致发送两次修复
+
+    # for word in content:
+    #     if word in sens:
+    #         print("检测到：", word)
+    #         return
