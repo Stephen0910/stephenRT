@@ -65,7 +65,7 @@ def filter_chat(chats_list):
             if chat["isJy"] is False and chat["isFh"] is False:
                 if len(chat["sendContent"]) > 15:
                     # if "钻" or "砖" or "鉆" in chat["sendContent"] and "s" in chat["sendContent"].lower():
-                    if re.search("鉆|钻|砖|钴", str(chat["sendContent"])) and "s" in str(chat["sendContent"]).lower():
+                    if re.search("鉆|钻|砖|钴", str(chat["sendContent"])) and re.search("s|元|沅", str(chat["sendContent"]).lower()):
                         result = "chatRoom疑似广告：" + str(chat["sendMan"]["numberUserId"]) + " " + str(chat["sendMan"][
                                                                                                         "name"]) + " " + str(
                             chat["sendContent"]).replace("\n", "") + str(chat["isFh"]) + str(chat["isJy"])
