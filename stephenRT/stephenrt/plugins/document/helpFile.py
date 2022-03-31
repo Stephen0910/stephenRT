@@ -21,12 +21,12 @@ from nonebot.params import ArgPlainText
 
 from nonebot.permission import SUPERUSER
 
-help = on_command("help", rule=to_me(), aliases={"帮助", "菜单", "使用"}, priority=1, permission=SUPERUSER)
+help = on_command("help", rule=to_me(), aliases={"帮助", "菜单", "使用"}, priority=1)
 
 split_symbol = "⬤"
 msg = (
-        "机器人功能(请@我 并加/命令呼出)：\n" + "{0}  zendesk工单统计(/zen /zendesk /工单)\n" +
-        "{0}  Q群聊天统计+词云(/report /日报 /词云)\n" + "{0}  敏感词检测（未完成）\n" + "{0}  羽毛球查询(/find /findt为测试服)、禁言(/ban 需添加权限)\n").format(
+        "机器人功能(请@我 并加/命令呼出 需添加权限)：\n" + "{0}  zendesk工单统计(/zen /zendesk /工单)\n" +
+        "{0}  Q群聊天统计+词云(/report /日报 /词云)\n" + "{0}  敏感词检测（测试中）\n" + "{0}  羽毛球查询(/find /findt为测试服)、禁言(/ban)\n").format(
     split_symbol)
 
 tools = "{0}  时间戳 /ts".format(split_symbol)
