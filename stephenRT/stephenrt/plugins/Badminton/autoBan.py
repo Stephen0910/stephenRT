@@ -65,15 +65,17 @@ def filter_chat(chats_list):
             if chat["isJy"] is False and chat["isFh"] is False:
                 if len(chat["sendContent"]) > 15:
                     # if "钻" or "砖" or "鉆" in chat["sendContent"] and "s" in chat["sendContent"].lower():
-                    if re.search("鉆|钻|砖|钴", str(chat["sendContent"])) and re.search("s|元|沅", str(chat["sendContent"]).lower()):
+                    if re.search("鉆|钻|砖|钴", str(chat["sendContent"])) and re.search("s|元|沅",
+                                                                                    str(chat["sendContent"]).lower()):
                         result = "chatRoom疑似广告：" + str(chat["sendMan"]["numberUserId"]) + " " + str(chat["sendMan"][
                                                                                                         "name"]) + " " + str(
-                            chat["sendContent"]).replace("\n", "") + str(chat["isFh"]) + str(chat["isJy"])
+                            chat["sendContent"]).replace("\n", "")
                         return result
-        elif re.match("3564837153|2580237802|166345259|3569544846|2927295662|万钻|万钴|万砖|万鉆|萬鉆|萬钻", str(chat["sendMan"]["name"])):
+        elif re.match("3564837153|2580237802|166345259|3569544846|2927295662|万钻|万钴|万砖|万鉆|萬鉆|萬钻",
+                      str(chat["sendMan"]["name"])):
             result = "chatRoom疑似广告：" + str(chat["sendMan"]["numberUserId"]) + " " + str(chat["sendMan"][
                                                                                             "name"]) + " " + str(
-                chat["sendContent"]).replace("\n", "") + str(chat["isFh"]) + str(chat["isJy"])
+                chat["sendContent"]).replace("\n", "")
             return result
 
 
