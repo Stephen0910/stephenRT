@@ -2,3 +2,7 @@
 人机 999999 n
 决战羽毛球 3 n
 干啥 4 n
+https 999999 n
+badminton 999999 n
+joyient 999999 n
+测试 3 n
