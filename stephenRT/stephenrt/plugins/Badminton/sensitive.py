@@ -11,9 +11,11 @@
 
 from nonebot.adapters.onebot.v11 import Bot, GroupMessageEvent, Event
 from nonebot import on_message
-import os, sys
+import os, sys, datetime
 import jieba
 import re
+import asyncpg
+import socket
 
 sys.path.append("../../")
 import stephenrt.privateCfg as cfg
@@ -21,8 +23,31 @@ import stephenrt.privateCfg as cfg
 config = cfg.config_content
 report_to = config["user_id"]
 user_id = config["user_id"]
-group_id = config["group_id_badminton"]
-check_gpName = "决战羽毛球"
+
+
+def get_host_ip():
+    """
+    查询本机ip地址
+    :return: ip
+    """
+    try:
+        s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+        s.connect(('8.8.8.8', 80))
+        ip = s.getsockname()[0]
+    finally:
+        s.close()
+
+    return ip
+
+
+if get_host_ip() == "10.10.10.8":
+    group_id = config["group_id_test"]
+    check_gpName = "决战羽毛球"
+else:
+    group_id = config["group_id_test"]
+    check_gpName = "Robot"
+
+print(group_id, check_gpName)
 
 
 def get_sens():
@@ -88,6 +113,13 @@ async def delete_msg(bot: Bot, msgid):
         await send_private(bot, user_id=report_to, msg=result)
 
 
+async def save_dirty(sql):
+    conn = await asyncpg.connect(user=config["user"], password=config["password"], database=config["database"],
+                         host=config["host"])
+    await conn.execute(sql)
+    await conn.close()
+
+
 msg_matcher = on_message()
 
 sens = get_sens()
@@ -98,15 +130,12 @@ white = get_white()
 @msg_matcher.handle()
 async def checkMessage(bot: Bot, event: GroupMessageEvent):
     msg = event
-    or_msg = str(msg.message).replace("\n", "").replace("\r", "")  # 去掉换行
-
+    or_msg = str(msg.message).replace("\n", "").replace("\r", "").replace(" ", "")  # 去掉空格换行
     # print("debug:", or_msg)
-
     jieba_msg = re.sub('\[CQ:\w+,.+?\]', "", or_msg)  # 图片等信息过滤
-
     sen_text = re.compile(u'[\u4E00-\u9FA5|\s\w]').findall(jieba_msg)  # 去掉所有标点符号
     pure_msg = "".join(sen_text)
-
+    print("pure_msg:", pure_msg)
     jieba.load_userdict(sens)  # 优先拆分敏感词
     jieba.load_userdict(get_white())  # 白名单词
     content = jieba.lcut(pure_msg, cut_all=False)  # 避免误报，使用分词
@@ -118,6 +147,7 @@ async def checkMessage(bot: Bot, event: GroupMessageEvent):
             groupInfo = await group_info(bot, msg.group_id)
             group_name = groupInfo["group_name"]
             sender = msg.sender
+            sender_id = sender.user_id
             # if "羽毛球" in group_name:
             message_id = msg.message_id
             if sender.card != "":
@@ -125,6 +155,13 @@ async def checkMessage(bot: Bot, event: GroupMessageEvent):
             else:
                 name = sender.nickname
             if check_gpName in group_name:  # 这里要做权限隔离  不要所有都检测
+                print("符合群规则")
+                dateArray = datetime.datetime.utcfromtimestamp(msg.time + 8 * 3600)  # 时区加8)
+                msg_time = dateArray.strftime("%Y-%m-%d %H:%M:%S")
+                sql = """
+                INSERT INTO "public"."dirty"("timestamp", "group_id", "group_name", "user_id", "user_name", "message", "key") VALUES ('{0}', {1}, '{2}', {3}, '{4}', '{5}', '{6}');
+                """.format(msg_time, group_id, group_name, sender_id, name, or_msg, word)
+                await save_dirty(sql)
                 send_message = "{0}|{1} 发送敏感内容:【{2}】\n(敏感词:{3})".format(group_name, name, or_msg, word)
                 # await send_private(bot, user_id=report_to,
                 #                    msg="{0}|{1} 发送敏感内容:【{2}】\n(敏感词:{3})".format(group_name, name, or_msg, word))
