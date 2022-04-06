@@ -47,7 +47,7 @@ else:
     group_id = config["group_id_test"]
     check_gpName = "Robot"
 
-is_delete = False
+is_delete = True
 
 print(group_id, check_gpName)
 
@@ -100,6 +100,10 @@ async def send_private(bot: Bot, user_id, msg):
     await bot.send_private_msg(user_id=user_id, message=str(msg))
 
 
+async def ban_user(bot: Bot, group_id, user_id, duration):
+    await bot.set_group_ban(group_id, user_id, duration * 60)
+
+
 async def delete_msg(bot: Bot, msgid):
     """
     撤回消息
@@ -117,7 +121,7 @@ async def delete_msg(bot: Bot, msgid):
 
 async def exe_dirty(sql):
     conn = await asyncpg.connect(user=config["user"], password=config["password"], database=config["database"],
-                         host=config["host"])
+                                 host=config["host"])
     await conn.execute(sql)
     await conn.close()
 
@@ -172,11 +176,18 @@ async def checkMessage(bot: Bot, event: GroupMessageEvent):
                 except Exception as e:
                     await bot.send_private_msg(user_id=user_id, message=str(e))
                     await bot.send_private_msg(user_id=user_id, message=str(send_message))
-
-                if is_delete == True:
-                    user_sql = ""
-                    user_info = exe_dirty()
-                    # await delete_msg(bot, message_id) # 暂不启用
+                finally:
+                    user_sql = """
+                    SELECT count(id) FROM "dirty" WHERE user_id = {0} and group_id = {1}
+                    """.format(user_id, group_id)
+                    count = await exe_dirty(user_sql)
+                    print("共有%s条数据" % count)
+                    if is_delete == True:
+                        await delete_msg(bot, message_id) # 暂不启用
+                        if count > 2:
+                            time = (count / 3) * 5
+                            if count % 3 == 0:
+                                await ban_user(group_id, user_id, time)
                 break  # 重复的脏字会导致发送两次修复
 
     # for word in content:
