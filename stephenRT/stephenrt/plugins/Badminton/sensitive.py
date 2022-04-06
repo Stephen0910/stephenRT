@@ -40,12 +40,14 @@ def get_host_ip():
     return ip
 
 
-if get_host_ip() == "10.10.10.8":
+if re.search("192", get_host_ip()):
     group_id = config["group_id_test"]
     check_gpName = "决战羽毛球"
 else:
     group_id = config["group_id_test"]
     check_gpName = "Robot"
+
+is_delete = False
 
 print(group_id, check_gpName)
 
@@ -113,7 +115,7 @@ async def delete_msg(bot: Bot, msgid):
         await send_private(bot, user_id=report_to, msg=result)
 
 
-async def save_dirty(sql):
+async def exe_dirty(sql):
     conn = await asyncpg.connect(user=config["user"], password=config["password"], database=config["database"],
                          host=config["host"])
     await conn.execute(sql)
@@ -161,7 +163,7 @@ async def checkMessage(bot: Bot, event: GroupMessageEvent):
                 sql = """
                 INSERT INTO "public"."dirty"("timestamp", "group_id", "group_name", "user_id", "user_name", "message", "key") VALUES ('{0}', {1}, '{2}', {3}, '{4}', '{5}', '{6}');
                 """.format(msg_time, group_id, group_name, sender_id, name, or_msg, word)
-                await save_dirty(sql)
+                await exe_dirty(sql)
                 send_message = "{0}|{1} 发送敏感内容:【{2}】\n(敏感词:{3})".format(group_name, name, or_msg, word)
                 # await send_private(bot, user_id=report_to,
                 #                    msg="{0}|{1} 发送敏感内容:【{2}】\n(敏感词:{3})".format(group_name, name, or_msg, word))
@@ -170,8 +172,11 @@ async def checkMessage(bot: Bot, event: GroupMessageEvent):
                 except Exception as e:
                     await bot.send_private_msg(user_id=user_id, message=str(e))
                     await bot.send_private_msg(user_id=user_id, message=str(send_message))
-                # finally:
-                #     await delete_msg(bot, message_id) # 暂不启用
+
+                if is_delete == True:
+                    user_sql = ""
+                    user_info = exe_dirty()
+                    # await delete_msg(bot, message_id) # 暂不启用
                 break  # 重复的脏字会导致发送两次修复
 
     # for word in content:
