@@ -9,6 +9,6 @@
 # @Copyright:   (c) StephenZ 2022
 # @Licence  :     <@2022>
 import re
-a = "ssda钻石dsaf"
-num = re.search("鉆|钻|砖|钴", a)
+a = "93ak1"
+num = re.search("[a-z]+\d+", a)
 print(num)

@@ -40,6 +40,7 @@ def get_host_ip():
     return ip
 
 
+# 本地测试群和使用群隔离
 if re.search("192", get_host_ip()):
     is_delete = True
     check_gpName = "Robot"
@@ -48,7 +49,6 @@ else:
     check_gpName = "决战羽毛球"
 
 group_id = config["group_id_test"]
-
 
 print(group_id, check_gpName)
 
@@ -192,10 +192,10 @@ async def checkMessage(bot: Bot, event: GroupMessageEvent):
                         if count > 2 and count % 3 == 0:
                             time = (count // 3) * 5
                             print("time:", time)
-                            await bot.set_group_ban(group_id=group_id, user_id=sender_id, duration=time*60)
+                            await bot.set_group_ban(group_id=group_id, user_id=sender_id, duration=time * 60)
+                            msg = "{0} {1} 被禁言 {1}分钟".format(str(group_name), str(name), str(time))
+                            try:
+                                await bot.send_group_msg(group_id=group_id, message=msg)
+                            except:
+                                await bot.send_private_msg(user_id=user_id, message=msg)
                 break  # 重复的脏字会导致发送两次修复
-
-    # for word in content:
-    #     if word in sens:
-    #         print("检测到：", word)
-    #         return

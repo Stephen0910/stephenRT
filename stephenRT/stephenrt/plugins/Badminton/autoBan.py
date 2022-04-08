@@ -59,9 +59,8 @@ async def get_chats():
 
 
 def filter_chat(chats_list):
-    for chat in chats_list[2:]:  # 延迟1条避免还没来得及自动禁言
-        # if re.match("boxer_", chat["sendMan"]["name"]):
-        if re.match("boxer_", chat["sendMan"]["name"]):
+    for chat in chats_list[4:]:  # 延迟3条避免还没来得及自动禁言
+        if re.match("[a-z]+\d+", chat["sendMan"]["name"]) or re.match("boxer_", chat["sendMan"]["name"]):
             if chat["isJy"] is False and chat["isFh"] is False:
                 if len(chat["sendContent"]) > 15:
                     # if "钻" or "砖" or "鉆" in chat["sendContent"] and "s" in chat["sendContent"].lower():
