@@ -61,9 +61,9 @@ ids = get_ids()
 
 matcher = on_metaevent()
 
-global new_time
-first_time = 1649601176
-# first_time = int(time.time())
+
+# first_time = 1649601176
+first_time = int(time.time())
 print("first_time:", first_time)
 time_list = [first_time]
 
