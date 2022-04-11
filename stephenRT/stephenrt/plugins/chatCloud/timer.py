@@ -131,7 +131,7 @@ async def send_message():
         # deleteFile(messages[1])
         pass
 
-scheduler.add_job(send_message, "interval", days=1, id="1")
-print("定时器timer触发成功")
+# scheduler.add_job(send_message, "interval", days=1, id="1")
+# print("定时器timer触发成功")
 
 
