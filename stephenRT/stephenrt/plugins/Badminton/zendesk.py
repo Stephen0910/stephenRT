@@ -129,9 +129,9 @@ async def send_message():
         await bot.send_private_msg(user_id=user_id, message=str(e))
         await bot.send_private_msg(user_id=user_id, message=str(msg))
 
-
-scheduler.add_job(send_message, "interval", days=1, id="2")
-print("定时器zendesk触发成功")
+# 暂时关闭
+# scheduler.add_job(send_message, "interval", days=1, id="2")
+# print("定时器zendesk触发成功")
 
 
 # 以下为命令触发
