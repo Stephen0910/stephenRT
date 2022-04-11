@@ -16,6 +16,7 @@ from nonebot import on_metaevent
 from nonebot import get_bot
 from nonebot import on_message
 import re
+import asyncio
 
 header = {"Content-Type": "application/json"}
 
@@ -150,7 +151,7 @@ async def game_info():
                         await bot.send_private_msg(user_id=281016636, message=str(omg_msg) + str(e))
 
     sleep = random.randint(50, 70)
-    time.sleep(sleep)
+    await asyncio.sleep(sleep)
 
 # print(get_recent_data(369818))
 # print(get_dg_id(369818))
