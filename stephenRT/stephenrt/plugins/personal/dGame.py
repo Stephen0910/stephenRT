@@ -15,6 +15,23 @@ from nonebot import on_metaevent
 from nonebot import get_bot
 import re
 import asyncio
+import socket
+
+
+def get_host_ip():
+    """
+    查询本机ip地址
+    :return: ip
+    """
+    try:
+        s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+        s.connect(('8.8.8.8', 80))
+        ip = s.getsockname()[0]
+    finally:
+        s.close()
+
+    return ip
+
 
 header = {"Content-Type": "application/json"}
 
@@ -38,7 +55,7 @@ async def get_recent_data(id):
     response = requests.get(recent_url)
     content = json.loads(response.content)
     last_game = content["data"]["listEntity"][0]
-    await asyncio.sleep(60)
+    await asyncio.sleep(10)
     return last_game
 
 
@@ -47,7 +64,7 @@ async def get_dg_id(id):
     response = requests.get(id_url)
     content = json.loads(response.content)
     last_game = content["data"][0]
-    await asyncio.sleep(60)
+    await asyncio.sleep(10)
     return last_game
 
 
@@ -61,9 +78,11 @@ ids = get_ids()
 
 matcher = on_metaevent()
 
+if get_host_ip() == "10.10.10.8":
+    first_time = int(time.time())
+else:
+    first_time = 1
 
-# first_time = 1649601176
-first_time = int(time.time())
 print("first_time:", first_time)
 time_list = [first_time]
 
@@ -72,6 +91,8 @@ time_list = [first_time]
 async def game_info():
     bot = get_bot()
     g_ids = []
+    o_msg = ""
+    d_msg = ""
     for name, id in ids.items():
         data = await get_recent_data(id)
         create_time = data["create_time"]
@@ -79,7 +100,7 @@ async def game_info():
         g_source = data["g_source"]
         t_create_time = int(time.mktime(time.strptime(create_time, "%Y-%m-%dT%H:%M:%S")))
         if t_create_time > time_list[-1]:
-            g_ids.append(g_id)  # g_id存一起，要去重
+            g_ids.append(g_id)
             time_list.append(t_create_time)
             break
         # else:
@@ -87,7 +108,7 @@ async def game_info():
 
     if len(g_ids) > 0:
         new_id = g_ids[0]
-        is_win = "OMG胜" if data["game_result"] == "0" else "OMG负"
+        is_win = "OMG 胜" if data["game_result"] == "0" else "OMG 负"
         id_url = "https://score.09game.com/MOBA/CorrelationPlayerMilitaryExploit?GameTypeID=21&GameID={0}&GameSource={1}&CurrentSeason=0".format(
             new_id, g_source)
         omg_spend = int(data["time_length"]) // 60 + 1
@@ -99,12 +120,15 @@ async def game_info():
                 kda = "{0}/{1}/{2}".format(data["kill_count"], data["killed_count"], data["assist_count"])
                 hero_name, hero_level = data["hero_name"], data["hero_level"]
                 omg_msg = is_win + " {0}分钟\n".format(omg_spend) + name + "-" + hero_name + ":" + kda
-                print(omg_msg)
-                if omg_msg > 5:
-                    try:
-                        await bot.send_group_msg(group_id=959822848, message=omg_msg)
-                    except Exception as e:
-                        await bot.send_private_msg(user_id=281016636, message=str(omg_msg) + str(e))
+                # print(omg_msg)
+                o_msg = "\n" + omg_msg
+        print(o_msg)
+        if get_host_ip() == "10.10.10.8":
+            if o_msg > 5:
+                try:
+                    await bot.send_group_msg(group_id=959822848, message=o_msg)
+                except Exception as e:
+                    await bot.send_private_msg(user_id=281016636, message=str(o_msg) + str(e))
 
     else:
         print("OMG无")
@@ -123,7 +147,7 @@ async def game_info():
         dg_create_time = int(time.mktime(time.strptime(dg_create_time, "%Y-%m-%dT%H:%M:%S")))
         # print(dg_create_time)
         if dg_create_time > time_list[-1]:
-            dg_ids.append(dg_id)  # g_id存一起，要去重
+            dg_ids.append(dg_id)
             time_list.append(dg_create_time)
             break
 
@@ -140,11 +164,13 @@ async def game_info():
                 kda = re.match("击杀:\d+;死亡:\d+;助攻:\d+;", data["extra_value"]).group()
                 dg_msg = is_win + " {0}分钟\n".format(dg_spend) + data["user_name"] + ":" + kda
                 print(dg_msg)
-                if omg_msg > 5:
-                    try:
-                        await bot.send_group_msg(group_id=959822848, message=dg_msg)
-                    except Exception as e:
-                        await bot.send_private_msg(user_id=281016636, message=str(omg_msg) + str(e))
+                d_msg = "\n" + dg_msg
+        if get_host_ip() == "10.10.10.8":
+            if d_msg > 5:
+                try:
+                    await bot.send_group_msg(group_id=959822848, message=d_msg)
+                except Exception as e:
+                    await bot.send_private_msg(user_id=281016636, message=str(d_msg) + str(e))
 
     # sleep = random.randint(50, 70)
     # await asyncio.sleep(sleep)

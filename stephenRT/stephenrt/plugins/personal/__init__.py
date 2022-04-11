@@ -10,6 +10,7 @@
 # @Licence  :     <@2022>
 import socket
 
+
 def get_host_ip():
     """
     查询本机ip地址
@@ -24,7 +25,6 @@ def get_host_ip():
 
     return ip
 
-# from .autoBan import *
 
 # from .dGame import *
 if str(get_host_ip()) == "10.10.10.8":
