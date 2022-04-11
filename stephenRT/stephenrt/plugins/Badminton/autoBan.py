@@ -59,18 +59,20 @@ async def get_chats():
 
 
 def filter_chat(chats_list):
-    for chat in chats_list[4:]:  # 延迟3条避免还没来得及自动禁言
+    for chat in chats_list[3:]:  # 延迟3条避免还没来得及自动禁言
         if re.match("[a-z]+\d+", chat["sendMan"]["name"]) or re.match("boxer_", chat["sendMan"]["name"]):
             if chat["isJy"] is False and chat["isFh"] is False:
                 if len(chat["sendContent"]) > 15:
                     # if "钻" or "砖" or "鉆" in chat["sendContent"] and "s" in chat["sendContent"].lower():
-                    if re.search("鉆|钻|砖|钴", str(chat["sendContent"])) and re.search("s|元|沅",
-                                                                                    str(chat["sendContent"]).lower()):
+                    if re.search("鉆|钻|砖|钴|万|萬", str(chat["sendContent"])) and re.search("s|元|沅|钱|q",
+                                                                                      str(chat[
+                                                                                              "sendContent"]).lower()) and \
+                            chat["sendMan"]["rankStage"] == 1:
                         result = "chatRoom疑似广告：" + str(chat["sendMan"]["numberUserId"]) + " " + str(chat["sendMan"][
                                                                                                         "name"]) + " " + str(
                             chat["sendContent"]).replace("\n", "")
                         return result
-        elif re.match("3564837153|2580237802|166345259|3569544846|2927295662|万钻|万钴|万砖|万鉆|萬鉆|萬钻",
+        elif re.match("3564837153|2580237802|166345259|3569544846|2927295662|1327004801|万钻|万钴|万砖|万鉆|萬鉆|萬钻",
                       str(chat["sendMan"]["name"])):
             result = "chatRoom疑似广告：" + str(chat["sendMan"]["numberUserId"]) + " " + str(chat["sendMan"][
                                                                                             "name"]) + " " + str(

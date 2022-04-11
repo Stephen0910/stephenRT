@@ -9,6 +9,6 @@
 # @Copyright:   (c) StephenZ 2022
 # @Licence  :     <@2022>
 import re
-a = "93ak1"
+a = "17sz171"
 num = re.search("[a-z]+\d+", a)
 print(num)

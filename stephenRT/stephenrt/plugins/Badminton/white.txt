@@ -6,3 +6,5 @@ https 999999 n
 badminton 999999 n
 joyient 999999 n
 测试 3 n
+干嘛 999999 n
+干啥 999999 n
