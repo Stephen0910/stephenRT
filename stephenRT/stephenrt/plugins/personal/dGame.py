@@ -55,7 +55,7 @@ async def get_recent_data(id):
     response = requests.get(recent_url)
     content = json.loads(response.content)
     last_game = content["data"]["listEntity"][0]
-    await asyncio.sleep(10)
+    await asyncio.sleep(15)
     return last_game
 
 
@@ -64,7 +64,7 @@ async def get_dg_id(id):
     response = requests.get(id_url)
     content = json.loads(response.content)
     last_game = content["data"][0]
-    await asyncio.sleep(10)
+    await asyncio.sleep(15)
     return last_game
 
 
@@ -80,8 +80,11 @@ matcher = on_metaevent()
 
 if get_host_ip() == "10.10.10.8":
     first_time = int(time.time())
+    group = 959822848
 else:
-    first_time = 1
+    # first_time = 1
+    first_time = int(time.time())
+    group = 755489024
 
 print("first_time:", first_time)
 time_list = [first_time]
@@ -99,6 +102,7 @@ async def game_info():
         g_id = data["g_id"]
         g_source = data["g_source"]
         t_create_time = int(time.mktime(time.strptime(create_time, "%Y-%m-%dT%H:%M:%S")))
+        print(t_create_time)
         if t_create_time > time_list[-1]:
             g_ids.append(g_id)
             time_list.append(t_create_time)
@@ -123,12 +127,11 @@ async def game_info():
                 # print(omg_msg)
                 o_msg = "\n" + omg_msg
         print(o_msg)
-        if get_host_ip() == "10.10.10.8":
-            if o_msg > 5:
-                try:
-                    await bot.send_group_msg(group_id=959822848, message=o_msg)
-                except Exception as e:
-                    await bot.send_private_msg(user_id=281016636, message=str(o_msg) + str(e))
+        if len(o_msg) > 5:
+            try:
+                await bot.send_group_msg(group_id=group, message=o_msg)
+            except Exception as e:
+                await bot.send_private_msg(user_id=281016636, message=str(o_msg) + str(e))
 
     else:
         print("OMG无")
@@ -165,16 +168,13 @@ async def game_info():
                 dg_msg = is_win + " {0}分钟\n".format(dg_spend) + data["user_name"] + ":" + kda
                 print(dg_msg)
                 d_msg = "\n" + dg_msg
-        if get_host_ip() == "10.10.10.8":
-            if d_msg > 5:
-                try:
-                    await bot.send_group_msg(group_id=959822848, message=d_msg)
-                except Exception as e:
-                    await bot.send_private_msg(user_id=281016636, message=str(d_msg) + str(e))
 
-    # sleep = random.randint(50, 70)
-    # await asyncio.sleep(sleep)
-    # time.sleep(sleep)
+        if len(d_msg) > 5:
+            try:
+                await bot.send_group_msg(group_id=group, message=d_msg)
+            except Exception as e:
+                await bot.send_private_msg(user_id=281016636, message=str(d_msg) + str(e))
+
 
 # print(get_recent_data(369818))
 # print(get_dg_id(369818))
