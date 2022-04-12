@@ -38,7 +38,7 @@ header = {"Content-Type": "application/json"}
 
 
 def get_ids():
-    names = ["你好尹天仇", "宁心之殇", "晴天眼神", "上海康恒", "再见柳飘飘", "求坑丶"]
+    names = ["你好尹天仇", "宁心之殇", "晴天眼神", "上海康恒", "再见柳飘飘", "求坑丶", "CG控"]
     id_url = "https://users.09game.com/home/GetUserPub?user_name="
     ids = {}
     for name in names:
