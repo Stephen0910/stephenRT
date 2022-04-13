@@ -27,7 +27,16 @@ def transfer_dId(id):
     t2 = id >> 8 & 255
     t3 = id >> 16 & 255
     t4 = id >> 24 & 255
-    return chr(t4)+chr(t3)+chr(t2)+chr(t1)
+    return chr(t4) + chr(t3) + chr(t2) + chr(t1)
+
+
+def get_title(a):
+    user_title = ""
+    title_num = str(bin(a))[2:]
+    for index, i in enumerate(title_num[::-1]):
+        if i == "1":
+            user_title += titles[index]
+    return user_title
 
 
 def get_host_ip():
@@ -83,7 +92,9 @@ async def get_dg_id(id):
 ids = get_ids()
 ip = get_host_ip()
 # print(get_recent_data(369818))
-game_source = {"0": "自主建房-", "1":"Dota-", "2":"IM-", "4": "自由匹配-", "3": "赛季模式-"}
+game_source = {"0": "自主建房-", "1": "Dota-", "2": "IM-", "4": "自由匹配-", "3": "赛季模式-"}
+
+titles = ["MVP", "杀", "助", "躺", "灵", "僵"]
 
 matcher = on_metaevent()
 
@@ -110,7 +121,6 @@ async def game_info():
         create_time = data["create_time"]
         g_id = data["g_id"]
         g_source = data["g_source"]
-        print(g_source)
         g_type = game_source[g_source]
         t_create_time = int(time.mktime(time.strptime(create_time, "%Y-%m-%dT%H:%M:%S")))
         # print(t_create_time)
@@ -135,15 +145,17 @@ async def game_info():
                 kda = "{0}/{1}/{2}".format(data["kill_count"], data["killed_count"], data["assist_count"])
                 hero_name, hero_level = data["hero_name"], data["hero_level"]
                 c_skills = [transfer_dId(x) for x in data["skills"].split(",")][4:6]
-                print("c_skills:", c_skills)
+                title = data["title"]
+                user_title = " " + get_title(title) + " "
+                # print("c_skills:", c_skills)
                 skill1 = MessageSegment.image(source_url + c_skills[0] + ".jpg")
                 skill2 = MessageSegment.image(source_url + c_skills[1] + ".jpg")
-                o_msg = o_msg + data["user_name"] + "-" + hero_name + ":" + kda + skill1 + skill2 + "\n"
+                o_msg = o_msg + data["user_name"] + "-" + hero_name + ":" + kda + user_title + "\n" + skill1 + skill2 + "\n"
                 # print(omg_msg)
 
         omg_msg = "报：" + g_type + is_win + " {0}分钟\n".format(omg_spend) + o_msg
         print(omg_msg)
-        if len(omg_msg) > 5:
+        if len(omg_msg) > 5 and ip == "10.10.10.8":
             try:
                 await bot.send_group_msg(group_id=group, message=omg_msg)
             except Exception as e:
