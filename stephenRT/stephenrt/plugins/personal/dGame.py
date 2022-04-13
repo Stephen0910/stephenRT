@@ -39,9 +39,6 @@ def get_title(a):
     return user_title
 
 
-
-
-
 def get_host_ip():
     """
     查询本机ip地址
@@ -66,7 +63,7 @@ def get_ids():
     ids = {}
     for name in names:
         url_name = urllib.parse.quote("\'" + name + "\'")
-        response = requests.get(id_url + url_name).text
+        response = requests.get(id_url + url_name, timeout=(3, 7)).text
         id = json.loads(response)["temp"][0]["user_id"]
         ids[name] = id
     print(ids)
@@ -76,7 +73,7 @@ def get_ids():
 async def get_recent_data(id):
     recent_url = "https://score.09game.com/MOBA/BasicDataList?UserID={0}&GameTypeID=21&CurrentSeason=0&GameSource=-1&Time=-1&PageIndex=0&PageSize=6".format(
         str(id))
-    response = requests.get(recent_url)
+    response = requests.get(recent_url, timeout=(3,7))
     content = json.loads(response.content)
     last_game = content["data"]["listEntity"][0]
     await asyncio.sleep(15)
@@ -85,7 +82,7 @@ async def get_recent_data(id):
 
 async def get_dg_id(id):
     id_url = "https://score.09game.com/RPG/GameList?UserID={0}&GameTypeID=142&GameSource=-1&Type=2&Number=11".format(id)
-    response = requests.get(id_url)
+    response = requests.get(id_url, timeout=(3,7))
     content = json.loads(response.content)
     last_game = content["data"][0]
     await asyncio.sleep(15)
@@ -111,7 +108,7 @@ if ip == "10.10.10.8":
     first_time = int(time.time())
     group = 959822848
 else:
-    first_time = 1
+    first_time = 1649837159
     # first_time = int(time.time())
     group = 755489024
 
@@ -147,7 +144,7 @@ async def game_info():
             new_id, g_source)
         source_url = "https://cdn.09game.com/resources/game_skill/"
         omg_spend = int(data["time_length"]) // 60 + 1
-        detail = json.loads(requests.get(id_url).content)
+        detail = json.loads(requests.get(id_url, timeout=(3,7)).content)
         # print(json.dumps(detail))
         for data in detail["data"]:
             if data["user_name"] in ids.keys():
@@ -198,7 +195,7 @@ async def game_info():
         id_url = "https://score.09game.com/RPG/GamePerformanceListJson?GameTypeID=142&gameid={0}&gamesource=".format(
             new_id)
         dg_spend = int(dg_data["time_length"]) // 60 + 1
-        dg_detail = json.loads(requests.get(id_url).content)
+        dg_detail = json.loads(requests.get(id_url, timeout=(3,7)).content)
 
         for data in dg_detail["data"]:
             if data["user_name"] in ids.keys():
