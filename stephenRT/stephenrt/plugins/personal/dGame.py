@@ -18,7 +18,7 @@ import asyncio
 import socket
 from nonebot.adapters.onebot.v11.message import MessageSegment
 
-sleep_time = 30
+sleep_time = 10
 
 def transfer_dId(id):
     id = int(id)
@@ -70,9 +70,10 @@ def get_ids():
     ids = {}
     for name in names:
         url_name = urllib.parse.quote("\'" + name + "\'")
-        response = requests.get(id_url + url_name).text
-        id = json.loads(response)["temp"][0]["user_id"]
+        response = requests.get(id_url + url_name)
+        id = json.loads(response.text)["temp"][0]["user_id"]
         ids[name] = id
+        response.close()
     print(ids)
     return ids
 
@@ -83,6 +84,7 @@ async def get_recent_data(id):
     response = requests.get(recent_url)
     content = json.loads(response.content)
     last_game = content["data"]["listEntity"][0]
+    response.close()
     await asyncio.sleep(sleep_time)
     return last_game
 
@@ -92,6 +94,7 @@ async def get_dg_id(id):
     response = requests.get(id_url)
     content = json.loads(response.content)
     last_game = content["data"][0]
+    response.close()
     await asyncio.sleep(sleep_time)
     return last_game
 
@@ -151,7 +154,9 @@ async def game_info():
             new_id, g_source)
         source_url = "https://cdn.09game.com/resources/game_skill/"
         omg_spend = int(data["time_length"]) // 60 + 1
-        detail = json.loads(requests.get(id_url).content)
+        response = requests.get(id_url)
+        detail = json.loads(response.content)
+        response.close()
         # print(json.dumps(detail))
         for data in detail["data"]:
             if data["user_name"] in ids.keys():
@@ -202,8 +207,9 @@ async def game_info():
         id_url = "https://score.09game.com/RPG/GamePerformanceListJson?GameTypeID=142&gameid={0}&gamesource=".format(
             new_id)
         dg_spend = int(dg_data["time_length"]) // 60 + 1
-        dg_detail = json.loads(requests.get(id_url).content)
-
+        response = requests.get(id_url)
+        dg_detail = json.loads(response.content)
+        response.close()
         for data in dg_detail["data"]:
             if data["user_name"] in ids.keys():
                 # 图片
