@@ -150,7 +150,8 @@ async def game_info():
                 # print("c_skills:", c_skills)
                 skill1 = MessageSegment.image(source_url + c_skills[0] + ".jpg")
                 skill2 = MessageSegment.image(source_url + c_skills[1] + ".jpg")
-                o_msg = o_msg + data["user_name"] + "-" + hero_name + ":" + kda + user_title + "\n" + skill1 + skill2 + "\n"
+                o_msg = o_msg + data[
+                    "user_name"] + "-" + hero_name + ":" + kda + user_title + "\n" + skill1 + skill2 + "\n"
                 # print(omg_msg)
 
         omg_msg = "报：" + g_type + is_win + " {0}分钟\n".format(omg_spend) + o_msg
@@ -169,13 +170,13 @@ async def game_info():
     for name, id in ids.items():
         try:
             dg_data = await get_dg_id(id)
-
         except:
             dg_data = "无"  # 没有对局
             continue
         dg_create_time = dg_data["create_time"]
         dg_id = dg_data["game_id"]
         dg_create_time = int(time.mktime(time.strptime(dg_create_time, "%Y-%m-%dT%H:%M:%S")))
+
         # print(dg_create_time)
         if dg_create_time > time_list[-1]:
             dg_ids.append(dg_id)
@@ -189,10 +190,21 @@ async def game_info():
             new_id)
         dg_spend = int(dg_data["time_length"]) // 60 + 1
         dg_detail = json.loads(requests.get(id_url).content)
+
         for data in dg_detail["data"]:
             if data["user_name"] in ids.keys():
+                # 图片
+                extra_value = str(data["extra_value"])
+                hero = re.search("英雄:.*?;", extra_value).group()[-5:-1]
+                skill1, skill2 = re.search("额外技能1:.*?;", extra_value).group()[-5:-1], re.search("额外技能2:.*?;",
+                                                                                                extra_value).group()[
+                                                                                      -5:-1]
+                hero_icon = MessageSegment.image("https://cdn.09game.com/resources/game_avator/" + hero + ".jpg")
+                skill1_icon = MessageSegment.image("https://cdn.09game.com/resources/game_skill/" + skill1 + ".jpg")
+                skill2_icon = MessageSegment.image("https://cdn.09game.com/resources/game_skill/" + skill2 + ".jpg")
+
                 kda = re.match("击杀:\d+;死亡:\d+;助攻:\d+;", data["extra_value"]).group()
-                d_msg = d_msg + data["user_name"] + ":" + kda + "\n"
+                d_msg = d_msg + data["user_name"] + ":" + kda + "\n" + hero_icon + skill1_icon + skill2_icon + "\n"
 
         dg_msg = "报：" + is_win + " {0}分钟\n".format(dg_spend) + d_msg
         print(dg_msg)
