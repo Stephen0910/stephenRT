@@ -39,6 +39,9 @@ def get_title(a):
     return user_title
 
 
+
+
+
 def get_host_ip():
     """
     查询本机ip地址
@@ -96,6 +99,12 @@ game_source = {"0": "自主建房-", "1": "Dota-", "2": "IM-", "4": "自由匹�
 
 titles = ["MVP", "杀", "助", "躺", "灵", "僵"]
 
+dg_titles = {"map_reserve2": "辅",
+             "map_reserve4": "MVP",
+             "map_reserve5": "杀",
+             "map_reserve6": "助",
+             "map_reserve7": "富",
+             "map_reserve8": "SMVP"}
 matcher = on_metaevent()
 
 if ip == "10.10.10.8":
@@ -194,6 +203,7 @@ async def game_info():
         for data in dg_detail["data"]:
             if data["user_name"] in ids.keys():
                 # 图片
+                user_title = ""
                 extra_value = str(data["extra_value"])
                 hero = re.search("英雄:.*?;", extra_value).group()[-5:-1]
                 skill1, skill2 = re.search("额外技能1:.*?;", extra_value).group()[-5:-1], re.search("额外技能2:.*?;",
@@ -204,7 +214,12 @@ async def game_info():
                 skill2_icon = MessageSegment.image("https://cdn.09game.com/resources/game_skill/" + skill2 + ".jpg")
 
                 kda = re.match("击杀:\d+;死亡:\d+;助攻:\d+;", data["extra_value"]).group()
-                d_msg = d_msg + data["user_name"] + ":" + kda + "\n" + hero_icon + skill1_icon + skill2_icon + "\n"
+                for title in dg_titles.keys():
+                    if data[title] != 0:
+                        user_title += dg_titles[title]
+
+                d_msg = d_msg + data["user_name"] + ":" + kda + " {} ".format(
+                    user_title) + "\n" + hero_icon + skill1_icon + skill2_icon + "\n"
 
         dg_msg = "报：" + is_win + " {0}分钟\n".format(dg_spend) + d_msg
         print(dg_msg)
