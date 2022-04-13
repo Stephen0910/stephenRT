@@ -19,6 +19,17 @@ import socket
 from nonebot.adapters.onebot.v11.message import MessageSegment
 
 
+def transfer_dId(id):
+    id = int(id)
+    if id <= 0:
+        return 0
+    t1 = id & 255
+    t2 = id >> 8 & 255
+    t3 = id >> 16 & 255
+    t4 = id >> 24 & 255
+    return chr(t4)+chr(t3)+chr(t2)+chr(t1)
+
+
 def get_host_ip():
     """
     查询本机ip地址
@@ -38,7 +49,7 @@ header = {"Content-Type": "application/json"}
 
 
 def get_ids():
-    names = ["你好尹天仇", "宁心之殇", "晴天眼神", "上海康恒", "再见柳飘飘", "求坑丶", "CG控"]
+    names = ["你好尹天仇", "宁心之殇", "晴天眼神", "上海康恒", "再见柳飘飘", "求坑丶", "CG控", "小灰灰居然"]
     id_url = "https://users.09game.com/home/GetUserPub?user_name="
     ids = {}
     for name in names:
@@ -68,10 +79,11 @@ async def get_dg_id(id):
     await asyncio.sleep(15)
     return last_game
 
+
 ids = get_ids()
 ip = get_host_ip()
 # print(get_recent_data(369818))
-
+game_source = {"0": "自主建房-", "1":"Dota-", "2":"IM-", "4": "自由匹配-", "3": "赛季模式-"}
 
 matcher = on_metaevent()
 
@@ -98,6 +110,8 @@ async def game_info():
         create_time = data["create_time"]
         g_id = data["g_id"]
         g_source = data["g_source"]
+        print(g_source)
+        g_type = game_source[g_source]
         t_create_time = int(time.mktime(time.strptime(create_time, "%Y-%m-%dT%H:%M:%S")))
         # print(t_create_time)
         if t_create_time > time_list[-1]:
@@ -112,6 +126,7 @@ async def game_info():
         is_win = "OMG 胜" if data["game_result"] == "0" else "OMG 负"
         id_url = "https://score.09game.com/MOBA/CorrelationPlayerMilitaryExploit?GameTypeID=21&GameID={0}&GameSource={1}&CurrentSeason=0".format(
             new_id, g_source)
+        source_url = "https://cdn.09game.com/resources/game_skill/"
         omg_spend = int(data["time_length"]) // 60 + 1
         detail = json.loads(requests.get(id_url).content)
         # print(json.dumps(detail))
@@ -119,12 +134,16 @@ async def game_info():
             if data["user_name"] in ids.keys():
                 kda = "{0}/{1}/{2}".format(data["kill_count"], data["killed_count"], data["assist_count"])
                 hero_name, hero_level = data["hero_name"], data["hero_level"]
-                o_msg = o_msg + data["user_name"] + "-" + hero_name + ":" + kda + "\n"
+                c_skills = [transfer_dId(x) for x in data["skills"].split(",")][4:6]
+                print("c_skills:", c_skills)
+                skill1 = MessageSegment.image(source_url + c_skills[0] + ".jpg")
+                skill2 = MessageSegment.image(source_url + c_skills[1] + ".jpg")
+                o_msg = o_msg + data["user_name"] + "-" + hero_name + ":" + kda + skill1 + skill2 + "\n"
                 # print(omg_msg)
 
-        omg_msg = "报：" + is_win + " {0}分钟\n".format(omg_spend) + o_msg
+        omg_msg = "报：" + g_type + is_win + " {0}分钟\n".format(omg_spend) + o_msg
         print(omg_msg)
-        if len(omg_msg) > 5 and ip == "10.10.10.8":
+        if len(omg_msg) > 5:
             try:
                 await bot.send_group_msg(group_id=group, message=omg_msg)
             except Exception as e:
@@ -161,7 +180,7 @@ async def game_info():
         for data in dg_detail["data"]:
             if data["user_name"] in ids.keys():
                 kda = re.match("击杀:\d+;死亡:\d+;助攻:\d+;", data["extra_value"]).group()
-                d_msg = d_msg +  data["user_name"] + ":" + kda + "\n"
+                d_msg = d_msg + data["user_name"] + ":" + kda + "\n"
 
         dg_msg = "报：" + is_win + " {0}分钟\n".format(dg_spend) + d_msg
         print(dg_msg)
@@ -170,8 +189,6 @@ async def game_info():
                 await bot.send_group_msg(group_id=group, message=dg_msg)
             except Exception as e:
                 await bot.send_private_msg(user_id=281016636, message=str(dg_msg) + str(e))
-
-
 
 # print(get_recent_data(369818))
 # print(get_dg_id(369818))
