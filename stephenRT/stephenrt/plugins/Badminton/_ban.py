@@ -95,9 +95,13 @@ def transferMsg(response, long=True):
         for user in userList:
             middle_dic = {}
             for key in key_words:
-                if user[key] != "" and user[key] is not None:
-                    middle_dic[key] = user[key]
-                    msg = msg + key + ":  " + str(user[key]) + "\n"
+                try:
+                    if user[key] != "" and user[key] is not None:
+                        middle_dic[key] = user[key]
+                        msg = msg + key + ":  " + str(user[key]) + "\n"
+                except:
+                    user[key] = ""
+                    print("该内容不存在")
             msg += "-" * 20 + "\n"
         logger.debug(msg)
         logger.debug(type(msg))

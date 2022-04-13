@@ -10,44 +10,263 @@
 # @Licence  :     <@2022>
 
 import re
-#
-# msg = """[Badminton Blitz][GOOGLE][1b2f782081d44579a989695103632e50] - SUPPORT"""
-#
-# project = re.match("\[.*?\]", msg).group()[1:-1]
-# print(project)
 
-# def test(id):
-#     if id <= 0:
-#         return 0
-#     t1 = id & 255
-#     t2 = id >> 8 & 255
-#     t3 = id >> 16 & 255
-#     t4 = id >> 24 & 255
-#     return chr(t4)+chr(t3)+chr(t2)+chr(t1)
-#
-#
-# a = 1215723364
-# print(test(a))
-#
-# titles = ["MVP", "杀", "助", "躺", "灵", "僵"]
-#
-#
-# def get_title(a):
-#     user_title = ""
-#     title_num = str(bin(a))[2:]
-#     print(title_num)
-#     for index, i in enumerate(title_num[::-1]):
-#         if i == "1":
-#             user_title += titles[index]
-#     return user_title
-#
-#
-# print(get_title(4))
+a = {
+    "code": 0,
+    "count": 27,
+    "records": [
+        {
+            "app_type": 2,
+            "channel_order_no": "4200001376202204049508337603",
+            "count": 100,
+            "create_time": "2022-4-4 14:2:0",
+            "rollback_flag": 0,
+            "rollback_reason": "",
+            "channel": "微信充值"
+        },
+        {
+            "app_type": 2,
+            "channel_order_no": "4200000799202101107187885274",
+            "count": 500,
+            "create_time": "2021-1-10 18:17:32",
+            "rollback_flag": 0,
+            "rollback_reason": "",
+            "channel": "微信充值"
+        },
+        {
+            "app_type": 2,
+            "channel_order_no": "4200000545202004115260482405",
+            "count": 1000,
+            "create_time": "2020-4-11 13:25:9",
+            "rollback_flag": 0,
+            "rollback_reason": "",
+            "channel": "微信充值"
+        },
+        {
+            "app_type": 2,
+            "channel_order_no": "4200000472202003314527548937",
+            "count": 1000,
+            "create_time": "2020-3-31 19:19:31",
+            "rollback_flag": 0,
+            "rollback_reason": "",
+            "channel": "微信充值"
+        },
+        {
+            "app_type": 2,
+            "channel_order_no": "4200000493202003216637949944",
+            "count": 1000,
+            "create_time": "2020-3-21 22:2:50",
+            "rollback_flag": 0,
+            "rollback_reason": "",
+            "channel": "微信充值"
+        },
+        {
+            "app_type": 2,
+            "channel_order_no": "4200000495202003104782977780",
+            "count": 1000,
+            "create_time": "2020-3-10 18:55:14",
+            "rollback_flag": 0,
+            "rollback_reason": "",
+            "channel": "微信充值"
+        },
+        {
+            "app_type": 2,
+            "channel_order_no": "4200000493202002268709398670",
+            "count": 1000,
+            "create_time": "2020-2-26 19:25:43",
+            "rollback_flag": 0,
+            "rollback_reason": "",
+            "channel": "微信充值"
+        },
+        {
+            "app_type": 2,
+            "channel_order_no": "4200000496202002080872951385",
+            "count": 1000,
+            "create_time": "2020-2-8 13:18:53",
+            "rollback_flag": 0,
+            "rollback_reason": "",
+            "channel": "微信充值"
+        },
+        {
+            "app_type": 2,
+            "channel_order_no": "4200000477202001068185498241",
+            "count": 1000,
+            "create_time": "2020-1-6 20:42:48",
+            "rollback_flag": 0,
+            "rollback_reason": "",
+            "channel": "微信充值"
+        },
+        {
+            "app_type": 2,
+            "channel_order_no": "4200000396201910021911159514",
+            "count": 1000,
+            "create_time": "2019-10-2 12:27:39",
+            "rollback_flag": 0,
+            "rollback_reason": "",
+            "channel": "微信充值"
+        },
+        {
+            "app_type": 2,
+            "channel_order_no": "4200000390201908225350305661",
+            "count": 1000,
+            "create_time": "2019-8-22 19:20:51",
+            "rollback_flag": 0,
+            "rollback_reason": "",
+            "channel": "微信充值"
+        },
+        {
+            "app_type": 2,
+            "channel_order_no": "4200000393201907239137107855",
+            "count": 1000,
+            "create_time": "2019-7-23 21:59:42",
+            "rollback_flag": 0,
+            "rollback_reason": "",
+            "channel": "微信充值"
+        },
+        {
+            "app_type": 2,
+            "channel_order_no": "4200000326201907119172491150",
+            "count": 1000,
+            "create_time": "2019-7-11 23:40:47",
+            "rollback_flag": 0,
+            "rollback_reason": "",
+            "channel": "微信充值"
+        },
+        {
+            "app_type": 2,
+            "channel_order_no": "4200000324201906175052527653",
+            "count": 1000,
+            "create_time": "2019-6-17 22:48:11",
+            "rollback_flag": 0,
+            "rollback_reason": "",
+            "channel": "微信充值"
+        },
+        {
+            "app_type": 2,
+            "channel_order_no": "4200000314201906037432693733",
+            "count": 1000,
+            "create_time": "2019-6-3 22:23:37",
+            "rollback_flag": 0,
+            "rollback_reason": "",
+            "channel": "微信充值"
+        },
+        {
+            "app_type": 2,
+            "channel_order_no": "4200000324201905221000741504",
+            "count": 1000,
+            "create_time": "2019-5-22 10:18:55",
+            "rollback_flag": 0,
+            "rollback_reason": "",
+            "channel": "微信充值"
+        },
+        {
+            "app_type": 2,
+            "channel_order_no": "4200000311201905119558738722",
+            "count": 1000,
+            "create_time": "2019-5-11 15:3:1",
+            "rollback_flag": 0,
+            "rollback_reason": "",
+            "channel": "微信充值"
+        },
+        {
+            "app_type": 2,
+            "channel_order_no": "4200000312201904204745372209",
+            "count": 1000,
+            "create_time": "2019-4-20 11:13:5",
+            "rollback_flag": 0,
+            "rollback_reason": "",
+            "channel": "微信充值"
+        },
+        {
+            "app_type": 2,
+            "channel_order_no": "4200000225201812289913162662",
+            "count": 1000,
+            "create_time": "2018-12-28 21:24:49",
+            "rollback_flag": 0,
+            "rollback_reason": "",
+            "channel": "微信充值"
+        },
+        {
+            "app_type": 2,
+            "channel_order_no": "4200000212201811243352803645",
+            "count": 1000,
+            "create_time": "2018-11-24 20:18:22",
+            "rollback_flag": 0,
+            "rollback_reason": "",
+            "channel": "微信充值"
+        },
+        {
+            "app_type": 2,
+            "channel_order_no": "4200000225201810246731204731",
+            "count": 1000,
+            "create_time": "2018-10-24 21:59:17",
+            "rollback_flag": 0,
+            "rollback_reason": "",
+            "channel": "微信充值"
+        },
+        {
+            "app_type": 2,
+            "channel_order_no": "4200000171201809241554809496",
+            "count": 1000,
+            "create_time": "2018-9-24 17:29:58",
+            "rollback_flag": 0,
+            "rollback_reason": "",
+            "channel": "微信充值"
+        },
+        {
+            "app_type": 2,
+            "channel_order_no": "4200000163201809151550123957",
+            "count": 1000,
+            "create_time": "2018-9-15 22:44:11",
+            "rollback_flag": 0,
+            "rollback_reason": "",
+            "channel": "微信充值"
+        },
+        {
+            "app_type": 2,
+            "channel_order_no": "4200000167201809021005387265",
+            "count": 1000,
+            "create_time": "2018-9-2 18:52:46",
+            "rollback_flag": 0,
+            "rollback_reason": "",
+            "channel": "微信充值"
+        },
+        {
+            "app_type": 2,
+            "channel_order_no": "4200000184201808261974860672",
+            "count": 1000,
+            "create_time": "2018-8-26 16:12:36",
+            "rollback_flag": 0,
+            "rollback_reason": "",
+            "channel": "微信充值"
+        },
+        {
+            "app_type": 2,
+            "channel_order_no": "4200000137201807169428533009",
+            "count": 1000,
+            "create_time": "2018-7-16 22:19:54",
+            "rollback_flag": 0,
+            "rollback_reason": "",
+            "channel": "微信充值"
+        },
+        {
+            "app_type": 2,
+            "channel_order_no": "4200000122201807021636246071",
+            "count": 1000,
+            "create_time": "2018-7-2 19:25:12",
+            "rollback_flag": 0,
+            "rollback_reason": "",
+            "channel": "微信充值"
+        }
+    ]
+}
 
-# a = "击杀:20;死亡:10;助攻:13;金钱:32889;金钱占比:27;伤害:69137;伤害占比:29;额外技能1:A170;额外技能2:A189;装备1:1229008948;装备2:1227899225;装备3:1227896386;装备4:1227902808;装备5:1227899189;装备6:1229008947;装备7:1229078863;英雄:H008;等级:25;"
-# a = "击杀:11;死亡:19;助攻:7;金钱:19708;金钱占比:21;伤害:51285;伤害占比:23;额外技能1:A323;额外技能2:A468;装备1:1229008948;装备2:1227900746;装备3:1227897178;装备4:0;装备5:1227900506;装备6:1227896137;装备7:1229078854;英雄:H002;等级:25;"
-a = "击杀:3;死亡:14;助攻:12;金钱:14080;金钱占比:15;伤害:22883;伤害占比:10;额外技能1:A063;额外技能2:A279;装备1:1227895880;装备2:0;装备3:1229008962;装备4:1227902281;装备5:1227896388;装备6:1227897178;装备7:1229078833;英雄:U000;等级:25;"
-hero = re.search("英雄:.*?;", a).group()[-5:-1]
-skill1 = re.search("额外技能1:.*?;", a).group()[-5:-1]
-print(hero)
-print(skill1)
+count = 0
+for i in a["records"]:
+    count += i["count"]
+print(count)
+
+b = """
+https://shop.09game.com/shop?{"type":"q_my_charge","json":"{\"Days\":30,\"Token\":\"54833-e4bda0e5a5bde5b0b9e5a4a9e4bb87-65536-1649903651-206_2-51e0ce60d8b6bb088bfac56ca76f9739\",\"Start\":0,\"Count\":12}"}
+""".encode("utf-8")
+print(b)
