@@ -105,7 +105,7 @@ async def get_dg_id(id):
 ids = get_ids(names=names)
 ip = get_host_ip()
 # print(get_recent_data(369818))
-game_source = {"0": "自主建房-", "1": "Dota-", "2": "IM-", "4": "自由匹配-", "3": "赛季模式-"}
+game_source = {"0": "自由作战-", "1": "Dota-", "2": "IM-", "4": "自由匹配-", "3": "赛季模式-"}
 
 titles = ["MVP", "杀", "助", "躺", "灵", "僵"]
 
@@ -165,6 +165,7 @@ async def game_info():
             if data["user_name"] in ids.keys():
                 kda = "{0}/{1}/{2}".format(data["kill_count"], data["killed_count"], data["assist_count"])
                 hero_name, hero_level = data["hero_name"], data["hero_level"]
+                guard = "近卫" if str(data["team_id"]) == "0" else "天灾"
                 c_skills = [transfer_dId(x) for x in data["skills"].split(",")][4:6]
                 title = data["title"]
                 user_title = " " + get_title(title) + " "
@@ -172,7 +173,7 @@ async def game_info():
                 skill1 = MessageSegment.image(source_url + c_skills[0] + ".jpg")
                 skill2 = MessageSegment.image(source_url + c_skills[1] + ".jpg")
                 o_msg = o_msg + data[
-                    "user_name"] + "-" + hero_name + ":" + kda + user_title + "\n" + skill1 + skill2 + "\n"
+                    "user_name"] + "-" + hero_name + "-" + str(hero_level) + "级 " + guard + ":" + kda + user_title + "\n" + skill1 + skill2 + "\n"
                 # print(omg_msg)
 
         omg_msg = "报：" + g_type + is_win + " {0}分钟\n".format(omg_spend) + o_msg
