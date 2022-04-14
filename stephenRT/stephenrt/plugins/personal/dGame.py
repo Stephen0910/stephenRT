@@ -18,7 +18,9 @@ import asyncio
 import socket
 from nonebot.adapters.onebot.v11.message import MessageSegment
 
+
 sleep_time = 10
+
 
 def transfer_dId(id):
     id = int(id)
@@ -55,6 +57,8 @@ def get_host_ip():
     return ip
 
 
+names = ["你好尹天仇", "宁心之殇", "晴天眼神", "上海康恒", "再见柳飘飘", "求坑丶", "CG控", "小灰灰居然"]
+
 header = {
     "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9",
     "Accept-Encoding": "gzip, deflate, br",
@@ -64,8 +68,7 @@ header = {
 }
 
 
-def get_ids():
-    names = ["你好尹天仇", "宁心之殇", "晴天眼神", "上海康恒", "再见柳飘飘", "求坑丶", "CG控", "小灰灰居然"]
+def get_ids(names):
     id_url = "https://users.09game.com/home/GetUserPub?user_name="
     ids = {}
     for name in names:
@@ -99,7 +102,7 @@ async def get_dg_id(id):
     return last_game
 
 
-ids = get_ids()
+ids = get_ids(names=names)
 ip = get_host_ip()
 # print(get_recent_data(369818))
 game_source = {"0": "自主建房-", "1": "Dota-", "2": "IM-", "4": "自由匹配-", "3": "赛季模式-"}
@@ -118,8 +121,8 @@ if ip == "10.10.10.8":
     first_time = int(time.time())
     group = 959822848
 else:
-    first_time = 1649837159
-    # first_time = int(time.time())
+    # first_time = 1649837159
+    first_time = int(time.time())
     group = 755489024
 
 print("first_time:", first_time)
@@ -239,5 +242,8 @@ async def game_info():
             except Exception as e:
                 await bot.send_private_msg(user_id=281016636, message=str(dg_msg) + str(e))
 
+
 # print(get_recent_data(369818))
 # print(get_dg_id(369818))
+
+

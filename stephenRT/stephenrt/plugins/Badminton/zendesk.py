@@ -34,6 +34,7 @@ group_id = config["group_id_test"]
 today = datetime.datetime.now().date().strftime('%Y-%m-%d')
 yesterday = (datetime.datetime.now() + datetime.timedelta(days=-1)).date().strftime('%Y-%m-%d')
 
+
 def show_ticket(ticketId):
     """
     获取单个
@@ -109,7 +110,7 @@ def projectCount(search_string):
     return [count, project]
 
 
-@scheduler.scheduled_job("cron", hour=23, minute=1, second=20)
+# @scheduler.scheduled_job("cron", hour=23, minute=1, second=20)  #暂时屏蔽 容易卡住
 async def send_message():
     bot = get_bot()
     # 处理msg打印
@@ -129,6 +130,7 @@ async def send_message():
         await bot.send_private_msg(user_id=user_id, message=str(e))
         await bot.send_private_msg(user_id=user_id, message=str(msg))
 
+
 # 暂时关闭
 # scheduler.add_job(send_message, "interval", days=1, id="2")
 # print("定时器zendesk触发成功")
@@ -136,6 +138,8 @@ async def send_message():
 
 # 以下为命令触发
 zendesk = on_command("zendesk", rule=to_me(), aliases={"工单", "zen", "zendesk查询"}, priority=1, permission=SUPERUSER)
+
+
 @zendesk.got("checkDay", prompt="请输入日期如：{0}".format(today))
 async def zendeskReport(
         checkDay: str = ArgPlainText("checkDay"),
