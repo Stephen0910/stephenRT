@@ -121,8 +121,8 @@ if ip == "10.10.10.8":
     first_time = int(time.time())
     group = 959822848
 else:
-    # first_time = 1649837159
-    first_time = int(time.time())
+    first_time = 1649837159
+    # first_time = int(time.time())
     group = 755489024
 
 print("first_time:", first_time)
@@ -176,8 +176,10 @@ async def game_info():
                 # print(omg_msg)
 
         omg_msg = "报：" + g_type + is_win + " {0}分钟\n".format(omg_spend) + o_msg
-        print(omg_msg)
-        if len(omg_msg) > 5 and ip == "10.10.10.8":
+        print(omg_msg, len(omg_msg))
+        # if len(omg_msg) > 1:
+        if len(omg_msg) > 1 and ip == "10.10.10.8":
+            print("send the omg msg")
             try:
                 await bot.send_group_msg(group_id=group, message=omg_msg)
             except Exception as e:
@@ -235,8 +237,9 @@ async def game_info():
                     user_title) + "\n" + hero_icon + skill1_icon + skill2_icon + "\n"
 
         dg_msg = "报：" + is_win + " {0}分钟\n".format(dg_spend) + d_msg
-        print(dg_msg)
-        if len(dg_msg) > 5 and ip == "10.10.10.8":
+        print(dg_msg, len(dg_msg))
+        if len(dg_msg) > 1 and ip == "10.10.10.8":
+            print("send dg new msg")
             try:
                 await bot.send_group_msg(group_id=group, message=dg_msg)
             except Exception as e:
