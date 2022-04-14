@@ -56,7 +56,7 @@ async def search_user_info(name):
     if user_data["total"] == []:
         return "无数据"
     elif user_data["season"] == []:
-        season_data = "赛季数据无"
+        season_data = "赛季数据无\n"
     else:
         season_total = user_data["season"][0]["total_times"]
         season_win = user_data["season"][0]["total_win"]
@@ -78,7 +78,10 @@ async def search_user_info(name):
 
     s = requests.get("https://score.09game.com/MOBA/UserRanking?gameTypeId=21&UserID={0}".format(user_id))
     rank = json.loads(s.content)
+
     s.close()
+    if rank["data"] == []:
+        return msg
     rank_info = "⬤  积分:{0}, 排名:{2},竞技场积分:{1}".format(rank["data"][0]["score"], rank["data"][0]["arena_score"],
                                                         rank["data"][0]["rank_number"])
 
