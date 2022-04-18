@@ -19,7 +19,7 @@ import socket
 from nonebot.adapters.onebot.v11.message import MessageSegment
 
 
-sleep_time = 10
+sleep_time = 5
 
 
 def transfer_dId(id):
