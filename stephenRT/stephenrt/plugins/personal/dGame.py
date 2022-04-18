@@ -18,7 +18,6 @@ import asyncio
 import socket
 from nonebot.adapters.onebot.v11.message import MessageSegment
 
-
 sleep_time = 5
 
 
@@ -67,6 +66,18 @@ header = {
     "Host": "score.09game.com"
 }
 
+game_source = {"0": "自由作战-", "1": "Dota-", "2": "IM-", "4": "自由匹配-", "3": "赛季模式-"}
+users_chi = {0: "无", 1: "单", 2: "双", 3: "三", 4: "四", 5: "五"}
+
+titles = ["杀", "MVP", "助", "躺", "灵", "僵"]
+
+dg_titles = {"map_reserve2": "辅",
+             "map_reserve4": "MVP",
+             "map_reserve5": "杀",
+             "map_reserve6": "助",
+             "map_reserve7": "富",
+             "map_reserve8": "SMVP"}
+
 
 def get_ids(names):
     id_url = "https://users.09game.com/home/GetUserPub?user_name="
@@ -102,19 +113,25 @@ async def get_dg_id(id):
     return last_game
 
 
+async def get_gids(id):
+    """
+    返回最近最多100场g_ids
+    :param id:
+    :return:
+    """
+    recent_most = "https://score.09game.com/moba/BasicDataList?UserID={0}&GameTypeID=21&CurrentSeason=0&GameSource=-1&Time=-1&PageIndex=0&PageSize=100".format(
+        id)
+    response = requests.get(recent_most)
+    recent_data = json.loads(response.content)["data"]["listEntity"]
+    response.close()
+    g_ids = [x["g_id"] for x in recent_data]
+    return g_ids
+
+
 ids = get_ids(names=names)
 ip = get_host_ip()
 # print(get_recent_data(369818))
-game_source = {"0": "自由作战-", "1": "Dota-", "2": "IM-", "4": "自由匹配-", "3": "赛季模式-"}
 
-titles = ["杀", "MVP", "助", "躺", "灵", "僵"]
-
-dg_titles = {"map_reserve2": "辅",
-             "map_reserve4": "MVP",
-             "map_reserve5": "杀",
-             "map_reserve6": "助",
-             "map_reserve7": "富",
-             "map_reserve8": "SMVP"}
 matcher = on_metaevent()
 
 if ip == "10.10.10.8":
@@ -161,8 +178,10 @@ async def game_info():
         detail = json.loads(response.content)
         response.close()
         # print(json.dumps(detail))
+        users = 0
         for data in detail["data"]:
             if data["user_name"] in ids.keys():
+                user_id = data["user_id"]
                 kda = "{0}/{1}/{2}".format(data["kill_count"], data["killed_count"], data["assist_count"])
                 hero_name, hero_level = data["hero_name"], data["hero_level"]
                 guard = "近卫" if str(data["team_id"]) == "0" else "天灾"
@@ -173,10 +192,25 @@ async def game_info():
                 skill1 = MessageSegment.image(source_url + c_skills[0] + ".jpg")
                 skill2 = MessageSegment.image(source_url + c_skills[1] + ".jpg")
                 o_msg = o_msg + data[
-                    "user_name"] + "-" + hero_name + "-" + str(hero_level) + "级 " + guard + ":" + kda + user_title + "\n" + skill1 + skill2 + "\n"
+                    "user_name"] + "-" + hero_name + "-" + str(
+                    hero_level) + "级 " + guard + ":" + kda + user_title + "\n" + skill1 + skill2 + "\n"
                 # print(omg_msg)
+                users += 1
+                team_id = data["team_id"]
+                mc_gids = await get_gids(user_id)
 
-        omg_msg = "报：" + g_type + is_win + " {0}分钟\n".format(omg_spend) + o_msg
+        for data in detail["data"]:
+            if data["user_name"] not in ids:
+                if data["team_id"] == team_id and data["user_name"] not in ids:
+                    street_ids = await get_gids(data["user_id"])
+                    same_ids = list(set(mc_gids) & set(street_ids))
+                    print("同局：".format(same_ids))
+                    if len(same_ids) > 3:
+                        users += 1
+                people = "{0}排 ".format(users_chi[users])
+
+        # 上面是人数
+        omg_msg = "报：" + g_type + people + is_win + " {0}分钟\n".format(omg_spend) + o_msg
         print(omg_msg, len(omg_msg))
         # if len(omg_msg) > 1:
         if len(omg_msg) > 1 and ip == "10.10.10.8":
@@ -246,8 +280,5 @@ async def game_info():
             except Exception as e:
                 await bot.send_private_msg(user_id=281016636, message=str(dg_msg) + str(e))
 
-
 # print(get_recent_data(369818))
 # print(get_dg_id(369818))
-
-
