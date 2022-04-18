@@ -107,7 +107,7 @@ ip = get_host_ip()
 # print(get_recent_data(369818))
 game_source = {"0": "自由作战-", "1": "Dota-", "2": "IM-", "4": "自由匹配-", "3": "赛季模式-"}
 
-titles = ["MVP", "杀", "助", "躺", "灵", "僵"]
+titles = ["杀", "MVP", "助", "躺", "灵", "僵"]
 
 dg_titles = {"map_reserve2": "辅",
              "map_reserve4": "MVP",

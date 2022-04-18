@@ -54,7 +54,7 @@ async def search_user_info(name):
     user_data = json.loads(s.content)["data"]
     s.close()
     if user_data["total"] == []:
-        return "无数据"
+        return "无OMG数据"
     elif user_data["season"] == []:
         season_data = "赛季数据无\n"
     else:
