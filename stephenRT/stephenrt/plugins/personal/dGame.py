@@ -119,7 +119,7 @@ async def get_gids(id):
     :param id:
     :return:
     """
-    recent_most = "https://score.09game.com/moba/BasicDataList?UserID={0}&GameTypeID=21&CurrentSeason=0&GameSource=-1&Time=-1&PageIndex=0&PageSize=50".format(
+    recent_most = "https://score.09game.com/moba/BasicDataList?UserID={0}&GameTypeID=21&CurrentSeason=0&GameSource=-1&Time=-1&PageIndex=0&PageSize=100".format(
         id)
     response = requests.get(recent_most)
     recent_data = json.loads(response.content)["data"]["listEntity"]
