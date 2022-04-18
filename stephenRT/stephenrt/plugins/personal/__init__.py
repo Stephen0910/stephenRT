@@ -26,7 +26,7 @@ def get_host_ip():
     return ip
 
 
-from .dGame import *
+# from .dGame import *
 from .search_body import *
 
 if str(get_host_ip()) == "10.10.10.8":
