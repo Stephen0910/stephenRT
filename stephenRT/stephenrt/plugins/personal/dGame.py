@@ -56,7 +56,7 @@ def get_host_ip():
     return ip
 
 
-names = ["你好尹天仇", "宁心之殇", "晴天眼神", "上海康恒", "再见柳飘飘", "求坑丶", "CG控", "小灰灰居然"]
+names = ["宁心之殇", "你好尹天仇", "晴天眼神", "上海康恒", "再见柳飘飘", "求坑丶", "CG控", "小灰灰居然"]
 
 header = {
     "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9",
@@ -119,7 +119,7 @@ async def get_gids(id):
     :param id:
     :return:
     """
-    recent_most = "https://score.09game.com/moba/BasicDataList?UserID={0}&GameTypeID=21&CurrentSeason=0&GameSource=-1&Time=-1&PageIndex=0&PageSize=100".format(
+    recent_most = "https://score.09game.com/moba/BasicDataList?UserID={0}&GameTypeID=21&CurrentSeason=0&GameSource=-1&Time=-1&PageIndex=0&PageSize=50".format(
         id)
     response = requests.get(recent_most)
     recent_data = json.loads(response.content)["data"]["listEntity"]
@@ -204,9 +204,9 @@ async def game_info():
                 if data["team_id"] == team_id and data["user_name"] not in ids:
                     street_ids = await get_gids(data["user_id"])
                     same_ids = list(set(mc_gids) & set(street_ids))
-                    print("同局：".format(same_ids))
                     if len(same_ids) > 3:
                         users += 1
+                        print(data["user_name"])
                 people = "{0}排 ".format(users_chi[users])
 
         # 上面是人数
@@ -272,7 +272,7 @@ async def game_info():
                     user_title) + "\n" + hero_icon + skill1_icon + skill2_icon + "\n"
 
         dg_msg = "报：" + is_win + " {0}分钟\n".format(dg_spend) + d_msg
-        print(dg_msg, len(dg_msg))
+        print(dg_msg)
         if len(dg_msg) > 1 and ip == "10.10.10.8":
             print("send dg new msg")
             try:
