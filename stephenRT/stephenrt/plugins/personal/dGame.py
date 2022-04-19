@@ -10,6 +10,8 @@
 # @Licence  :     <@2022>
 
 import requests, json
+from lxml import etree
+import random
 import urllib, time
 from nonebot import on_metaevent
 from nonebot import get_bot
@@ -20,6 +22,28 @@ from nonebot.adapters.onebot.v11.message import MessageSegment
 
 sleep_time = 5
 
+# names = ["Dream丶狗", "a824683653"]
+names = ["宁心之殇", "你好尹天仇", "晴天眼神", "上海康恒", "再见柳飘飘", "求坑丶", "CG控", "小灰灰居然"]
+
+header = {
+    "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9",
+    "Accept-Encoding": "gzip, deflate, br",
+    "Connection": "keep-alive",
+    "User_Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.4896.75 Safari/537.36",
+    "Host": "score.09game.com"
+}
+
+game_source = {"0": "自由作战-", "1": "Dota-", "2": "IM-", "4": "自由匹配-", "3": "赛季模式-"}
+users_chi = {0: "无", 1: "单", 2: "双", 3: "三", 4: "四", 5: "五"}
+
+titles = ["杀", "MVP", "助", "躺", "灵", "僵"]
+
+dg_titles = {"map_reserve2": "辅",
+             "map_reserve4": "MVP",
+             "map_reserve5": "杀",
+             "map_reserve6": "助",
+             "map_reserve7": "富",
+             "map_reserve8": "SMVP"}
 
 def transfer_dId(id):
     id = int(id)
@@ -56,27 +80,33 @@ def get_host_ip():
     return ip
 
 
-names = ["宁心之殇", "你好尹天仇", "晴天眼神", "上海康恒", "再见柳飘飘", "求坑丶", "CG控", "小灰灰居然"]
+def get_response(url):
+    response = requests.get(url)
+    response.close()
+    return response.content
 
-header = {
-    "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9",
-    "Accept-Encoding": "gzip, deflate, br",
-    "Connection": "keep-alive",
-    "User_Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.4896.75 Safari/537.36",
-    "Host": "score.09game.com"
-}
 
-game_source = {"0": "自由作战-", "1": "Dota-", "2": "IM-", "4": "自由匹配-", "3": "赛季模式-"}
-users_chi = {0: "无", 1: "单", 2: "双", 3: "三", 4: "四", 5: "五"}
-
-titles = ["杀", "MVP", "助", "躺", "灵", "僵"]
-
-dg_titles = {"map_reserve2": "辅",
-             "map_reserve4": "MVP",
-             "map_reserve5": "杀",
-             "map_reserve6": "助",
-             "map_reserve7": "富",
-             "map_reserve8": "SMVP"}
+def get_rPic():
+    # 获取页数
+    page_url = "https://fuliba2021.net/flhz"
+    page_html = etree.HTML(get_response(page_url).decode())
+    page = page_html.xpath("/html/body/section/div[1]/div/div[2]/ul/li[8]/span//text()")[0]
+    page_number = re.search("\d+", page).group()
+    # print(page_number)
+    rand_page = random.randint(1, int(page_number))
+    # 获取某一期
+    index_url = "https://fuliba2021.net/flhz/page/" + str(rand_page)
+    html = etree.HTML(get_response(index_url).decode())
+    total = html.xpath("//article//h2//@href")
+    rand_index = random.choice(total)
+    # print(rand_index)
+    # 获取图片
+    page3 = rand_index + "/3"
+    pics = etree.HTML(get_response(page3).decode())
+    pics_xpath = pics.xpath("/html/body/section/div[1]/div/article/p[1]/img/@src")
+    pic_url = random.choice(pics_xpath)
+    print(pic_url)
+    return pic_url
 
 
 def get_ids(names):
@@ -219,6 +249,13 @@ async def game_info():
                 await bot.send_group_msg(group_id=group, message=omg_msg)
             except Exception as e:
                 await bot.send_private_msg(user_id=281016636, message=str(omg_msg) + str(e))
+
+        if is_win == "OMG 胜":
+            image = MessageSegment.image(get_rPic())
+            try:
+                await bot.send_group_msg(group_id=group, message=image)
+            except Exception as e:
+                await bot.send_private_msg(user_id=281016636, message=str(e))
 
     # else:
     #     print("OMG无")
