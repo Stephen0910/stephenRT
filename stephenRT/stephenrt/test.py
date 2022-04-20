@@ -12,18 +12,26 @@ import requests, json, random, time
 from lxml import etree
 import re
 
+headers = {
+    "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9",
+    "Accept-Encoding": "gzip, deflate, br",
+    "Connection": "keep-alive",
+    "User_Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.4896.75 Safari/537.36",
+    "Remote Address": "206.119.79.46:443"
+}
 
 def get_response(url):
-    response = requests.get(url)
+    response = requests.get(url, headers=headers)
     response.close()
     return response.content
 
 
 def get_rPic():
     # 获取页数
-    page_url = "https://fuliba2021.net/flhz"
+    page_url = "https://fuliba2021.net/flhz/page/1"
     page_html = etree.HTML(get_response(page_url).decode())
     page = page_html.xpath("/html/body/section/div[1]/div/div[2]/ul/li[8]/span//text()")[0]
+    print("page:", page)
     page_number = re.search("\d+", page).group()
     # print(page_number)
 

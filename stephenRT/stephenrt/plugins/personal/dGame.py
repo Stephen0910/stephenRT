@@ -23,14 +23,24 @@ from nonebot.adapters.onebot.v11.message import MessageSegment
 sleep_time = 10
 
 # names = ["Dream丶狗", "a824683653"]
-names = ["宁心之殇", "你好尹天仇", "晴天眼神", "上海康恒", "再见柳飘飘", "求坑丶", "CG控", "小灰灰居然"]
+# names = ["宁心之殇", "你好尹天仇", "晴天眼神", "上海康恒", "再见柳飘飘", "求坑丶", "CG控", "小灰灰居然"]
+names = ["宁心之殇", "你好尹天仇", "晴天眼神", "上海康恒", "再见柳飘飘", "求坑丶"]
 
-header = {
+d_headers = {
     "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9",
     "Accept-Encoding": "gzip, deflate, br",
     "Connection": "keep-alive",
     "User_Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.4896.75 Safari/537.36",
     "Host": "score.09game.com"
+}
+
+fl_headers = {
+    "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9",
+    "Accept-Encoding": "gzip, deflate, br",
+    "Connection": "keep-alive",
+    "User_Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.4896.75 Safari/537.36",
+    "Remote Address": "206.119.79.46:443",
+    "Referrer Policy": "strict-origin-when-cross-origin"
 }
 
 game_source = {"0": "自由作战-", "1": "Dota-", "2": "IM-", "4": "自由匹配-", "3": "赛季模式-"}
@@ -44,6 +54,7 @@ dg_titles = {"map_reserve2": "辅",
              "map_reserve6": "助",
              "map_reserve7": "富",
              "map_reserve8": "SMVP"}
+
 
 def transfer_dId(id):
     id = int(id)
@@ -81,7 +92,7 @@ def get_host_ip():
 
 
 def get_response(url):
-    response = requests.get(url)
+    response = requests.get(url, headers=fl_headers)
     response.close()
     return response.content
 
@@ -118,11 +129,15 @@ def get_response(url):
 #             print("pic_url为空")
 #     print(pic_url)
 #     return pic_url
+
 async def get_rPic():
     # 获取页数
     page_url = "https://fuliba2021.net/flhz"
     page_html = etree.HTML(get_response(page_url).decode())
+    # page = page_html.xpath("/html/body/section/div[1]/div/div[2]/ul/li[8]/span//text()")
     page = page_html.xpath("/html/body/section/div[1]/div/div[2]/ul/li[8]/span//text()")[0]
+    print("page:", page)
+
     page_number = re.search("\d+", page).group()
     # print(page_number)
 
@@ -135,7 +150,8 @@ async def get_rPic():
         total = html.xpath("//article//h2//@href")
         rand_index = random.choice(total)
         # 获取页码
-        page_index = etree.HTML(get_response(rand_index).decode()).xpath("/html/body/section/div[1]/div/div[2]//text()")[-1]
+        page_index = \
+            etree.HTML(get_response(rand_index).decode()).xpath("/html/body/section/div[1]/div/div[2]//text()")[-1]
         # print("----------", page_index, len(page_index))
         # 获取图片
         page_m = rand_index + "/" + page_index
@@ -176,7 +192,7 @@ def get_ids(names):
 async def get_recent_data(id):
     recent_url = "https://score.09game.com/MOBA/BasicDataList?UserID={0}&GameTypeID=21&CurrentSeason=0&GameSource=-1&Time=-1&PageIndex=0&PageSize=6".format(
         str(id))
-    response = requests.get(recent_url)
+    response = requests.get(recent_url, headers=d_headers)
     content = json.loads(response.content)
     last_game = content["data"]["listEntity"][0]
     response.close()
@@ -186,7 +202,7 @@ async def get_recent_data(id):
 
 async def get_dg_id(id):
     id_url = "https://score.09game.com/RPG/GameList?UserID={0}&GameTypeID=142&GameSource=-1&Type=2&Number=11".format(id)
-    response = requests.get(id_url)
+    response = requests.get(id_url, headers=d_headers)
     content = json.loads(response.content)
     last_game = content["data"][0]
     response.close()
@@ -202,7 +218,7 @@ async def get_gids(id):
     """
     recent_most = "https://score.09game.com/moba/BasicDataList?UserID={0}&GameTypeID=21&CurrentSeason=0&GameSource=-1&Time=-1&PageIndex=0&PageSize=100".format(
         id)
-    response = requests.get(recent_most)
+    response = requests.get(recent_most, headers=d_headers)
     recent_data = json.loads(response.content)["data"]["listEntity"]
     response.close()
     g_ids = [x["g_id"] for x in recent_data]
@@ -297,7 +313,6 @@ async def game_info():
         # 上面是人数
         omg_msg = "报：" + g_type + people + is_win + " {0}分钟\n".format(omg_spend) + o_msg
 
-
         pic = "战绩图： https://www.09game.com/html/2020gamescore/web/gamedetail/21.html?sessid=0&gameid={0}".format(new_id)
         # pic = '<a href="{0}">超链接</a>'.format(pic)
         print("pic:", pic)
@@ -305,7 +320,7 @@ async def game_info():
         print(omg_msg, len(omg_msg))
 
         # if len(omg_msg) > 1:
-        if len(omg_msg) > 1:
+        if len(omg_msg) > 1 and ip == "10.10.10.8":
             print("send the omg msg")
             try:
                 await bot.send_group_msg(group_id=group, message=omg_msg)
