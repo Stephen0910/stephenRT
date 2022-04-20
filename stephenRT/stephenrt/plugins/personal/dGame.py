@@ -179,13 +179,17 @@ async def get_rPic():
 def get_ids(names):
     id_url = "https://users.09game.com/home/GetUserPub?user_name="
     ids = {}
-    for name in names:
-        url_name = urllib.parse.quote("\'" + name + "\'")
-        response = requests.get(id_url + url_name)
-        id = json.loads(response.text)["temp"][0]["user_id"]
-        ids[name] = id
-        response.close()
-    print(ids)
+    while len(ids) < len(names):
+        try:
+            for name in names:
+                url_name = urllib.parse.quote("\'" + name + "\'")
+                response = requests.get(id_url + url_name)
+                id = json.loads(response.text)["temp"][0]["user_id"]
+                ids[name] = id
+                response.close()
+        except:
+            print("连接错误 重试")
+        print(ids)
     return ids
 
 
@@ -216,7 +220,7 @@ async def get_gids(id):
     :param id:
     :return:
     """
-    recent_most = "https://score.09game.com/moba/BasicDataList?UserID={0}&GameTypeID=21&CurrentSeason=0&GameSource=-1&Time=-1&PageIndex=0&PageSize=100".format(
+    recent_most = "https://score.09game.com/moba/BasicDataList?UserID={0}&GameTypeID=21&CurrentSeason=0&GameSource=-1&Time=-1&PageIndex=0&PageSize=200".format(
         id)
     response = requests.get(recent_most, headers=d_headers)
     recent_data = json.loads(response.content)["data"]["listEntity"]
