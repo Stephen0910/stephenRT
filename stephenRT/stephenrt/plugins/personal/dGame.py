@@ -20,7 +20,7 @@ import asyncio
 import socket
 from nonebot.adapters.onebot.v11.message import MessageSegment
 
-sleep_time = 5
+sleep_time = 10
 
 # names = ["Dream丶狗", "a824683653"]
 names = ["宁心之殇", "你好尹天仇", "晴天眼神", "上海康恒", "再见柳飘飘", "求坑丶", "CG控", "小灰灰居然"]
@@ -86,26 +86,77 @@ def get_response(url):
     return response.content
 
 
-def get_rPic():
+# def get_rPic():
+#     # 获取页数
+#     page_url = "https://fuliba2021.net/flhz"
+#     page_html = etree.HTML(get_response(page_url).decode())
+#     page = page_html.xpath("/html/body/section/div[1]/div/div[2]/ul/li[8]/span//text()")[0]
+#     page_number = re.search("\d+", page).group()
+#     print(page_number)
+#
+#
+#     pic_url = ""
+#     while pic_url == "":  # 有可能获取失败，2021016前面的都不行
+#         rand_page = random.randint(1, int(page_number))
+#         # 获取某一期
+#         index_url = "https://fuliba2021.net/flhz/page/" + str(rand_page)
+#         html = etree.HTML(get_response(index_url).decode())
+#         total = html.xpath("//article//h2//@href")
+#         rand_index = random.choice(total)
+#         print(rand_index)
+#         # 获取页码
+#
+#
+#
+#         # 获取图片
+#         page3 = rand_index + "/3"
+#         pics = etree.HTML(get_response(page3).decode())
+#         pics_xpath = pics.xpath("/html/body/section/div[1]/div/article/p[1]/img/@src")
+#         try:
+#             pic_url = random.choice(pics_xpath)
+#         except:
+#             print("pic_url为空")
+#     print(pic_url)
+#     return pic_url
+async def get_rPic():
     # 获取页数
     page_url = "https://fuliba2021.net/flhz"
     page_html = etree.HTML(get_response(page_url).decode())
     page = page_html.xpath("/html/body/section/div[1]/div/div[2]/ul/li[8]/span//text()")[0]
     page_number = re.search("\d+", page).group()
     # print(page_number)
-    rand_page = random.randint(1, int(page_number))
-    # 获取某一期
-    index_url = "https://fuliba2021.net/flhz/page/" + str(rand_page)
-    html = etree.HTML(get_response(index_url).decode())
-    total = html.xpath("//article//h2//@href")
-    rand_index = random.choice(total)
-    # print(rand_index)
-    # 获取图片
-    page3 = rand_index + "/3"
-    pics = etree.HTML(get_response(page3).decode())
-    pics_xpath = pics.xpath("/html/body/section/div[1]/div/article/p[1]/img/@src")
-    pic_url = random.choice(pics_xpath)
-    print(pic_url)
+
+    pic_url = ""
+    while pic_url == "":  # 有可能获取失败，2021016前面的都不行
+        rand_page = random.randint(1, int(page_number))
+        # 获取某一期
+        index_url = "https://fuliba2021.net/flhz/page/" + str(rand_page)
+        html = etree.HTML(get_response(index_url).decode())
+        total = html.xpath("//article//h2//@href")
+        rand_index = random.choice(total)
+        # 获取页码
+        page_index = etree.HTML(get_response(rand_index).decode()).xpath("/html/body/section/div[1]/div/div[2]//text()")[-1]
+        # print("----------", page_index, len(page_index))
+        # 获取图片
+        page_m = rand_index + "/" + page_index
+        print("html:", page_m)
+        pics = etree.HTML(get_response(page_m).decode())
+        pics_xpath = pics.xpath("/html/body/section/div[1]/div/article/p[1]/img/@src")
+        try:
+            pic_url = random.choice(pics_xpath)
+            print("pic_url:", pic_url)
+        except:
+            print("pic_url为空")
+            print(pics_xpath)
+
+        if pic_url != "":
+            s = requests.get(pic_url)
+            response_code = s.status_code
+            result = s.url
+            if str(result).endswith("FileDeleted") or str(result).endswith("101") or response_code != 200:
+                pic_url = ""
+                print("文件不存在，重新找")
+                print(response_code)
     return pic_url
 
 
@@ -224,6 +275,10 @@ async def game_info():
                 o_msg = o_msg + data[
                     "user_name"] + "-" + hero_name + "-" + str(
                     hero_level) + "级 " + guard + ":" + kda + user_title + "\n" + skill1 + skill2 + "\n"
+                # 暂不显示skills, guard-天灾近卫
+                # o_msg = o_msg + data[
+                #     "user_name"] + "-" + hero_name + "-" + str(
+                #     hero_level) + "级 " + ":" + kda + user_title + "\n"
                 # print(omg_msg)
                 users += 1
                 team_id = data["team_id"]
@@ -241,9 +296,16 @@ async def game_info():
 
         # 上面是人数
         omg_msg = "报：" + g_type + people + is_win + " {0}分钟\n".format(omg_spend) + o_msg
+
+
+        pic = "战绩图： https://www.09game.com/html/2020gamescore/web/gamedetail/21.html?sessid=0&gameid={0}".format(new_id)
+        # pic = '<a href="{0}">超链接</a>'.format(pic)
+        print("pic:", pic)
+        omg_msg = omg_msg + pic
         print(omg_msg, len(omg_msg))
+
         # if len(omg_msg) > 1:
-        if len(omg_msg) > 1 and ip == "10.10.10.8":
+        if len(omg_msg) > 1:
             print("send the omg msg")
             try:
                 await bot.send_group_msg(group_id=group, message=omg_msg)
@@ -251,7 +313,8 @@ async def game_info():
                 await bot.send_private_msg(user_id=281016636, message=str(omg_msg) + str(e))
 
         if is_win == "OMG 胜":
-            image = MessageSegment.image(get_rPic())
+            award_url = await get_rPic()
+            image = MessageSegment.image(award_url)
             try:
                 await bot.send_group_msg(group_id=group, message=image)
             except Exception as e:

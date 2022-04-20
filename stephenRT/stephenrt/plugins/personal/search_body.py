@@ -28,7 +28,7 @@ def get_id(name):
     return id
 
 
-dGame = on_command("dota", rule=to_me(), aliases={"查询", "09"}, priority=1)
+dGame = on_command("dota", rule=to_me(), aliases={"dota1", "09"}, priority=1)
 
 
 @dGame.handle()
