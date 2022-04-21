@@ -60,10 +60,16 @@ async def search_user_info(name):
     else:
         season_total = user_data["season"][0]["total_times"]
         season_win = user_data["season"][0]["total_win"]
-        season_data = "赛季{0}场".format(season_total) + ":{:.0%}\n".format(season_win / season_total)
+        if season_total == 0:
+            season_data = "赛季0场"
+        else:
+            season_data = "赛季{0}场".format(season_total) + ":{:.0%}\n".format(season_win / season_total)
     all_total = user_data["total"][0]["total_times"]
     all_win = user_data["total"][0]["total_win"]
-    total_data = "⬤  共{0}场".format(all_total) + ":{:.0%}  ".format(all_win / all_total)
+    if all_total == 0:
+        total_data = "⬤  共0场"
+    else:
+        total_data = "⬤  共{0}场".format(all_total) + ":{:.0%}  ".format(all_win / all_total)
 
     msg = msg + total_data + season_data
 
