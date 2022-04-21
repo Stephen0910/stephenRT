@@ -20,11 +20,11 @@ import asyncio
 import socket
 from nonebot.adapters.onebot.v11.message import MessageSegment
 
-sleep_time = 10
+sleep_time = 7
 
 # names = ["Dream丶狗", "a824683653"]
-# names = ["宁心之殇", "你好尹天仇", "晴天眼神", "上海康恒", "再见柳飘飘", "求坑丶", "CG控", "小灰灰居然"]
-names = ["宁心之殇", "你好尹天仇", "晴天眼神", "上海康恒", "再见柳飘飘", "求坑丶"]
+names = ["宁心之殇", "你好尹天仇", "晴天眼神", "上海康恒", "再见柳飘飘", "求坑丶", "CG控", "小灰灰居然"]
+# names = ["宁心之殇", "你好尹天仇", "晴天眼神", "上海康恒", "再见柳飘飘", "求坑丶"]
 
 d_headers = {
     "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9",
@@ -43,7 +43,7 @@ fl_headers = {
     "Referrer Policy": "strict-origin-when-cross-origin"
 }
 
-game_source = {"0": "自由作战-", "1": "Dota-", "2": "IM-", "4": "自由匹配-", "3": "赛季模式-"}
+game_source = {"0": "菜鸡对黑-", "1": "Dota-", "2": "IM-", "4": "自由霸主-", "3": "赛季挨打-"}
 users_chi = {0: "无", 1: "单", 2: "双", 3: "三", 4: "四", 5: "五"}
 
 titles = ["杀", "MVP", "助", "躺", "灵", "僵"]
