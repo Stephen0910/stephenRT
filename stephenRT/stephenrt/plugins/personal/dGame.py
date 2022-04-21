@@ -166,7 +166,7 @@ async def get_rPic():
             print(pics_xpath)
 
         if pic_url != "":
-            s = requests.get(pic_url)
+            s = requests.get(pic_url, headers=fl_headers)
             response_code = s.status_code
             result = s.url
             if str(result).endswith("FileDeleted") or str(result).endswith("101") or response_code != 200:
