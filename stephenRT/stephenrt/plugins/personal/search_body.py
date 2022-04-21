@@ -14,7 +14,13 @@ from nonebot.adapters import Message
 from nonebot.matcher import Matcher
 from nonebot.params import Arg, CommandArg, ArgPlainText
 from nonebot.permission import SUPERUSER
+from nonebot.adapters.onebot.v11 import MessageEvent
 import urllib, requests, json
+from .dGame import get_rPic
+from nonebot.adapters.onebot.v11.message import MessageSegment
+from nonebot.params import Depends
+
+players = [281016636, 659738900, 158709003, 726408753]
 
 
 def get_id(name):
@@ -102,3 +108,24 @@ async def user_search(
 ):
     user_info = await search_user_info(user_name)
     await dGame.finish(str(user_info))
+
+
+
+
+# pic
+
+async def depend(event: MessageEvent): # 2.编写依赖函数
+    return {"uid": event.get_user_id(), "nickname": event.sender.nickname}
+
+picture = on_command("setu", rule=to_me(), aliases={"图", "pic"}, priority=1)
+
+@picture.handle()
+async def get_pic(x: dict = Depends(depend)):
+    print("pId:", x["uid"])
+    if int(x["uid"]) in players:
+        pic_url = await get_rPic()
+        image = MessageSegment.image(pic_url)
+        await picture.finish(image)
+    else:
+        print("无法操作")
+        await picture.finish()

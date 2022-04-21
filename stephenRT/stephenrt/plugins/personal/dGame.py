@@ -331,7 +331,7 @@ async def game_info():
             except Exception as e:
                 await bot.send_private_msg(user_id=281016636, message=str(omg_msg) + str(e))
 
-        if is_win == "OMG 胜":
+        if is_win == "OMG 胜" and ip == "10.10.10.8":
             award_url = await get_rPic()
             image = MessageSegment.image(award_url)
             try:
