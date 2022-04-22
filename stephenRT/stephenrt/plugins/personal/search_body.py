@@ -21,6 +21,7 @@ from nonebot.adapters.onebot.v11.message import MessageSegment
 from nonebot.params import Depends
 
 players = [281016636, 659738900, 158709003, 726408753]
+# players = [281016636]
 
 
 def get_id(name):
