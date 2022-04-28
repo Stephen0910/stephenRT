@@ -11,8 +11,9 @@
 
 
 import time, re, requests, json
-import asyncio
+import asyncio, time
 import stephenrt.privateCfg as cfg
+import websockets
 from nonebot import on_command
 from nonebot.rule import to_me
 from nonebot.matcher import Matcher
@@ -22,6 +23,7 @@ from nonebot.params import Arg, CommandArg, ArgPlainText
 from nonebot.permission import SUPERUSER
 from nonebot import get_bot
 from nonebot import on_metaevent
+import socket
 
 config = cfg.config_content
 group_id = config["group_id_badminton"]
@@ -36,6 +38,7 @@ else:
     manager_base = config["manager_prod"]
     user = config["manager_prod_auth"]
 
+socket_url = config["socket_url"]
 base_url = manager_base + "/login"
 chat_url = manager_base + "/badmintonCn/getChatRoomMsg"
 # ban_url = manager_base + "/badmintonCn/user_search_forbidden"
@@ -44,7 +47,35 @@ headers = {
     'Content-Type': 'application/x-www-form-urlencoded'
 }
 
+text_check = ["鉆|钻|砖|钴|万|萬|澫", "s|元|沅|钱|q|秋秋"]
+name_check = ["3564837153|2580237802|166345259|3569544846|2927295662|1327004801|万钻|万钴|万砖|万鉆|萬鉆|萬钻|S级|S拍"]
+
 print("自动禁言脚本---------------------------------")
+
+
+def get_host_ip():
+    """
+    查询本机ip地址
+    :return: ip
+    """
+    try:
+        s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+        s.connect(('8.8.8.8', 80))
+        ip = s.getsockname()[0]
+    finally:
+        s.close()
+
+    return ip
+
+
+async def socket_message():
+    print("获取房间信息websocket")
+    msg_list = []
+    async with websockets.connect(socket_url) as socket:
+        for i in range(50):
+            recieve = await socket.recv()
+            msg_list.append(json.loads(recieve))
+    return msg_list
 
 
 async def get_chats():
@@ -58,26 +89,45 @@ async def get_chats():
     return json.loads(response.content)  # 延迟1条 否则还没来的
 
 
+# 改版websocket 废弃
 def filter_chat(chats_list):
-    for chat in chats_list[3:]:  # 延迟3条避免还没来得及自动禁言
+    # for chat in chats_list[3:]:  # 延迟3条避免还没来得及自动禁
+    for chat in chats_list[3:]:
         if re.match("[a-z]+\d+", chat["sendMan"]["name"]) or re.match("boxer_", chat["sendMan"]["name"]):
-            if chat["isJy"] is False and chat["isFh"] is False:
+            if chat["isJy"] is False and chat["isFh"] is False:  # 是否已禁言开关
                 if len(chat["sendContent"]) > 15:
                     # if "钻" or "砖" or "鉆" in chat["sendContent"] and "s" in chat["sendContent"].lower():
                     if re.search("鉆|钻|砖|钴|万|萬|澫", str(chat["sendContent"])) and re.search("s|元|沅|钱|q|秋秋",
-                                                                                      str(chat[
-                                                                                              "sendContent"]).lower()) and \
+                                                                                          str(chat[
+                                                                                                  "sendContent"]).lower()) and \
                             chat["sendMan"]["rankStage"] == 1:
                         result = "chatRoom疑似广告：" + str(chat["sendMan"]["numberUserId"]) + " " + str(chat["sendMan"][
                                                                                                         "name"]) + " " + str(
                             chat["sendContent"]).replace("\n", "")
                         return result
-        elif re.match("3564837153|2580237802|166345259|3569544846|2927295662|1327004801|万钻|万钴|万砖|万鉆|萬鉆|萬钻",
-                      str(chat["sendMan"]["name"])):
-            result = "chatRoom疑似广告：" + str(chat["sendMan"]["numberUserId"]) + " " + str(chat["sendMan"][
-                                                                                            "name"]) + " " + str(
-                chat["sendContent"]).replace("\n", "")
-            return result
+                    elif re.match("3564837153|2580237802|166345259|3569544846|2927295662|1327004801|万钻|万钴|万砖|万鉆|萬鉆|萬钻",
+                                  str(chat["sendMan"]["name"])):
+                        result = "chatRoom疑似广告：" + str(chat["sendMan"]["numberUserId"]) + " " + str(chat["sendMan"][
+                                                                                                        "name"]) + " " + str(
+                            chat["sendContent"]).replace("\n", "")
+                        return result
+
+
+async def check_room():
+    chat_msg = await socket_message()
+    for chat in chat_msg:
+        if chat["sendMan"]["rankStage"] == 1:
+            if chat["isJy"] is False and chat["isFh"] is False and len(chat["sendContent"]) > 10:  # 是否已禁言
+            # if chat:
+                if re.search(text_check[0], str(chat["sendContent"])) and re.search(text_check[1], str(chat["sendContent"])):
+                    result = "chatRoom发言广告：" + str(chat["sendMan"]["numberUserId"]) + " " + str(chat["sendMan"][
+                                                                                                    "name"]) + " " + str(
+                        chat["sendContent"]).replace("\n", "")
+                elif re.match(name_check[0], str(chat["sendMan"]["name"])):
+                    result = "chatRoom名字广告：" + str(chat["sendMan"]["numberUserId"]) + " " + str(chat["sendMan"][
+                                                                                                    "name"]) + " " + str(
+                        chat["sendContent"]).replace("\n", "")
+                return result
 
 
 def test_chat(chat_list):
@@ -93,16 +143,6 @@ async def send_message(msg):
     except Exception as e:
         await bot.send_private_msg(user_id=281016636, message=str(e))
 
-
-# while True:
-#     response = get_chats()
-#     if response["status"] == 200:
-#         chats = response["data"]
-#         result = filter_chat(chats)
-#         if result:
-#             print(result)
-#             # send_message(result)
-#         time.sleep(10)
 
 async def main():
     sent = []
@@ -131,21 +171,27 @@ block_list = []
 @matcher.handle()
 async def shut_user():
     bot = get_bot()
+    try:
+        # response = await socket_message()
+        # print("response:\n", json.dumps(response))
 
-    response = await get_chats()
-    if response["status"] == 200:
-        chats = response["data"]
-        result = filter_chat(chats)
-        if result and result not in block_list:
+        result = await check_room()
+        if result not in block_list:
             # print("检测到：", result)
             block_list.append(result)
-            try:
-                # await bot.send_private_msg(user_id=281016636, message=str(result))
-                await bot.send_group_msg(group_id=group_id, message=str(result))
-            except Exception as e:
-                await bot.send_private_msg(user_id=user_id, message=str(result) + str(e))
-            finally:
-                print("block_list:", block_list)
+
+    except Exception as e:
+        result = "获取消息列表失败：" + str(e)
+
+    try:
+        # await bot.send_private_msg(user_id=281016636, message=str(result))
+        if get_host_ip() == "10.10.10.8":
+            print("8号机发送消息")
+            await bot.send_group_msg(group_id=group_id, message=str(result))
+    except Exception as e:
+        await bot.send_private_msg(user_id=user_id, message=str(result) + str(e))
+    finally:
+        print("block_list:", block_list)
 
     # if len(block_list) > 3:
     #     pass
