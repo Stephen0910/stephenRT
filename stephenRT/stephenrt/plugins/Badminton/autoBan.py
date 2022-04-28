@@ -116,21 +116,30 @@ def filter_chat(chats_list):
 async def check_room():
     chat_msg = await socket_message()
     for chat in chat_msg:
-        if chat["sendMan"]["rankStage"] == 1:
-            if chat["isJy"] is False and chat["isFh"] is False and len(chat["sendContent"]) > 10:  # 是否已禁言
+        if chat["sendMan"]["rankStage"] == 1 and len(chat["sendContent"]) > 10:
             # if chat:
-                if re.search(text_check[0], str(chat["sendContent"])) and re.search(text_check[1], str(chat["sendContent"])):
-                    result = "chatRoom发言广告：" + str(chat["sendMan"]["numberUserId"]) + " " + str(chat["sendMan"][
-                                                                                                    "name"]) + " " + str(
-                        chat["sendContent"]).replace("\n", "")
+            # print(str(chat["sendContent"]))
+            if re.search(text_check[0], str(chat["sendContent"])) and re.search(text_check[1],
+                                                                                str(chat["sendContent"])) and re.match(
+                    "[a-z]+\d+", chat["sendMan"]["name"]):
+                result = "chatRoom发言广告：" + str(chat["sendMan"]["numberUserId"]) + " " + str(chat["sendMan"][
+                                                                                                "name"]) + " " + str(
+                    chat["sendContent"]).replace("\n", "")
+                if chat["isJy"] is False and chat["isFh"] is False:  # 是否已禁言
                     print("result:", result)
                     return result
-                elif re.match(name_check[0], str(chat["sendMan"]["name"])):
-                    result = "chatRoom名字广告：" + str(chat["sendMan"]["numberUserId"]) + " " + str(chat["sendMan"][
-                                                                                                    "name"]) + " " + str(
-                        chat["sendContent"]).replace("\n", "")
-                    print("result:", result)
+                else:
+                    print("已经禁言了")
+            elif re.match(name_check[0], str(chat["sendMan"]["name"])):
+                result = "chatRoom名字广告：" + str(chat["sendMan"]["numberUserId"]) + " " + str(chat["sendMan"][
+                                                                                                "name"]) + " " + str(
+                    chat["sendContent"]).replace("\n", "")
+                if chat["isJy"] is False and chat["isFh"] is False:
                     return result
+                else:
+                    print("已经禁言了")
+            elif re.match("环城国际", str(chat["sendContent"])):
+                print("发现招聘广告")
 
 
 def test_chat(chat_list):
@@ -168,7 +177,7 @@ async def shut_user():
                 # if get_host_ip() == "10.10.10.8":
                 if result:
                     print("8号机发送消息")
-                    await bot.send_group_msg(group_id=755489024, message=str(result))
+                    await bot.send_group_msg(group_id=group_id, message=str(result))
             except Exception as e:
                 await bot.send_private_msg(user_id=user_id, message=str(result) + str(e))
             finally:
