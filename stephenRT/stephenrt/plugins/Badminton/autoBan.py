@@ -123,11 +123,14 @@ async def check_room():
                     result = "chatRoom发言广告：" + str(chat["sendMan"]["numberUserId"]) + " " + str(chat["sendMan"][
                                                                                                     "name"]) + " " + str(
                         chat["sendContent"]).replace("\n", "")
+                    print("result:", result)
+                    return result
                 elif re.match(name_check[0], str(chat["sendMan"]["name"])):
                     result = "chatRoom名字广告：" + str(chat["sendMan"]["numberUserId"]) + " " + str(chat["sendMan"][
                                                                                                     "name"]) + " " + str(
                         chat["sendContent"]).replace("\n", "")
-                return result
+                    print("result:", result)
+                    return result
 
 
 def test_chat(chat_list):
@@ -144,25 +147,6 @@ async def send_message(msg):
         await bot.send_private_msg(user_id=281016636, message=str(e))
 
 
-async def main():
-    sent = []
-    while True:
-        response = await get_chats()
-        if response["status"] == 200:
-            chats = response["data"]
-            result = filter_chat(chats)
-            if result and result not in sent:
-                print(result)
-                sent.append(result)
-                print(sent)
-                # try:
-                #     await bot.send_private_msg(user_id=281016636, message=str(result))
-                # except Exception as e:
-                #     await bot.send_private_msg(user_id=281016636, message=str(e))
-            time.sleep(10)
-            # asyncio.sleep(10)
-
-
 matcher = on_metaevent()
 
 block_list = []
@@ -176,22 +160,22 @@ async def shut_user():
         # print("response:\n", json.dumps(response))
 
         result = await check_room()
-        if result not in block_list:
+        if result != None and result not in block_list:
             # print("检测到：", result)
             block_list.append(result)
+            try:
+                # await bot.send_private_msg(user_id=281016636, message=str(result))
+                # if get_host_ip() == "10.10.10.8":
+                if result:
+                    print("8号机发送消息")
+                    await bot.send_group_msg(group_id=755489024, message=str(result))
+            except Exception as e:
+                await bot.send_private_msg(user_id=user_id, message=str(result) + str(e))
+            finally:
+                print("block_list:", block_list)
 
     except Exception as e:
         result = "获取消息列表失败：" + str(e)
-
-    try:
-        # await bot.send_private_msg(user_id=281016636, message=str(result))
-        if get_host_ip() == "10.10.10.8":
-            print("8号机发送消息")
-            await bot.send_group_msg(group_id=group_id, message=str(result))
-    except Exception as e:
-        await bot.send_private_msg(user_id=user_id, message=str(result) + str(e))
-    finally:
-        print("block_list:", block_list)
 
     # if len(block_list) > 3:
     #     pass
