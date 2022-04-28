@@ -72,7 +72,7 @@ async def socket_message():
     print("获取房间信息websocket")
     msg_list = []
     async with websockets.connect(socket_url) as socket:
-        for i in range(50):
+        for i in range(20):
             recieve = await socket.recv()
             msg_list.append(json.loads(recieve))
     return msg_list
