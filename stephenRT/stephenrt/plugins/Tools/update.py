@@ -41,7 +41,7 @@ async def handleuser(
 ):
     print("cmd:", cmd)
     if cmd == "q":
-        await update.finish("放弃执行指令")
+        await update.finish("放弃执行指令，会话结束")
     elif cmd == "update":
         run_silently("cd /home/ttg/Tools/project/robot/stephenRT/stephenRT")
         git_status = run_silently("git pull")
@@ -51,4 +51,5 @@ async def handleuser(
         await update.finish("执行结果：\n" + ret)
     else:
         ret = run_silently(cmd)
-        await update.send("执行结束：\n" + str(ret))
+        await update.pause(str(ret))
+

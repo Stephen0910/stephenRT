@@ -196,7 +196,7 @@ def get_ids(names):
 async def get_recent_data(id):
     recent_url = "https://score.09game.com/MOBA/BasicDataList?UserID={0}&GameTypeID=21&CurrentSeason=0&GameSource=-1&Time=-1&PageIndex=0&PageSize=6".format(
         str(id))
-    response = requests.get(recent_url, headers=d_headers)
+    response = requests.get(recent_url, headers=d_headers, timeout=5)
     content = json.loads(response.content)
     last_game = content["data"]["listEntity"][0]
     response.close()
