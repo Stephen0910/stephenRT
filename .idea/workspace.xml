@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="3047aada-47d5-4ad8-a368-9e15af7b4bc7" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/stephenRT/stephenrt/plugins/Tools/update.py" beforeDir="false" afterPath="$PROJECT_DIR$/stephenRT/stephenrt/plugins/Tools/update.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/stephenRT/stephenrt/plugins/personal/search_body.py" beforeDir="false" afterPath="$PROJECT_DIR$/stephenRT/stephenrt/plugins/personal/search_body.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -39,11 +39,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/stephenRT/stephenrt/plugins/Tools/update.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="414">
-              <caret line="58" column="37" lean-forward="true" selection-start-line="58" selection-start-column="37" selection-end-line="58" selection-end-column="37" />
+            <state relative-caret-position="69">
+              <caret line="35" column="30" lean-forward="true" selection-start-line="35" selection-start-column="30" selection-end-line="35" selection-end-column="30" />
               <folding>
                 <element signature="e#236#261#0" expanded="true" />
               </folding>
@@ -91,6 +91,18 @@
               <caret line="196" column="147" lean-forward="true" selection-start-line="196" selection-start-column="18" selection-end-line="196" selection-end-column="147" />
               <folding>
                 <element signature="e#233#254#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/stephenRT/stephenrt/plugins/personal/search_body.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="354">
+              <caret line="30" column="46" lean-forward="true" selection-start-line="30" selection-start-column="46" selection-end-line="30" selection-end-column="46" />
+              <folding>
+                <element signature="e#239#269#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -199,7 +211,6 @@
         <option value="$PROJECT_DIR$/stephenRT/stephenrt/plugins/projects/__init__.py" />
         <option value="$PROJECT_DIR$/stephenRT/stephenrt/plugins/projects/outside.py" />
         <option value="$PROJECT_DIR$/stephenRT/stephenrt/plugins/personal/mzt.py" />
-        <option value="$PROJECT_DIR$/stephenRT/stephenrt/plugins/personal/search_body.py" />
         <option value="$PROJECT_DIR$/stephenRT/stephenrt/test.py" />
         <option value="$PROJECT_DIR$/stephenRT/stephenrt/plugins/projects/encrypt.py" />
         <option value="$PROJECT_DIR$/stephenRT/stephenrt/plugins/projects/bmEncrypt.py" />
@@ -209,6 +220,7 @@
         <option value="$PROJECT_DIR$/stephenRT/stephenrt/plugins/personal/dGame.py" />
         <option value="$PROJECT_DIR$/stephenRT/stephenrt/plugins/projects/test1.py" />
         <option value="$PROJECT_DIR$/stephenRT/stephenrt/plugins/Tools/update.py" />
+        <option value="$PROJECT_DIR$/stephenRT/stephenrt/plugins/personal/search_body.py" />
       </list>
     </option>
   </component>
@@ -258,6 +270,22 @@
               <item name="stephenrt" type="462c0819:PsiDirectoryNode" />
               <item name="plugins" type="462c0819:PsiDirectoryNode" />
               <item name="Badminton" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="stephenRT" type="b2602c69:ProjectViewProjectNode" />
+              <item name="stephenRT" type="462c0819:PsiDirectoryNode" />
+              <item name="stephenRT" type="462c0819:PsiDirectoryNode" />
+              <item name="stephenrt" type="462c0819:PsiDirectoryNode" />
+              <item name="plugins" type="462c0819:PsiDirectoryNode" />
+              <item name="personal" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="stephenRT" type="b2602c69:ProjectViewProjectNode" />
+              <item name="stephenRT" type="462c0819:PsiDirectoryNode" />
+              <item name="stephenRT" type="462c0819:PsiDirectoryNode" />
+              <item name="stephenrt" type="462c0819:PsiDirectoryNode" />
+              <item name="plugins" type="462c0819:PsiDirectoryNode" />
+              <item name="projects" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="stephenRT" type="b2602c69:ProjectViewProjectNode" />
@@ -482,7 +510,7 @@
       <workItem from="1650959890894" duration="12087000" />
       <workItem from="1651114577446" duration="4000" />
       <workItem from="1651114588169" duration="26289000" />
-      <workItem from="1651211007464" duration="3844000" />
+      <workItem from="1651211007464" duration="4088000" />
     </task>
     <servers />
   </component>
@@ -495,7 +523,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="675816000" />
+    <option name="totallyTimeSpent" value="676060000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -510,12 +538,12 @@
     <frame x="-1928" y="-8" width="1936" height="1056" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49837664" visible="true" weight="0.18729989" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.49837664" visible="true" weight="0.18729989" />
       <window_info id="Structure" order="1" sideWeight="0.5016234" side_tool="true" weight="0.14887941" />
       <window_info id="Favorites" order="2" sideWeight="0.5016234" side_tool="true" weight="0.14887941" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32897604" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.36165577" />
+      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.36165577" />
       <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.4994664" weight="0.39978212" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -828,16 +856,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/stephenRT/stephenrt/plugins/personal/search_body.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="369">
-          <caret line="126" column="30" selection-start-line="126" selection-start-column="30" selection-end-line="126" selection-end-column="30" />
-          <folding>
-            <element signature="e#239#269#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/stephenRT/stephenrt/plugins/projects/meoEncrypt.py" />
     <entry file="file://$PROJECT_DIR$/stephenRT/stephenrt/plugins/projects/bmEncrypt.py" />
     <entry file="file://D:/Tools/python3/Lib/asyncio/events.py">
@@ -923,10 +941,20 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/stephenRT/stephenrt/plugins/Tools/update.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="414">
-          <caret line="58" column="37" lean-forward="true" selection-start-line="58" selection-start-column="37" selection-end-line="58" selection-end-column="37" />
+        <state relative-caret-position="69">
+          <caret line="35" column="30" lean-forward="true" selection-start-line="35" selection-start-column="30" selection-end-line="35" selection-end-column="30" />
           <folding>
             <element signature="e#236#261#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/stephenRT/stephenrt/plugins/personal/search_body.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="354">
+          <caret line="30" column="46" lean-forward="true" selection-start-line="30" selection-start-column="46" selection-end-line="30" selection-end-column="46" />
+          <folding>
+            <element signature="e#239#269#0" expanded="true" />
           </folding>
         </state>
       </provider>

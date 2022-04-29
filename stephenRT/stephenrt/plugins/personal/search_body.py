@@ -24,7 +24,7 @@ players = [281016636, 659738900, 158709003, 726408753]
 # players = [281016636]
 
 
-def get_id(name):
+async def get_id(name):
     id_url = "https://users.09game.com/home/GetUserPub?user_name="
     ids = {}
     url_name = urllib.parse.quote("\'" + name + "\'")
@@ -50,7 +50,7 @@ async def search_user_info(name):
     # id
     print("调用查询")
     try:
-        user_id = get_id(name)
+        user_id = await get_id(name)
     except:
         return "查无此人"
     print("user_id", user_id)
