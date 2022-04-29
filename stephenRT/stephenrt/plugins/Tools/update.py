@@ -51,5 +51,5 @@ async def handleuser(
         await update.finish("执行结果：\n" + ret)
     else:
         ret = run_silently(cmd)
-        await update.pause(str(ret))
+        await update.send(str(ret))
 
