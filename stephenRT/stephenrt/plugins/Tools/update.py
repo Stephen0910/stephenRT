@@ -16,21 +16,39 @@ from nonebot.rule import to_me
 from nonebot.matcher import Matcher
 from nonebot.adapters import Message
 from nonebot.params import Arg, CommandArg
+from nonebot.params import Arg, CommandArg, ArgPlainText
 from nonebot.permission import SUPERUSER
 import os
 
 update = on_command("update", rule=to_me(), aliases={"更新", "selfupdate"}, priority=1, permission=SUPERUSER)
 
 
-@update.handle()
+def run_silently(cmd):
+    with os.popen(cmd) as fp:
+        bf = fp._stream.buffer.read()
+    try:
+        return bf.decode().strip()
+    except UnicodeDecodeError:
+        return bf.decode('gbk').strip()
+
+
+prompt = "请输入你要执行的指令\n主路径：/home/ttg/Tools/project/robot/stephenRT/stephenRT\nq放弃"
+
+
+@update.got("cmd", prompt=prompt)
 async def handleuser(
+        cmd: str = ArgPlainText("cmd")
 ):
-    cmd = "ifconfig"
-    po = os.popen(cmd)
-    msg = po.buffer.read().decode('utf-8')
-
-    print("msg:", msg)
-    # success = str(os.popen("./bot_restart.sh").read()).encode("utf-8")
-    # await update.finish(str(success))
-    await update.finish("完")
-
+    print("cmd:", cmd)
+    if cmd == "q":
+        await update.finish("放弃执行指令")
+    elif cmd == "update":
+        run_silently("cd /home/ttg/Tools/project/robot/stephenRT/stephenRT")
+        git_status = run_silently("git pull")
+        await update.send("git更新结果：\n" + git_status)
+        run_silently("cd /home/ttg/Tools/project/robot")
+        ret = run_silently("./bot_restart.sh")
+        await update.finish("执行结果：\n" + ret)
+    else:
+        ret = run_silently(cmd)
+        await update.send("执行结束：\n" + str(ret))

@@ -13,14 +13,16 @@ import requests, json
 import websockets
 import asyncio
 import re
+import os
 
-text_check = ["鉆|钻|砖|钴|万|萬|澫", "s|元|沅|钱|q|秋秋"]
-name_check = ["3564837153|2580237802|166345259|3569544846|2927295662|1327004801|万钻|万钴|万砖|万鉆|萬鉆|萬钻|S级|S拍"]
 
-a = "最强PK 5o=48澫钻时 Q  ③⑤③④①O⑧①④④ 货真价实，来了就是一家人"
-b = "npcfauqjk"
-c = "lccw411022"
-print(re.search(text_check[0], a))
+def run_silently(cmd):
+    with os.popen(cmd) as fp:
+        bf = fp._stream.buffer.read()
+    try:
+        return bf.decode().strip()
+    except UnicodeDecodeError:
+        return bf.decode('gbk').strip()
 
-print(re.search(text_check[1], a.lower()))
-print(re.match("[a-z]+|\d+", c))
+
+print(run_silently("adb devices"))
