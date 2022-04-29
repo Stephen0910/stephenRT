@@ -48,7 +48,7 @@ headers = {
 }
 
 text_check = ["鉆|钻|砖|钴|万|萬|澫", "s|元|沅|钱|q|秋秋"]
-name_check = ["3564837153|2580237802|166345259|3569544846|2927295662|1327004801|万钻|万钴|万砖|万鉆|萬鉆|萬钻|S级|S拍"]
+name_check = ["3564837153|2580237802|166345259|3569544846|2927295662|1327004801|万钻|万钴|万砖|万鉆|萬鉆|萬钻|s级|s拍"]
 
 print("自动禁言脚本---------------------------------")
 
@@ -119,9 +119,10 @@ async def check_room():
         if chat["sendMan"]["rankStage"] == 1 and len(chat["sendContent"]) > 10:
             # if chat:
             # print(str(chat["sendContent"]))
-            if re.search(text_check[0], str(chat["sendContent"])) and re.search(text_check[1],
-                                                                                str(chat["sendContent"])) and re.match(
-                    "[a-z]+\d+", chat["sendMan"]["name"]):
+            if re.search(text_check[0], str(chat["sendContent"]).lower()) and re.search(text_check[1],
+                                                                                        str(chat[
+                                                                                                "sendContent"]).lower) and re.match(
+                "[a-z]+|\d+", chat["sendMan"]["name"]):
                 result = "chatRoom发言广告：" + str(chat["sendMan"]["numberUserId"]) + " " + str(chat["sendMan"][
                                                                                                 "name"]) + " " + str(
                     chat["sendContent"]).replace("\n", "")
@@ -130,7 +131,7 @@ async def check_room():
                     return result
                 else:
                     print("已经禁言了")
-            elif re.match(name_check[0], str(chat["sendMan"]["name"])):
+            elif re.match(name_check[0], str(chat["sendMan"]["name"]).lower()):
                 result = "chatRoom名字广告：" + str(chat["sendMan"]["numberUserId"]) + " " + str(chat["sendMan"][
                                                                                                 "name"]) + " " + str(
                     chat["sendContent"]).replace("\n", "")
@@ -138,8 +139,7 @@ async def check_room():
                     return result
                 else:
                     print("已经禁言了")
-            elif re.match("环城国际", str(chat["sendContent"])):
-                print("发现招聘广告")
+
 
 
 def test_chat(chat_list):

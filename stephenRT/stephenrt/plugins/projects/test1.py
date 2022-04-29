@@ -12,38 +12,15 @@
 import requests, json
 import websockets
 import asyncio
+import re
 
-socket_url = "ws://10.10.10.21:3002/chatRoom"
-# base_url = "http://10.10.10.21:3000/login"
-# test_user = {"user": "zhangjian", "pass": "zhangjian2705"}
+text_check = ["鉆|钻|砖|钴|万|萬|澫", "s|元|沅|钱|q|秋秋"]
+name_check = ["3564837153|2580237802|166345259|3569544846|2927295662|1327004801|万钻|万钴|万砖|万鉆|萬鉆|萬钻|S级|S拍"]
 
-msg_list = []
+a = "最强PK 5o=48澫钻时 Q  ③⑤③④①O⑧①④④ 货真价实，来了就是一家人"
+b = "npcfauqjk"
+c = "lccw411022"
+print(re.search(text_check[0], a))
 
-async def chat_message():
-    async with websockets.connect(socket_url) as socket:
-        while True:
-            recieve = await socket.recv()
-            # await asyncio.sleep(1)
-            msg_list.append(recieve)
-            print(recieve)
-            print(type(recieve))
-# def get_chats():
-#     print("聊天获取")
-#     payload = {}
-#     try:
-#         with requests.session() as session:
-#             session.post(url=base_url, data=test_user)
-#             print("session:", session)
-#     except Exception as e:
-#         print(e)
-#         return str(e)
-
-async def deal_message():
-    await chat_message()
-    print()
-    return msg_list
-
-
-loop = asyncio.get_event_loop()
-loop.run_until_complete(deal_message())
-loop.close()
+print(re.search(text_check[1], a.lower()))
+print(re.match("[a-z]+|\d+", c))
