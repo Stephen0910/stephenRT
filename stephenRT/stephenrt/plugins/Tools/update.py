@@ -32,7 +32,7 @@ def run_silently(cmd):
         return bf.decode('gbk').strip()
 
 
-prompt = "请输入你要执行的指令\n主路径：/home/ttg/Tools/project/robot/stephenRT/stephenRT\nq放弃"
+prompt = "请输入你要执行的指令\nq放弃"
 
 
 @update.got("cmd", prompt=prompt)
