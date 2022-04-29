@@ -13,7 +13,7 @@ import requests, json
 import websockets
 import asyncio
 import re
-import os
+import os, subprocess
 
 
 def run_silently(cmd):
@@ -25,4 +25,9 @@ def run_silently(cmd):
         return bf.decode('gbk').strip()
 
 
-print(run_silently("adb devices"))
+def run_cmd(cmd):
+    with subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, encoding="gbk") as f:
+        data = f.stdout.read()
+    return data
+
+print(run_cmd("adb devices"))
