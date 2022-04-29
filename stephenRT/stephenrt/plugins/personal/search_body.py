@@ -21,6 +21,8 @@ from nonebot.adapters.onebot.v11.message import MessageSegment
 from nonebot.params import Depends
 
 players = [281016636, 659738900, 158709003, 726408753]
+
+
 # players = [281016636]
 
 
@@ -96,7 +98,7 @@ async def search_user_info(name):
     if rank["data"] == []:
         return msg
     rank_info = "⬤  积分:{0}, 排名:{2},竞技场积分:{1}".format(rank["data"][0]["score"], rank["data"][0]["arena_score"],
-                                                        rank["data"][0]["rank_number"])
+                                                     rank["data"][0]["rank_number"])
 
     msg += rank_info
 
@@ -111,14 +113,14 @@ async def user_search(
     await dGame.finish(str(user_info))
 
 
-
-
 # pic
 
-async def depend(event: MessageEvent): # 2.编写依赖函数
+async def depend(event: MessageEvent):  # 2.编写依赖函数
     return {"uid": event.get_user_id(), "nickname": event.sender.nickname}
 
+
 picture = on_command("setu", rule=to_me(), aliases={"图", "pic"}, priority=1)
+
 
 @picture.handle()
 async def get_pic(x: dict = Depends(depend)):

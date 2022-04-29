@@ -55,6 +55,6 @@ async def handleuser(
         # ret = run_cmd("sh /home/ttg/Tools/project/robot/bot_restart.sh")
         await update.finish("执行结果：\n" + ret)
     else:
-        ret = await run_cmd(cmd)
+        ret = await run_silently(cmd)
         await update.finish(str(ret))
 
