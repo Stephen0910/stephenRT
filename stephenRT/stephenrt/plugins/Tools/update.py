@@ -47,7 +47,7 @@ async def handleuser(
         git_status = run_silently("git pull")
         await update.send("git更新结果：\n" + git_status)
         # run_silently("cd /home/ttg/Tools/project/robot")
-        ret = run_silently("./home/ttg/Tools/project/robot/bot_restart.sh")
+        ret = run_silently("sh /home/ttg/Tools/project/robot/bot_restart.sh")
         await update.finish("执行结果：\n" + ret)
     else:
         ret = run_silently(cmd)
