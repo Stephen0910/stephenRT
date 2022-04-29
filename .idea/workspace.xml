@@ -42,8 +42,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/stephenRT/stephenrt/plugins/Tools/update.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="429">
-              <caret line="44" lean-forward="true" selection-start-line="44" selection-end-line="44" />
+            <state relative-caret-position="354">
+              <caret line="70" column="81" selection-start-line="70" selection-start-column="81" selection-end-line="70" selection-end-column="81" />
               <folding>
                 <element signature="e#236#261#0" expanded="true" />
               </folding>
@@ -510,7 +510,7 @@
       <workItem from="1650959890894" duration="12087000" />
       <workItem from="1651114577446" duration="4000" />
       <workItem from="1651114588169" duration="26289000" />
-      <workItem from="1651211007464" duration="7889000" />
+      <workItem from="1651211007464" duration="8283000" />
     </task>
     <servers />
   </component>
@@ -523,7 +523,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="679861000" />
+    <option name="totallyTimeSpent" value="680255000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -536,6 +536,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-1928" y="-8" width="1936" height="1056" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49837664" visible="true" weight="0.18729989" />
       <window_info id="Structure" order="1" sideWeight="0.5016234" side_tool="true" weight="0.14887941" />
@@ -947,8 +948,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/stephenRT/stephenrt/plugins/Tools/update.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="429">
-          <caret line="44" lean-forward="true" selection-start-line="44" selection-end-line="44" />
+        <state relative-caret-position="354">
+          <caret line="70" column="81" selection-start-line="70" selection-start-column="81" selection-end-line="70" selection-end-column="81" />
           <folding>
             <element signature="e#236#261#0" expanded="true" />
           </folding>

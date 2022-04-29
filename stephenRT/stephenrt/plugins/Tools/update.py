@@ -68,7 +68,7 @@ async def handleuser(
         # run_cmd("cd /home/ttg/Tools/project/robot/stephenRT/stephenRT")
         git_status = await run_cmd("git pull")
         await update.send("git更新结果：\n" + git_status)
-        ret = single_run("sh /home/ttg/Tools/project/robot/bot_restart.sh")
+        ret = single_run("nohup sh /home/ttg/Tools/project/robot/bot_restart.sh &")
         # ret = run_cmd("sh /home/ttg/Tools/project/robot/bot_restart.sh")
         await update.finish("执行结果：\n" + ret)
     else:
