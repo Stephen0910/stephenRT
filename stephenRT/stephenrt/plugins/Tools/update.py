@@ -29,12 +29,17 @@ async def run_silently(cmd):
     try:
         return bf.decode().strip()
     except UnicodeDecodeError:
-        return bf.decode('utf-8').strip()
+        return bf.decode('gbk').strip()
 
 
 def run_cmd(cmd):
-    with subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, encoding="utf-8") as f:
-        data = f.stdout.read()
+    try:
+        with subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, encoding="utf-8") as f:
+            data = f.stdout.read()
+    except:
+        with subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, encoding="gbk") as f:
+            data = f.stdout.read()
+
     return data
 
 
@@ -52,9 +57,9 @@ async def handleuser(
         # run_cmd("cd /home/ttg/Tools/project/robot/stephenRT/stephenRT")
         git_status = run_cmd("git pull")
         await update.send("git更新结果：\n" + git_status)
-        ret = await run_silently("sh /home/ttg/Tools/project/robot/bot_restart.sh")
+        ret = run_cmd("sh /home/ttg/Tools/project/robot/bot_restart.sh")
         # ret = run_cmd("sh /home/ttg/Tools/project/robot/bot_restart.sh")
         await update.finish("执行结果：\n" + ret)
     else:
-        ret = await run_silently(cmd)
+        ret = run_cmd(cmd)
         await update.finish(str(ret))
