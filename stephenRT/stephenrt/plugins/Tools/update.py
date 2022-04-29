@@ -23,7 +23,7 @@ import os, subprocess
 update = on_command("update", rule=to_me(), aliases={"更新", "selfupdate"}, priority=1, permission=SUPERUSER)
 
 
-def run_silently(cmd):
+async def run_silently(cmd):
     with os.popen(cmd) as fp:
         bf = fp._stream.buffer.read()
     try:
@@ -31,7 +31,7 @@ def run_silently(cmd):
     except UnicodeDecodeError:
         return bf.decode('gbk').strip()
 
-def run_cmd(cmd):
+async def run_cmd(cmd):
     with subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, encoding="utf-8") as f:
         data = f.stdout.read()
     return data
@@ -49,12 +49,12 @@ async def handleuser(
         await update.finish("放弃执行指令，会话结束")
     elif cmd == "update":
         # run_cmd("cd /home/ttg/Tools/project/robot/stephenRT/stephenRT")
-        git_status = run_cmd("git pull")
+        git_status = await run_cmd("git pull")
         await update.send("git更新结果：\n" + git_status)
-        ret = run_silently("sh /home/ttg/Tools/project/robot/bot_restart.sh")
+        ret = await run_silently("sh /home/ttg/Tools/project/robot/bot_restart.sh")
         # ret = run_cmd("sh /home/ttg/Tools/project/robot/bot_restart.sh")
         await update.finish("执行结果：\n" + ret)
     else:
-        ret = run_cmd(cmd)
+        ret = await run_cmd(cmd)
         await update.finish(str(ret))
 
