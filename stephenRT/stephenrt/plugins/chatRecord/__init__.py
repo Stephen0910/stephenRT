@@ -114,7 +114,7 @@ async def saveMsg(bot: Bot, event: GroupMessageEvent):
     # print(msg.message["type"])
     # await send_private(bot, user_id=281016636, msg=msg)
     groupInfo = await group_info(bot, groupId=msg.group_id)
-    dateArray = datetime.datetime.utcfromtimestamp(msg.time + 8 * 3600)  # 时区加8)
+    dateArray = datetime.datetime.utcfromtimestamp(msg.time)  # 时区加8 不加了
     msg_time = dateArray.strftime("%Y-%m-%d %H:%M:%S")
     sql = """INSERT INTO "public"."group"("message_id", "sender_name", "sender_id", "message", "group_id",
      "group_name", "group_card", "timestamp", "self_id", "post_type", "msg_type") 
