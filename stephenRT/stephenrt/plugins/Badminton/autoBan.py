@@ -95,7 +95,7 @@ def filter_chat(chats_list):
     for chat in chats_list[3:]:
         if re.match("[a-z]+\d+", chat["sendMan"]["name"]) or re.match("boxer_", chat["sendMan"]["name"]):
             if chat["isJy"] is False and chat["isFh"] is False:  # 是否已禁言开关
-                if len(chat["sendContent"]) > 15:
+                if len(chat["sendContent"]) > 9:
                     # if "钻" or "砖" or "鉆" in chat["sendContent"] and "s" in chat["sendContent"].lower():
                     if re.search("鉆|钻|砖|钴|万|萬|澫", str(chat["sendContent"])) and re.search("s|元|沅|钱|q|秋秋",
                                                                                           str(chat[
@@ -116,7 +116,7 @@ def filter_chat(chats_list):
 async def check_room():
     chat_msg = await socket_message()
     for chat in chat_msg:
-        if chat["sendMan"]["rankStage"] == 1 and len(chat["sendContent"]) > 10:
+        if chat["sendMan"]["rankStage"] == 1 and len(chat["sendContent"]) > 9:
             # if chat:
             # print(str(chat["sendContent"]))
             if re.search(text_check[0], str(chat["sendContent"]).lower()) and re.search(text_check[1],
@@ -131,7 +131,7 @@ async def check_room():
                     return result
                 else:
                     print("已经禁言了")
-            elif re.match(name_check[0], str(chat["sendMan"]["name"]).lower()):
+            elif re.match(name_check[0], str(chat["sendMan"]["name"]).lower()) and len(chat["sendMan"]["name"]).lower() > 9:
                 result = "chatRoom名字广告：" + str(chat["sendMan"]["numberUserId"]) + " " + str(chat["sendMan"][
                                                                                                 "name"]) + " " + str(
                     chat["sendContent"]).replace("\n", "")
