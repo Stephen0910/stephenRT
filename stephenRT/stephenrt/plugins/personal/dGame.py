@@ -20,7 +20,9 @@ import asyncio
 import socket
 from nonebot.adapters.onebot.v11.message import MessageSegment
 
+
 sleep_time = 7
+v_url = "https://api.linhun.vip/api/Littlesistervideo?type=json"
 
 # names = ["Dream丶狗", "a824683653"]
 # names = ["宁心之殇", "你好尹天仇", "晴天眼神", "上海康恒", "再见柳飘飘", "求坑丶", "CG控", "小灰灰居然"]
@@ -55,6 +57,13 @@ dg_titles = {"map_reserve2": "辅",
              "map_reserve7": "富",
              "map_reserve8": "SMVP"}
 
+
+async def get_video():
+    with requests.get(v_url) as session:
+        response = session.text
+        data = json.loads(response)["video"]
+        print("视频地址：", data)
+    return data
 
 def transfer_dId(id):
     id = int(id)
@@ -96,39 +105,6 @@ def get_response(url):
     response.close()
     return response.content
 
-
-# def get_rPic():
-#     # 获取页数
-#     page_url = "https://fuliba2021.net/flhz"
-#     page_html = etree.HTML(get_response(page_url).decode())
-#     page = page_html.xpath("/html/body/section/div[1]/div/div[2]/ul/li[8]/span//text()")[0]
-#     page_number = re.search("\d+", page).group()
-#     print(page_number)
-#
-#
-#     pic_url = ""
-#     while pic_url == "":  # 有可能获取失败，2021016前面的都不行
-#         rand_page = random.randint(1, int(page_number))
-#         # 获取某一期
-#         index_url = "https://fuliba2021.net/flhz/page/" + str(rand_page)
-#         html = etree.HTML(get_response(index_url).decode())
-#         total = html.xpath("//article//h2//@href")
-#         rand_index = random.choice(total)
-#         print(rand_index)
-#         # 获取页码
-#
-#
-#
-#         # 获取图片
-#         page3 = rand_index + "/3"
-#         pics = etree.HTML(get_response(page3).decode())
-#         pics_xpath = pics.xpath("/html/body/section/div[1]/div/article/p[1]/img/@src")
-#         try:
-#             pic_url = random.choice(pics_xpath)
-#         except:
-#             print("pic_url为空")
-#     print(pic_url)
-#     return pic_url
 
 async def get_rPic():
     # 获取页数
@@ -229,6 +205,8 @@ async def get_gids(id):
     return g_ids
 
 
+
+
 ids = get_ids(names=names)
 ip = get_host_ip()
 # print(get_recent_data(369818))
@@ -239,8 +217,8 @@ if ip == "10.10.10.8":
     first_time = int(time.time())
     group = 959822848
 else:
-    # first_time = 1649837159
-    first_time = int(time.time())
+    first_time = 1649837159
+    # first_time = int(time.time())
     group = 755489024
 
 print("first_time:", first_time)
@@ -324,7 +302,7 @@ async def game_info():
         print(omg_msg, len(omg_msg))
 
         # if len(omg_msg) > 1:
-        if len(omg_msg) > 1 and ip == "10.10.10.8":
+        if len(omg_msg) > 1:
             print("send the omg msg")
             try:
                 await bot.send_group_msg(group_id=group, message=omg_msg)
@@ -332,6 +310,17 @@ async def game_info():
                 await bot.send_private_msg(user_id=281016636, message=str(omg_msg) + str(e))
 
         if is_win == "OMG 胜" and ip == "10.10.10.8":
+            send = 0
+            while send == 0:
+                video_url = await get_video()
+                pic_file = MessageSegment.video(file=video_url)
+                try:
+                    await bot.send_group_msg(group_id=group, message=pic_file)
+                    send = 1
+                except:
+                    print("发送失败，重试")
+
+        elif is_win == "OMG 负" and ip == "10.10.10.8":
             award_url = await get_rPic()
             image = MessageSegment.image(award_url)
             try:

@@ -149,12 +149,18 @@ async def get_pic(x: dict = Depends(depend)):
 video = on_command("video", rule=to_me(), aliases={"视频", "随机视频", "sp"}, priority=1)
 
 @video.handle()
-async def video_func():
-    video_url = await get_video()
-    video_file = MessageSegment.video(file=video_url)
-    try:
-        await video.send(message=video_file)
-    except Exception as e:
-        await video.send(str(e))
-    # cq = r"[CQ:video, file={0}]".format(video_url)
-    # await video.finish(video_file)
+async def video_func(x: dict = Depends(depend)):
+    print("pId:", x["uid"])
+    if int(x["uid"]) in players:
+        send = 0
+        while send == 0:
+            video_url = await get_video()
+            pic_file = MessageSegment.video(file=video_url)
+            try:
+                await video.send(message=pic_file)
+                send = 1
+            except:
+                print("发送失败，重试")
+    else:
+        print("无法操作")
+        await video.finish()
