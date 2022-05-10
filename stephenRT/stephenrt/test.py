@@ -8,6 +8,20 @@
 # @Software : PyCharm
 # @Copyright:   (c) StephenZ 2022
 # @Licence  :     <@2022>
+import requests, json
+import asyncio
 
-a = "fasdf}"
-print(a.replace("a", "1"))
+v_url = "https://api.linhun.vip/api/Littlesistervideo?type=json"
+
+
+async def get_video():
+    with requests.get(v_url) as session:
+        response = session.text
+        data = json.loads(response)["video"]
+        print(data)
+    return data
+
+
+loop = asyncio.get_event_loop()
+loop.run_until_complete(get_video())
+loop.close()

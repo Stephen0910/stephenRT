@@ -29,6 +29,7 @@ def get_host_ip():
 # from .dGame import *
 ip = str(get_host_ip())
 
+print(ip)
 
 if ip == "10.10.10.8" or ip == "192.168.2.3":
     print("本地内网")

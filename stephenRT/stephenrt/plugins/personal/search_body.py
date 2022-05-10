@@ -21,6 +21,7 @@ from nonebot.adapters.onebot.v11.message import MessageSegment
 from nonebot.params import Depends
 
 players = [281016636, 659738900, 158709003, 726408753]
+v_url = "https://api.linhun.vip/api/Littlesistervideo?type=json"
 
 
 # players = [281016636]
@@ -105,6 +106,14 @@ async def search_user_info(name):
     return msg
 
 
+async def get_video():
+    with requests.get(v_url) as session:
+        response = session.text
+        data = json.loads(response)["video"]
+        print("视频地址：", data)
+    return data
+
+
 @dGame.got("user_name", prompt="输入要查询的名字")
 async def user_search(
         user_name: str = ArgPlainText("user_name")
@@ -119,7 +128,8 @@ async def depend(event: MessageEvent):  # 2.编写依赖函数
     return {"uid": event.get_user_id(), "nickname": event.sender.nickname}
 
 
-picture = on_command("setu", rule=to_me(), aliases={"图", "pic"}, priority=1)
+picture = on_command("st", rule=to_me(), aliases={"图", "pic"}, priority=1)
+
 
 
 @picture.handle()
@@ -132,3 +142,16 @@ async def get_pic(x: dict = Depends(depend)):
     else:
         print("无法操作")
         await picture.finish()
+
+
+"""
+"""
+video = on_command("video", rule=to_me(), aliases={"视频", "随机视频", "sp"}, priority=1)
+
+@video.handle()
+async def video_func():
+    video_url = await get_video()
+    video_file = MessageSegment.video(file=video_url)
+    # cq = r"[CQ:video, file={0}]".format(video_url)
+    await video.send(message=video_file)
+    # await video.finish(video_file)
