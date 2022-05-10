@@ -152,6 +152,9 @@ video = on_command("video", rule=to_me(), aliases={"视频", "随机视频", "sp
 async def video_func():
     video_url = await get_video()
     video_file = MessageSegment.video(file=video_url)
+    try:
+        await video.send(message=video_file)
+    except Exception as e:
+        await video.send(str(e))
     # cq = r"[CQ:video, file={0}]".format(video_url)
-    await video.send(message=video_file)
     # await video.finish(video_file)
