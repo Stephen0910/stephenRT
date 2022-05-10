@@ -115,13 +115,15 @@ def filter_chat(chats_list):
 
 async def check_room():
     chat_msg = await socket_message()
+    print("chat_msg:", chat_msg)
+    print(type(chat_msg))
     for chat in chat_msg:
         if chat["sendMan"]["rankStage"] == 1 and len(chat["sendContent"]) > 9:
+            print(chat["sendContent"])
+            # print("大于9疑似")
             # if chat:
             # print(str(chat["sendContent"]))
-            if re.search(text_check[0], str(chat["sendContent"]).lower()) and re.search(text_check[1],
-                                                                                        str(chat[
-                                                                                                "sendContent"]).lower) and re.match(
+            if re.search(text_check[0], str(chat["sendContent"]).lower()) and re.search(text_check[1], str(chat["sendContent"]).lower()) and re.match(
                 "[a-z]+|\d+", chat["sendMan"]["name"]):
                 result = "chatRoom发言广告：" + str(chat["sendMan"]["numberUserId"]) + " " + str(chat["sendMan"][
                                                                                                 "name"]) + " " + str(
@@ -131,7 +133,8 @@ async def check_room():
                     return result
                 else:
                     print("已经禁言了")
-            elif re.match(name_check[0], str(chat["sendMan"]["name"]).lower()) and len(chat["sendMan"]["name"]).lower() > 9:
+            elif re.match(name_check[0], str(chat["sendMan"]["name"]).lower()) and len(
+                    chat["sendMan"]["name"]).lower() > 8:
                 result = "chatRoom名字广告：" + str(chat["sendMan"]["numberUserId"]) + " " + str(chat["sendMan"][
                                                                                                 "name"]) + " " + str(
                     chat["sendContent"]).replace("\n", "")
@@ -139,7 +142,6 @@ async def check_room():
                     return result
                 else:
                     print("已经禁言了")
-
 
 
 def test_chat(chat_list):
@@ -165,10 +167,8 @@ block_list = []
 async def shut_user():
     bot = get_bot()
     try:
-        # response = await socket_message()
-        # print("response:\n", json.dumps(response))
-
         result = await check_room()
+        print("--------", result)
         if result != None and result not in block_list:
             # print("检测到：", result)
             block_list.append(result)
@@ -185,6 +185,7 @@ async def shut_user():
 
     except Exception as e:
         result = "获取消息列表失败：" + str(e)
+        print(result)
 
     # if len(block_list) > 3:
     #     pass

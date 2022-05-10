@@ -2,8 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="3047aada-47d5-4ad8-a368-9e15af7b4bc7" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/stephenRT/stephenrt/plugins/Badminton/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/stephenRT/stephenrt/plugins/Badminton/__init__.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/stephenRT/stephenrt/plugins/Badminton/autoBan.py" beforeDir="false" afterPath="$PROJECT_DIR$/stephenRT/stephenrt/plugins/Badminton/autoBan.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/stephenRT/stephenrt/plugins/personal/dGame.py" beforeDir="false" afterPath="$PROJECT_DIR$/stephenRT/stephenrt/plugins/personal/dGame.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -19,8 +20,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/stephenRT/stephenrt/plugins/personal/dGame.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="465">
-              <caret line="221" column="21" lean-forward="true" selection-start-line="221" selection-start-column="21" selection-end-line="221" selection-end-column="21" />
+            <state relative-caret-position="3180">
+              <caret line="221" column="21" selection-start-line="221" selection-start-column="21" selection-end-line="221" selection-end-column="21" />
               <folding>
                 <element signature="e#233#254#0" expanded="true" />
               </folding>
@@ -31,8 +32,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/stephenRT/stephenrt/plugins/personal/search_body.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="384">
-              <caret line="162" column="32" lean-forward="true" selection-start-line="154" selection-start-column="8" selection-end-line="162" selection-end-column="32" />
+            <state relative-caret-position="2280">
+              <caret line="162" column="32" selection-start-line="154" selection-start-column="8" selection-end-line="162" selection-end-column="32" />
               <folding>
                 <element signature="e#239#269#0" expanded="true" />
               </folding>
@@ -43,8 +44,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/stephenRT/bot.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="139">
-              <caret line="20" column="42" lean-forward="true" selection-start-line="20" selection-start-column="42" selection-end-line="20" selection-end-column="42" />
+            <state relative-caret-position="285">
+              <caret line="20" column="42" selection-start-line="20" selection-start-column="42" selection-end-line="20" selection-end-column="42" />
             </state>
           </provider>
         </entry>
@@ -52,7 +53,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/stephenRT/stephenrt/plugins/Badminton/sensitive.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="504">
+            <state relative-caret-position="1800">
               <caret line="126" column="22" selection-start-line="126" selection-start-column="22" selection-end-line="126" selection-end-column="22" />
               <folding>
                 <element signature="e#238#307#0" expanded="true" />
@@ -73,8 +74,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/stephenRT/stephenrt/plugins/Badminton/autoBan.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="105">
-              <caret line="97" column="47" selection-start-line="97" selection-start-column="47" selection-end-line="97" selection-end-column="47" />
+            <state relative-caret-position="-107">
+              <caret line="126" column="55" lean-forward="true" selection-start-line="126" selection-start-column="55" selection-end-line="126" selection-end-column="55" />
               <folding>
                 <element signature="e#237#268#0" expanded="true" />
               </folding>
@@ -85,7 +86,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://D:/Tools/python3/Lib/site-packages/nonebot/adapters/onebot/v11/message.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="291">
+            <state relative-caret-position="3405">
               <caret line="237" column="29" selection-start-line="237" selection-start-column="15" selection-end-line="237" selection-end-column="29" />
             </state>
           </provider>
@@ -94,7 +95,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://D:/Tools/python3/Lib/site-packages/nonebot/adapters/onebot/v11/utils.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="411">
+            <state relative-caret-position="1110">
               <caret line="80" selection-start-line="80" selection-end-line="80" />
             </state>
           </provider>
@@ -103,8 +104,17 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://D:/Tools/python3/Lib/site-packages/nonebot/message.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="186">
+            <state relative-caret-position="1995">
               <caret line="157" selection-start-line="157" selection-end-line="157" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/stephenRT/stephenrt/plugins/Badminton/__init__.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="420">
+              <caret line="33" selection-start-line="33" selection-end-line="33" />
             </state>
           </provider>
         </entry>
@@ -211,7 +221,6 @@
         <option value="$PROJECT_DIR$/stephenRT/stephenrt/plugins/personal/mzt.py" />
         <option value="$PROJECT_DIR$/stephenRT/stephenrt/plugins/projects/encrypt.py" />
         <option value="$PROJECT_DIR$/stephenRT/stephenrt/plugins/projects/bmEncrypt.py" />
-        <option value="$PROJECT_DIR$/stephenRT/stephenrt/plugins/Badminton/__init__.py" />
         <option value="$PROJECT_DIR$/stephenRT/stephenrt/plugins/Tools/__init__.py" />
         <option value="$PROJECT_DIR$/stephenRT/stephenrt/plugins/projects/test1.py" />
         <option value="$PROJECT_DIR$/stephenRT/stephenrt/plugins/Tools/update.py" />
@@ -222,6 +231,7 @@
         <option value="$PROJECT_DIR$/stephenRT/stephenrt/test.py" />
         <option value="$PROJECT_DIR$/stephenRT/stephenrt/plugins/personal/search_body.py" />
         <option value="$PROJECT_DIR$/stephenRT/stephenrt/plugins/personal/dGame.py" />
+        <option value="$PROJECT_DIR$/stephenRT/stephenrt/plugins/Badminton/__init__.py" />
         <option value="$PROJECT_DIR$/stephenRT/stephenrt/plugins/Badminton/autoBan.py" />
       </list>
     </option>
@@ -240,7 +250,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -278,6 +287,7 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -305,7 +315,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.test">
+  <component name="RunManager" selected="Python.bot">
     <configuration name="bot" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="stephenRT" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -505,7 +515,8 @@
       <workItem from="1651825990681" duration="1226000" />
       <workItem from="1651827692176" duration="390000" />
       <workItem from="1652059918373" duration="42000" />
-      <workItem from="1652080743362" duration="19798000" />
+      <workItem from="1652080743362" duration="21018000" />
+      <workItem from="1652176202719" duration="237000" />
     </task>
     <servers />
   </component>
@@ -518,7 +529,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="707956000" />
+    <option name="totallyTimeSpent" value="709413000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -533,7 +544,7 @@
     <frame x="-1928" y="-8" width="1936" height="1056" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49837664" visible="true" weight="0.2022412" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49837664" visible="true" weight="0.20437567" />
       <window_info id="Structure" order="1" sideWeight="0.5016234" side_tool="true" weight="0.14887941" />
       <window_info id="Favorites" order="2" sideWeight="0.5016234" side_tool="true" weight="0.14887941" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -589,7 +600,7 @@
     <SUITE FILE_PATH="coverage/stephenRT$outside.coverage" NAME="outside Coverage Results" MODIFIED="1650338869459" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/stephenRT/stephenrt/plugins/projects" />
     <SUITE FILE_PATH="coverage/stephenRT$dGame.coverage" NAME="dGame Coverage Results" MODIFIED="1649657669222" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/stephenRT/stephenrt/plugins/personal" />
     <SUITE FILE_PATH="coverage/stephenRT$__init__.coverage" NAME="__init__ Coverage Results" MODIFIED="1651194988561" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/stephenRT/stephenrt/plugins/Tools" />
-    <SUITE FILE_PATH="coverage/stephenRT$test.coverage" NAME="test Coverage Results" MODIFIED="1652145336543" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/stephenRT/stephenrt" />
+    <SUITE FILE_PATH="coverage/stephenRT$test.coverage" NAME="test Coverage Results" MODIFIED="1652176258686" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/stephenRT/stephenrt" />
     <SUITE FILE_PATH="coverage/stephenRT$hot_search.coverage" NAME="hot_search Coverage Results" MODIFIED="1652082664593" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="D:/Tools/python3/Lib/site-packages/douyin_spider/enter" />
     <SUITE FILE_PATH="coverage/stephenRT$hot_positive_energy.coverage" NAME="hot_positive_energy Coverage Results" MODIFIED="1652082946006" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="D:/Tools/python3/Lib/site-packages/douyin_spider/enter" />
     <SUITE FILE_PATH="coverage/stephenRT$pytest_in_autoBan_py.coverage" NAME="pytest in autoBan.py Coverage Results" MODIFIED="1651137071688" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/stephenRT/stephenrt/plugins/Badminton" />
@@ -597,7 +608,7 @@
     <SUITE FILE_PATH="coverage/stephenRT$zendesk.coverage" NAME="zendesk Coverage Results" MODIFIED="1645431241737" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/stephenRT/stephenrt/plugins/Badminton" />
     <SUITE FILE_PATH="coverage/stephenRT$bmEncrypt.coverage" NAME="bmEncrypt Coverage Results" MODIFIED="1651054153557" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/stephenRT/stephenrt/plugins/projects" />
     <SUITE FILE_PATH="coverage/stephenRT$test1.coverage" NAME="test1 Coverage Results" MODIFIED="1651218606680" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/stephenRT/stephenrt/plugins/projects" />
-    <SUITE FILE_PATH="coverage/stephenRT$bot.coverage" NAME="bot Coverage Results" MODIFIED="1652167193947" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/stephenRT" />
+    <SUITE FILE_PATH="coverage/stephenRT$bot.coverage" NAME="bot Coverage Results" MODIFIED="1652176630447" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/stephenRT" />
     <SUITE FILE_PATH="coverage/stephenRT$encrypt.coverage" NAME="encrypt Coverage Results" MODIFIED="1650785444317" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/stephenRT/stephenrt/plugins/projects" />
     <SUITE FILE_PATH="coverage/stephenRT$config__1_.coverage" NAME="config (1) Coverage Results" MODIFIED="1644460068460" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/stephenRT/stephenrt/plugins" />
     <SUITE FILE_PATH="coverage/stephenRT$sensitive.coverage" NAME="sensitive Coverage Results" MODIFIED="1644917430897" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/stephenRT/stephenrt/plugins/Badminton" />
@@ -608,16 +619,6 @@
     <SUITE FILE_PATH="coverage/stephenRT$mzt.coverage" NAME="mzt Coverage Results" MODIFIED="1650424758189" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/stephenRT/stephenrt/plugins/personal" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/stephenRT/stephenrt/plugins/Tools/__init__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="165">
-          <caret line="12" column="21" selection-start-line="12" selection-start-column="21" selection-end-line="12" selection-end-column="21" />
-          <folding>
-            <element signature="e#236#260#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/stephenRT/stephenrt/plugins/Badminton/_ban.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="270">
@@ -648,36 +649,10 @@
     <entry file="file://$PROJECT_DIR$/stephenRT/stephenrt/wordcloud.png">
       <provider selected="true" editor-type-id="images" />
     </entry>
-    <entry file="file://D:/Tools/python3/Lib/site-packages/douyin/handlers/__init__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <folding>
-            <element signature="e#0#40#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://D:/Tools/python3/Lib/site-packages/douyin/hot/__init__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="33" lean-forward="true" selection-start-column="33" selection-end-column="33" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://D:/Tools/python3/Lib/site-packages/douyin/config.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="15">
-          <caret line="1" column="65" selection-start-line="1" selection-start-column="18" selection-end-line="1" selection-end-column="65" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://D:/Tools/python3/Lib/site-packages/douyin/__init__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="15">
-          <caret line="1" column="17" lean-forward="true" selection-start-line="1" selection-start-column="17" selection-end-line="1" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://D:/Tools/python3/Lib/site-packages/douyin/handlers/__init__.py" />
+    <entry file="file://D:/Tools/python3/Lib/site-packages/douyin/hot/__init__.py" />
+    <entry file="file://D:/Tools/python3/Lib/site-packages/douyin/config.py" />
+    <entry file="file://D:/Tools/python3/Lib/site-packages/douyin/__init__.py" />
     <entry file="file://D:/Tools/python3/Lib/site-packages/asks/sessions.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="186">
@@ -706,18 +681,8 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://D:/Tools/python3/Lib/site-packages/douyin_spider/models/user.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <folding>
-            <element signature="e#0#54#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://D:/Tools/python3/Lib/site-packages/douyin_spider/__init__.py">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
+    <entry file="file://D:/Tools/python3/Lib/site-packages/douyin_spider/models/user.py" />
+    <entry file="file://D:/Tools/python3/Lib/site-packages/douyin_spider/__init__.py" />
     <entry file="file://D:/Tools/python3/Lib/site-packages/douyin_tool.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="133">
@@ -725,156 +690,24 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://D:/Tools/python3/Lib/site-packages/douyin_spider/enter/hot_search.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <folding>
-            <element signature="e#0#59#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://D:/Tools/python3/Lib/site-packages/douyin_spider/enter/hot_top.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <folding>
-            <element signature="e#0#39#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://D:/Tools/python3/Lib/site-packages/douyin_spider/enter/hot_star.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <folding>
-            <element signature="e#0#51#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://D:/Tools/python3/Lib/site-packages/douyin_spider/downloaders/parent.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-60">
-          <caret line="56" column="29" selection-start-line="56" selection-start-column="14" selection-end-line="56" selection-end-column="29" />
-          <folding>
-            <element signature="e#0#11#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://D:/Tools/python3/Lib/site-packages/douyin_spider/downloaders/video.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="420">
-          <caret line="28" column="20" lean-forward="true" selection-start-line="28" selection-start-column="20" selection-end-line="28" selection-end-column="20" />
-          <folding>
-            <element signature="e#0#44#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://D:/Tools/python3/Lib/site-packages/douyin_spider/enter/hot_music.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="360">
-          <caret line="24" selection-start-line="24" selection-end-line="27" />
-          <folding>
-            <element signature="e#0#39#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://D:/Tools/python3/Lib/site-packages/douyin_spider/enter/hot_positive_energy.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <folding>
-            <element signature="e#0#39#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://D:/Tools/python3/Lib/site-packages/douyin/downloader/__init__.py">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://D:/Tools/python3/Lib/site-packages/douyin/downloaders/base.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <folding>
-            <element signature="e#0#21#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://D:/Tools/python3/Lib/site-packages/douyin/downloaders/music.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <folding>
-            <element signature="e#0#35#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://D:/Tools/python3/Lib/site-packages/douyin/downloaders/video.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <folding>
-            <element signature="e#0#35#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://D:/Tools/python3/Lib/site-packages/douyin/handlers/mongo.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="178">
-          <caret line="16" column="13" selection-start-line="16" selection-start-column="13" selection-end-line="16" selection-end-column="13" />
-          <folding>
-            <element signature="e#0#35#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://D:/Tools/python3/Lib/site-packages/douyin/handlers/video.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <folding>
-            <element signature="e#0#39#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://D:/Tools/python3/Lib/site-packages/douyin/hot/trend.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <folding>
-            <element signature="e#0#30#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://D:/Tools/python3/Lib/site-packages/douyin/hot/search.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="30">
-          <caret line="2" column="30" lean-forward="true" selection-start-line="2" selection-start-column="30" selection-end-line="2" selection-end-column="30" />
-          <folding>
-            <element signature="e#0#40#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://D:/Tools/python3/Lib/site-packages/douyin/structure/address.py">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://D:/Tools/python3/Lib/site-packages/douyin_spider/downloaders/__init__.py">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://D:/Tools/python3/Lib/site-packages/douyin_spider/downloaders/music.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="75">
-          <caret line="5" column="21" selection-start-line="5" selection-start-column="6" selection-end-line="5" selection-end-column="21" />
-          <folding>
-            <element signature="e#0#44#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://D:/Tools/python3/Lib/site-packages/douyin_spider/enter/hot_search.py" />
+    <entry file="file://D:/Tools/python3/Lib/site-packages/douyin_spider/enter/hot_top.py" />
+    <entry file="file://D:/Tools/python3/Lib/site-packages/douyin_spider/enter/hot_star.py" />
+    <entry file="file://D:/Tools/python3/Lib/site-packages/douyin_spider/downloaders/parent.py" />
+    <entry file="file://D:/Tools/python3/Lib/site-packages/douyin_spider/downloaders/video.py" />
+    <entry file="file://D:/Tools/python3/Lib/site-packages/douyin_spider/enter/hot_music.py" />
+    <entry file="file://D:/Tools/python3/Lib/site-packages/douyin_spider/enter/hot_positive_energy.py" />
+    <entry file="file://D:/Tools/python3/Lib/site-packages/douyin/downloader/__init__.py" />
+    <entry file="file://D:/Tools/python3/Lib/site-packages/douyin/downloaders/base.py" />
+    <entry file="file://D:/Tools/python3/Lib/site-packages/douyin/downloaders/music.py" />
+    <entry file="file://D:/Tools/python3/Lib/site-packages/douyin/downloaders/video.py" />
+    <entry file="file://D:/Tools/python3/Lib/site-packages/douyin/handlers/mongo.py" />
+    <entry file="file://D:/Tools/python3/Lib/site-packages/douyin/handlers/video.py" />
+    <entry file="file://D:/Tools/python3/Lib/site-packages/douyin/hot/trend.py" />
+    <entry file="file://D:/Tools/python3/Lib/site-packages/douyin/hot/search.py" />
+    <entry file="file://D:/Tools/python3/Lib/site-packages/douyin/structure/address.py" />
+    <entry file="file://D:/Tools/python3/Lib/site-packages/douyin_spider/downloaders/__init__.py" />
+    <entry file="file://D:/Tools/python3/Lib/site-packages/douyin_spider/downloaders/music.py" />
     <entry file="file://$PROJECT_DIR$/stephenRT/stephenrt/videos/tick.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="180">
@@ -923,9 +756,43 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://D:/Tools/python3/Lib/site-packages/nonebot/matcher.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="426">
+          <caret line="535" column="26" selection-start-line="535" selection-start-column="22" selection-end-line="535" selection-end-column="26" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/stephenRT/stephenrt/plugins/personal/dGame.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3180">
+          <caret line="221" column="21" selection-start-line="221" selection-start-column="21" selection-end-line="221" selection-end-column="21" />
+          <folding>
+            <element signature="e#233#254#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/stephenRT/stephenrt/plugins/personal/search_body.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2280">
+          <caret line="162" column="32" selection-start-line="154" selection-start-column="8" selection-end-line="162" selection-end-column="32" />
+          <folding>
+            <element signature="e#239#269#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/stephenRT/bot.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="285">
+          <caret line="20" column="42" selection-start-line="20" selection-start-column="42" selection-end-line="20" selection-end-column="42" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/stephenRT/stephenrt/plugins/Badminton/sensitive.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="504">
+        <state relative-caret-position="1800">
           <caret line="126" column="22" selection-start-line="126" selection-start-column="22" selection-end-line="126" selection-end-column="22" />
           <folding>
             <element signature="e#238#307#0" expanded="true" />
@@ -940,65 +807,38 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/stephenRT/bot.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="139">
-          <caret line="20" column="42" lean-forward="true" selection-start-line="20" selection-start-column="42" selection-end-line="20" selection-end-column="42" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://D:/Tools/python3/Lib/site-packages/nonebot/matcher.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="426">
-          <caret line="535" column="26" selection-start-line="535" selection-start-column="22" selection-end-line="535" selection-end-column="26" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://D:/Tools/python3/Lib/site-packages/nonebot/adapters/onebot/v11/message.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="291">
+        <state relative-caret-position="3405">
           <caret line="237" column="29" selection-start-line="237" selection-start-column="15" selection-end-line="237" selection-end-column="29" />
         </state>
       </provider>
     </entry>
     <entry file="file://D:/Tools/python3/Lib/site-packages/nonebot/adapters/onebot/v11/utils.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="411">
+        <state relative-caret-position="1110">
           <caret line="80" selection-start-line="80" selection-end-line="80" />
         </state>
       </provider>
     </entry>
     <entry file="file://D:/Tools/python3/Lib/site-packages/nonebot/message.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="186">
+        <state relative-caret-position="1995">
           <caret line="157" selection-start-line="157" selection-end-line="157" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/stephenRT/stephenrt/plugins/personal/search_body.py">
+    <entry file="file://$PROJECT_DIR$/stephenRT/stephenrt/plugins/Badminton/__init__.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="384">
-          <caret line="162" column="32" lean-forward="true" selection-start-line="154" selection-start-column="8" selection-end-line="162" selection-end-column="32" />
-          <folding>
-            <element signature="e#239#269#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/stephenRT/stephenrt/plugins/personal/dGame.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="465">
-          <caret line="221" column="21" lean-forward="true" selection-start-line="221" selection-start-column="21" selection-end-line="221" selection-end-column="21" />
-          <folding>
-            <element signature="e#233#254#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="420">
+          <caret line="33" selection-start-line="33" selection-end-line="33" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/stephenRT/stephenrt/plugins/Badminton/autoBan.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="105">
-          <caret line="97" column="47" selection-start-line="97" selection-start-column="47" selection-end-line="97" selection-end-column="47" />
+        <state relative-caret-position="-107">
+          <caret line="126" column="55" lean-forward="true" selection-start-line="126" selection-start-column="55" selection-end-line="126" selection-end-column="55" />
           <folding>
             <element signature="e#237#268#0" expanded="true" />
           </folding>

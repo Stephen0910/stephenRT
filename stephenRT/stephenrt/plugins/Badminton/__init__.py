@@ -30,7 +30,7 @@ def get_host_ip():
 
     return ip
 
-# from .autoBan import *
+from .autoBan import *
 
 if str(get_host_ip()) == "10.10.10.8":
     print("本地内网")
