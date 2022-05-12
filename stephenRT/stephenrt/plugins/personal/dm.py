@@ -28,7 +28,7 @@ elif user == "pao":
 elif user == "kai":
     id = "6974685"
 else:
-    id = "606118"
+    id = "24422"
 
 # 一些接口可以获取是否在线等情况
 # room_info = "https://www.douyu.com/roomapi/biz/getSwitch?rid={0}".format(id)
@@ -95,8 +95,9 @@ class DyDanmu:
                 else:
                     print(msg_dict['nn'] + '\t送出\t' + msg_dict['gfcnt'] + '\t个\t' + msg_dict['gfid'] + '\t未知礼物')
                     print(msg_dict)
-            if msg_dict["type"] == "uenter":
-                print(msg_dict)
+            if msg_dict["type"] == "uenter" and int(msg_dict["nl"]) > 3:
+                print("贵族{0} {1} 进入房间".format(msg_dict["nl"], msg_dict["nn"]))
+
 
     # 发送登录信息
     def login(self):
