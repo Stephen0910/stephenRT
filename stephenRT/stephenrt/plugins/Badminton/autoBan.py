@@ -75,6 +75,7 @@ async def socket_message():
         for i in range(20):
             recieve = await socket.recv()
             msg_list.append(json.loads(recieve))
+    # print("msg_list:", msg_list)
     return msg_list
 
 
@@ -115,14 +116,12 @@ def filter_chat(chats_list):
 
 async def check_room():
     chat_msg = await socket_message()
-    print("chat_msg:", chat_msg)
+    # print("chat_msg:", chat_msg)
     print(type(chat_msg))
     for chat in chat_msg:
         if chat["sendMan"]["rankStage"] == 1 and len(chat["sendContent"]) > 9:
-            print(chat["sendContent"])
-            # print("大于9疑似")
-            # if chat:
-            # print(str(chat["sendContent"]))
+            print(str(chat["sendMan"]["name"]).lower(), chat["sendContent"])
+            print("大于9疑似")
             if re.search(text_check[0], str(chat["sendContent"]).lower()) and re.search(text_check[1], str(chat["sendContent"]).lower()) and re.match(
                 "[a-z]+|\d+", chat["sendMan"]["name"]):
                 result = "chatRoom发言广告：" + str(chat["sendMan"]["numberUserId"]) + " " + str(chat["sendMan"][
@@ -133,8 +132,8 @@ async def check_room():
                     return result
                 else:
                     print("已经禁言了")
-            elif re.match(name_check[0], str(chat["sendMan"]["name"]).lower()) and len(
-                    chat["sendMan"]["name"]).lower() > 8:
+            elif re.search(name_check[0], str(chat["sendMan"]["name"]).lower()) and len(
+                    chat["sendMan"]["name"]) > 8:
                 result = "chatRoom名字广告：" + str(chat["sendMan"]["numberUserId"]) + " " + str(chat["sendMan"][
                                                                                                 "name"]) + " " + str(
                     chat["sendContent"]).replace("\n", "")
@@ -142,6 +141,8 @@ async def check_room():
                     return result
                 else:
                     print("已经禁言了")
+            else:
+                print("不处理：", name_check[0], text_check)
 
 
 def test_chat(chat_list):
@@ -168,9 +169,9 @@ async def shut_user():
     bot = get_bot()
     try:
         result = await check_room()
-        print("--------", result)
+        print("---result-----", result)
         if result != None and result not in block_list:
-            # print("检测到：", result)
+            print("检测到：", result)
             block_list.append(result)
             try:
                 # await bot.send_private_msg(user_id=281016636, message=str(result))
