@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 # @Time     : 2022/5/11 9:31
 # @Author   : StephenZ
-# @Site     : 
+# @Site     :
 # @File     : dm.py
 # @Purpose  :
 # @Software : PyCharm
@@ -14,9 +14,12 @@ import threading
 import time
 import requests
 import json
+from logzero import logger
+import logzero, logging
 
+logzero.loglevel(logging.DEBUG)
 
-user = "a8"
+user = "pao"
 if user == "a8":
     id = "5645739"
 elif user == "dog":
@@ -27,8 +30,14 @@ elif user == "pao":
     id = "6566346"
 elif user == "kai":
     id = "6974685"
+elif user == "pis":
+    id = "532152"
 else:
-    id = "24422"
+    id = "1221923"
+
+defalt_lenth = 39
+robot = True  # True为打开
+
 
 # 一些接口可以获取是否在线等情况
 # room_info = "https://www.douyu.com/roomapi/biz/getSwitch?rid={0}".format(id)
@@ -38,11 +47,29 @@ else:
 # betward = "https://www.douyu.com/betard/{0}".format(id)
 
 
+def isChinese(ch):
+    if ch >= '\u4e00' and ch <= '\u9fa5':
+        return True
+    else:
+        return False
+
+
+def lenStr(string):
+    count = 0
+    for line in string:
+        if isChinese(line):
+            count = count + 2
+        else:
+            count = count + 1
+    return count
+
 
 class DyDanmu:
     def __init__(self, roomid, url):
         self.gift_dict = self.get_gift_dict()
+        self.price_dict = self.get_price_dict()
         print("礼物：", self.gift_dict)
+        print("价格：", self.price_dict)
         self.gift_dict_keys = self.gift_dict.keys()
         self.room_id = roomid
         self.client = websocket.WebSocketApp(url, on_open=self.on_open, on_error=self.on_error,
@@ -80,24 +107,56 @@ class DyDanmu:
             msg_dict = self.msg_format(msg_str)
             # print("-----------", msg_dict)
             if msg_dict['type'] == 'chatmsg':
-                # print("-----------", msg_dict)
+                msg = msg_dict["txt"]
+                # logger.debug(msg_dict)
                 if msg_dict["bnn"] != "":
-                    print("[{0}][lv{1}][{2}-lv{3}] {4}: {5}".format(msg_dict["uid"], msg_dict["level"], msg_dict["bnn"], msg_dict["bl"],  msg_dict["nn"], msg_dict["txt"]))
+                    user_info = "{0}[Lv{1}][{2} {3}] {4}".format("", msg_dict["level"],
+                                                                 msg_dict["bnn"], msg_dict["bl"], msg_dict["nn"])
                 else:
-                    print("[{0}][lv{1}] {2}: {3}".format(msg_dict["uid"], msg_dict["level"],  msg_dict["nn"], msg_dict["txt"]))
-                if "rg" in msg_dict.keys():
-                    print("-----权限：", msg_dict["rg"])
-                # pass
+                    user_info = "{0}[lv{1}] {2}".format("", msg_dict["level"], msg_dict["nn"])
+
+                if "dms" not in msg_dict.keys():  # dms 机器人？
+                    user_info = "[机器人]" + user_info
+                    msg = "\033[1;47m{0}\033[0m!".format(msg)
+                    # user_info = ""
+
+                if "rg" in msg_dict.keys() and int(msg_dict["rg"]) == 4:
+                    fang = "[房]"
+                    user_info = fang + user_info
+                user_info += "："
+                # if len(user_info) > 38:
+                #     # print("过长..", len(user_info))
+                #     user_info = user_info[:34] + ".."
+                user_info = user_info + " " * abs(defalt_lenth - lenStr(user_info))
+
+                if robot is False:
+                    if "机器人" not in user_info:
+                        logger.debug(user_info + msg)
+                else:
+                    logger.debug(user_info + msg)
+                # if "rg" in msg_dict.keys():
+                #     print("-----权限：", msg_dict["rg"])
+
             if msg_dict['type'] == 'dgb':
-
+                # print("礼物")
+                id = msg_dict["gfid"]
+                single_price = round(float(self.price_dict[id]) / 100, 2)
+                # print(single_price)
+                price = round(single_price * int(msg_dict['gfcnt']), 2)
+                # print(price)
                 if msg_dict['gfid'] in self.gift_dict_keys:
-                    print(msg_dict['nn'] + '\t送出\t' + msg_dict['gfcnt'] + '\t个\t' + self.gift_dict[msg_dict['gfid']])
-                else:
-                    print(msg_dict['nn'] + '\t送出\t' + msg_dict['gfcnt'] + '\t个\t' + msg_dict['gfid'] + '\t未知礼物')
-                    print(msg_dict)
-            if msg_dict["type"] == "uenter" and int(msg_dict["nl"]) > 3:
-                print("贵族{0} {1} 进入房间".format(msg_dict["nl"], msg_dict["nn"]))
+                    gift_msg = "{0} 送出 {1} 个 \033[1;33m{2}\033[0m ￥{3}".format(msg_dict["nn"], msg_dict["gfcnt"],
+                                                                                 self.gift_dict[msg_dict['gfid']],
+                                                                                 price)
+                    logger.debug(gift_msg)
 
+                else:
+                    logger.debug(
+                        msg_dict['nn'] + ' 送出 ' + msg_dict['gfcnt'] + '个' + msg_dict[
+                            'gfid'] + "\033[1;33m {0}\033[0m".format('\t未知礼物'))
+                    print(msg_dict)
+            if msg_dict["type"] == "uenter" and int(msg_dict["nl"]) > 4:
+                logger.warning("贵族{0} {1} \033[1;35m 进入房间\033[0m".format(msg_dict["nl"], msg_dict["nn"]))
 
     # 发送登录信息
     def login(self):
@@ -180,15 +239,42 @@ class DyDanmu:
         gift_json1 = requests.get('https://webconf.douyucdn.cn/resource/common/gift/flash/gift_effect.json').text
         gift_json2 = requests.get(
             'https://webconf.douyucdn.cn/resource/common/prop_gift_list/prop_gift_config.json').text
+        gift_json3 = requests.get("https://webconf.douyucdn.cn/resource/common/gift/gift_template/20728.json").text
         gift_json1 = gift_json1.replace('DYConfigCallback(', '')[0:-2]
         gift_json2 = gift_json2.replace('DYConfigCallback(', '')[0:-2]
+        gift_json3 = gift_json3.replace('DYConfigCallback(', '')[0:-2]
         gift_json1 = json.loads(gift_json1)['data']['flashConfig']
         gift_json2 = json.loads(gift_json2)['data']
+        gift_json3 = json.loads(gift_json3)['data']
         for gift in gift_json1:
             gift_json[gift] = gift_json1[gift]['name']
         for gift in gift_json2:
             gift_json[gift] = gift_json2[gift]['name']
+        for gift in gift_json3:
+            gift_json[str(gift["id"])] = gift["name"]
         return gift_json
+
+    def get_price_dict(self):
+        price_json = {}
+        with requests.get(
+                "https://webconf.douyucdn.cn/resource/common/prop_gift_list/prop_gift_config.json") as session:
+            data = session.text
+            data = data.replace('DYConfigCallback(', '')[0:-2]
+            data = json.loads(data)["data"]
+            for key, value in data.items():
+                try:
+                    price_json[key] = value["pc"]
+                except:
+                    print(key, "没有价格")
+
+        with requests.get(
+                "https://webconf.douyucdn.cn/resource/common/gift/gift_template/20728.json") as session:
+            data = session.text
+            data = data.replace('DYConfigCallback(', '')[0:-2]
+            data = json.loads(data)["data"]
+            for item in data:
+                price_json[item["id"]] = item["pc"]
+        return price_json
 
 
 if __name__ == '__main__':
@@ -196,5 +282,3 @@ if __name__ == '__main__':
     url = 'wss://danmuproxy.douyu.com:8501/'
     dy = DyDanmu(roomid, url)
     dy.start()
-
-

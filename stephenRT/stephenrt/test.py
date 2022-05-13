@@ -11,13 +11,7 @@
 # !/usr/bin/env python3
 # coding: utf-8
 
-import re
-name = "1亓拿走22w鉆和s级球拍"
-a = "3564837153|2580237802|166345259|3569544846|2927295662|1327004801|万钻|万钴|万砖|万鉆|萬鉆|萬钻|s级|s拍|亓"
-
-print(re.search(a, name.lower()))
-
-if re.search(a, name.lower()) and len(name) > 8:
-    print("get")
-else:
-    print("????????")
+a = 9.223133
+b = 1
+print(round(a, 2))
+print(round(b, 2))

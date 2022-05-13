@@ -11,7 +11,6 @@
 
 import requests, json
 
-user_name = "狗神k"
 a = "https://www.doseeing.com/data/api/topuser/5645739?type=gift&dt=7"
 
 # s = requests.get(a)
@@ -40,14 +39,17 @@ def get_info(id, count):
         with requests.get("https://www.doseeing.com/data/api/topuser/{0}?type=gift&dt={1}".format(id, day)) as session:
             data = json.loads(session.text)
             for i in data["data"]:
-                if i["rank"] < count+1:
-                    print(i["rank"], i["user.nickname"], "￥", i["gift.paid.price"]/100)
+                if i["rank"] < count + 1:
+                    print(i["rank"], i["user.nickname"], "￥", i["gift.paid.price"] / 100)
         print("弹幕：")
         with requests.get("https://www.doseeing.com/data/api/topuser/{0}?type=chat&dt={1}".format(id, day)) as session:
             data = json.loads(session.text)
             for i in data["data"]:
-                if i["rank"] < count+1:
-                    print( i["rank"], i["user.nickname"], i["chat.pv"], "条")
+                if i["rank"] < count + 1:
+                    print(i["rank"], i["user.nickname"], i["chat.pv"], "条")
 
-print(get_id("a824683653"))
-get_info(5645739, 10)
+
+user_name = "不2不叫"
+print(get_id(user_name))
+
+get_info(5264153, 10)
