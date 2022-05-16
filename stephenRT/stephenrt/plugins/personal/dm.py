@@ -19,7 +19,7 @@ import logzero, logging
 
 logzero.loglevel(logging.DEBUG)
 
-user = "pao"
+user = "dog"
 if user == "a8":
     id = "5645739"
 elif user == "dog":
@@ -31,12 +31,15 @@ elif user == "pao":
 elif user == "kai":
     id = "6974685"
 elif user == "pis":
-    id = "532152"
+    id = "90016"
 else:
-    id = "1221923"
+    id = "5002454"
 
 defalt_lenth = 39
-robot = True  # True为打开
+robot = False  # True为打开
+free = True  # True为打开免费礼物
+
+# freeGifts = ["粉丝荧光棒"]
 
 
 # 一些接口可以获取是否在线等情况
@@ -67,9 +70,12 @@ def lenStr(string):
 class DyDanmu:
     def __init__(self, roomid, url):
         self.gift_dict = self.get_gift_dict()
-        self.price_dict = self.get_price_dict()
-        print("礼物：", self.gift_dict)
-        print("价格：", self.price_dict)
+        self.price_dict, self.pic_dic = self.get_price_dict()[0], self.get_price_dict()[1]
+        # for key, value in self.price_dict.items():
+        #     if value > 500000:
+        #         print(self.gift_dict[str(key)], key, value)
+        # print("礼物：", self.gift_dict)
+        # print("价格：", self.price_dict)
         self.gift_dict_keys = self.gift_dict.keys()
         self.room_id = roomid
         self.client = websocket.WebSocketApp(url, on_open=self.on_open, on_error=self.on_error,
@@ -138,17 +144,24 @@ class DyDanmu:
                 #     print("-----权限：", msg_dict["rg"])
 
             if msg_dict['type'] == 'dgb':
-                # print("礼物")
                 id = msg_dict["gfid"]
                 single_price = round(float(self.price_dict[id]) / 100, 2)
                 # print(single_price)
                 price = round(single_price * int(msg_dict['gfcnt']), 2)
                 # print(price)
                 if msg_dict['gfid'] in self.gift_dict_keys:
-                    gift_msg = "{0} 送出 {1} 个 \033[1;33m{2}\033[0m ￥{3}".format(msg_dict["nn"], msg_dict["gfcnt"],
-                                                                                 self.gift_dict[msg_dict['gfid']],
-                                                                                 price)
-                    logger.debug(gift_msg)
+                    if free is False and single_price == 0.1:
+                        gift_msg = "{0} 送出 {1} 个 {2} ".format(msg_dict["nn"], msg_dict["gfcnt"],
+                                                                                   self.gift_dict[msg_dict['gfid']])
+
+                    else:
+                        # logger.error("收到礼物")
+                        gift_msg = "{0} 送出 {1} 个 \033[1;33m{2}\033[0m ({4}) ￥{3} \n {5}".format(msg_dict["nn"], msg_dict["gfcnt"],
+                                                                                   self.gift_dict[msg_dict['gfid']],
+                                                                                   price, msg_dict["gfid"], self.pic_dic[msg_dict["gfid"]])
+                        logger.debug(gift_msg)
+                        # if price > 99:
+                        #     logger.error("价值连城")
 
                 else:
                     logger.debug(
@@ -256,6 +269,7 @@ class DyDanmu:
 
     def get_price_dict(self):
         price_json = {}
+        pic_json = {}
         with requests.get(
                 "https://webconf.douyucdn.cn/resource/common/prop_gift_list/prop_gift_config.json") as session:
             data = session.text
@@ -264,6 +278,7 @@ class DyDanmu:
             for key, value in data.items():
                 try:
                     price_json[key] = value["pc"]
+                    pic_json[key] = value["himg"]
                 except:
                     print(key, "没有价格")
 
@@ -274,7 +289,9 @@ class DyDanmu:
             data = json.loads(data)["data"]
             for item in data:
                 price_json[item["id"]] = item["pc"]
-        return price_json
+                pic_json[item["id"]] = item["himg"]
+        return [price_json, pic_json]
+
 
 
 if __name__ == '__main__':
