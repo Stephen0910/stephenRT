@@ -17,6 +17,9 @@ from logzero import logger
 import logzero, logging
 import psycopg2
 import socket
+import asyncio
+from nonebot.matcher import Matcher
+from nonebot import on_metaevent
 
 
 import time, datetime
@@ -24,7 +27,7 @@ import time, datetime
 logzero.loglevel(logging.DEBUG)
 logger.info("dm start")
 
-user = "a8"
+user = "dog"
 if user == "a8":
     id = "5645739"
 elif user == "dog":
@@ -42,7 +45,7 @@ else:
 
 defalt_lenth = 39
 robot = False  # True为打开
-free = True  # True为打开免费礼物
+free = False  # True为打开免费礼物
 save_sql = False
 
 # freeGifts = ["粉丝荧光棒"]
@@ -370,9 +373,21 @@ class DyDanmu:
         return [price_json, pic_json]
 
 
-# if __name__ == '__main__':
+if __name__ == '__main__':
+    roomid = str(id)
+    url = 'wss://danmuproxy.douyu.com:8501/'
+    dy = DyDanmu(roomid, url)
+    dy.start()
 
-roomid = str(id)
-url = 'wss://danmuproxy.douyu.com:8501/'
-dy = DyDanmu(roomid, url)
-dy.start()
+
+
+
+# matcher = on_metaevent()
+#
+#
+# @matcher.handle()
+# async def shut_user():
+#     roomid = str(id)
+#     url = 'wss://danmuproxy.douyu.com:8501/'
+#     dy = DyDanmu(roomid, url)
+#     dy.start()
