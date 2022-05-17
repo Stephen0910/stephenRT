@@ -11,15 +11,20 @@
 
 import websocket
 import threading
-import time
 import requests
 import json
 from logzero import logger
 import logzero, logging
+import psycopg2
+import socket
+
+
+import time, datetime
 
 logzero.loglevel(logging.DEBUG)
+logger.info("dm start")
 
-user = "dog"
+user = "a8"
 if user == "a8":
     id = "5645739"
 elif user == "dog":
@@ -33,11 +38,12 @@ elif user == "kai":
 elif user == "pis":
     id = "90016"
 else:
-    id = "5002454"
+    id = "71415"
 
 defalt_lenth = 39
 robot = False  # True为打开
 free = True  # True为打开免费礼物
+save_sql = False
 
 # freeGifts = ["粉丝荧光棒"]
 
@@ -49,12 +55,38 @@ free = True  # True为打开免费礼物
 # play_info = "https://www.douyu.com/lapi/live/getH5Play/{0}".format(id)
 # betward = "https://www.douyu.com/betard/{0}".format(id)
 
+def get_host_ip():
+    """
+    查询本机ip地址
+    :return: ip
+    """
+    try:
+        s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+        s.connect(('8.8.8.8', 80))
+        ip = s.getsockname()[0]
+    finally:
+        s.close()
+
+    return ip
+
+
+ip = get_host_ip()
+if ip == "10.10.10.8":
+    import stephenrt.privateCfg as cfg
+    pgsql = cfg.config_content
+    save_sql = True
 
 def isChinese(ch):
     if ch >= '\u4e00' and ch <= '\u9fa5':
         return True
     else:
         return False
+
+
+def get_time():
+    dateArray = datetime.datetime.utcfromtimestamp(time.time())  # 时区加8 不加了
+    msg_time = dateArray.strftime("%Y-%m-%d %H:%M:%S")
+    return msg_time
 
 
 def lenStr(string):
@@ -65,6 +97,18 @@ def lenStr(string):
         else:
             count = count + 1
     return count
+
+
+def save_info(sql):
+    """
+    执行插入sql
+    :param sql:
+    :return:
+    """
+    print(pgsql)
+    with psycopg2.connect(user=pgsql["user"], password=pgsql["password"], database=pgsql["database"], host=pgsql["host"]) as conn:
+        cursor = conn.cursor()
+        cursor.execute(sql)
 
 
 class DyDanmu:
@@ -143,22 +187,51 @@ class DyDanmu:
                 # if "rg" in msg_dict.keys():
                 #     print("-----权限：", msg_dict["rg"])
 
-            if msg_dict['type'] == 'dgb':
+            elif msg_dict['type'] == 'dgb':
+                # logger.debug(msg_dict)
                 id = msg_dict["gfid"]
                 single_price = round(float(self.price_dict[id]) / 100, 2)
                 # print(single_price)
                 price = round(single_price * int(msg_dict['gfcnt']), 2)
                 # print(price)
                 if msg_dict['gfid'] in self.gift_dict_keys:
+                    # 逻辑
                     if free is False and single_price == 0.1:
                         gift_msg = "{0} 送出 {1} 个 {2} ".format(msg_dict["nn"], msg_dict["gfcnt"],
-                                                                                   self.gift_dict[msg_dict['gfid']])
+                                                              self.gift_dict[msg_dict['gfid']])
 
                     else:
                         # logger.error("收到礼物")
-                        gift_msg = "{0} 送出 {1} 个 \033[1;33m{2}\033[0m ({4}) ￥{3} \n {5}".format(msg_dict["nn"], msg_dict["gfcnt"],
-                                                                                   self.gift_dict[msg_dict['gfid']],
-                                                                                   price, msg_dict["gfid"], self.pic_dic[msg_dict["gfid"]])
+
+                        timestamp = int(time.time())
+                        gfid = msg_dict["gfid"]
+                        gfn = self.gift_dict[gfid]
+                        icon = self.pic_dic[gfid]
+                        room_id = msg_dict["rid"]
+                        num = msg_dict["gfcnt"]
+                        if save_sql is True:
+                            try:
+                                sql = """
+                                INSERT INTO "public"."dm" ("timestamp", "user_id", "nn", "gfid", "gfn", "icon", "room_id", "room_user", "num", "single_price", "price" )
+    VALUES
+        ({0}, {1}, '{2}', {3}, '{4}', '{5}', {6}, '{7}', {8}, {9}, '{10}' );
+                                """.format(timestamp, msg_dict["uid"], msg_dict["nn"], gfid, gfn, icon, room_id, user, num, single_price, price)
+                            except Exception as e:
+                                logger.error(e)
+                            try:
+                                save_info(sql)
+                            except Exception as e:
+                                logger.error(str(e))
+
+
+
+                        gift_msg = "{0} 送出 {1} 个 \033[1;33m{2}\033[0m ({4}) ￥{3} \n {5}".format(msg_dict["nn"],
+                                                                                                msg_dict["gfcnt"],
+                                                                                                self.gift_dict[
+                                                                                                    msg_dict['gfid']],
+                                                                                                price, msg_dict["gfid"],
+                                                                                                self.pic_dic[
+                                                                                                    msg_dict["gfid"]])
                         logger.debug(gift_msg)
                         # if price > 99:
                         #     logger.error("价值连城")
@@ -168,8 +241,12 @@ class DyDanmu:
                         msg_dict['nn'] + ' 送出 ' + msg_dict['gfcnt'] + '个' + msg_dict[
                             'gfid'] + "\033[1;33m {0}\033[0m".format('\t未知礼物'))
                     print(msg_dict)
-            if msg_dict["type"] == "uenter" and int(msg_dict["nl"]) > 4:
+            elif msg_dict["type"] == "uenter" and int(msg_dict["nl"]) > 4:
                 logger.warning("贵族{0} {1} \033[1;35m 进入房间\033[0m".format(msg_dict["nl"], msg_dict["nn"]))
+
+            else:
+                # logger.debug(json.dumps(msg_dict).encode('utf-8').decode('unicode_escape'))
+                pass
 
     # 发送登录信息
     def login(self):
@@ -293,9 +370,9 @@ class DyDanmu:
         return [price_json, pic_json]
 
 
+# if __name__ == '__main__':
 
-if __name__ == '__main__':
-    roomid = str(id)
-    url = 'wss://danmuproxy.douyu.com:8501/'
-    dy = DyDanmu(roomid, url)
-    dy.start()
+roomid = str(id)
+url = 'wss://danmuproxy.douyu.com:8501/'
+dy = DyDanmu(roomid, url)
+dy.start()
