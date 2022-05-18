@@ -17,10 +17,10 @@ from logzero import logger
 import logzero, logging
 import psycopg2
 import socket
-import asyncio
-from nonebot.matcher import Matcher
-from nonebot import on_metaevent
-
+import os
+# import asyncio
+# from nonebot.matcher import Matcher
+# from nonebot import on_metaevent
 
 import time, datetime
 
@@ -43,10 +43,13 @@ elif user == "pis":
 else:
     id = "71415"
 
+print(user, id)
+
 defalt_lenth = 39
 robot = False  # True为打开
-free = False  # True为打开免费礼物
+free = True  # True为打开免费礼物
 save_sql = False
+
 
 # freeGifts = ["粉丝荧光棒"]
 
@@ -72,12 +75,29 @@ def get_host_ip():
 
     return ip
 
+def get_cfg():
+    up_dir = os.path.abspath(os.path.join(os.getcwd(), "../../../../../"))
+    config_path = os.path.join(up_dir, "config.json")
+    print(config_path)
+
+
+    try:
+        with open(config_path, "r", encoding="utf-8") as f:
+            config_content = json.load(f)
+    except:
+        with open(config_path, "r", encoding="gbk") as f:
+            config_content = json.load(f)
+    return config_content
+
+
+cfg = get_cfg()
+
 
 ip = get_host_ip()
 if ip == "10.10.10.8":
-    import stephenrt.privateCfg as cfg
     pgsql = cfg.config_content
     save_sql = True
+
 
 def isChinese(ch):
     if ch >= '\u4e00' and ch <= '\u9fa5':
@@ -109,7 +129,8 @@ def save_info(sql):
     :return:
     """
     print(pgsql)
-    with psycopg2.connect(user=pgsql["user"], password=pgsql["password"], database=pgsql["database"], host=pgsql["host"]) as conn:
+    with psycopg2.connect(user=pgsql["user"], password=pgsql["password"], database=pgsql["database"],
+                          host=pgsql["host"]) as conn:
         cursor = conn.cursor()
         cursor.execute(sql)
 
@@ -218,15 +239,14 @@ class DyDanmu:
                                 INSERT INTO "public"."dm" ("timestamp", "user_id", "nn", "gfid", "gfn", "icon", "room_id", "room_user", "num", "single_price", "price" )
     VALUES
         ({0}, {1}, '{2}', {3}, '{4}', '{5}', {6}, '{7}', {8}, {9}, '{10}' );
-                                """.format(timestamp, msg_dict["uid"], msg_dict["nn"], gfid, gfn, icon, room_id, user, num, single_price, price)
+                                """.format(timestamp, msg_dict["uid"], msg_dict["nn"], gfid, gfn, icon, room_id, user,
+                                           num, single_price, price)
                             except Exception as e:
                                 logger.error(e)
                             try:
                                 save_info(sql)
                             except Exception as e:
                                 logger.error(str(e))
-
-
 
                         gift_msg = "{0} 送出 {1} 个 \033[1;33m{2}\033[0m ({4}) ￥{3} \n {5}".format(msg_dict["nn"],
                                                                                                 msg_dict["gfcnt"],
@@ -373,7 +393,7 @@ class DyDanmu:
         return [price_json, pic_json]
 
 
-if __name__ == '__main__':
+def main():
     roomid = str(id)
     url = 'wss://danmuproxy.douyu.com:8501/'
     dy = DyDanmu(roomid, url)
@@ -381,13 +401,7 @@ if __name__ == '__main__':
 
 
 
+import threading
 
-# matcher = on_metaevent()
-#
-#
-# @matcher.handle()
-# async def shut_user():
-#     roomid = str(id)
-#     url = 'wss://danmuproxy.douyu.com:8501/'
-#     dy = DyDanmu(roomid, url)
-#     dy.start()
+thread1 = threading.Thread(main())
+thread1.start()

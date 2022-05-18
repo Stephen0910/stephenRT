@@ -36,4 +36,4 @@ if ip == "10.10.10.8":
 else:
     print("不加载dGame")
 
-# from .dm import *
+from .dm import *
