@@ -95,7 +95,7 @@ cfg = get_cfg()
 
 ip = get_host_ip()
 if ip == "10.10.10.8":
-    pgsql = cfg.config_content
+    pgsql = cfg
     save_sql = True
 
 
