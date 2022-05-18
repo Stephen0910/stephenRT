@@ -240,7 +240,7 @@ class DyDanmu:
                                 INSERT INTO "public"."dm" ("timestamp", "user_id", "nn", "gfid", "gfn", "icon", "room_id", "room_user", "num", "single_price", "price" )
     VALUES
         ({0}, {1}, '{2}', {3}, '{4}', '{5}', {6}, '{7}', {8}, {9}, '{10}' );
-                                """.format(timestamp, msg_dict["uid"], msg_dict["nn"], gfid, gfn, icon, room_id, user,
+                                """.format(timestamp, msg_dict["uid"], msg_dict["nn"], gfid, gfn, icon, self.room_id, self.name,
                                            num, single_price, price)
                             except Exception as e:
                                 logger.error(e)
