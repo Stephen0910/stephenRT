@@ -43,7 +43,7 @@ elif user == "pis":
 else:
     id = "71415"
 
-print(user, id)
+rooms = {"5645739": "a824683653", "5264153": "肖璐s"}
 
 defalt_lenth = 39
 robot = False  # True为打开
@@ -75,11 +75,11 @@ def get_host_ip():
 
     return ip
 
+
 def get_cfg():
     up_dir = os.path.abspath(os.path.join(os.getcwd(), "../../../../../"))
     config_path = os.path.join(up_dir, "config.json")
     print(config_path)
-
 
     try:
         with open(config_path, "r", encoding="utf-8") as f:
@@ -91,7 +91,6 @@ def get_cfg():
 
 
 cfg = get_cfg()
-
 
 ip = get_host_ip()
 if ip == "10.10.10.8":
@@ -150,6 +149,7 @@ class DyDanmu:
                                              on_message=self.on_message, on_close=self.on_close)
         self.heartbeat_thread = threading.Thread(target=self.heartbeat)
         self.ws = None
+        self.name = "{0} ".format(rooms[roomid])
 
     def start(self):
         self.client.run_forever()
@@ -184,13 +184,14 @@ class DyDanmu:
                 msg = msg_dict["txt"]
                 # logger.debug(msg_dict)
                 if msg_dict["bnn"] != "":
-                    user_info = "{0}[Lv{1}][{2} {3}] {4}".format("", msg_dict["level"],
-                                                                 msg_dict["bnn"], msg_dict["bl"], msg_dict["nn"])
+                    user_info = self.name + "{0}[Lv{1}][{2} {3}] {4}".format("", msg_dict["level"],
+                                                                             msg_dict["bnn"], msg_dict["bl"],
+                                                                             msg_dict["nn"])
                 else:
-                    user_info = "{0}[lv{1}] {2}".format("", msg_dict["level"], msg_dict["nn"])
+                    user_info = self.name + "{0}[lv{1}] {2}".format("", msg_dict["level"], msg_dict["nn"])
 
                 if "dms" not in msg_dict.keys():  # dms 机器人？
-                    user_info = "[机器人]" + user_info
+                    user_info = self.name + "[机器人]" + user_info
                     msg = "\033[1;47m{0}\033[0m!".format(msg)
                     # user_info = ""
 
@@ -221,8 +222,8 @@ class DyDanmu:
                 if msg_dict['gfid'] in self.gift_dict_keys:
                     # 逻辑
                     if free is False and single_price == 0.1:
-                        gift_msg = "{0} 送出 {1} 个 {2} ".format(msg_dict["nn"], msg_dict["gfcnt"],
-                                                              self.gift_dict[msg_dict['gfid']])
+                        gift_msg = self.name + "{0} 送出 {1} 个 {2} ".format(msg_dict["nn"], msg_dict["gfcnt"],
+                                                                          self.gift_dict[msg_dict['gfid']])
 
                     else:
                         # logger.error("收到礼物")
@@ -248,13 +249,14 @@ class DyDanmu:
                             except Exception as e:
                                 logger.error(str(e))
 
-                        gift_msg = "{0} 送出 {1} 个 \033[1;33m{2}\033[0m ({4}) ￥{3} \n {5}".format(msg_dict["nn"],
-                                                                                                msg_dict["gfcnt"],
-                                                                                                self.gift_dict[
-                                                                                                    msg_dict['gfid']],
-                                                                                                price, msg_dict["gfid"],
-                                                                                                self.pic_dic[
-                                                                                                    msg_dict["gfid"]])
+                        gift_msg = self.name + "{0} 送出 {1} 个 \033[1;33m{2}\033[0m ({4}) ￥{3} \n {5}".format(
+                            msg_dict["nn"],
+                            msg_dict["gfcnt"],
+                            self.gift_dict[
+                                msg_dict['gfid']],
+                            price, msg_dict["gfid"],
+                            self.pic_dic[
+                                msg_dict["gfid"]])
                         logger.debug(gift_msg)
                         # if price > 99:
                         #     logger.error("价值连城")
@@ -393,15 +395,17 @@ class DyDanmu:
         return [price_json, pic_json]
 
 
-def main():
+def main(id):
     roomid = str(id)
+    print(roomid)
     url = 'wss://danmuproxy.douyu.com:8501/'
     dy = DyDanmu(roomid, url)
     dy.start()
 
 
-
 import threading
 
-thread1 = threading.Thread(main())
+thread1 = threading.Thread(target=main, args=(5645739,))
+thread2 = threading.Thread(target=main, args=(5264153,))
 thread1.start()
+thread2.start()
