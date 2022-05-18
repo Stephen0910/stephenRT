@@ -27,7 +27,7 @@ import time, datetime
 logzero.loglevel(logging.DEBUG)
 logger.info("dm start")
 
-user = "dog"
+user = "a8"
 if user == "a8":
     id = "5645739"
 elif user == "dog":
