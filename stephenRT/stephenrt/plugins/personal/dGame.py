@@ -290,6 +290,9 @@ async def game_info():
                     if len(same_ids) > 3:
                         users += 1
                         print(data["user_name"])
+
+                if g_type == "赛季挨打-" and users >=3:
+                    users = 3
                 people = "{0}排 ".format(users_chi[users])
 
         # 上面是人数
