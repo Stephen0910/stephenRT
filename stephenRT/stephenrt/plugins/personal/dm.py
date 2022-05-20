@@ -24,6 +24,7 @@ import os
 
 import time, datetime
 import random
+
 logzero.loglevel(logging.DEBUG)
 logger.info("dm start")
 
@@ -90,10 +91,11 @@ def get_cfg():
     return config_content
 
 
-cfg = get_cfg()
+
 
 ip = get_host_ip()
 if ip == "10.10.10.8":
+    cfg = get_cfg()
     pgsql = cfg
     save_sql = True
 
@@ -242,7 +244,8 @@ class DyDanmu:
                                 INSERT INTO "public"."dm" ("timestamp", "user_id", "nn", "gfid", "gfn", "icon", "room_id", "room_user", "num", "single_price", "price" )
     VALUES
         ({0}, {1}, '{2}', {3}, '{4}', '{5}', {6}, '{7}', {8}, {9}, '{10}' );
-                                """.format(timestamp, msg_dict["uid"], msg_dict["nn"], gfid, gfn, icon, self.room_id, self.name,
+                                """.format(timestamp, msg_dict["uid"], msg_dict["nn"], gfid, gfn, icon, self.room_id,
+                                           self.name,
                                            num, single_price, price)
                             except Exception as e:
                                 logger.error(e)
@@ -269,7 +272,7 @@ class DyDanmu:
                             'gfid'] + "\033[1;33m {0}\033[0m".format('\t未知礼物'))
                     print(msg_dict)
             elif msg_dict["type"] == "uenter" and int(msg_dict["nl"]) > 4:
-                logger.warning("贵族{0} {1} \033[1;35m 进入房间\033[0m".format(msg_dict["nl"], msg_dict["nn"]))
+                logger.warning(self.name + "贵族{0} {1} \033[1;35m 进入房间\033[0m".format(msg_dict["nl"], msg_dict["nn"]))
 
             else:
                 # logger.debug(json.dumps(msg_dict).encode('utf-8').decode('unicode_escape'))
@@ -410,8 +413,12 @@ def main(id):
 
 import threading
 
-
-thread1 = threading.Thread(target=main, args=(5645739,))
-thread2 = threading.Thread(target=main, args=(5264153,))
-thread1.start()
-thread2.start()
+# thread1 = threading.Thread(target=main, args=(5645739,))
+# thread2 = threading.Thread(target=main, args=(5264153,))
+# thread1.start()
+# thread2.start()
+if __name__ == '__main__':
+    for key, value in rooms.items():
+        thread = threading.Thread(target=main, args=(key,))
+        thread.start()
+        print(thread.name)
