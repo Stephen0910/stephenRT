@@ -46,7 +46,7 @@ rooms = {"5645739": "a824683653", "5264153": "肖璐s"}
 
 defalt_lenth = 39
 robot = False  # True为打开
-free = True  # True为打开免费礼物
+free = False  # True为打开免费礼物
 save_sql = False
 
 
@@ -216,18 +216,21 @@ class DyDanmu:
                 #     print("-----权限：", msg_dict["rg"])
 
             elif msg_dict['type'] == 'dgb':
-                logger.debug(json.dumps(msg_dict))
+                logger.debug(msg_dict)
                 id = msg_dict["gfid"]
-                single_price = round(float(self.price_dict[id]) / 10, 2)
-                # print(single_price)
-                price = round(single_price * int(msg_dict['gfcnt']), 2)
-                # print(price)
+                try:
+                    single_price = round(float(self.price_dict[id]) / 10, 2)
+                    # print(single_price)
+                    price = round(single_price * int(msg_dict['gfcnt']), 2)
+                    # print(price)
+                except Exception as e:
+                    logger.error("{0} {1} single_price not found:{2}".format(msg_dict["gfid"], self.gift_dict[msg_dict["gfid"]], str(e)))
                 if msg_dict['gfid'] in self.gift_dict_keys:
                     # 逻辑
                     if free is False and single_price == 0.1:
                         gift_msg = self.name + "{0} 送出 {1} 个 {2} ".format(msg_dict["nn"], msg_dict["gfcnt"],
                                                                           self.gift_dict[msg_dict['gfid']])
-                        logger.debug(gift_msg)
+                        # logger.debug(gift_msg)
 
                     else:
                         # logger.error("收到礼物")
@@ -397,8 +400,9 @@ class DyDanmu:
             data = data.replace('DYConfigCallback(', '')[0:-2]
             data = json.loads(data)["data"]
             for item in data:
-                price_json[item["id"]] = item["pc"]
-                pic_json[item["id"]] = item["himg"]
+                # price_json[item["id"]] = item["pc"]
+                price_json[str(item["id"])] = item["exp"]
+                pic_json[str(item["id"])] = item["himg"]
         return [price_json, pic_json]
 
 
