@@ -39,6 +39,8 @@ async def handleuser(
     elif re.match("\d+$", str(orinTime)):
         query_time = int(str(orinTime))
         try:
+            if query_time > 3653284221:
+                query_time = round(query_time / 1000)
             nature = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(query_time))
         except Exception as e:
             nature = "内部错误：" + str(e)

@@ -19,7 +19,6 @@ import psycopg2
 import socket
 import os
 
-
 import time, datetime
 import random
 
@@ -42,7 +41,7 @@ elif user == "pis":
 else:
     id = "71415"
 
-rooms = {"5645739": "a824683653", "5264153": "肖璐s"}
+rooms = {"5645739": "a824683653", "5264153": "肖璐s", "6566346": "子阳"}
 
 defalt_lenth = 39
 robot = False  # True为打开
@@ -87,8 +86,6 @@ def get_cfg():
         with open(config_path, "r", encoding="gbk") as f:
             config_content = json.load(f)
     return config_content
-
-
 
 
 ip = get_host_ip()
@@ -224,7 +221,9 @@ class DyDanmu:
                     price = round(single_price * int(msg_dict['gfcnt']), 2)
                     # print(price)
                 except Exception as e:
-                    logger.error("{0} {1} single_price not found:{2}".format(msg_dict["gfid"], self.gift_dict[msg_dict["gfid"]], str(e)))
+                    logger.error(
+                        "{0} {1} single_price not found:{2}".format(msg_dict["gfid"], self.gift_dict[msg_dict["gfid"]],
+                                                                    str(e)))
                 if msg_dict['gfid'] in self.gift_dict_keys:
                     # 逻辑
                     if free is False and single_price == 0.1:
