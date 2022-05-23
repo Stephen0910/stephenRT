@@ -216,7 +216,7 @@ class DyDanmu:
                 #     print("-----权限：", msg_dict["rg"])
 
             elif msg_dict['type'] == 'dgb':
-                logger.debug(msg_dict)
+                # logger.debug(msg_dict)
                 id = msg_dict["gfid"]
                 try:
                     single_price = round(float(self.price_dict[id]) / 10, 2)
