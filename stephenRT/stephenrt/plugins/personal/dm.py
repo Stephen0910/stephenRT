@@ -18,9 +18,7 @@ import logzero, logging
 import psycopg2
 import socket
 import os
-# import asyncio
-# from nonebot.matcher import Matcher
-# from nonebot import on_metaevent
+
 
 import time, datetime
 import random
@@ -48,7 +46,7 @@ rooms = {"5645739": "a824683653", "5264153": "肖璐s"}
 
 defalt_lenth = 39
 robot = False  # True为打开
-free = False  # True为打开免费礼物
+free = True  # True为打开免费礼物
 save_sql = False
 
 
@@ -217,9 +215,9 @@ class DyDanmu:
                 #     print("-----权限：", msg_dict["rg"])
 
             elif msg_dict['type'] == 'dgb':
-                # logger.debug(msg_dict)
+                logger.debug(json.dumps(msg_dict))
                 id = msg_dict["gfid"]
-                single_price = round(float(self.price_dict[id]) / 100, 2)
+                single_price = round(float(self.price_dict[id]) / 10, 2)
                 # print(single_price)
                 price = round(single_price * int(msg_dict['gfcnt']), 2)
                 # print(price)
@@ -228,6 +226,7 @@ class DyDanmu:
                     if free is False and single_price == 0.1:
                         gift_msg = self.name + "{0} 送出 {1} 个 {2} ".format(msg_dict["nn"], msg_dict["gfcnt"],
                                                                           self.gift_dict[msg_dict['gfid']])
+                        logger.debug(gift_msg)
 
                     else:
                         # logger.error("收到礼物")
@@ -385,7 +384,8 @@ class DyDanmu:
             data = json.loads(data)["data"]
             for key, value in data.items():
                 try:
-                    price_json[key] = value["pc"]
+                    # price_json[key] = value["pc"]
+                    price_json[key] = value["exp"]
                     pic_json[key] = value["himg"]
                 except:
                     print(key, "没有价格")
