@@ -243,7 +243,7 @@ async def hand_findt(
 
 """正式服find"""
 
-find_prod = on_command("find", rule=to_me(), aliases={"search", "findp"}, priority=1, permission=SUPERUSER)
+find_prod = on_command("find", rule=to_me(), aliases={"search", "findp"}, priority=1)
 
 
 @find_prod.handle()
