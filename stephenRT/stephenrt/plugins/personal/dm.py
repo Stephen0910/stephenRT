@@ -46,7 +46,7 @@ rooms = {"5645739": "a824683653", "5264153": "肖璐s"}
 
 defalt_lenth = 39
 robot = False  # True为打开
-free = True  # True为打开免费礼物
+free = False  # True为打开免费礼物
 save_sql = False
 
 
