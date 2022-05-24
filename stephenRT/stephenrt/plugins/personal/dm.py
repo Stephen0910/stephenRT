@@ -181,6 +181,8 @@ class DyDanmu:
         for msg_str in message:
             msg_dict = self.msg_format(msg_str)
             # print("-----------", msg_dict)
+            if debug is True:
+                logger.debug(msg_dict)
             if msg_dict['type'] == 'chatmsg':
                 msg = msg_dict["txt"]
                 # logger.debug(msg_dict)
@@ -214,8 +216,6 @@ class DyDanmu:
                 #     print("-----权限：", msg_dict["rg"])
 
             elif msg_dict['type'] == 'dgb':
-                if debug is True:
-                    logger.debug(msg_dict)
                 id = msg_dict["gfid"]
                 try:
                     single_price = round(float(self.price_dict[id]) / 10, 2)
@@ -274,7 +274,7 @@ class DyDanmu:
                     logger.debug(
                         msg_dict['nn'] + ' 送出 ' + msg_dict['gfcnt'] + '个' + msg_dict[
                             'gfid'] + "\033[1;33m {0}\033[0m".format('\t未知礼物'))
-                    print(msg_dict)
+
             elif msg_dict["type"] == "uenter" and int(msg_dict["nl"]) > 4:
                 logger.warning(self.name + "贵族{0} {1} \033[1;35m 进入房间\033[0m".format(msg_dict["nl"], msg_dict["nn"]))
 
