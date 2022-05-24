@@ -25,7 +25,7 @@ import random
 logzero.loglevel(logging.DEBUG)
 logger.info("dm start")
 
-user = "a8"
+user = "other"
 if user == "a8":
     id = "5645739"
 elif user == "dog":
@@ -41,13 +41,13 @@ elif user == "pis":
 else:
     id = "71415"
 
-rooms = {"5645739": "a824683653", "5264153": "肖璐s", "6566346": "子阳"}
+rooms = {"5645739": "a824683653", "5264153": "肖璐s"}
 
 defalt_lenth = 39
 robot = False  # True为打开
 free = False  # True为打开免费礼物
 save_sql = False
-
+debug = False
 
 # freeGifts = ["粉丝荧光棒"]
 
@@ -94,6 +94,7 @@ if ip == "10.10.10.8":
     pgsql = cfg
     save_sql = True
     free = False
+    debug = True
 
 
 def isChinese(ch):
@@ -139,7 +140,7 @@ class DyDanmu:
         # for key, value in self.price_dict.items():
         #     if value > 500000:
         #         print(self.gift_dict[str(key)], key, value)
-        # print("礼物：", self.gift_dict)
+        print("礼物：", self.gift_dict)
         # print("价格：", self.price_dict)
         self.login_name = login_name
         self.login_id = login_id
@@ -213,7 +214,8 @@ class DyDanmu:
                 #     print("-----权限：", msg_dict["rg"])
 
             elif msg_dict['type'] == 'dgb':
-                # logger.debug(msg_dict)
+                if debug is True:
+                    logger.debug(msg_dict)
                 id = msg_dict["gfid"]
                 try:
                     single_price = round(float(self.price_dict[id]) / 10, 2)
