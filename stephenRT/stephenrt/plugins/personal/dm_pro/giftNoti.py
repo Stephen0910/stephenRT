@@ -49,7 +49,7 @@ async def get_presents(sql):
 @mattcher.handle()
 async def gift_push():
     bot = get_bot()
-    sql = "SELECT nn, room_user, num, gfn, price, timestamp FROM dm where single_price > {0} and timestamp > {1} ORDER BY timestamp DESC".format(limit_money, init_time[-1])
+    sql = "SELECT nn, room_user, num, gfn, price, timestamp FROM dm where price > {0} and timestamp > {1} ORDER BY timestamp DESC".format(limit_money, init_time[-1])
     gifts = await get_presents(sql=sql)
     if gifts:
         init_time.append(gifts[0][-1])

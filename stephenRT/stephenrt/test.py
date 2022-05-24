@@ -11,43 +11,19 @@
 # !/usr/bin/env python3
 # coding: utf-8
 
-msg_dict = {
-    "type": "dgb",
-    "rid": "5264153",
-    "gfid": "20003",
-    "gs": "0",
-    "uid": "54611663",
-    "bg": "1",
-    "nn": "老年玩家1",
-    "ic": "avatar@Sdefault@S02",
-    "eid": "0",
-    "eic": "20001",
-    "level": "37",
-    "dw": "0",
-    "gfcnt": "1",
-    "hits": "1",
-    "bcnt": "1",
-    "bst": "60",
-    "rg": "4",
-    "ct": "2",
-    "el": "",
-    "cm": "0",
-    "bnn": "肖璐",
-    "bl": "18",
-    "brid": "5264153",
-    "hc": "9a2b242fc29b80a5632301d99775ded7",
-    "sahf": "0",
-    "fc": "0",
-    "bnid": "1",
-    "bnl": "2",
-    "receive_uid": "210400563",
-    "receive_nn": "肖璐s",
-    "from": "1",
-    "pfm": "1868",
-    "pma": "55917270",
-    "mss": "55916803",
-    "skinid": "2",
-    "bcst": "4",
-    "bsfl": "1"
+import requests
+import time
+
+url = "https://www.douyu.com/lapi/live/getH5Play/5264153"
+
+data = {
+    "v": 220120220524,
+    "tt": int(time.time()),
+    "did":"5f6f25a45d1b8be592e9330500071501",
+    "sign": "5f6f25a45d1b8be592e9330500071501",
+    "ver": "Douyu_222052005",
+    "iar": 1
 }
 
+with requests.post(url=url, json=data) as session:
+    print(session.content)
