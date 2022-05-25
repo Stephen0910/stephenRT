@@ -48,6 +48,15 @@ def get_mc():
     return mc_dict
 
 
+def new_id(old_id):
+    url = "https://www.douyu.com/{0}".format(old_id)
+    with requests.get(url) as session:
+        page_html = etree.HTML(session.content)
+        redict_url = page_html.xpath("/html/body/section/main/div[4]/div[1]/div[1]/div[1]/div[1]/div/a/@href")
+        room_id = re.search("\d+\d", str(redict_url)).group()
+    return room_id
+
+
 def first_response():
     mcs = get_mc()
     info = "请输入要查询的主播信息（输入以下序号或房间号）:\n"
@@ -74,13 +83,13 @@ def room_status(room_id):
     payload = {}
     headers = {}
     with requests.get(url=url, headers=headers, data=payload) as session:
-        print(session.text)
+        # print(session.text)
         data = json.loads(str(session.text))
         try:
             child_cate = data["game"]["tag_name"]
         except Exception as e:
             child_cate = ""
-            print(e)
+            # print(e)
         room_info = data["room"]
         is_alive = room_info["show_status"]  # 是否在播
         nickname = room_info["nickname"]
@@ -122,8 +131,8 @@ async def get_roomInfo(room_id):
     url = "https://www.douyu.com/betard/{0}".format(room_id)
     payload = {}
     headers = {}
-    with requests.get(url=url, headers=headers, data=payload) as session:
-        print(session.text)
+    with requests.get(url=url, headers=headers, data=payload, allow_redirects=True) as session:
+        # print(session.text)
         data = json.loads(str(session.text))
         try:
             child_cate = data["game"]["tag_name"]
@@ -194,11 +203,13 @@ async def get_live(
         room_id = list(mcs.values())[int(room_id) - 1]
         msg_dict = await get_roomInfo(room_id)
 
-    elif room_id == "90016":
-        msg_dict = await get_roomInfo(532152)
+    # elif room_id == "90016":
+    #     msg_dict = await get_roomInfo(532152)
     else:
-        msg_dict = await get_roomInfo(room_id)
-        # await dy.finish("该房间目前没有开放")
+        try:
+            msg_dict = await get_roomInfo(room_id)
+        except:
+            msg_dict = await get_roomInfo(new_id(room_id))
 
     if msg_dict["is_alive"] == 0:
         status = "未直播"

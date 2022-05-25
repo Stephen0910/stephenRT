@@ -22,21 +22,14 @@ def get_response(url):
     return response.content
 
 
-def get_mc():
-    url = "https://www.doseeing.com/rank/chat/7day?category=9"
-    content_num = 8
-    mc_dict = {}
+def new_id(old_id):
+    url = "https://www.douyu.com/{0}".format(old_id)
     with requests.get(url) as session:
         page_html = etree.HTML(session.content)
-        text_list = page_html.xpath("/html/body/div/div[2]/main/div/div/div[2]/table[2]/tbody//text()")
-        mc_num = int(len(text_list) / content_num)
-        for i in range(mc_num):
-            if text_list[i * content_num + 3] == "DOTA":
-                room = page_html.xpath(
-                    "/html/body/div/div[2]/main/div/div/div[2]/table[2]/tbody/tr[{0}]/td[2]/a/@href".format(i + 1))
-                room_id = re.search("\d+", str(room)).group()
-                mc_dict[text_list[i * content_num + 1]] = room_id
-    return mc_dict
+        redict_url = page_html.xpath("/html/body/section/main/div[4]/div[1]/div[1]/div[1]/div[1]/div/a/@href")
+        room_id = re.search("\d+\d", str(redict_url)).group()
+    return room_id
+
 
 a = get_mc()
-print(list(a.keys()), list(a.values()))
+print(a)
