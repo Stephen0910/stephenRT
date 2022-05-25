@@ -224,9 +224,9 @@ class DyDanmu:
                     # print(price)
                 except Exception as e:
                     logger.error(
-                        "{0} {1} single_price not found:{2}".format(msg_dict["gfid"], self.gift_dict[msg_dict["gfid"]],
+                        "{0} {1} single_price not found:{2}".format(id, self.gift_dict[id],
                                                                     str(e)))
-                if msg_dict['gfid'] in self.gift_dict_keys:
+                if id in self.gift_dict_keys:
                     # 逻辑
                     if free is False and single_price == 0.1:
                         gift_msg = self.name + "{0} 送出 {1} 个 {2} ".format(msg_dict["nn"], msg_dict["gfcnt"],
@@ -271,6 +271,7 @@ class DyDanmu:
                         #     logger.error("价值连城")
 
                 else:
+                    logger.error("未知礼物！" + msg_dict["gfid"])
                     logger.debug(
                         msg_dict['nn'] + ' 送出 ' + msg_dict['gfcnt'] + '个' + msg_dict[
                             'gfid'] + "\033[1;33m {0}\033[0m".format('\t未知礼物'))
@@ -365,6 +366,9 @@ class DyDanmu:
         gift_json2 = requests.get(
             'https://webconf.douyucdn.cn/resource/common/prop_gift_list/prop_gift_config.json').text
         gift_json3 = requests.get("https://webconf.douyucdn.cn/resource/common/gift/gift_template/20728.json").text
+        gift_json4 = requests.get("https://webconf.douyucdn.cn/resource/common/property_info_14.json").text
+        # print(gift_json4.replace('DYConfigCallback(', '')[0:-2])
+
         gift_json1 = gift_json1.replace('DYConfigCallback(', '')[0:-2]
         gift_json2 = gift_json2.replace('DYConfigCallback(', '')[0:-2]
         gift_json3 = gift_json3.replace('DYConfigCallback(', '')[0:-2]
