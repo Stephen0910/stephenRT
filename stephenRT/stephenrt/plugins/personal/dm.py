@@ -152,6 +152,7 @@ class DyDanmu:
         self.ws = None
         self.name = "【{0}】 ".format(rooms[roomid])
 
+
     def start(self):
         self.client.run_forever()
 
@@ -293,6 +294,8 @@ class DyDanmu:
                     )
         # 'visitor4444086', '1178849206'
         self.send_msg(login_msg)
+
+
 
     def logout(self):
         logout_msg = 'type@=logout/'

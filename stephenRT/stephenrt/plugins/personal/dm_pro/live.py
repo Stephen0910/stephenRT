@@ -52,10 +52,70 @@ def first_response():
     mcs = get_mc()
     info = "请输入要查询的主播信息（输入以下序号或房间号）:\n"
     index = 1
-    for key in mcs.keys():
-        info = info + "{0}、{1}\n".format(index, key)
+    for key, value in mcs.items():
+        msg_dict = room_status(value)
+        if msg_dict["is_alive"] == 0:
+            status = "未直播"
+        elif msg_dict["is_alive"] == 2:
+            status = "直播结束"
+        elif msg_dict["is_alive"] == 1 and msg_dict["is_loop"] == 1:
+            status = "录播中"
+        elif msg_dict["is_alive"] == 1 and msg_dict["is_loop"] == 0:
+            status = "直播中"
+
+        info = info + "{0}、{1}: {2}\n".format(index, key, status)
         index += 1
     return info
+
+
+# 非异步
+def room_status(room_id):
+    url = "https://www.douyu.com/betard/{0}".format(room_id)
+    payload = {}
+    headers = {}
+    with requests.get(url=url, headers=headers, data=payload) as session:
+        print(session.text)
+        data = json.loads(str(session.text))
+        try:
+            child_cate = data["game"]["tag_name"]
+        except Exception as e:
+            child_cate = ""
+            print(e)
+        room_info = data["room"]
+        is_alive = room_info["show_status"]  # 是否在播
+        nickname = room_info["nickname"]
+        if room_info["authInfo"]["type"] == 1:
+            auth = room_info["authInfo"]["desc"]
+        elif room_info["authInfo"]["type"] == 0:
+            auth = ""
+        # small_avatar = room_info["avatar"]["small"]
+        owner_avatar = room_info["avatar"]["small"]
+        room_name = room_info["room_name"]
+        level_info = room_info["levelInfo"]
+        # room_src = "https://rpic.douyucdn.cn/" + room_info["room_src"]
+        room_pic = room_info["room_pic"]
+        hot = room_info["room_biz_all"]["hot"]
+        end_time = room_info["end_time"]
+        is_loop = room_info["videoLoop"]
+        second_lvl_name = room_info["second_lvl_name"]
+        if room_info["fans_bn"] is False:
+            fans_bn = ""
+        else:
+            fans_bn = json.loads(room_info["fans_bn"])["bn"]
+
+        primary = {
+            "child_cate": child_cate, "nickname": nickname, "owner_avatar": owner_avatar, "is_alive": is_alive,
+            "hot": hot, "room_name": room_name, "room_pic": room_pic, "fans_bn": fans_bn, "is_loop": is_loop,
+            "auth": auth
+        }
+        # print(child_cate)
+        # print(nickname, owner_avatar, is_alive, "热度：", hot)
+        # print(room_name, "房间图片：", room_pic)
+        # print("牌子：", fans_bn)
+        # print("是否录播:", is_loop)
+        # print(auth)
+        # print("\n\n--------------------------")
+        return primary
 
 
 async def get_roomInfo(room_id):
@@ -112,6 +172,11 @@ dy = on_command("dy", rule=to_me(), aliases={"douyu", "直播", "zhibo", "zb"}, 
 
 # for key, value in rooms.items():
 #     get_roomInfo(key)
+@dy.handle()
+async def msg_receive(matcher: Matcher, args: Message = CommandArg()):
+    plain_text = args.extract_plain_text()  #
+    if plain_text:
+        matcher.set_arg("room_id", args)  # 如果用户发送了参数则直接赋值
 
 
 @dy.got("room_id", prompt=first_response())
@@ -119,18 +184,14 @@ async def get_live(
         room_id: Message = Arg()
 ):
     room_id = str(room_id)
-    print("room_id:", room_id)
+    # print("room_id:", room_id)
     if not re.search("^\d+$", room_id):
         await dy.finish("输入的不是直播间号， 结束会话")
 
-    # if room_id == "1":
-    #     msg_dict = await get_roomInfo(5645739)
-    # elif room_id == "2":
-    #     msg_dict = await get_roomInfo(5264153)
-
     mcs = get_mc()
-    if int(room_id) < len(mcs):
-        room_id = list(mcs.values())[int(room_id)-1]
+    # print(mcs)
+    if int(room_id) < len(mcs) + 1:
+        room_id = list(mcs.values())[int(room_id) - 1]
         msg_dict = await get_roomInfo(room_id)
 
     elif room_id == "90016":

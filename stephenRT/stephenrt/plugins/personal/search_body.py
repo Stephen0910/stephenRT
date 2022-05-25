@@ -131,7 +131,6 @@ async def depend(event: MessageEvent):  # 2.编写依赖函数
 picture = on_command("st", rule=to_me(), aliases={"图", "pic"}, priority=1)
 
 
-
 @picture.handle()
 async def get_pic(x: dict = Depends(depend)):
     print("pId:", x["uid"])
@@ -147,6 +146,7 @@ async def get_pic(x: dict = Depends(depend)):
 """
 """
 video = on_command("video", rule=to_me(), aliases={"视频", "随机视频", "sp"}, priority=1)
+
 
 @video.handle()
 async def video_func(x: dict = Depends(depend)):
