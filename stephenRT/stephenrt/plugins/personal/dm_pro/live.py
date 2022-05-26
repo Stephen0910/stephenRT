@@ -239,7 +239,25 @@ async def get_live(
     await dy.finish(msg)
 
 
-def rooms_states():
+def first_states():
+    room_states = {}
+    for key, value in rooms.items():
+        room_info = room_status(key)
+        is_alive = room_info["is_alive"]
+        is_loop = room_info["is_loop"]
+
+        if is_alive in [0, 2]:
+            status = "未直播"
+        elif is_alive == 1 and is_loop == 1:
+            status = "录播中"
+        elif is_alive == 1 and is_loop == 0:
+            status = "直播中"
+        else:
+            status = "状态未知"
+        room_states[key] = status
+    return room_states
+
+async def rooms_states():
     room_states = {}
     for key, value in rooms.items():
         room_info = room_status(key)
@@ -259,12 +277,13 @@ def rooms_states():
 
 
 live_msg = on_metaevent()
-first_states = rooms_states()
+first_states = first_states()
+
 
 @live_msg.handle()
 async def live_notifacation():
     bot = get_bot()
-    states = rooms_states()
+    states = await rooms_states()
     for key, value in states.items():
         if first_states[key] == "未直播" and value == "直播中":
             msg_dict = await get_roomInfo(key)
@@ -282,9 +301,11 @@ async def live_notifacation():
             live_pic = MessageSegment.image(live_pic)
             avatar = MessageSegment.image(msg_dict["owner_avatar"])
 
-            msg = avatar + "{4}\n⬤  【{0}】\n⬤  {1}\n⬤  {2}\n⬤  热度：{3}".format(msg_dict["nickname"], msg_dict["room_name"],
-                                                                     status,
-                                                                     msg_dict["hot"], msg_dict["child_cate"]) + live_pic
+            msg = avatar + "{4}\n⬤  【{0}】\n⬤  {1}\n⬤  {2}\n⬤  热度：{3}".format(msg_dict["nickname"],
+                                                                             msg_dict["room_name"],
+                                                                             status,
+                                                                             msg_dict["hot"],
+                                                                             msg_dict["child_cate"]) + live_pic
             await bot.send_private_msg(user_id=281016636, message=msg)
 
 
@@ -294,9 +315,3 @@ async def live_notifacation():
             await bot.send_private_msg(user_id=281016636, message=msg)
 
         first_states[key] = value
-
-
-
-
-
-

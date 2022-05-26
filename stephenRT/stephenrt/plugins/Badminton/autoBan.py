@@ -117,7 +117,7 @@ def filter_chat(chats_list):
 async def check_room():
     chat_msg = await socket_message()
     # print("chat_msg:", chat_msg)
-    print(type(chat_msg))
+    # print(type(chat_msg))
     for chat in chat_msg:
         if chat["sendMan"]["rankStage"] == 1 and len(chat["sendContent"]) > 9:
             print(str(chat["sendMan"]["name"]).lower(), chat["sendContent"])
@@ -143,12 +143,6 @@ async def check_room():
                     print("已经禁言了")
             else:
                 print("不处理：", name_check[0], text_check)
-
-
-def test_chat(chat_list):
-    for chat in chat_list:
-        if "部" in str(chat["sendContent"]).lower():
-            return str(chat["sendMan"]["name"]) + "： " + str(chat["sendContent"])
 
 
 async def send_message(msg):

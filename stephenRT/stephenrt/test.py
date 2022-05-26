@@ -17,12 +17,7 @@ import requests
 import time
 import json
 
+url = "https://winningslotsgame.com/"
 
-for i in range(1,100000):
-    url = "https://webconf.douyucdn.cn/resource/common/gift/gift_template/{0}.json".format(i)
-    with requests.get(url=url) as session:
-        if session.status_code == 200:
-            print(i)
-            data = session.text.replace('DYConfigCallback(', '')[0:-2]
-            if "野摩托" in data:
-                print(data)
+with requests.get(url) as session:
+    print(session.text)
