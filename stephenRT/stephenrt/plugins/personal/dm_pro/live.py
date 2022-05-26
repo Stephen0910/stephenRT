@@ -77,12 +77,28 @@ def first_response():
     return info
 
 
+dy_headers = {
+    "host": "www.douyu.com",
+    "method": "GET",
+    "accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9",
+    "accept-encoding": "gzip, deflate, br",
+    "accept-language": "en-GB,en;q=0.9",
+    "sec-ch-ua": '" Not A;Brand";v="99", "Chromium";v="102", "Google Chrome";v="102"',
+    "sec-ch-ua-mobile": "?0",
+    "sec-ch-ua-platform": "Windows",
+    "sec-fetch-dest": "document",
+    "sec-fetch-mode": "navigate",
+    "sec-fetch-site": "none",
+    "sec-fetch-user": "?1",
+    "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.0.0 Safari/537.36"
+}
+
+
 # 非异步
 def room_status(room_id):
     url = "https://www.douyu.com/betard/{0}".format(room_id)
     payload = {}
-    headers = {}
-    with requests.get(url=url, headers=headers, data=payload) as session:
+    with requests.get(url=url, headers=dy_headers, data=payload) as session:
         # print(session.text)
         data = json.loads(str(session.text))
         try:
@@ -193,7 +209,9 @@ async def depend():
     info = first_response()
     return info
 
+
 mcs = get_mc()
+
 
 @dy.got("room_id", prompt=first_response())
 async def get_live(
@@ -255,6 +273,7 @@ def first_states():
         room_states[key] = status
     return room_states
 
+
 async def rooms_states():
     room_states = {}
     for key, value in rooms.items():
@@ -313,4 +332,3 @@ async def live_notifacation():
             await bot.send_private_msg(user_id=281016636, message=msg)
 
         first_states[key] = value
-
