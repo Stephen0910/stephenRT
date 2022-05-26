@@ -29,12 +29,29 @@ from nonebot.adapters.onebot.v11.message import MessageSegment
 rooms = {"5645739": "a824683653", "5264153": "肖璐s", "5106536": "599"}
 show_status = {"0": "等待开播", "1": "直播中", "2": "直播结束"}
 
+dosee_headers = {
+    "host": "/www.doseeing.com",
+    "method": "GET",
+    "accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9",
+    "accept-encoding": "gzip, deflate, br",
+    "accept-language": "en-GB,en;q=0.9",
+    "sec-ch-ua": '" Not A;Brand";v="99", "Chromium";v="102", "Google Chrome";v="102"',
+    "sec-ch-ua-mobile": "?0",
+    "sec-ch-ua-platform": "Windows",
+    "sec-fetch-dest": "document",
+    "sec-fetch-mode": "navigate",
+    "sec-fetch-site": "none",
+    "sec-fetch-user": "?1",
+    "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.0.0 Safari/537.36"
+}
+
 
 def get_mc():
     url = "https://www.doseeing.com/rank/chat/7day?category=9"
     content_num = 8
     mc_dict = {}
-    with requests.get(url) as session:
+    payload = {}
+    with requests.get(url, headers=dosee_headers, data=payload) as session:
         page_html = etree.HTML(session.content)
         text_list = page_html.xpath("/html/body/div/div[2]/main/div/div/div[2]/table[2]/tbody//text()")
         mc_num = int(len(text_list) / content_num)

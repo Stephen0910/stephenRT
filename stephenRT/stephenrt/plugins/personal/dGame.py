@@ -164,6 +164,7 @@ def get_ids(names):
                 ids[name] = id
                 response.close()
         except:
+            time.sleep(1)
             print("连接错误 重试")
         print(ids)
     return ids
