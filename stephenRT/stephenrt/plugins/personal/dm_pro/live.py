@@ -30,7 +30,7 @@ rooms = {"5645739": "a824683653", "5264153": "肖璐s", "5106536": "599"}
 show_status = {"0": "等待开播", "1": "直播中", "2": "直播结束"}
 
 dosee_headers = {
-    "host": "/www.doseeing.com",
+    "host": "www.doseeing.com",
     "method": "GET",
     "accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9",
     "accept-encoding": "gzip, deflate, br",
@@ -61,6 +61,7 @@ def get_mc():
                     "/html/body/div/div[2]/main/div/div/div[2]/table[2]/tbody/tr[{0}]/td[2]/a/@href".format(i + 1))
                 room_id = re.search("\d+", str(room)).group()
                 mc_dict[text_list[i * content_num + 1]] = room_id
+    print("test:", mc_dict)
     return mc_dict
 
 
@@ -220,11 +221,6 @@ async def msg_receive(matcher: Matcher, args: Message = CommandArg()):
     plain_text = args.extract_plain_text()  #
     if plain_text:
         matcher.set_arg("room_id", args)  # 如果用户发送了参数则直接赋值
-
-
-async def depend():
-    info = first_response()
-    return info
 
 
 mcs = get_mc()
