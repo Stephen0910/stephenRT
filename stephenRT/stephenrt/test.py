@@ -14,22 +14,29 @@
 import re
 from lxml import etree
 import requests
+import time
+import json
 
+import requests
+from bs4 import BeautifulSoup
 
-def get_response(url):
-    response = requests.get(url)
-    response.close()
-    return response.content
+site = "https://webconf.douyucdn.cn"
 
+headers = {'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) '
+                         'Chrome/60.0.3112.78 Safari/537.36'}
 
-def new_id(old_id):
-    url = "https://www.douyu.com/{0}".format(old_id)
-    with requests.get(url) as session:
-        page_html = etree.HTML(session.content)
-        redict_url = page_html.xpath("/html/body/section/main/div[4]/div[1]/div[1]/div[1]/div[1]/div/a/@href")
-        room_id = re.search("\d+\d", str(redict_url)).group()
-    return room_id
+url = "http://openapi.douyu.com/api/thirdPart/token"
 
+with requests.get(url=url, headers=headers) as session:
+    response = json.loads(session.text)
+    traceId = response["traceId"]
+    print(traceId)
 
-a = get_mc()
-print(a)
+room = "http://openapi.douyu.com/api/thirdPart/getRoomInfo"
+data = {
+    "rid": "5264153",
+    "cid_type": 3,
+    "cid": 3,
+    "rw": 300,
+    "rh": 300
+}

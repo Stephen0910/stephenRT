@@ -370,7 +370,7 @@ class DyDanmu:
             'https://webconf.douyucdn.cn/resource/common/prop_gift_list/prop_gift_config.json').text
         gift_json3 = requests.get("https://webconf.douyucdn.cn/resource/common/gift/gift_template/20728.json").text
         gift_json4 = requests.get("https://webconf.douyucdn.cn/resource/common/property_info_14.json").text
-        # print(gift_json4.replace('DYConfigCallback(', '')[0:-2])
+
 
         gift_json1 = gift_json1.replace('DYConfigCallback(', '')[0:-2]
         gift_json2 = gift_json2.replace('DYConfigCallback(', '')[0:-2]
@@ -378,12 +378,14 @@ class DyDanmu:
         gift_json1 = json.loads(gift_json1)['data']['flashConfig']
         gift_json2 = json.loads(gift_json2)['data']
         gift_json3 = json.loads(gift_json3)['data']
+        gift_json4 = gift_json4.replace('DYConfigCallback(', '')[0:-2]
         for gift in gift_json1:
             gift_json[gift] = gift_json1[gift]['name']
         for gift in gift_json2:
             gift_json[gift] = gift_json2[gift]['name']
         for gift in gift_json3:
             gift_json[str(gift["id"])] = gift["name"]
+
         return gift_json
 
     def get_price_dict(self):

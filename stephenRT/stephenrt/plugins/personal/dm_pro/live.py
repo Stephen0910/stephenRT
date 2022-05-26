@@ -25,6 +25,7 @@ from lxml import etree
 from nonebot.permission import SUPERUSER
 from nonebot import get_bot
 from nonebot import on_metaevent
+from nonebot.params import Depends
 from nonebot.adapters.onebot.v11.message import MessageSegment
 
 rooms = {"5645739": "a824683653", "5264153": "肖璐s", "5106536": "599"}
@@ -178,6 +179,8 @@ async def get_roomInfo(room_id):
 
 dy = on_command("dy", rule=to_me(), aliases={"douyu", "直播", "zhibo", "zb"}, priority=1, permission=SUPERUSER)
 
+first_msg = []
+first_msg.append(first_response())  # 临时处理方案
 
 # for key, value in rooms.items():
 #     get_roomInfo(key)
@@ -188,10 +191,15 @@ async def msg_receive(matcher: Matcher, args: Message = CommandArg()):
         matcher.set_arg("room_id", args)  # 如果用户发送了参数则直接赋值
 
 
-@dy.got("room_id", prompt=first_response())
+@dy.got("room_id", prompt=first_msg[-1])
 async def get_live(
         room_id: Message = Arg()
+
 ):
+    first_msg = []
+    first_msg.append(first_response())
+    first_msg = first_msg[-1:]
+    print(first_msg)
     room_id = str(room_id)
     # print("room_id:", room_id)
     if not re.search("^\d+$", room_id):
