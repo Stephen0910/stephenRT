@@ -59,6 +59,7 @@ def new_id(old_id):
 
 
 def first_response():
+    print("run first_response---------")
     mcs = get_mc()
     info = "请输入要查询的主播信息（输入以下序号或房间号）:\n"
     index = 1
@@ -73,7 +74,7 @@ def first_response():
         elif msg_dict["is_alive"] == 1 and msg_dict["is_loop"] == 0:
             status = "直播中"
 
-        info = info + "{0}、{1}: {2}\n".format(index, key, status)
+        info = info + "{0}、{1}\n".format(index, key)
         index += 1
     return info
 
@@ -182,8 +183,7 @@ dy = on_command("dy", rule=to_me(), aliases={"douyu", "直播", "zhibo", "zb"}, 
 first_msg = []
 first_msg.append(first_response())  # 临时处理方案
 
-# for key, value in rooms.items():
-#     get_roomInfo(key)
+
 @dy.handle()
 async def msg_receive(matcher: Matcher, args: Message = CommandArg()):
     plain_text = args.extract_plain_text()  #
@@ -191,15 +191,15 @@ async def msg_receive(matcher: Matcher, args: Message = CommandArg()):
         matcher.set_arg("room_id", args)  # 如果用户发送了参数则直接赋值
 
 
-@dy.got("room_id", prompt=first_msg[-1])
+async def depend():
+    info = first_response()
+    return info
+
+
+@dy.got("room_id", prompt=first_response())
 async def get_live(
         room_id: Message = Arg()
-
 ):
-    first_msg = []
-    first_msg.append(first_response())
-    first_msg = first_msg[-1:]
-    print(first_msg)
     room_id = str(room_id)
     # print("room_id:", room_id)
     if not re.search("^\d+$", room_id):
@@ -237,3 +237,66 @@ async def get_live(
                                                                      msg_dict["hot"], msg_dict["child_cate"]) + live_pic
 
     await dy.finish(msg)
+
+
+def rooms_states():
+    room_states = {}
+    for key, value in rooms.items():
+        room_info = room_status(key)
+        is_alive = room_info["is_alive"]
+        is_loop = room_info["is_loop"]
+
+        if is_alive in [0, 2]:
+            status = "未直播"
+        elif is_alive == 1 and is_loop == 1:
+            status = "录播中"
+        elif is_alive == 1 and is_loop == 0:
+            status = "直播中"
+        else:
+            status = "状态未知"
+        room_states[key] = status
+    return room_states
+
+
+live_msg = on_metaevent()
+first_states = rooms_states()
+
+@live_msg.handle()
+async def live_notifacation():
+    bot = get_bot()
+    states = rooms_states()
+    for key, value in states.items():
+        if first_states[key] == "未直播" and value == "直播中":
+            msg_dict = await get_roomInfo(key)
+            if msg_dict["is_alive"] == 0:
+                status = "未直播"
+            elif msg_dict["is_alive"] == 2:
+                status = "直播结束"
+            elif msg_dict["is_alive"] == 1 and msg_dict["is_loop"] == 1:
+                status = "录播中"
+            elif msg_dict["is_alive"] == 1 and msg_dict["is_loop"] == 0:
+                status = "直播中"
+            else:
+                status = "状态未知"
+            live_pic = msg_dict["room_pic"]
+            live_pic = MessageSegment.image(live_pic)
+            avatar = MessageSegment.image(msg_dict["owner_avatar"])
+
+            msg = avatar + "{4}\n⬤  【{0}】\n⬤  {1}\n⬤  {2}\n⬤  热度：{3}".format(msg_dict["nickname"], msg_dict["room_name"],
+                                                                     status,
+                                                                     msg_dict["hot"], msg_dict["child_cate"]) + live_pic
+            await bot.send_private_msg(user_id=281016636, message=msg)
+
+
+        elif first_states[key] == "直播中" and value == "未直播":
+            msg_dict = await get_roomInfo(key)
+            msg = "{0} 下播了".format(msg_dict["nickname"])
+            await bot.send_private_msg(user_id=281016636, message=msg)
+
+        first_states[key] = value
+
+
+
+
+
+

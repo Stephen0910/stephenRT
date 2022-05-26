@@ -17,26 +17,12 @@ import requests
 import time
 import json
 
-import requests
-from bs4 import BeautifulSoup
 
-site = "https://webconf.douyucdn.cn"
-
-headers = {'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) '
-                         'Chrome/60.0.3112.78 Safari/537.36'}
-
-url = "http://openapi.douyu.com/api/thirdPart/token"
-
-with requests.get(url=url, headers=headers) as session:
-    response = json.loads(session.text)
-    traceId = response["traceId"]
-    print(traceId)
-
-room = "http://openapi.douyu.com/api/thirdPart/getRoomInfo"
-data = {
-    "rid": "5264153",
-    "cid_type": 3,
-    "cid": 3,
-    "rw": 300,
-    "rh": 300
-}
+for i in range(1,100000):
+    url = "https://webconf.douyucdn.cn/resource/common/gift/gift_template/{0}.json".format(i)
+    with requests.get(url=url) as session:
+        if session.status_code == 200:
+            print(i)
+            data = session.text.replace('DYConfigCallback(', '')[0:-2]
+            if "野摩托" in data:
+                print(data)
