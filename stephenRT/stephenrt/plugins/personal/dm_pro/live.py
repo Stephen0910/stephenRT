@@ -14,8 +14,6 @@ import requests
 import json
 import time, re, requests, json
 import asyncio, time
-import stephenrt.privateCfg as cfg
-import websockets
 from nonebot import on_command
 from nonebot.rule import to_me
 from nonebot.matcher import Matcher
@@ -195,6 +193,7 @@ async def depend():
     info = first_response()
     return info
 
+mcs = get_mc()
 
 @dy.got("room_id", prompt=first_response())
 async def get_live(
@@ -205,7 +204,6 @@ async def get_live(
     if not re.search("^\d+$", room_id):
         await dy.finish("输入的不是直播间号， 结束会话")
 
-    mcs = get_mc()
     # print(mcs)
     if int(room_id) < len(mcs) + 1:
         room_id = list(mcs.values())[int(room_id) - 1]
@@ -315,3 +313,4 @@ async def live_notifacation():
             await bot.send_private_msg(user_id=281016636, message=msg)
 
         first_states[key] = value
+
