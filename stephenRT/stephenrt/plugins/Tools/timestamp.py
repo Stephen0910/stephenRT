@@ -28,16 +28,19 @@ async def handle_first_receive(matcher: Matcher, args: Message = CommandArg()):
         matcher.set_arg("orinTime", args)  # 如果用户发送了参数则直接赋值
 
 
-@timeStamp.got("orinTime", prompt="输入时间戳或者now")
+@timeStamp.got("orinTime", prompt="输入时间(年月日时分秒)/时间戳/now")
 async def handleuser(
         orinTime: Message = Arg()
 ):
-    if str(orinTime) == "now":
+    orinTime = str(orinTime)
+    print("输入为：{0}".format(orinTime))
+    if orinTime == "now":
         sTime = int(time.time())
+        nature = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(sTime))
         # mTime = int(round(sTime * 1000))
-        await timeStamp.finish("当前时间戳：\n{0}".format(sTime))
-    elif re.match("\d+$", str(orinTime)):
-        query_time = int(str(orinTime))
+        await timeStamp.finish("当前时间：{0}\n时间戳: {1}".format(nature, sTime))
+    elif re.match("\d+$", orinTime):
+        query_time = int(orinTime)
         try:
             if query_time > 3653284221:
                 query_time = round(query_time / 1000)
@@ -45,6 +48,16 @@ async def handleuser(
         except Exception as e:
             nature = "内部错误：" + str(e)
         await timeStamp.finish(nature)
-
     else:
-        await timeStamp.finish("输入错误，查询结束")
+        if re.search("\d\d\d\d", orinTime):
+            try:
+                input_time = re.findall("\d+", orinTime)
+                shijian = "-".join(input_time)
+                s_t = time.strptime(shijian, "%Y-%m-%d-%H-%M-%S")
+                ts = int(time.mktime(s_t))
+                print(ts)
+                await timeStamp.finish(str(ts))
+            except Exception as e:
+                print("内部错误, 查询结束: {0}".format(str(e)))
+        else:
+            await timeStamp.finish("输入错误，查询结束")
