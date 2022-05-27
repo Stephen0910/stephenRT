@@ -47,20 +47,21 @@ dosee_headers = {
 
 
 def get_mc():
-    url = "https://www.doseeing.com/rank/chat/7day?category=9"
     content_num = 8
     mc_dict = {}
     payload = {}
-    with requests.get(url, headers=dosee_headers, data=payload) as session:
-        page_html = etree.HTML(session.content)
-        text_list = page_html.xpath("/html/body/div/div[2]/main/div/div/div[2]/table[2]/tbody//text()")
-        mc_num = int(len(text_list) / content_num)
-        for i in range(mc_num):
-            if text_list[i * content_num + 3] == "DOTA":
-                room = page_html.xpath(
-                    "/html/body/div/div[2]/main/div/div/div[2]/table[2]/tbody/tr[{0}]/td[2]/a/@href".format(i + 1))
-                room_id = re.search("\d+", str(room)).group()
-                mc_dict[text_list[i * content_num + 1]] = room_id
+    for i in [1, 2]:
+        url = "https://www.doseeing.com/rank/chat/7day?category=9&p={0}".format(i)
+        with requests.get(url, headers=dosee_headers, data=payload) as session:
+            page_html = etree.HTML(session.content)
+            text_list = page_html.xpath("/html/body/div/div[2]/main/div/div/div[2]/table[2]/tbody//text()")
+            mc_num = int(len(text_list) / content_num)
+            for i in range(mc_num):
+                if text_list[i * content_num + 3] == "DOTA":
+                    room = page_html.xpath(
+                        "/html/body/div/div[2]/main/div/div/div[2]/table[2]/tbody/tr[{0}]/td[2]/a/@href".format(i + 1))
+                    room_id = re.search("\d+", str(room)).group()
+                    mc_dict[text_list[i * content_num + 1]] = room_id
     print("test:", mc_dict)
     return mc_dict
 
@@ -75,23 +76,31 @@ def new_id(old_id):
 
 
 def first_response():
+    split_symbol = "⬤"
     print("run first_response---------")
     mcs = get_mc()
-    info = "请输入要查询的主播信息（输入以下序号或房间号）:\n"
+    # info = "请输入要查询的主播信息（输入以下序号或房间号）:\n"
+    info = "斗鱼DOTA1七日弹幕排行：\n"
     index = 1
     for key, value in mcs.items():
-        msg_dict = room_status(value)
-        if msg_dict["is_alive"] == 0:
-            status = "未直播"
-        elif msg_dict["is_alive"] == 2:
-            status = "直播结束"
-        elif msg_dict["is_alive"] == 1 and msg_dict["is_loop"] == 1:
-            status = "录播中"
-        elif msg_dict["is_alive"] == 1 and msg_dict["is_loop"] == 0:
-            status = "直播中"
+        if index < 11:
+            msg_dict = room_status(value)
+            if msg_dict["is_alive"] == 0:
+                status = "未直播"
+            elif msg_dict["is_alive"] == 2:
+                status = "直播结束"
+            elif msg_dict["is_alive"] == 1 and msg_dict["is_loop"] == 1:
+                status = "录播中"
+            elif msg_dict["is_alive"] == 1 and msg_dict["is_loop"] == 0:
+                status = "直播中"
 
-        info = info + "{0}、{1}\n".format(index, key)
-        index += 1
+            if msg_dict["is_alive"] in [0, 2]:
+                info =  info + "{4}  {0}、{1} [{2}]  {3}\n".format(index, key, value, status, split_symbol)
+            else:
+                info =  info + "{5}  {0}、{1} [{2}] {3}  热度:{4} \n".format(index, key, value, status, msg_dict["hot"], split_symbol)
+            index += 1
+        else:
+            break
     return info
 
 
@@ -224,15 +233,19 @@ async def msg_receive(matcher: Matcher, args: Message = CommandArg()):
 
 mcs = get_mc()
 
+prompt = "输入要查询直播间号(或前十序号)\n0为获取榜单前十"
 
-@dy.got("room_id", prompt=first_response())
+@dy.got("room_id", prompt=prompt)
 async def get_live(
         room_id: Message = Arg()
 ):
     room_id = str(room_id)
-    # print("room_id:", room_id)
+
     if not re.search("^\d+$", room_id):
         await dy.finish("输入的不是直播间号， 结束会话")
+
+    if room_id == "0":
+        await dy.finish(first_response())
 
     # print(mcs)
     if int(room_id) < len(mcs) + 1:

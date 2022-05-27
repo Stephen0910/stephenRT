@@ -33,6 +33,6 @@ tools = "{0}  时间戳 /ts".format(split_symbol)
 msg += tools
 
 
-@help.got("noparam", prompt=msg)
+@help.handle()
 async def zendeskReport():
     await help.finish()
