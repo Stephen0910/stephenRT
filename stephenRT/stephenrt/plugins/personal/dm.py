@@ -50,7 +50,8 @@ save_sql = False
 debug = False
 
 # freeGifts = ["粉丝荧光棒"]
-
+unknown_gift = {"21901": "单车", "21900": "野摩托"}
+unknown_price = {"21901": 2000, "21900": 1000}
 
 # 一些接口可以获取是否在线等情况
 # room_info = "https://www.douyu.com/roomapi/biz/getSwitch?rid={0}".format(id)
@@ -140,8 +141,8 @@ class DyDanmu:
         # for key, value in self.price_dict.items():
         #     if value > 500000:
         #         print(self.gift_dict[str(key)], key, value)
-        # print("礼物：", self.gift_dict)
-        # print("价格：", self.price_dict)
+        print("礼物：", self.gift_dict)
+        print("价格：", self.price_dict)
         self.login_name = login_name
         self.login_id = login_id
         self.gift_dict_keys = self.gift_dict.keys()
@@ -385,6 +386,9 @@ class DyDanmu:
             gift_json[gift] = gift_json2[gift]['name']
         for gift in gift_json3:
             gift_json[str(gift["id"])] = gift["name"]
+        for gift in unknown_gift.keys():
+            print(gift)
+            gift_json[str(gift)] = unknown_gift[str(gift)]
 
         return gift_json
 
@@ -413,6 +417,12 @@ class DyDanmu:
                 # price_json[item["id"]] = item["pc"]
                 price_json[str(item["id"])] = item["exp"]
                 pic_json[str(item["id"])] = item["himg"]
+
+
+        for gift in unknown_price:
+            price_json[gift] = unknown_price[gift]
+            pic_json[gift] = "unknow"
+
         return [price_json, pic_json]
 
 
