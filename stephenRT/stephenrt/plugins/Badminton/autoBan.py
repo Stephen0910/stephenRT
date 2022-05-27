@@ -144,8 +144,9 @@ async def check_room():
             else:
                 print("不处理：", name_check[0], text_check)
 
-bot = get_bot()
+
 async def send_message(msg):
+    bot = get_bot()
     try:
         await bot.send_group_msg(group_id=792627520, message=str(msg))
     except Exception as e:
