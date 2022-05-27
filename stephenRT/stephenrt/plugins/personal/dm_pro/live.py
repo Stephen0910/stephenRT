@@ -307,15 +307,15 @@ async def rooms_states():
 
 
 live_msg = on_metaevent()
-first_states = first_states()
+init_states = first_states()
 
 
 @live_msg.handle()
 async def live_notifacation():
     bot = get_bot()
-    states = await rooms_states()
+    states = first_states()
     for key, value in states.items():
-        if first_states[key] == "未直播" and value == "直播中":
+        if init_states[key] == "未直播" and value == "直播中":
             msg_dict = await get_roomInfo(key)
             if msg_dict["is_alive"] == 0:
                 status = "未直播"
@@ -331,17 +331,18 @@ async def live_notifacation():
             live_pic = MessageSegment.image(live_pic)
             avatar = MessageSegment.image(msg_dict["owner_avatar"])
 
-            msg = avatar + "{4}\n⬤  【{0}】\n⬤  {1}\n⬤  {2}\n⬤  热度：{3}".format(msg_dict["nickname"],
-                                                                             msg_dict["room_name"],
-                                                                             status,
-                                                                             msg_dict["hot"],
-                                                                             msg_dict["child_cate"]) + live_pic
+            msg = "上钟提醒:" + avatar + "{4}\n⬤  【{0}】\n⬤  {1}\n⬤  {2}\n⬤  热度：{3}".format(msg_dict["nickname"],
+                                                                                       msg_dict["room_name"],
+                                                                                       status,
+                                                                                       msg_dict["hot"],
+                                                                                       msg_dict[
+                                                                                           "child_cate"]) + live_pic
             await bot.send_private_msg(user_id=281016636, message=msg)
 
 
-        elif first_states[key] == "直播中" and value == "未直播":
+        elif init_states[key] == "直播中" and value == "未直播":
             msg_dict = await get_roomInfo(key)
-            msg = "{0} 下播了".format(msg_dict["nickname"])
+            msg = "下钟提醒\n{0} 下播了".format(msg_dict["nickname"])
             await bot.send_private_msg(user_id=281016636, message=msg)
 
-        first_states[key] = value
+        init_states[key] = value
