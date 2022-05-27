@@ -144,9 +144,8 @@ async def check_room():
             else:
                 print("不处理：", name_check[0], text_check)
 
-
+bot = get_bot()
 async def send_message(msg):
-    bot = get_bot()
     try:
         await bot.send_group_msg(group_id=792627520, message=str(msg))
     except Exception as e:
@@ -154,29 +153,27 @@ async def send_message(msg):
 
 
 matcher = on_metaevent()
-
 block_list = []
-
-
 @matcher.handle()
 async def shut_user():
     bot = get_bot()
     try:
         result = await check_room()
-        print("---result-----", result)
+        # print("---result-----", result)
         if result != None and result not in block_list:
-            print("检测到：", result)
+            # print("检测到：", result)
             block_list.append(result)
             try:
                 # await bot.send_private_msg(user_id=281016636, message=str(result))
                 # if get_host_ip() == "10.10.10.8":
                 if result:
-                    print("8号机发送消息")
+                    # print("8号机发送消息")
                     await bot.send_group_msg(group_id=group_id, message=str(result))
             except Exception as e:
                 await bot.send_private_msg(user_id=user_id, message=str(result) + str(e))
             finally:
-                print("block_list:", block_list)
+                # print("block_list:", block_list)
+                pass
 
     except Exception as e:
         result = "获取消息列表失败：" + str(e)

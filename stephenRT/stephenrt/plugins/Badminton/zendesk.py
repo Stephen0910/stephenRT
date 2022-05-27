@@ -112,8 +112,8 @@ def projectCount(search_string):
 
 # @scheduler.scheduled_job("cron", hour=23, minute=1, second=20)  #暂时屏蔽 容易卡住
 async def send_message():
-    bot = get_bot()
     # 处理msg打印
+    bot = get_bot()
     yTickets = projectCount(str(yesterday))
     tTickets = projectCount(str(today))
     change = "增长" if tTickets[0] > yTickets[0] else "减少"
