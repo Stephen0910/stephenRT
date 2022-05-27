@@ -246,24 +246,27 @@ async def get_live(
             msg_dict = await get_roomInfo(room_id)
         except:
             msg_dict = await get_roomInfo(new_id(room_id))
+    try:
+        if msg_dict["is_alive"] == 0:
+            status = "未直播"
+        elif msg_dict["is_alive"] == 2:
+            status = "直播结束"
+        elif msg_dict["is_alive"] == 1 and msg_dict["is_loop"] == 1:
+            status = "录播中"
+        elif msg_dict["is_alive"] == 1 and msg_dict["is_loop"] == 0:
+            status = "直播中"
+        else:
+            status = "状态未知"
 
-    if msg_dict["is_alive"] == 0:
-        status = "未直播"
-    elif msg_dict["is_alive"] == 2:
-        status = "直播结束"
-    elif msg_dict["is_alive"] == 1 and msg_dict["is_loop"] == 1:
-        status = "录播中"
-    elif msg_dict["is_alive"] == 1 and msg_dict["is_loop"] == 0:
-        status = "直播中"
-    else:
-        status = "状态未知"
-    live_pic = msg_dict["room_pic"]
-    live_pic = MessageSegment.image(live_pic)
-    avatar = MessageSegment.image(msg_dict["owner_avatar"])
-    msg = avatar + "{4}\n⬤  【{0}】\n⬤  {1}\n⬤  {2}\n⬤  热度：{3}".format(msg_dict["nickname"], msg_dict["room_name"],
+        live_pic = msg_dict["room_pic"]
+        live_pic = MessageSegment.image(live_pic)
+        avatar = MessageSegment.image(msg_dict["owner_avatar"])
+        msg = avatar + "{4}\n⬤  【{0}】\n⬤  {1}\n⬤  {2}\n⬤  热度：{3}".format(msg_dict["nickname"], msg_dict["room_name"],
                                                                      status,
-                                                                     msg_dict["hot"], msg_dict["child_cate"]) + live_pic
 
+                                                                     msg_dict["hot"], msg_dict["child_cate"]) + live_pic
+    except Exception as e:
+        msg = "查询失败：{0}".format(str(e))
     await dy.finish(msg)
 
 
