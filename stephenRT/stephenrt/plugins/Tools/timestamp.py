@@ -39,7 +39,7 @@ async def handleuser(
         nature = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(sTime))
         # mTime = int(round(sTime * 1000))
         await timeStamp.finish("当前时间：{0}\n时间戳: {1}".format(nature, sTime))
-    elif re.match("\d+$", orinTime):
+    elif re.match("^\d+$", orinTime):
         query_time = int(orinTime)
         try:
             if query_time > 3653284221:
@@ -49,15 +49,19 @@ async def handleuser(
             nature = "内部错误：" + str(e)
         await timeStamp.finish(nature)
     else:
-        if re.search("\d\d\d\d", orinTime):
-            try:
-                input_time = re.findall("\d+", orinTime)
-                shijian = "-".join(input_time)
-                s_t = time.strptime(shijian, "%Y-%m-%d-%H-%M-%S")
-                ts = int(time.mktime(s_t))
-                print(ts)
-                await timeStamp.finish(str(ts))
-            except Exception as e:
-                print("内部错误, 查询结束: {0}".format(str(e)))
-        else:
-            await timeStamp.finish("输入错误，查询结束")
+        try:
+            input_time = re.findall("\d+", orinTime)
+            shijian = "-".join(input_time)
+            print(shijian)
+            timeArray = time.strptime(shijian, "%Y-%m-%d-%H-%M-%S")
+
+            # 转换为时间戳:
+
+            nature = int(time.mktime(timeArray))
+
+            await timeStamp.finish(str(nature))
+        except Exception as e:
+            if str(e) != "":
+                await timeStamp.finish(str(e))
+        finally:
+            pass
