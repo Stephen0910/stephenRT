@@ -140,7 +140,7 @@ def room_status(room_id):
         elif room_info["authInfo"]["type"] == 0:
             auth = ""
         # small_avatar = room_info["avatar"]["small"]
-        owner_avatar = room_info["avatar"]["small"]
+        owner_avatar = room_info["avatar"]["middle"]
         room_name = room_info["room_name"]
         level_info = room_info["levelInfo"]
         # room_src = "https://rpic.douyucdn.cn/" + room_info["room_src"]
@@ -274,7 +274,7 @@ async def get_live(
         live_pic = msg_dict["room_pic"]
         live_pic = MessageSegment.image(live_pic)
         avatar = MessageSegment.image(msg_dict["owner_avatar"])
-        msg = avatar + "{4}\n⬤  【{0}】\n⬤  {1}\n⬤  {2}\n⬤  热度：{3}".format(msg_dict["nickname"], msg_dict["room_name"],
+        msg = avatar + "{4}\n⬤  {0}\n⬤  {1}\n⬤  {2}\n⬤  热度：{3}".format(msg_dict["nickname"], msg_dict["room_name"],
                                                                      status,
 
                                                                      msg_dict["hot"], msg_dict["child_cate"]) + live_pic
