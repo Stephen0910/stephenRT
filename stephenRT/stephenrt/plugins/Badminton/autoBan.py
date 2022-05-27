@@ -116,19 +116,17 @@ def filter_chat(chats_list):
 
 async def check_room():
     chat_msg = await socket_message()
-    # print("chat_msg:", chat_msg)
-    # print(type(chat_msg))
     for chat in chat_msg:
         if chat["sendMan"]["rankStage"] == 1 and len(chat["sendContent"]) > 9:
-            print(str(chat["sendMan"]["name"]).lower(), chat["sendContent"])
-            print("大于9疑似")
-            if re.search(text_check[0], str(chat["sendContent"]).lower()) and re.search(text_check[1], str(chat["sendContent"]).lower()) and re.match(
-                "[a-z]+|\d+", chat["sendMan"]["name"]):
+            # print(str(chat["sendMan"]["name"]).lower(), chat["sendContent"])
+            if re.search(text_check[0], str(chat["sendContent"]).lower()) and re.search(text_check[1], str(
+                    chat["sendContent"]).lower()) and re.match(
+                    "[a-z]+|\d+", chat["sendMan"]["name"]):
                 result = "chatRoom发言广告：" + str(chat["sendMan"]["numberUserId"]) + " " + str(chat["sendMan"][
                                                                                                 "name"]) + " " + str(
                     chat["sendContent"]).replace("\n", "")
                 if chat["isJy"] is False and chat["isFh"] is False:  # 是否已禁言
-                    print("result:", result)
+                    # print("result:", result)
                     return result
                 else:
                     print("已经禁言了")
@@ -155,6 +153,8 @@ async def send_message(msg):
 
 matcher = on_metaevent()
 block_list = []
+
+
 @matcher.handle()
 async def shut_user():
     bot = get_bot()
@@ -178,7 +178,7 @@ async def shut_user():
 
     except Exception as e:
         result = "获取消息列表失败：" + str(e)
-        print(result)
+        # print(result)
 
     # if len(block_list) > 3:
     #     pass
