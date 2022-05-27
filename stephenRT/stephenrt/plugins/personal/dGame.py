@@ -225,10 +225,10 @@ else:
 print("first_time:", first_time)
 time_list = [first_time]
 
-bot = get_bot()
+
 @matcher.handle()
 async def game_info():
-
+    bot = get_bot()
     g_ids = []
     o_msg = ""
     d_msg = ""
