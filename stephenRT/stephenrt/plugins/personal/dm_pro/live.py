@@ -28,6 +28,7 @@ from nonebot.adapters.onebot.v11.message import MessageSegment
 
 import urllib3
 urllib3.disable_warnings()
+requests.adapters.DEFAULT_RETRIES = 5
 
 print("live loading")
 
@@ -173,6 +174,14 @@ def room_status(room_id):
         # print(auth)
         # print("\n\n--------------------------")
         return primary
+
+
+async def dosee_info(id):
+    d1 = "https://www.doseeing.com/api/room_dots?room={0}&hours=today".format(id)
+    d2 = "https://www.doseeing.com/api/room_stat?room={0}&hours=today".format(id)
+
+
+
 
 
 async def get_roomInfo(room_id):
@@ -341,7 +350,7 @@ init_states = first_states()
 # init_states = {'5645739': '未直播', '5264153': '未直播', '5106536': '未直播', '6566346': '未直播'}
 
 
-@live_msg.handle()
+# @live_msg.handle()
 async def live_notifacation():
     bot = get_bot()
     states = await rooms_states()
