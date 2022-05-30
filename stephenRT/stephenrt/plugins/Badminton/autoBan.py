@@ -28,6 +28,8 @@ import socket
 config = cfg.config_content
 group_id = config["group_id_badminton"]
 user_id = config["user_id"]
+sleep_time = 7
+
 
 env = "prod"  # 根据环境读取配置
 
@@ -141,6 +143,7 @@ async def check_room():
                     print("已经禁言了")
             else:
                 print("不处理：", name_check[0], text_check)
+    await asyncio.sleep(sleep_time)
 
 
 async def send_message(msg):

@@ -345,7 +345,7 @@ async def rooms_states():
     异步获取房间信息
     :return:
     """
-
+    sleep_time = 10
     room_states = {}
     for key, value in rooms.items():
         room_info = await get_roomInfo(key)
@@ -361,6 +361,7 @@ async def rooms_states():
         else:
             status = "状态未知"
         room_states[key] = status
+    await asyncio.sleep(sleep_time)
     return room_states
 
 
@@ -371,7 +372,7 @@ init_states = first_states()
 # init_states = {'5645739': '未直播', '5264153': '未直播', '5106536': '未直播', '6566346': '未直播'}
 
 
-# @live_msg.handle()
+@live_msg.handle()
 async def live_notifacation():
     bot = get_bot()
     states = await rooms_states()
