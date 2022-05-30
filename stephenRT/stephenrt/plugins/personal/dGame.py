@@ -20,6 +20,10 @@ import asyncio
 import socket
 from nonebot.adapters.onebot.v11.message import MessageSegment
 
+import urllib3
+
+urllib3.disable_warnings()
+requests.adapters.DEFAULT_RETRIES = 5
 
 sleep_time = 7
 v_url = "https://api.linhun.vip/api/Littlesistervideo?type=json"
@@ -59,7 +63,7 @@ dg_titles = {"map_reserve2": "辅",
 
 
 async def get_video():
-    with requests.get(v_url) as session:
+    with requests.get(v_url, verify=False, timeout=3) as session:
         response = session.text
         data = json.loads(response)["video"]
         print("视频地址：", data)
@@ -101,7 +105,7 @@ def get_host_ip():
 
 
 def get_response(url):
-    response = requests.get(url, headers=fl_headers)
+    response = requests.get(url, headers=fl_headers, verify=False, timeout=3)
     response.close()
     return response.content
 
@@ -142,7 +146,7 @@ async def get_rPic():
             print(pics_xpath)
 
         if pic_url != "":
-            s = requests.get(pic_url, headers=fl_headers)
+            s = requests.get(pic_url, headers=fl_headers, verify=False, timeout=3)
             response_code = s.status_code
             result = s.url
             if str(result).endswith("FileDeleted") or str(result).endswith("101") or response_code != 200:
@@ -159,7 +163,7 @@ def get_ids(names):
         try:
             for name in names:
                 url_name = urllib.parse.quote("\'" + name + "\'")
-                response = requests.get(id_url + url_name)
+                response = requests.get(id_url + url_name, verify=False, timeout=3)
                 id = json.loads(response.text)["temp"][0]["user_id"]
                 ids[name] = id
                 response.close()
@@ -173,7 +177,7 @@ def get_ids(names):
 async def get_recent_data(id):
     recent_url = "https://score.09game.com/MOBA/BasicDataList?UserID={0}&GameTypeID=21&CurrentSeason=0&GameSource=-1&Time=-1&PageIndex=0&PageSize=6".format(
         str(id))
-    response = requests.get(recent_url, headers=d_headers, timeout=5)
+    response = requests.get(recent_url, headers=d_headers, verify=False, timeout=3)
     content = json.loads(response.content)
     last_game = content["data"]["listEntity"][0]
     response.close()
@@ -183,7 +187,7 @@ async def get_recent_data(id):
 
 async def get_dg_id(id):
     id_url = "https://score.09game.com/RPG/GameList?UserID={0}&GameTypeID=142&GameSource=-1&Type=2&Number=11".format(id)
-    response = requests.get(id_url, headers=d_headers)
+    response = requests.get(id_url, headers=d_headers, verify=False, timeout=3)
     content = json.loads(response.content)
     last_game = content["data"][0]
     response.close()
@@ -199,7 +203,7 @@ async def get_gids(id):
     """
     recent_most = "https://score.09game.com/moba/BasicDataList?UserID={0}&GameTypeID=21&CurrentSeason=0&GameSource=-1&Time=-1&PageIndex=0&PageSize=200".format(
         id)
-    response = requests.get(recent_most, headers=d_headers)
+    response = requests.get(recent_most, headers=d_headers, verify=False, timeout=3)
     recent_data = json.loads(response.content)["data"]["listEntity"]
     response.close()
     g_ids = [x["g_id"] for x in recent_data]
@@ -254,7 +258,7 @@ async def game_info():
             new_id, g_source)
         source_url = "https://cdn.09game.com/resources/game_skill/"
         omg_spend = int(data["time_length"]) // 60 + 1
-        response = requests.get(id_url)
+        response = requests.get(id_url, verify=False, timeout=3)
         detail = json.loads(response.content)
         response.close()
         # print(json.dumps(detail))
@@ -359,7 +363,7 @@ async def game_info():
         id_url = "https://score.09game.com/RPG/GamePerformanceListJson?GameTypeID=142&gameid={0}&gamesource=".format(
             new_id)
         dg_spend = int(dg_data["time_length"]) // 60 + 1
-        response = requests.get(id_url)
+        response = requests.get(id_url, verify=False, timeout=3)
         dg_detail = json.loads(response.content)
         response.close()
         for data in dg_detail["data"]:
