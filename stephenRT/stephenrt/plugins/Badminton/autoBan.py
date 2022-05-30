@@ -152,7 +152,6 @@ async def send_message(msg):
 
 
 matcher = on_metaevent()
-# matcher = on_message()
 block_list = []
 
 

@@ -26,6 +26,9 @@ from nonebot import on_metaevent
 from nonebot.params import Depends
 from nonebot.adapters.onebot.v11.message import MessageSegment
 
+import urllib3
+urllib3.disable_warnings()
+
 print("live loading")
 
 rooms = {"5645739": "a824683653", "5264153": "肖璐s", "5106536": "599", "6566346": "paogod"}
@@ -54,7 +57,7 @@ def get_mc():
     payload = {}
     for i in [1, 2]:
         url = "https://www.doseeing.com/rank/chat/7day?category=9&p={0}".format(i)
-        with requests.get(url, headers=dosee_headers, data=payload) as session:
+        with requests.get(url, headers=dosee_headers, data=payload, verify=False) as session:
             page_html = etree.HTML(session.content)
             text_list = page_html.xpath("/html/body/div/div[2]/main/div/div/div[2]/table[2]/tbody//text()")
             mc_num = int(len(text_list) / content_num)
@@ -70,7 +73,7 @@ def get_mc():
 
 def new_id(old_id):
     url = "https://www.douyu.com/{0}".format(old_id)
-    with requests.get(url) as session:
+    with requests.get(url, verify=False) as session:
         page_html = etree.HTML(session.content)
         redict_url = page_html.xpath("/html/body/section/main/div[4]/div[1]/div[1]/div[1]/div[1]/div/a/@href")
         room_id = re.search("\d+\d", str(redict_url)).group()
@@ -127,7 +130,7 @@ dy_headers = {
 def room_status(room_id):
     url = "https://www.douyu.com/betard/{0}".format(room_id)
     payload = {}
-    with requests.get(url=url, headers=dy_headers, data=payload) as session:
+    with requests.get(url=url, headers=dy_headers, data=payload, verify=False) as session:
         # print(session.text)
         data = json.loads(str(session.text))
         try:
@@ -176,7 +179,7 @@ async def get_roomInfo(room_id):
     url = "https://www.douyu.com/betard/{0}".format(room_id)
     payload = {}
     headers = {}
-    with requests.get(url=url, headers=headers, data=payload, allow_redirects=True, timeout=3) as session:
+    with requests.get(url=url, headers=headers, data=payload, allow_redirects=True, timeout=3, verify=False) as session:
         # print(session.text)
         data = json.loads(str(session.text))
         try:
