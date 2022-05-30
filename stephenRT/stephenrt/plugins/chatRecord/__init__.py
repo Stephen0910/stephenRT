@@ -108,7 +108,6 @@ async def saveMsg(bot: Bot, event: GroupMessageEvent):
     try:
         msg_type = str([x[2:] for x in re.findall("=\'text|=\'image|=\'json|=\'face", str(get_type))]).replace("'", "\"")
     except Exception as e:
-        print(e)
         msg_type = ""
     print("msg_type:", msg_type, type(msg_type))
     # print(msg.message["type"])
@@ -125,33 +124,9 @@ async def saveMsg(bot: Bot, event: GroupMessageEvent):
            groupInfo["group_name"],
            str(msg.sender.card).replace("\'", "\""), msg_time, msg.self_id, msg.post_type, msg_type)
 
-    # await poolSave(sql)
-
-    # mem1 = str(bot.get_group_member_list(612610584))
-    # mem2 = str(bot.get_group_member_list(310100922))
-    # mem1 = await get_mems(bot, groupId=612610584)
-    # mem2 = await get_mems(bot, groupId=310100922)
-    #
-    # print("mmmmmmmmmmmmmmmmmm2:")
-    # print(mem2)
-    #
-    # test_file = "/home/a.txt"
-    # if os.path.exists(test_file) is False:
-    #     with open(test_file, "a+") as f:
-    #         f.write(mem2)
-
-
     try:
         await executeSql(sql)
-
-        # print(bot.get_group_member_list(group_id=612610584))
-
-
-
-        # print(bot.get_group_member_list(group_id=612610584))
-        # await poolSave(sql)
     except Exception as e:
-        print(sql)
         await send_private(bot, pgsql["user_id"], e)  # 如果保存失败，把sql发送到指定的qq号
 
 

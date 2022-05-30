@@ -165,10 +165,7 @@ async def shut_user():
             # print("检测到：", result)
             block_list.append(result)
             try:
-                # await bot.send_private_msg(user_id=281016636, message=str(result))
-                # if get_host_ip() == "10.10.10.8":
                 if result:
-                    # print("8号机发送消息")
                     await bot.send_group_msg(group_id=group_id, message=str(result))
             except Exception as e:
                 await bot.send_private_msg(user_id=user_id, message=str(result) + str(e))

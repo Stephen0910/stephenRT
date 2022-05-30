@@ -10,7 +10,7 @@
 # @Licence  :     <@2022>
 
 
-import requests
+import requests, datetime
 import json
 import time, re, requests, json
 import asyncio, time
@@ -283,7 +283,7 @@ async def get_live(
     await dy.finish(msg)
 
 
-def first_states():
+async def first_states():
     room_states = {}
     for key, value in rooms.items():
         room_info = room_status(key)
@@ -328,7 +328,7 @@ init_states = first_states()
 @live_msg.handle()
 async def live_notifacation():
     bot = get_bot()
-    states = first_states()
+    states = await first_states()
     for key, value in states.items():
         if init_states[key] == "未直播" and value == "直播中":
             msg_dict = await get_roomInfo(key)
@@ -346,7 +346,10 @@ async def live_notifacation():
             live_pic = MessageSegment.image(live_pic)
             avatar = MessageSegment.image(msg_dict["owner_avatar"])
 
-            msg = "上钟提醒:" + avatar + "{4}\n⬤  【{0}】\n⬤  {1}\n⬤  {2}\n⬤  热度：{3}".format(msg_dict["nickname"],
+            dateArray = datetime.datetime.utcfromtimestamp(int(time.time()))
+            msg_time = dateArray.strftime("%Y-%m-%d %H:%M:%S")
+
+            msg = "上钟提醒-" + str(msg_time) + avatar + "{4}\n⬤  【{0}】\n⬤  {1}\n⬤  {2}\n⬤  热度：{3}".format(msg_dict["nickname"],
                                                                                        msg_dict["room_name"],
                                                                                        status,
                                                                                        msg_dict["hot"],
