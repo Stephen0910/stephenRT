@@ -132,49 +132,53 @@ dy_headers = {
 def room_status(room_id):
     url = "https://www.douyu.com/betard/{0}".format(room_id)
     payload = {}
-    with requests.get(url=url, headers=dy_headers, data=payload, verify=False, timeout=3) as session:
-        # print(session.text)
-        data = json.loads(str(session.text))
-        try:
-            child_cate = data["game"]["tag_name"]
-        except Exception as e:
-            child_cate = ""
-            # print(e)
-        room_info = data["room"]
-        is_alive = room_info["show_status"]  # 是否在播
-        nickname = room_info["nickname"]
-        if room_info["authInfo"]["type"] == 1:
-            auth = room_info["authInfo"]["desc"]
-        elif room_info["authInfo"]["type"] == 0:
-            auth = ""
-        # small_avatar = room_info["avatar"]["small"]
-        owner_avatar = room_info["avatar"]["middle"]
-        room_name = room_info["room_name"]
-        level_info = room_info["levelInfo"]
-        # room_src = "https://rpic.douyucdn.cn/" + room_info["room_src"]
-        room_pic = room_info["room_pic"]
-        hot = room_info["room_biz_all"]["hot"]
-        end_time = room_info["end_time"]
-        is_loop = room_info["videoLoop"]
-        second_lvl_name = room_info["second_lvl_name"]
-        if room_info["fans_bn"] is False:
-            fans_bn = ""
-        else:
-            fans_bn = json.loads(room_info["fans_bn"])["bn"]
+    try:
+        with requests.get(url=url, headers=dy_headers, data=payload, verify=False, timeout=1) as session:
+            # print(session.text)
+            data = json.loads(str(session.text))
+            try:
+                child_cate = data["game"]["tag_name"]
+            except Exception as e:
+                child_cate = ""
+                # print(e)
+            room_info = data["room"]
+            is_alive = room_info["show_status"]  # 是否在播
+            nickname = room_info["nickname"]
+            if room_info["authInfo"]["type"] == 1:
+                auth = room_info["authInfo"]["desc"]
+            elif room_info["authInfo"]["type"] == 0:
+                auth = ""
+            # small_avatar = room_info["avatar"]["small"]
+            owner_avatar = room_info["avatar"]["middle"]
+            room_name = room_info["room_name"]
+            level_info = room_info["levelInfo"]
+            # room_src = "https://rpic.douyucdn.cn/" + room_info["room_src"]
+            room_pic = room_info["room_pic"]
+            hot = room_info["room_biz_all"]["hot"]
+            end_time = room_info["end_time"]
+            is_loop = room_info["videoLoop"]
+            second_lvl_name = room_info["second_lvl_name"]
+            if room_info["fans_bn"] is False:
+                fans_bn = ""
+            else:
+                fans_bn = json.loads(room_info["fans_bn"])["bn"]
 
-        primary = {
-            "child_cate": child_cate, "nickname": nickname, "owner_avatar": owner_avatar, "is_alive": is_alive,
-            "hot": hot, "room_name": room_name, "room_pic": room_pic, "fans_bn": fans_bn, "is_loop": is_loop,
-            "auth": auth
-        }
-        # print(child_cate)
-        # print(nickname, owner_avatar, is_alive, "热度：", hot)
-        # print(room_name, "房间图片：", room_pic)
-        # print("牌子：", fans_bn)
-        # print("是否录播:", is_loop)
-        # print(auth)
-        # print("\n\n--------------------------")
-        return primary
+            primary = {
+                "child_cate": child_cate, "nickname": nickname, "owner_avatar": owner_avatar, "is_alive": is_alive,
+                "hot": hot, "room_name": room_name, "room_pic": room_pic, "fans_bn": fans_bn, "is_loop": is_loop,
+                "auth": auth
+            }
+            # print(child_cate)
+            # print(nickname, owner_avatar, is_alive, "热度：", hot)
+            # print(room_name, "房间图片：", room_pic)
+            # print("牌子：", fans_bn)
+            # print("是否录播:", is_loop)
+            # print(auth)
+            # print("\n\n--------------------------")
+
+    except:
+        primary = "查询失败"
+    return primary
 
 
 async def dosee_info(id):
