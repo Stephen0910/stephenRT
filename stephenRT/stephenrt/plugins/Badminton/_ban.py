@@ -311,7 +311,7 @@ async def banUser(
             result = await ban_user(id=id, ban_time=str(ban_time), reason="QQ禁" + now, env=env)
             await ban.finish("禁言结果：" + str(result))
     else:
-        await ban.finish(user_id.template("输入数字id错误，命令结束：" + user_id))
+        await ban.finish("输入数字id错误，命令结束：" + user_id)
 
 
 """关键字禁言"""

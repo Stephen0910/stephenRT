@@ -20,8 +20,9 @@ from nonebot.rule import to_me
 from nonebot.params import ArgPlainText
 
 from nonebot.permission import SUPERUSER
+from nonebot.permission import SUPERUSER
 
-help = on_command("help", rule=to_me(), aliases={"帮助", "菜单", "使用"}, priority=1)
+help = on_command("help", rule=to_me(), aliases={"帮助", "菜单", "使用"}, priority=1, permission=SUPERUSER)
 
 split_symbol = "⬤"
 msg = (
