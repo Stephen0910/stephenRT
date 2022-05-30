@@ -285,6 +285,7 @@ async def get_live(
                                                                        msg_dict["child_cate"]) + live_pic
     except Exception as e:
         msg = "查询失败：{0}".format(str(e))
+    print("sent:", msg)
     await dy.finish(msg)
 
 
@@ -343,7 +344,6 @@ async def live_notifacation():
     states = await rooms_states()
     for key, value in states.items():
         if init_states[key] == "未直播" and value == "直播中":
-            noti_time = int(time.time())
             msg_dict = await get_roomInfo(key)
             if msg_dict["is_alive"] == 0:
                 status = "未直播"
@@ -361,7 +361,6 @@ async def live_notifacation():
 
             dateArray = datetime.datetime.utcfromtimestamp(int(time.time() + 8 * 3600))
             msg_time = dateArray.strftime("%Y-%m-%d %H:%M:%S")
-            print(msg_time)
             msg = "上钟提醒-" + str(msg_time) + avatar + "{4}\n⬤  【{0}】\n⬤  {1}\n⬤  {2}\n⬤  热度：{3}".format(
                 msg_dict["nickname"],
                 msg_dict["room_name"],
