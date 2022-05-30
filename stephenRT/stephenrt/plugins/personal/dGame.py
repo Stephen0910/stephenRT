@@ -237,7 +237,10 @@ async def game_info():
     o_msg = ""
     d_msg = ""
     for name, id in ids.items():
-        data = await get_recent_data(id)
+        try:
+            data = await get_recent_data(id)
+        except:
+            data = ""
         create_time = data["create_time"]
         g_id = data["g_id"]
         g_source = data["g_source"]
