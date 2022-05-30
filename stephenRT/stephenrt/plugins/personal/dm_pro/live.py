@@ -289,7 +289,9 @@ async def get_live(
         try:
             msg_dict = await get_roomInfo(room_id)
         except:
-            msg_dict = await get_roomInfo(new_id(room_id))
+            room_id = new_id(room_id)
+            msg_dict = await get_roomInfo(room_id)
+
     try:
         if msg_dict["is_alive"] == 0:
             status = "未直播"
