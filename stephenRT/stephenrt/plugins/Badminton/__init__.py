@@ -34,6 +34,6 @@ def get_host_ip():
 
 if str(get_host_ip()) == "10.10.10.8":
     print("本地内网")
-    from .autoBan import *
+    # from .autoBan import *
 else:
     print("不加载chatRoom")
