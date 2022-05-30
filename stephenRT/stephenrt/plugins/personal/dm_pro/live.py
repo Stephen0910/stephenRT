@@ -196,7 +196,7 @@ async def dosee_info(id):
                  x["rank"] < 4])
             print(talk)
 
-    return pay + talk
+    return pay + talk + "-"*20 + "\n"
 
 
 async def get_roomInfo(room_id):
@@ -263,7 +263,7 @@ async def msg_receive(matcher: Matcher, args: Message = CommandArg()):
 
 mcs = get_mc()
 
-prompt = "输入要查询直播间号(或前十序号)\n0为获取榜单前十"
+prompt = "⬤  输入要查询直播间号(或前十序号)\n⬤  0为获取榜单前十"
 
 
 @dy.got("room_id", prompt=prompt)
