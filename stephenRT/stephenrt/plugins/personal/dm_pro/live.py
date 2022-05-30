@@ -59,17 +59,18 @@ def get_mc():
     payload = {}
     for i in [1, 2]:
         url = "https://www.doseeing.com/rank/chat/7day?category=9&p={0}".format(i)
-        with requests.get(url, headers=dosee_headers, data=payload, verify=False) as session:
-            page_html = etree.HTML(session.content)
-            text_list = page_html.xpath("/html/body/div/div[2]/main/div/div/div[2]/table[2]/tbody//text()")
-            mc_num = int(len(text_list) / content_num)
-            for i in range(mc_num):
-                if text_list[i * content_num + 3] == "DOTA":
-                    room = page_html.xpath(
-                        "/html/body/div/div[2]/main/div/div/div[2]/table[2]/tbody/tr[{0}]/td[2]/a/@href".format(i + 1))
-                    room_id = re.search("\d+", str(room)).group()
-                    mc_dict[text_list[i * content_num + 1]] = room_id
-    print("test:", mc_dict)
+        try:
+            with requests.get(url, headers=dosee_headers, data=payload, verify=False) as session:
+                page_html = etree.HTML(session.content)
+                text_list = page_html.xpath("/html/body/div/div[2]/main/div/div/div[2]/table[2]/tbody//text()")
+                mc_num = int(len(text_list) / content_num)
+                for i in range(mc_num):
+                    if text_list[i * content_num + 3] == "DOTA":
+                        room = page_html.xpath(
+                            "/html/body/div/div[2]/main/div/div/div[2]/table[2]/tbody/tr[{0}]/td[2]/a/@href".format(i + 1))
+                        room_id = re.search("\d+", str(room)).group()
+                        mc_dict[text_list[i * content_num + 1]] = room_id
+
     return mc_dict
 
 
@@ -379,7 +380,10 @@ init_states = first_states()
 @live_msg.handle()
 async def live_notifacation():
     bot = get_bot()
-    states = await rooms_states()
+    try:
+        states = await rooms_states()
+    except:
+        print("查询失败")
     for key, value in states.items():
         if init_states[key] == "未直播" and value == "直播中":
             msg_dict = await get_roomInfo(key)
