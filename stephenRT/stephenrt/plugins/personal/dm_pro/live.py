@@ -314,7 +314,8 @@ async def get_live(
                                                                        msg_dict["hot"],
                                                                        msg_dict["child_cate"]) + live_pic
     except Exception as e:
-        msg = "查询失败：{0}".format(str(e))
+        msg = "查询失败：{0}".format("请重试")
+        print(str(e))
     print("sent:", msg)
     await dy.finish(msg)
 
