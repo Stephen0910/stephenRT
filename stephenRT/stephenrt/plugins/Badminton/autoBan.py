@@ -151,8 +151,8 @@ async def send_message(msg):
         await bot.send_private_msg(user_id=281016636, message=str(e))
 
 
-# matcher = on_metaevent()
-matcher = on_message()
+matcher = on_metaevent()
+# matcher = on_message()
 block_list = []
 
 
