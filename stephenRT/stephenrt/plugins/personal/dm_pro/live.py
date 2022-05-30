@@ -26,6 +26,8 @@ from nonebot import on_metaevent
 from nonebot.params import Depends
 from nonebot.adapters.onebot.v11.message import MessageSegment
 
+print("live loading")
+
 rooms = {"5645739": "a824683653", "5264153": "肖璐s", "5106536": "599", "6566346": "paogod"}
 show_status = {"0": "等待开播", "1": "直播中", "2": "直播结束"}
 
@@ -95,9 +97,10 @@ def first_response():
                 status = "直播中"
 
             if msg_dict["is_alive"] in [0, 2]:
-                info =  info + "{4}  {0}、{1} [{2}]  {3}\n".format(index, key, value, status, split_symbol)
+                info = info + "{4}  {0}、{1} [{2}]  {3}\n".format(index, key, value, status, split_symbol)
             else:
-                info =  info + "{5}  {0}、{1} [{2}] {3}  热度:{4} \n".format(index, key, value, status, msg_dict["hot"], split_symbol)
+                info = info + "{5}  {0}、{1} [{2}] {3}  热度:{4} \n".format(index, key, value, status, msg_dict["hot"],
+                                                                         split_symbol)
             index += 1
         else:
             break
@@ -173,7 +176,7 @@ async def get_roomInfo(room_id):
     url = "https://www.douyu.com/betard/{0}".format(room_id)
     payload = {}
     headers = {}
-    with requests.get(url=url, headers=headers, data=payload, allow_redirects=True) as session:
+    with requests.get(url=url, headers=headers, data=payload, allow_redirects=True, timeout=3) as session:
         # print(session.text)
         data = json.loads(str(session.text))
         try:
@@ -235,6 +238,7 @@ mcs = get_mc()
 
 prompt = "输入要查询直播间号(或前十序号)\n0为获取榜单前十"
 
+
 @dy.got("room_id", prompt=prompt)
 async def get_live(
         room_id: Message = Arg()
@@ -275,15 +279,16 @@ async def get_live(
         live_pic = MessageSegment.image(live_pic)
         avatar = MessageSegment.image(msg_dict["owner_avatar"])
         msg = avatar + "{4}\n⬤  {0}\n⬤  {1}\n⬤  {2}\n⬤  热度：{3}".format(msg_dict["nickname"], msg_dict["room_name"],
-                                                                     status,
+                                                                       status,
 
-                                                                     msg_dict["hot"], msg_dict["child_cate"]) + live_pic
+                                                                       msg_dict["hot"],
+                                                                       msg_dict["child_cate"]) + live_pic
     except Exception as e:
         msg = "查询失败：{0}".format(str(e))
     await dy.finish(msg)
 
 
-async def first_states():
+def first_states():
     room_states = {}
     for key, value in rooms.items():
         room_info = room_status(key)
@@ -299,13 +304,19 @@ async def first_states():
         else:
             status = "状态未知"
         room_states[key] = status
+    print("first_states():", room_states)
     return room_states
 
 
 async def rooms_states():
+    """
+    异步获取房间信息
+    :return:
+    """
+
     room_states = {}
     for key, value in rooms.items():
-        room_info = room_status(key)
+        room_info = await get_roomInfo(key)
         is_alive = room_info["is_alive"]
         is_loop = room_info["is_loop"]
 
@@ -323,14 +334,16 @@ async def rooms_states():
 
 live_msg = on_metaevent()
 init_states = first_states()
+# init_states = {'5645739': '未直播', '5264153': '未直播', '5106536': '未直播', '6566346': '未直播'}
 
 
 @live_msg.handle()
 async def live_notifacation():
     bot = get_bot()
-    states = await first_states()
+    states = await rooms_states()
     for key, value in states.items():
         if init_states[key] == "未直播" and value == "直播中":
+            noti_time = int(time.time())
             msg_dict = await get_roomInfo(key)
             if msg_dict["is_alive"] == 0:
                 status = "未直播"
@@ -346,21 +359,23 @@ async def live_notifacation():
             live_pic = MessageSegment.image(live_pic)
             avatar = MessageSegment.image(msg_dict["owner_avatar"])
 
-            dateArray = datetime.datetime.utcfromtimestamp(int(time.time()))
+            dateArray = datetime.datetime.utcfromtimestamp(int(time.time() + 8 * 3600))
             msg_time = dateArray.strftime("%Y-%m-%d %H:%M:%S")
-
-            msg = "上钟提醒-" + str(msg_time) + avatar + "{4}\n⬤  【{0}】\n⬤  {1}\n⬤  {2}\n⬤  热度：{3}".format(msg_dict["nickname"],
-                                                                                       msg_dict["room_name"],
-                                                                                       status,
-                                                                                       msg_dict["hot"],
-                                                                                       msg_dict[
-                                                                                           "child_cate"]) + live_pic
+            print(msg_time)
+            msg = "上钟提醒-" + str(msg_time) + avatar + "{4}\n⬤  【{0}】\n⬤  {1}\n⬤  {2}\n⬤  热度：{3}".format(
+                msg_dict["nickname"],
+                msg_dict["room_name"],
+                status,
+                msg_dict["hot"],
+                msg_dict[
+                    "child_cate"]) + live_pic
+            init_states[key] = value
             await bot.send_private_msg(user_id=281016636, message=msg)
-
 
         elif init_states[key] == "直播中" and value == "未直播":
-            msg_dict = await get_roomInfo(key)
+            dateArray = datetime.datetime.utcfromtimestamp(int(time.time() + 8 * 3600))
             msg = "下钟提醒\n{0} 下播了".format(msg_dict["nickname"])
+            init_states[key] = value
             await bot.send_private_msg(user_id=281016636, message=msg)
 
-        init_states[key] = value
+
