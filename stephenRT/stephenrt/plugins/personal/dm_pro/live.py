@@ -27,6 +27,7 @@ from nonebot.params import Depends
 from nonebot.adapters.onebot.v11.message import MessageSegment
 
 import urllib3
+
 urllib3.disable_warnings()
 requests.adapters.DEFAULT_RETRIES = 5
 
@@ -74,7 +75,7 @@ def get_mc():
 
 def new_id(old_id):
     url = "https://www.douyu.com/{0}".format(old_id)
-    with requests.get(url, verify=False) as session:
+    with requests.get(url, headers=dy_headers, verify=False, timeout=3) as session:
         page_html = etree.HTML(session.content)
         redict_url = page_html.xpath("/html/body/section/main/div[4]/div[1]/div[1]/div[1]/div[1]/div/a/@href")
         room_id = re.search("\d+\d", str(redict_url)).group()
@@ -131,7 +132,7 @@ dy_headers = {
 def room_status(room_id):
     url = "https://www.douyu.com/betard/{0}".format(room_id)
     payload = {}
-    with requests.get(url=url, headers=dy_headers, data=payload, verify=False) as session:
+    with requests.get(url=url, headers=dy_headers, data=payload, verify=False, timeout=3) as session:
         # print(session.text)
         data = json.loads(str(session.text))
         try:
@@ -177,11 +178,25 @@ def room_status(room_id):
 
 
 async def dosee_info(id):
-    d1 = "https://www.doseeing.com/api/room_dots?room={0}&hours=today".format(id)
-    d2 = "https://www.doseeing.com/api/room_stat?room={0}&hours=today".format(id)
+    d1 = "https://www.doseeing.com/data/api/topuser/{0}?type=gift&dt=0".format(id)
+    d2 = "https://www.doseeing.com/data/api/topuser/{0}?type=chat&dt=0".format(id)
+    with requests.get(d1, verify=False, timeout=3) as session:
+        if session.status_code == 200:
+            response = json.loads(session.text)["data"]
 
+            pay = "今日付费排行：\n" + "".join(
+                [str(x["rank"]) + ": " + x["user.nickname"] + " ￥{0}".format(x["gift.paid.price"] / 100) + "\n" for x in
+                 response if x["rank"] < 4])
+            print(pay)
+    with requests.get(d2, verify=False, timeout=3) as session:
+        if session.status_code == 200:
+            response = json.loads(session.text)["data"]
+            talk = "今日弹幕排行: \n" + "".join(
+                [str(x["rank"]) + ":" + x["user.nickname"] + " {0} 条".format(x["chat.pv"]) + "\n" for x in response if
+                 x["rank"] < 4])
+            print(talk)
 
-
+    return pay + talk
 
 
 async def get_roomInfo(room_id):
@@ -290,7 +305,8 @@ async def get_live(
         live_pic = msg_dict["room_pic"]
         live_pic = MessageSegment.image(live_pic)
         avatar = MessageSegment.image(msg_dict["owner_avatar"])
-        msg = avatar + "{4}\n⬤  {0}\n⬤  {1}\n⬤  {2}\n⬤  热度：{3}".format(msg_dict["nickname"], msg_dict["room_name"],
+        today = await dosee_info(room_id)
+        msg = avatar + today + "{4}\n⬤  {0}\n⬤  {1}\n⬤  {2}\n⬤  热度：{3}".format(msg_dict["nickname"], msg_dict["room_name"],
                                                                        status,
 
                                                                        msg_dict["hot"],
@@ -347,6 +363,8 @@ async def rooms_states():
 
 live_msg = on_metaevent()
 init_states = first_states()
+
+
 # init_states = {'5645739': '未直播', '5264153': '未直播', '5106536': '未直播', '6566346': '未直播'}
 
 
@@ -388,5 +406,3 @@ async def live_notifacation():
             msg = "下钟提醒\n{0} 下播了".format(msg_dict["nickname"])
             init_states[key] = value
             await bot.send_private_msg(user_id=281016636, message=msg)
-
-
