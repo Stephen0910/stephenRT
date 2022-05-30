@@ -36,4 +36,4 @@ msg += tools
 
 @help.handle()
 async def zendeskReport():
-    await help.finish()
+    await help.finish(msg)
