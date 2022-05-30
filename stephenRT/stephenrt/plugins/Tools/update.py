@@ -79,7 +79,9 @@ async def handleuser(
         # run_cmd("cd /home/ttg/Tools/project/robot/stephenRT/stephenRT")
         git_status = await run_cmd("git pull")
         await update.send("git更新结果：\n" + git_status)
-        ret = await as_single_run("sh /home/ttg/Tools/project/robot/bot_restart.sh")
+        os.chdir("/home/ttg/Tools/project/robot")
+        ret = await run_cmd("./bot_restart.sh")
+        # ret = await as_single_run("sh /home/ttg/Tools/project/robot/bot_restart.sh")
         # ret = run_cmd("sh /home/ttg/Tools/project/robot/bot_restart.sh")
         await update.finish("执行结果：\n" + ret)
     else:
