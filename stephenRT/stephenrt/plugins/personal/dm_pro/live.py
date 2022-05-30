@@ -406,6 +406,7 @@ async def live_notifacation():
             await bot.send_private_msg(user_id=281016636, message=msg)
 
         elif init_states[key] == "直播中" and value == "未直播":
+            msg_dict = await get_roomInfo(key)
             dateArray = datetime.datetime.utcfromtimestamp(int(time.time() + 8 * 3600))
             msg = "下钟提醒\n{0} 下播了".format(msg_dict["nickname"])
             init_states[key] = value
