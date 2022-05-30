@@ -54,6 +54,17 @@ def single_run(cmd):
         return data
 
 
+async def as_single_run(cmd):
+    try:
+        with subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, encoding="utf-8") as f:
+            data = f.stdout.read()
+    except:
+        with subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, encoding="gbk") as f:
+            data = f.stdout.read()
+    finally:
+        return data
+
+
 prompt = "请输入你要执行的指令\nq放弃"
 
 
@@ -68,7 +79,7 @@ async def handleuser(
         # run_cmd("cd /home/ttg/Tools/project/robot/stephenRT/stephenRT")
         git_status = await run_cmd("git pull")
         await update.send("git更新结果：\n" + git_status)
-        ret = single_run("sh /home/ttg/Tools/project/robot/bot_restart.sh")
+        ret = await as_single_run("sh /home/ttg/Tools/project/robot/bot_restart.sh")
         # ret = run_cmd("sh /home/ttg/Tools/project/robot/bot_restart.sh")
         await update.finish("执行结果：\n" + ret)
     else:
