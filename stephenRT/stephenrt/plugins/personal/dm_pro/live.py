@@ -70,7 +70,8 @@ def get_mc():
                             "/html/body/div/div[2]/main/div/div/div[2]/table[2]/tbody/tr[{0}]/td[2]/a/@href".format(i + 1))
                         room_id = re.search("\d+", str(room)).group()
                         mc_dict[text_list[i * content_num + 1]] = room_id
-
+        except:
+            mc_dict = ""
     return mc_dict
 
 
@@ -380,10 +381,7 @@ init_states = first_states()
 @live_msg.handle()
 async def live_notifacation():
     bot = get_bot()
-    try:
-        states = await rooms_states()
-    except:
-        print("查询失败")
+    states = await rooms_states()
     for key, value in states.items():
         if init_states[key] == "未直播" and value == "直播中":
             msg_dict = await get_roomInfo(key)
