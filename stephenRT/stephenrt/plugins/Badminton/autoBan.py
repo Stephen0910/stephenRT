@@ -22,7 +22,7 @@ from nonebot.params import Arg, CommandArg, ArgPlainText
 
 from nonebot.permission import SUPERUSER
 from nonebot import get_bot
-from nonebot import on_metaevent
+from nonebot import on_metaevent, on_message
 import socket
 
 config = cfg.config_content
@@ -151,7 +151,8 @@ async def send_message(msg):
         await bot.send_private_msg(user_id=281016636, message=str(e))
 
 
-matcher = on_metaevent()
+# matcher = on_metaevent()
+matcher = on_message()
 block_list = []
 
 
