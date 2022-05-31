@@ -401,5 +401,4 @@ async def game_info():
     # print(get_dg_id(369818))
     else:
         print("dg trigger pass:{0}".format(trigger))
-
     trigger += 1

@@ -67,7 +67,8 @@ def get_mc():
                 for i in range(mc_num):
                     if text_list[i * content_num + 3] == "DOTA":
                         room = page_html.xpath(
-                            "/html/body/div/div[2]/main/div/div/div[2]/table[2]/tbody/tr[{0}]/td[2]/a/@href".format(i + 1))
+                            "/html/body/div/div[2]/main/div/div/div[2]/table[2]/tbody/tr[{0}]/td[2]/a/@href".format(
+                                i + 1))
                         room_id = re.search("\d+", str(room)).group()
                         mc_dict[text_list[i * content_num + 1]] = room_id
         except:
@@ -159,6 +160,7 @@ def room_status(room_id):
             hot = room_info["room_biz_all"]["hot"]
             end_time = room_info["end_time"]
             is_loop = room_info["videoLoop"]
+            show_time = room_info["show_time"]
             second_lvl_name = room_info["second_lvl_name"]
             if room_info["fans_bn"] is False:
                 fans_bn = ""
@@ -168,7 +170,7 @@ def room_status(room_id):
             primary = {
                 "child_cate": child_cate, "nickname": nickname, "owner_avatar": owner_avatar, "is_alive": is_alive,
                 "hot": hot, "room_name": room_name, "room_pic": room_pic, "fans_bn": fans_bn, "is_loop": is_loop,
-                "auth": auth
+                "auth": auth, "show_time": show_time
             }
             # print(child_cate)
             # print(nickname, owner_avatar, is_alive, "热度：", hot)
@@ -202,7 +204,7 @@ async def dosee_info(id):
                  x["rank"] < 4])
             print(talk)
 
-    return pay + talk + "-"*20 + "\n"
+    return pay + talk + "-" * 20 + "\n"
 
 
 async def get_roomInfo(room_id):
@@ -234,6 +236,7 @@ async def get_roomInfo(room_id):
         end_time = room_info["end_time"]
         is_loop = room_info["videoLoop"]
         second_lvl_name = room_info["second_lvl_name"]
+        show_time = room_info["show_time"]
         if room_info["fans_bn"] is False:
             fans_bn = ""
         else:
@@ -242,7 +245,7 @@ async def get_roomInfo(room_id):
         primary = {
             "child_cate": child_cate, "nickname": nickname, "owner_avatar": owner_avatar, "is_alive": is_alive,
             "hot": hot, "room_name": room_name, "room_pic": room_pic, "fans_bn": fans_bn, "is_loop": is_loop,
-            "auth": auth
+            "auth": auth, "show_time": show_time
         }
         # print(child_cate)
         # print(nickname, owner_avatar, is_alive, "热度：", hot)
@@ -314,11 +317,14 @@ async def get_live(
         live_pic = MessageSegment.image(live_pic)
         avatar = MessageSegment.image(msg_dict["owner_avatar"])
         today = await dosee_info(room_id)
-        msg = avatar + today + "{4}\n⬤  {0}\n⬤  {1}\n⬤  {2}\n⬤  热度：{3}".format(msg_dict["nickname"], msg_dict["room_name"],
-                                                                       status,
-
-                                                                       msg_dict["hot"],
-                                                                       msg_dict["child_cate"]) + live_pic
+        show_time = int(msg_dict["show_time"])
+        start_time = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(show_time))
+        print("start_time:", start_time)
+        msg = avatar + today + "{4}\n⬤  {0}\n⬤  开播时间： {5}\n⬤  {1}\n⬤  {2}\n⬤  热度：{3}".format(msg_dict["nickname"],
+                                                                                       msg_dict["room_name"],
+                                                                                       status, msg_dict["hot"],
+                                                                                       msg_dict["child_cate"],
+                                                                                       start_time) + live_pic
     except Exception as e:
         msg = "查询失败：{0}".format("请重试")
         print(str(e))
@@ -372,6 +378,7 @@ async def rooms_states():
 live_msg = on_metaevent()
 init_states = first_states()
 trigger = 1
+
 
 # init_states = {'5645739': '未直播', '5264153': '未直播', '5106536': '未直播', '6566346': '未直播'}
 
