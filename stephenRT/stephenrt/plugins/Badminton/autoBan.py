@@ -156,32 +156,36 @@ async def send_message(msg):
 
 matcher = on_metaevent()
 block_list = []
-
+trigger = 1
 
 @matcher.handle()
 async def shut_user():
-    bot = get_bot()
-    try:
-        result = await check_room()
-        # print("---result-----", result)
-        if result != None and result not in block_list:
-            # print("检测到：", result)
-            block_list.append(result)
-            try:
-                if result:
-                    await bot.send_group_msg(group_id=group_id, message=str(result))
-            except Exception as e:
-                await bot.send_private_msg(user_id=user_id, message=str(result) + str(e))
-            finally:
-                # print("block_list:", block_list)
-                pass
+    if trigger % 3 == 0:
+        bot = get_bot()
+        try:
+            result = await check_room()
+            # print("---result-----", result)
+            if result != None and result not in block_list:
+                # print("检测到：", result)
+                block_list.append(result)
+                try:
+                    if result:
+                        await bot.send_group_msg(group_id=group_id, message=str(result))
+                except Exception as e:
+                    await bot.send_private_msg(user_id=user_id, message=str(result) + str(e))
+                finally:
+                    # print("block_list:", block_list)
+                    pass
 
-    except Exception as e:
-        result = "获取消息列表失败：" + str(e)
-        # print(result)
+        except Exception as e:
+            result = "获取消息列表失败：" + str(e)
+            # print(result)
 
-    # if len(block_list) > 3:
-    #     pass
-    #     block_list = block_list[:1]
+        # if len(block_list) > 3:
+        #     pass
+        #     block_list = block_list[:1]
 
-    # await asyncio.sleep(10)
+        # await asyncio.sleep(10)
+    else:
+        print("autoban trigger 忽略")
+    trigger += 1
