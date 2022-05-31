@@ -204,7 +204,7 @@ async def dosee_info(id):
                  x["rank"] < 4])
             print(talk)
 
-    return pay + talk + "-" * 20 + "\n"
+    return "-" * 20 + "\n" + pay + talk
 
 
 async def get_roomInfo(room_id):
@@ -320,11 +320,11 @@ async def get_live(
         show_time = int(msg_dict["show_time"])
         start_time = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(show_time))
         print("start_time:", start_time)
-        msg = avatar + today + "{4}\n⬤  {0}\n⬤  开播时间： {5}\n⬤  {1}\n⬤  {2}\n⬤  热度：{3}".format(msg_dict["nickname"],
+        msg = avatar + "{4}\n⬤  {0}\n⬤  开播时间： {5}\n⬤  {1}\n⬤  {2}\n⬤  热度：{3}".format(msg_dict["nickname"],
                                                                                        msg_dict["room_name"],
                                                                                        status, msg_dict["hot"],
                                                                                        msg_dict["child_cate"],
-                                                                                       start_time) + live_pic
+                                                                                       start_time) + live_pic + today
     except Exception as e:
         msg = "查询失败：{0}".format("请重试")
         print(str(e))
