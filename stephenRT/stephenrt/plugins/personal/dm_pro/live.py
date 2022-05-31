@@ -298,8 +298,11 @@ async def get_live(
         try:
             msg_dict = await get_roomInfo(room_id)
         except:
-            room_id = new_id(room_id)
-            msg_dict = await get_roomInfo(room_id)
+            try:
+                room_id = new_id(room_id)
+                msg_dict = await get_roomInfo(room_id)
+            except:
+                dy.finish("该房间已关闭")
 
     try:
         if msg_dict["is_alive"] == 0:
