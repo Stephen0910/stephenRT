@@ -381,7 +381,10 @@ init_states = first_states()
 @live_msg.handle()
 async def live_notifacation():
     bot = get_bot()
-    states = await rooms_states()
+    try:
+        states = await rooms_states()
+    except:
+        states = init_states  # 错误则使用初始
     for key, value in states.items():
         if init_states[key] == "未直播" and value == "直播中":
             msg_dict = await get_roomInfo(key)
