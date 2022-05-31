@@ -229,7 +229,7 @@ trigger = 1
 @matcher.handle()
 async def game_info():
     global trigger
-    if trigger % 2 == 0:
+    if trigger % 4 == 0:
         bot = get_bot()
         g_ids = []
         o_msg = ""

@@ -386,7 +386,7 @@ trigger = 1
 @live_msg.handle()
 async def live_notifacation():
     global trigger
-    if trigger % 3 == 0:
+    if trigger % 5 == 0:
         bot = get_bot()
         try:
             states = await rooms_states()

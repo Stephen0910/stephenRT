@@ -161,7 +161,7 @@ block_list = []
 @matcher.handle()
 async def shut_user():
     global trigger
-    if trigger % 3 == 0:
+    if trigger % 4 == 0:
         bot = get_bot()
         try:
             result = await check_room()
