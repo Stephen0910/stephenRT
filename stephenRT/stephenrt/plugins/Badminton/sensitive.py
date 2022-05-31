@@ -193,7 +193,7 @@ async def checkMessage(bot: Bot, event: GroupMessageEvent):
                             time = (count // 3) * 5
                             print("time:", time)
                             await bot.set_group_ban(group_id=group_id, user_id=sender_id, duration=time * 60)
-                            msg = "{0} {1} 被禁言 {1}分钟".format(str(group_name), str(name), str(time))
+                            msg = "{0} {1} 被禁言 {2}分钟".format(str(group_name), str(name), str(time))
                             try:
                                 await bot.send_group_msg(group_id=group_id, message=msg)
                             except:
