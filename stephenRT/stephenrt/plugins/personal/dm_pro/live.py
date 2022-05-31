@@ -195,14 +195,13 @@ async def dosee_info(id):
             pay = "今日付费排行：\n" + "".join(
                 [str(x["rank"]) + ": " + x["user.nickname"] + " ￥{0}".format(x["gift.paid.price"] / 100) + "\n" for x in
                  response if x["rank"] < 4])
-            print(pay)
+
     with requests.get(d2, verify=False, timeout=3) as session:
         if session.status_code == 200:
             response = json.loads(session.text)["data"]
             talk = "今日弹幕排行: \n" + "".join(
                 [str(x["rank"]) + ":" + x["user.nickname"] + " {0} 条".format(x["chat.pv"]) + "\n" for x in response if
                  x["rank"] < 4])
-            print(talk)
 
     return "-" * 20 + "\n" + pay + talk
 
@@ -322,7 +321,7 @@ async def get_live(
         today = await dosee_info(room_id)
         show_time = int(msg_dict["show_time"])
         start_time = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(show_time))
-        msg = avatar + "\n{4}\n⬤  {0}\n⬤  开播时间： {5}\n⬤  {1}\n⬤  {2}\n⬤  热度：{3}".format(msg_dict["nickname"],
+        msg = "分类-{4}\n⬤  【{0}】： {1}\n⬤  开播时间： {5}\n⬤  {2}\n⬤  热度：{3}".format(msg_dict["nickname"],
                                                                                        msg_dict["room_name"],
                                                                                        status, msg_dict["hot"],
                                                                                        msg_dict["child_cate"],
