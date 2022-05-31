@@ -152,7 +152,7 @@ def room_status(room_id):
             elif room_info["authInfo"]["type"] == 0:
                 auth = ""
             # small_avatar = room_info["avatar"]["small"]
-            owner_avatar = room_info["avatar"]["middle"]
+            owner_avatar = room_info["avatar"]["big"]
             room_name = room_info["room_name"]
             level_info = room_info["levelInfo"]
             # room_src = "https://rpic.douyucdn.cn/" + room_info["room_src"]
@@ -227,7 +227,7 @@ async def get_roomInfo(room_id):
         elif room_info["authInfo"]["type"] == 0:
             auth = ""
         # small_avatar = room_info["avatar"]["small"]
-        owner_avatar = room_info["avatar"]["small"]
+        owner_avatar = room_info["avatar"]["big"]
         room_name = room_info["room_name"]
         level_info = room_info["levelInfo"]
         # room_src = "https://rpic.douyucdn.cn/" + room_info["room_src"]
@@ -322,8 +322,7 @@ async def get_live(
         today = await dosee_info(room_id)
         show_time = int(msg_dict["show_time"])
         start_time = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(show_time))
-        print("start_time:", start_time)
-        msg = avatar + "{4}\n⬤  {0}\n⬤  开播时间： {5}\n⬤  {1}\n⬤  {2}\n⬤  热度：{3}".format(msg_dict["nickname"],
+        msg = avatar + "\n{4}\n⬤  {0}\n⬤  开播时间： {5}\n⬤  {1}\n⬤  {2}\n⬤  热度：{3}".format(msg_dict["nickname"],
                                                                                        msg_dict["room_name"],
                                                                                        status, msg_dict["hot"],
                                                                                        msg_dict["child_cate"],
