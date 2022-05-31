@@ -29,7 +29,7 @@ config = cfg.config_content
 group_id = config["group_id_badminton"]
 user_id = config["user_id"]
 sleep_time = 7
-
+trigger = 1
 
 env = "prod"  # 根据环境读取配置
 
@@ -156,10 +156,11 @@ async def send_message(msg):
 
 matcher = on_metaevent()
 block_list = []
-trigger = 1
+
 
 @matcher.handle()
 async def shut_user():
+    global trigger
     if trigger % 3 == 0:
         bot = get_bot()
         try:
@@ -187,5 +188,5 @@ async def shut_user():
 
         # await asyncio.sleep(10)
     else:
-        print("autoban trigger 忽略")
+        print("autoban trigger pass:{0}".format(trigger))
     trigger += 1

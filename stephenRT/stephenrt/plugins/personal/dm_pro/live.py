@@ -351,7 +351,6 @@ async def rooms_states():
     异步获取房间信息
     :return:
     """
-    sleep_time = 10
     room_states = {}
     for key, value in rooms.items():
         room_info = await get_roomInfo(key)
@@ -367,56 +366,60 @@ async def rooms_states():
         else:
             status = "状态未知"
         room_states[key] = status
-    await asyncio.sleep(sleep_time)
     return room_states
 
 
 live_msg = on_metaevent()
 init_states = first_states()
-
+trigger = 1
 
 # init_states = {'5645739': '未直播', '5264153': '未直播', '5106536': '未直播', '6566346': '未直播'}
 
 
 @live_msg.handle()
 async def live_notifacation():
-    bot = get_bot()
-    try:
-        states = await rooms_states()
-    except:
-        states = init_states  # 错误则使用初始
-    for key, value in states.items():
-        if init_states[key] == "未直播" and value == "直播中":
-            msg_dict = await get_roomInfo(key)
-            if msg_dict["is_alive"] == 0:
-                status = "未直播"
-            elif msg_dict["is_alive"] == 2:
-                status = "直播结束"
-            elif msg_dict["is_alive"] == 1 and msg_dict["is_loop"] == 1:
-                status = "录播中"
-            elif msg_dict["is_alive"] == 1 and msg_dict["is_loop"] == 0:
-                status = "直播中"
-            else:
-                status = "状态未知"
-            live_pic = msg_dict["room_pic"]
-            live_pic = MessageSegment.image(live_pic)
-            avatar = MessageSegment.image(msg_dict["owner_avatar"])
+    global trigger
+    if trigger % 3 == 0:
+        bot = get_bot()
+        try:
+            states = await rooms_states()
+        except:
+            states = init_states  # 错误则使用初始
+        for key, value in states.items():
+            if init_states[key] == "未直播" and value == "直播中":
+                msg_dict = await get_roomInfo(key)
+                if msg_dict["is_alive"] == 0:
+                    status = "未直播"
+                elif msg_dict["is_alive"] == 2:
+                    status = "直播结束"
+                elif msg_dict["is_alive"] == 1 and msg_dict["is_loop"] == 1:
+                    status = "录播中"
+                elif msg_dict["is_alive"] == 1 and msg_dict["is_loop"] == 0:
+                    status = "直播中"
+                else:
+                    status = "状态未知"
+                live_pic = msg_dict["room_pic"]
+                live_pic = MessageSegment.image(live_pic)
+                avatar = MessageSegment.image(msg_dict["owner_avatar"])
 
-            dateArray = datetime.datetime.utcfromtimestamp(int(time.time() + 8 * 3600))
-            msg_time = dateArray.strftime("%Y-%m-%d %H:%M:%S")
-            msg = "上钟提醒-" + str(msg_time) + avatar + "{4}\n⬤  【{0}】\n⬤  {1}\n⬤  {2}\n⬤  热度：{3}".format(
-                msg_dict["nickname"],
-                msg_dict["room_name"],
-                status,
-                msg_dict["hot"],
-                msg_dict[
-                    "child_cate"]) + live_pic
-            init_states[key] = value
-            await bot.send_private_msg(user_id=281016636, message=msg)
+                dateArray = datetime.datetime.utcfromtimestamp(int(time.time() + 8 * 3600))
+                msg_time = dateArray.strftime("%Y-%m-%d %H:%M:%S")
+                msg = "上钟提醒-" + str(msg_time) + avatar + "{4}\n⬤  【{0}】\n⬤  {1}\n⬤  {2}\n⬤  热度：{3}".format(
+                    msg_dict["nickname"],
+                    msg_dict["room_name"],
+                    status,
+                    msg_dict["hot"],
+                    msg_dict[
+                        "child_cate"]) + live_pic
+                init_states[key] = value
+                await bot.send_private_msg(user_id=281016636, message=msg)
 
-        elif init_states[key] == "直播中" and value == "未直播":
-            msg_dict = await get_roomInfo(key)
-            dateArray = datetime.datetime.utcfromtimestamp(int(time.time() + 8 * 3600))
-            msg = "下钟提醒\n{0} 下播了".format(msg_dict["nickname"])
-            init_states[key] = value
-            await bot.send_private_msg(user_id=281016636, message=msg)
+            elif init_states[key] == "直播中" and value == "未直播":
+                msg_dict = await get_roomInfo(key)
+                dateArray = datetime.datetime.utcfromtimestamp(int(time.time() + 8 * 3600))
+                msg = "下钟提醒\n{0} 下播了".format(msg_dict["nickname"])
+                init_states[key] = value
+                await bot.send_private_msg(user_id=281016636, message=msg)
+    else:
+        print("live trigger pass:{0}".format(trigger))
+    trigger += 1

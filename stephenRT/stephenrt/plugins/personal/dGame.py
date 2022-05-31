@@ -181,7 +181,6 @@ async def get_recent_data(id):
     content = json.loads(response.content)
     last_game = content["data"]["listEntity"][0]
     response.close()
-    await asyncio.sleep(sleep_time)
     return last_game
 
 
@@ -190,8 +189,6 @@ async def get_dg_id(id):
     response = requests.get(id_url, headers=d_headers, verify=False, timeout=3)
     content = json.loads(response.content)
     last_game = content["data"][0]
-    response.close()
-    await asyncio.sleep(sleep_time)
     return last_game
 
 
