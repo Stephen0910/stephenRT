@@ -135,7 +135,10 @@ picture = on_command("st", rule=to_me(), aliases={"图", "pic"}, priority=1)
 async def get_pic(x: dict = Depends(depend)):
     print("pId:", x["uid"])
     if int(x["uid"]) in players:
-        pic_url = await get_rPic()
+        try:
+            pic_url = await get_rPic()
+        except:
+            await picture.finish("图片获取失败")
         image = MessageSegment.image(pic_url)
         await picture.finish(image)
     else:
