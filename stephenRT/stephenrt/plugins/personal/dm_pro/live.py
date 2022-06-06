@@ -191,8 +191,9 @@ async def dosee_info(id):
     with requests.get(d1, verify=False, timeout=3) as session:
         if session.status_code == 200:
             response = json.loads(session.text)["data"]
+            total = "总礼物: {0}".format(sum([int(x["gift.paid.price"] / 100) for x in response])) + "\n"
 
-            pay = "今日付费排行：\n" + "".join(
+            pay = total + "今日付费排行：\n" + "".join(
                 [str(x["rank"]) + ": " + x["user.nickname"] + " ￥{0}".format(x["gift.paid.price"] / 100) + "\n" for x in
                  response if x["rank"] < 4])
 
