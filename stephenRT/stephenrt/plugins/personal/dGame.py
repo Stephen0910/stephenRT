@@ -229,7 +229,7 @@ trigger = 1
 @matcher.handle()
 async def game_info():
     global trigger
-    if trigger % 4 == 0:
+    if trigger % 7 == 0:
         bot = get_bot()
         g_ids = []
         o_msg = ""
@@ -395,7 +395,7 @@ async def game_info():
                 print("send dg new msg")
                 try:
                     # await bot.send_group_msg(group_id=group, message=dg_msg)
-                    
+
                     await bot.send_private_msg(user_id=281016636, message=dg_msg)
                 except Exception as e:
                     await bot.send_private_msg(user_id=281016636, message=str(dg_msg) + str(e))
