@@ -188,23 +188,41 @@ def room_status(room_id):
 async def dosee_info(id):
     d1 = "https://www.doseeing.com/data/api/topuser/{0}?type=gift&dt=0".format(id)
     d2 = "https://www.doseeing.com/data/api/topuser/{0}?type=chat&dt=0".format(id)
-    with requests.get(d1, verify=False, timeout=3) as session:
-        if session.status_code == 200:
-            response = json.loads(session.text)["data"]
-            total = "总礼物: ￥ {0}".format(sum([x["gift.paid.price"] / 100 for x in response])) + "\n"
+    d3 = "https://www.doseeing.com/data/api/rank?rids={0}&dt=0&rank_type=chat_pv".format(id)  # 总信息
+    headers = {
+        "Cookie": "connect.sid=s%3AP5UKa3BieRaSXePQMui8YXyIHf4-Rdl_.aeUiZBvjuSERszP%2FKIji8R0DmYZYRY8q53JdcbHcTYc; search_type=room; _ga=GA1.2.511076242.1652323852; history_search_fan=[{}]; _gid=GA1.2.2101712291.1654477272; _gat=1"
+    }
+    try:
+        with requests.get(d3, verify=False, timeout=3, headers=headers) as session:
+            if session.status_code == 200:
+                response = json.loads(session.text)
+                if response["status"] == "success":
+                    data = response["result"]["result"][0]
+                    total_info = "总礼物 {}, 总收入{}, 总弹幕{}, 活跃人数{}".format(data["gift.all.price"] / 100, data["gift.paid.price"] / 100, data["chat.pv"], data["active.uv"])
+                else:
+                    total_info = ""
 
-            pay = total + "今日付费排行：\n" + "".join(
-                [str(x["rank"]) + ": " + x["user.nickname"] + " ￥{0}".format(x["gift.paid.price"] / 100) + "\n" for x in
-                 response if x["rank"] < 4])
+        with requests.get(d1, verify=False, timeout=3) as session:
+            if session.status_code == 200:
+                response = json.loads(session.text)["data"]
 
-    with requests.get(d2, verify=False, timeout=3) as session:
-        if session.status_code == 200:
-            response = json.loads(session.text)["data"]
-            talk = "今日弹幕排行: \n" + "".join(
-                [str(x["rank"]) + ":" + x["user.nickname"] + " {0} 条".format(x["chat.pv"]) + "\n" for x in response if
-                 x["rank"] < 4])
+        # total = "总礼物: ￥ {0}".format(round(sum([x["gift.paid.price"] / 100 for x in response]), 2)) + "\n"
 
-    return "-" * 20 + "\n" + pay + talk
+        pay = "今日付费排行：\n" + "".join(
+            [str(x["rank"]) + ": " + x["user.nickname"] + " ￥{0}".format(x["gift.paid.price"] / 100) + "\n" for x in
+             response if x["rank"] < 4])
+
+        with requests.get(d2, verify=False, timeout=3) as session:
+            if session.status_code == 200:
+                response = json.loads(session.text)["data"]
+                talk = "今日弹幕排行: \n" + "".join(
+                    [str(x["rank"]) + ":" + x["user.nickname"] + " {0} 条".format(x["chat.pv"]) + "\n" for x in response
+                     if
+                     x["rank"] < 4])
+
+        return "-" * 20 + "\n" + total_info + "\n" + pay + talk
+    except Exception as e:
+        return str(e)
 
 
 async def get_roomInfo(room_id):
@@ -323,10 +341,10 @@ async def get_live(
         show_time = int(msg_dict["show_time"])
         start_time = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(show_time))
         msg = "分类-{4}\n⬤  【{0}】： {1}\n⬤  开播时间： {5}\n⬤  {2}\n⬤  热度：{3}".format(msg_dict["nickname"],
-                                                                                       msg_dict["room_name"],
-                                                                                       status, msg_dict["hot"],
-                                                                                       msg_dict["child_cate"],
-                                                                                       start_time) + live_pic + today
+                                                                              msg_dict["room_name"],
+                                                                              status, msg_dict["hot"],
+                                                                              msg_dict["child_cate"],
+                                                                              start_time) + live_pic + today
     except Exception as e:
         msg = "查询失败：{0}".format("请重试")
         print(str(e))
