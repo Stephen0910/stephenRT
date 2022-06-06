@@ -314,28 +314,29 @@ async def game_info():
             if len(omg_msg) > 1:
                 print("send the omg msg")
                 try:
-                    await bot.send_group_msg(group_id=group, message=omg_msg)
+                    # await bot.send_group_msg(group_id=group, message=omg_msg)
+                    await bot.send_private_msg(user_id=281016636, message=omg_msg)
                 except Exception as e:
                     await bot.send_private_msg(user_id=281016636, message=str(omg_msg) + str(e))
 
-            if is_win == "OMG 胜" and ip == "10.10.10.8":
-                send = 0
-                while send == 0:
-                    video_url = await get_video()
-                    pic_file = MessageSegment.video(file=video_url)
-                    try:
-                        await bot.send_group_msg(group_id=group, message=pic_file)
-                        send = 1
-                    except:
-                        print("发送失败，重试")
-
-            elif is_win == "OMG 负" and ip == "10.10.10.8":
-                award_url = await get_rPic()
-                image = MessageSegment.image(award_url)
-                try:
-                    await bot.send_group_msg(group_id=group, message=image)
-                except Exception as e:
-                    await bot.send_private_msg(user_id=281016636, message=str(e))
+            # if is_win == "OMG 胜" and ip == "10.10.10.8":
+            #     send = 0
+            #     while send == 0:
+            #         video_url = await get_video()
+            #         pic_file = MessageSegment.video(file=video_url)
+            #         try:
+            #             await bot.send_group_msg(group_id=group, message=pic_file)
+            #             send = 1
+            #         except:
+            #             print("发送失败，重试")
+            #
+            # elif is_win == "OMG 负" and ip == "10.10.10.8":
+            #     award_url = await get_rPic()
+            #     image = MessageSegment.image(award_url)
+            #     try:
+            #         await bot.send_group_msg(group_id=group, message=image)
+            #     except Exception as e:
+            #         await bot.send_private_msg(user_id=281016636, message=str(e))
 
         # else:
         #     print("OMG无")
@@ -393,7 +394,9 @@ async def game_info():
             if len(dg_msg) > 1 and ip == "10.10.10.8":
                 print("send dg new msg")
                 try:
-                    await bot.send_group_msg(group_id=group, message=dg_msg)
+                    # await bot.send_group_msg(group_id=group, message=dg_msg)
+                    
+                    await bot.send_private_msg(user_id=281016636, message=dg_msg)
                 except Exception as e:
                     await bot.send_private_msg(user_id=281016636, message=str(dg_msg) + str(e))
 

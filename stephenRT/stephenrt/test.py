@@ -203,7 +203,7 @@ class TwitterMedia:
 downloader = TwitterMedia()
 
 # Fetch media through an URL
-tweet = downloader.fetch_media('https://twitter.com/i/status/1532028237890498560')
+tweet = downloader.fetch_media('https://twitter.com/i/status/1531974111831916545')
 
 # Will print the url
 print(tweet.url)
