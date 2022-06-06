@@ -57,7 +57,7 @@ def get_mc():
     content_num = 8
     mc_dict = {}
     payload = {}
-    for i in [1, 2]:
+    for i in [1, 2, 3]:
         url = "https://www.doseeing.com/rank/chat/7day?category=9&p={0}".format(i)
         try:
             with requests.get(url, headers=dosee_headers, data=payload, verify=False) as session:
@@ -271,7 +271,7 @@ async def msg_receive(matcher: Matcher, args: Message = CommandArg()):
 
 mcs = get_mc()
 
-prompt = "⬤  输入要查询直播间号(或前十序号)\n⬤  0为获取榜单前十"
+prompt = "⬤  输入要查询直播间号(或榜单序号)\n⬤  0为获取榜单数据"
 
 
 @dy.got("room_id", prompt=prompt)
