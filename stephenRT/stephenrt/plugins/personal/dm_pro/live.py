@@ -437,7 +437,7 @@ async def live_notifacation():
 
                 dateArray = datetime.datetime.utcfromtimestamp(int(time.time() + 8 * 3600))
                 msg_time = dateArray.strftime("%Y-%m-%d %H:%M:%S")
-                msg = "上钟提醒-{0}".format(msg_dict["nickname"]) + "{4}\n⬤  【{0}】\n⬤  {1}\n⬤  {2}\n⬤  热度：{3}".format(
+                msg = "上钟提醒-{0}".format(msg_dict["nickname"]) + "\n⬤  【{4}】\n⬤  {1}\n⬤  {2}\n⬤  热度：{3}".format(
                     msg_dict["nickname"],
                     msg_dict["room_name"],
                     status,
