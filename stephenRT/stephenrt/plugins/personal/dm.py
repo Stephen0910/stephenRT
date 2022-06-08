@@ -41,7 +41,7 @@ elif user == "pis":
 else:
     id = "71415"
 
-rooms = {"5645739": "a824683653", "5264153": "肖璐s"}
+rooms = {"5645739": "a824683653", "5264153": "肖璐s", "5106536": "599"}
 
 defalt_lenth = 39
 robot = False  # True为打开
@@ -52,6 +52,7 @@ debug = False
 # freeGifts = ["粉丝荧光棒"]
 unknown_gift = {"21901": "单车", "21900": "野摩托"}
 unknown_price = {"21901": 2000, "21900": 1000}
+
 
 # 一些接口可以获取是否在线等情况
 # room_info = "https://www.douyu.com/roomapi/biz/getSwitch?rid={0}".format(id)
@@ -152,7 +153,6 @@ class DyDanmu:
         self.heartbeat_thread = threading.Thread(target=self.heartbeat)
         self.ws = None
         self.name = "【{0}】 ".format(rooms[roomid])
-
 
     def start(self):
         self.client.run_forever()
@@ -296,8 +296,6 @@ class DyDanmu:
         # 'visitor4444086', '1178849206'
         self.send_msg(login_msg)
 
-
-
     def logout(self):
         logout_msg = 'type@=logout/'
         self.send_msg(logout_msg)
@@ -372,7 +370,6 @@ class DyDanmu:
         gift_json3 = requests.get("https://webconf.douyucdn.cn/resource/common/gift/gift_template/20728.json").text
         gift_json4 = requests.get("https://webconf.douyucdn.cn/resource/common/property_info_14.json").text
 
-
         gift_json1 = gift_json1.replace('DYConfigCallback(', '')[0:-2]
         gift_json2 = gift_json2.replace('DYConfigCallback(', '')[0:-2]
         gift_json3 = gift_json3.replace('DYConfigCallback(', '')[0:-2]
@@ -417,7 +414,6 @@ class DyDanmu:
                 # price_json[item["id"]] = item["pc"]
                 price_json[str(item["id"])] = item["exp"]
                 pic_json[str(item["id"])] = item["himg"]
-
 
         for gift in unknown_price:
             price_json[gift] = unknown_price[gift]

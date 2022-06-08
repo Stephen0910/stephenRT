@@ -308,8 +308,10 @@ async def get_live(
     # print(mcs)
     if int(room_id) < len(mcs) + 1:
         room_id = list(mcs.values())[int(room_id) - 1]
-        msg_dict = await get_roomInfo(room_id)
-
+        try:
+            msg_dict = await get_roomInfo(room_id)
+        except:
+            await dy.finish("查询失败，重试")
     # elif room_id == "90016":
     #     msg_dict = await get_roomInfo(532152)
     else:

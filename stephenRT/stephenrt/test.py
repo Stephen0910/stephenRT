@@ -34,13 +34,8 @@ import urllib
 
 import requests
 
-url = "http://10.10.10.22:10086/api/api_iap_common.php"
-
-payload='user_id=5272&openudid=1932009e83f13eb6&appname=candycruise&client_time=1654566440&appversion=19.7.3051&platform=GP&packagename=com.gameone.candycruiseswap.free&dataversion=337&adjust_adid=63201937c1214dde6aba2f5055160a0a&adjust_gpsadid=e24b8970-a227-433e-a147-cd40c24327ae&adjust_idfa=&onesignal_playerid=&fbase_forecast_pay=0&fbase_forecast_away=0&timezone_offset=28800&dynamic_code=753346&country=CN&systemversion=8.0.0&devicemodle=SM-G9350&request_type=getIAPItemData'
-headers = {
-  'Content-Type': 'application/x-www-form-urlencoded'
-}
-
-response = requests.request("POST", url, headers=headers, data=payload)
-
-print(response.text)
+with requests.get("https://imyshare.com/hot-girl/") as session:
+  print(session.text)
+  page_html = etree.HTML(session.text)
+  src = page_html.xpath("/html/body/div[2]//@src")[0]
+  print(src)
