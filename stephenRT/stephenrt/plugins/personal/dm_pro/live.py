@@ -94,22 +94,26 @@ def first_response():
     index = 1
     for key, value in mcs.items():
         if index < 11:
-            msg_dict = room_status(value)
-            if msg_dict["is_alive"] == 0:
-                status = "未直播"
-            elif msg_dict["is_alive"] == 2:
-                status = "直播结束"
-            elif msg_dict["is_alive"] == 1 and msg_dict["is_loop"] == 1:
-                status = "录播中"
-            elif msg_dict["is_alive"] == 1 and msg_dict["is_loop"] == 0:
-                status = "直播中"
+            try:
+                msg_dict = room_status(value)
+                if msg_dict["is_alive"] == 0:
+                    status = "未直播"
+                elif msg_dict["is_alive"] == 2:
+                    status = "直播结束"
+                elif msg_dict["is_alive"] == 1 and msg_dict["is_loop"] == 1:
+                    status = "录播中"
+                elif msg_dict["is_alive"] == 1 and msg_dict["is_loop"] == 0:
+                    status = "直播中"
 
-            if msg_dict["is_alive"] in [0, 2]:
-                info = info + "{4}  {0}、{1} [{2}]  {3}\n".format(index, key, value, status, split_symbol)
-            else:
-                info = info + "{5}  {0}、{1} [{2}] {3}  热度:{4} \n".format(index, key, value, status, msg_dict["hot"],
-                                                                         split_symbol)
-            index += 1
+                if msg_dict["is_alive"] in [0, 2]:
+                    info = info + "{4}  {0}、{1} [{2}]  {3}\n".format(index, key, value, status, split_symbol)
+                else:
+                    info = info + "{5}  {0}、{1} [{2}] {3}  热度:{4} \n".format(index, key, value, status, msg_dict["hot"],
+                                                                             split_symbol)
+            except:
+                print("获取room_status失败")
+            finally:
+                index += 1
         else:
             break
     return info
