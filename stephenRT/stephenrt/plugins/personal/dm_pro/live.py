@@ -346,7 +346,7 @@ async def get_live(
         today = await dosee_info(room_id)
         show_time = int(msg_dict["show_time"])
         start_time = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(show_time))
-        msg = "分类-{4}\n⬤  【{0}】： {1}\n⬤  开播时间： {5}\n⬤  {2}\n⬤  热度：{3}".format(msg_dict["nickname"],
+        msg = "分类-{4}\n⬤  【{0}】： {1}\n⬤  开播时间： {5}\n⬤  {2}\n⬤  热度：{3}\n".format(msg_dict["nickname"],
                                                                               msg_dict["room_name"],
                                                                               status, msg_dict["hot"],
                                                                               msg_dict["child_cate"],
