@@ -431,7 +431,7 @@ async def live_notifacation():
 
                 dateArray = datetime.datetime.utcfromtimestamp(int(time.time() + 8 * 3600))
                 msg_time = dateArray.strftime("%Y-%m-%d %H:%M:%S")
-                msg = "上钟提醒-" + str(msg_time) + avatar + "{4}\n⬤  【{0}】\n⬤  {1}\n⬤  {2}\n⬤  热度：{3}".format(
+                msg = "上钟提醒-{0}".format(msg_dict["nickname"]) + "{4}\n⬤  【{0}】\n⬤  {1}\n⬤  {2}\n⬤  热度：{3}".format(
                     msg_dict["nickname"],
                     msg_dict["room_name"],
                     status,
@@ -444,7 +444,7 @@ async def live_notifacation():
             elif init_states[key] == "直播中" and value == "未直播":
                 msg_dict = await get_roomInfo(key)
                 dateArray = datetime.datetime.utcfromtimestamp(int(time.time() + 8 * 3600))
-                msg = "下钟提醒\n{0} 下播了".format(msg_dict["nickname"])
+                msg = "下钟提醒：{0} 下播了".format(msg_dict["nickname"])
                 init_states[key] = value
                 await bot.send_private_msg(user_id=281016636, message=msg)
     else:
