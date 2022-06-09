@@ -27,15 +27,16 @@ def get_host_ip():
 
 
 # from .dGame import *
+from .search_body import *
 ip = str(get_host_ip())
 
 if ip == "10.10.10.8":
     print("本地内网")
     from .dGame import *
     from .search_body import *
+    from .dm_pro.live import *
+    from .dm_pro.giftNoti import *
 
 
-# from .dm import *
 
-from .dm_pro.giftNoti import *
-from .dm_pro.live import *
+
