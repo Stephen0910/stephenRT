@@ -33,8 +33,7 @@ if ip == "10.10.10.8":
     print("本地内网")
     from .dGame import *
     from .search_body import *
-else:
-    print("不加载dGame")
+
 
 # from .dm import *
 

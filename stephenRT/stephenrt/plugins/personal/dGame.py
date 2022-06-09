@@ -405,3 +405,5 @@ async def game_info():
     else:
         print("dg trigger pass:{0}".format(trigger))
     trigger += 1
+
+print("dGame started")
