@@ -301,8 +301,9 @@ prompt = "⬤  输入要查询直播间号(或榜单序号)\n⬤  0为获取榜�
 async def get_live(
         room_id: Message = Arg()
 ):
-    room_id = str(room_id)
 
+    room_id = str(room_id)
+    print("【live】查询room_id:", room_id)
     if not re.search("^\d+$", room_id):
         await dy.finish("输入的不是直播间号， 结束会话")
 
@@ -318,6 +319,7 @@ async def get_live(
             await dy.finish("查询失败，重试")
     # elif room_id == "90016":
     #     msg_dict = await get_roomInfo(532152)
+
     else:
         try:
             msg_dict = await get_roomInfo(room_id)
