@@ -230,6 +230,7 @@ trigger = 1
 async def game_info():
     global trigger
     if trigger % 7 == 0:
+        print("查询dGam.....")
         bot = get_bot()
         g_ids = []
         o_msg = ""
