@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="3047aada-47d5-4ad8-a368-9e15af7b4bc7" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/stephenRT/stephenrt/plugins/personal/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/stephenRT/stephenrt/plugins/personal/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/stephenRT/stephenrt/plugins/personal/dGame.py" beforeDir="false" afterPath="$PROJECT_DIR$/stephenRT/stephenrt/plugins/personal/dGame.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -36,11 +36,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/stephenRT/stephenrt/plugins/personal/dGame.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-300">
-              <caret line="351" column="24" lean-forward="true" selection-start-line="351" selection-start-column="24" selection-end-line="351" selection-end-column="24" />
+            <state relative-caret-position="330">
+              <caret line="32" column="56" selection-start-line="32" selection-start-column="56" selection-end-line="32" selection-end-column="56" />
               <folding>
                 <element signature="e#233#254#0" expanded="true" />
               </folding>
@@ -108,11 +108,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/stephenRT/stephenrt/plugins/personal/__init__.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="360">
-              <caret line="29" column="22" lean-forward="true" selection-start-line="29" selection-start-column="22" selection-end-line="29" selection-end-column="22" />
+            <state relative-caret-position="390">
+              <caret line="31" lean-forward="true" selection-start-line="31" selection-end-line="31" />
             </state>
           </provider>
         </entry>
@@ -231,8 +231,8 @@
         <option value="$PROJECT_DIR$/stephenRT/stephenrt/plugins/personal/v_dif.py" />
         <option value="$PROJECT_DIR$/stephenRT/stephenrt/plugins/personal/dm.py" />
         <option value="$PROJECT_DIR$/stephenRT/stephenrt/plugins/personal/dm_pro/live.py" />
-        <option value="$PROJECT_DIR$/stephenRT/stephenrt/plugins/personal/dGame.py" />
         <option value="$PROJECT_DIR$/stephenRT/stephenrt/plugins/personal/__init__.py" />
+        <option value="$PROJECT_DIR$/stephenRT/stephenrt/plugins/personal/dGame.py" />
       </list>
     </option>
   </component>
@@ -586,7 +586,7 @@
       <workItem from="1654072325575" duration="3906000" />
       <workItem from="1654135458669" duration="14709000" />
       <workItem from="1654475411835" duration="23982000" />
-      <workItem from="1654671513552" duration="16912000" />
+      <workItem from="1654671513552" duration="18769000" />
     </task>
     <servers />
   </component>
@@ -599,7 +599,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="1113517000" />
+    <option name="totallyTimeSpent" value="1115374000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1030,20 +1030,20 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/stephenRT/stephenrt/plugins/personal/__init__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="360">
-          <caret line="29" column="22" lean-forward="true" selection-start-line="29" selection-start-column="22" selection-end-line="29" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/stephenRT/stephenrt/plugins/personal/dGame.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-300">
-          <caret line="351" column="24" lean-forward="true" selection-start-line="351" selection-start-column="24" selection-end-line="351" selection-end-column="24" />
+        <state relative-caret-position="330">
+          <caret line="32" column="56" selection-start-line="32" selection-start-column="56" selection-end-line="32" selection-end-column="56" />
           <folding>
             <element signature="e#233#254#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/stephenRT/stephenrt/plugins/personal/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="390">
+          <caret line="31" lean-forward="true" selection-start-line="31" selection-end-line="31" />
         </state>
       </provider>
     </entry>
