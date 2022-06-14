@@ -310,7 +310,8 @@ async def game_info():
             # pic = '<a href="{0}">超链接</a>'.format(pic)
             # print("pic:", pic)
             omg_msg = omg_msg + pic
-            print(omg_msg, len(omg_msg))
+            print("omg_msg:", omg_msg)
+            print("o_msg:", o_msg)
 
             # if len(omg_msg) > 1:
             if len(omg_msg) > 1:
@@ -319,7 +320,6 @@ async def game_info():
                     # await bot.send_group_msg(group_id=group, message=omg_msg)
                     await bot.send_private_msg(user_id=281016636, message=omg_msg)
                     await bot.send_private_msg(user_id=281016636, message=o_msg)
-                    await bot.send_private_msg(user_id=281016636, message=pic)
                 except Exception as e:
                     await bot.send_private_msg(user_id=281016636, message="发送错误:" + str(e))
 
