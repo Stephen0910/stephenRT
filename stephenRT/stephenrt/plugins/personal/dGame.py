@@ -307,23 +307,21 @@ async def game_info():
             omg_msg = "报：" + g_type + people + is_win + " {0}分钟\n".format(omg_spend)
 
             pic = "战绩图： https://www.09game.com/html/2020gamescore/web/gamedetail/21.html?sessid=0&gameid={0}".format(new_id)
-            # pic = '<a href="{0}">超链接</a>'.format(pic)
-            # print("pic:", pic)
-            omg_msg = omg_msg + pic
+            omg_msg = omg_msg + pic + o_msg
             print("omg_msg:", omg_msg)
-            print("o_msg:", o_msg)
+            # print("o_msg:", o_msg)
 
             # if len(omg_msg) > 1:
             if len(omg_msg) > 1:
-                print("send the omg msg")
+                print("send the omg msg--------------------------------------------------------------------------")
                 try:
                     # await bot.send_group_msg(group_id=group, message=omg_msg)
                     await bot.send_private_msg(user_id=281016636, message=omg_msg)
-                    await bot.send_private_msg(user_id=281016636, message=o_msg)
+                    # await bot.send_private_msg(user_id=281016636, message=o_msg)
                 except Exception as e:
                     await bot.send_private_msg(user_id=281016636, message="发送错误:" + str(e))
 
-            # if is_win == "OMG 胜" and ip == "10.10.10.8":
+            # if is_win == "OMG 胜":
             #     send = 0
             #     while send == 0:
             #         video_url = await get_video()
@@ -334,7 +332,7 @@ async def game_info():
             #         except:
             #             print("发送失败，重试")
             #
-            # elif is_win == "OMG 负" and ip == "10.10.10.8":
+            # elif is_win == "OMG 负":
             #     award_url = await get_rPic()
             #     image = MessageSegment.image(award_url)
             #     try:
@@ -342,9 +340,10 @@ async def game_info():
             #     except Exception as e:
             #         await bot.send_private_msg(user_id=281016636, message=str(e))
 
-        # else:
-        #     print("OMG无")
 
+        '''
+        忽略-----------------------------------
+        '''
         # DG模式
         dg_ids = []
         for name, id in ids.items():
