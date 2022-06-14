@@ -32,10 +32,15 @@ import urllib
 #     print(key, ":", value)
 #
 
-import requests
+# import requests
+#
+# with requests.get("https://imyshare.com/hot-girl/") as session:
+#   print(session.text)
+#   page_html = etree.HTML(session.text)
+#   src = page_html.xpath("/html/body/div[2]//@src")[0]
+#   print(src)
 
-with requests.get("https://imyshare.com/hot-girl/") as session:
-  print(session.text)
-  page_html = etree.HTML(session.text)
-  src = page_html.xpath("/html/body/div[2]//@src")[0]
-  print(src)
+
+with requests.get("https://xjj.349457.xyz/video.php") as session:
+  a = session.text
+  print(a.encode())

@@ -202,7 +202,9 @@ async def dosee_info(id):
                 response = json.loads(session.text)
                 if response["status"] == "success":
                     data = response["result"]["result"][0]
-                    total_info = "总礼物 {}, 总收入{}, 总弹幕{}, 活跃人数{}".format(data["gift.all.price"] / 100, data["gift.paid.price"] / 100, data["chat.pv"], data["active.uv"])
+                    total_info = "总礼物 {}, 总收入{}, 总弹幕{}, 活跃人数{}".format(data["gift.all.price"] / 100,
+                                                                       data["gift.paid.price"] / 100, data["chat.pv"],
+                                                                       data["active.uv"])
                 else:
                     total_info = ""
 
@@ -301,7 +303,6 @@ prompt = "⬤  输入要查询直播间号(或榜单序号)\n⬤  0为获取榜�
 async def get_live(
         room_id: Message = Arg()
 ):
-
     room_id = str(room_id)
     print("【live】查询room_id:", room_id)
     if not re.search("^\d+$", room_id):
@@ -348,16 +349,20 @@ async def get_live(
         today = await dosee_info(room_id)
         show_time = int(msg_dict["show_time"])
         start_time = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(show_time))
-        msg = "分类-{4}\n⬤  【{0}】： {1}\n⬤  开播时间： {5}\n⬤  {2}\n⬤  热度：{3}\n".format(msg_dict["nickname"],
+        msg = "分类-{4}\n⬤  【{0}】： {1}\n⬤  开播时间： {5}\n⬤  {2}\n⬤  热度：{3}".format(msg_dict["nickname"],
                                                                               msg_dict["room_name"],
                                                                               status, msg_dict["hot"],
                                                                               msg_dict["child_cate"],
-                                                                              start_time) + live_pic + today
+                                                                              start_time) + live_pic + "\n" + today
     except Exception as e:
         msg = "查询失败：{0}".format("请重试")
         print(str(e))
-    print("sent:", msg)
-    await dy.finish(msg)
+    print("sent:\n", msg)
+    try:
+        await dy.send(msg)
+        # await dy.finish(live_pic)
+    except Exception as e:
+        await dy.finish(str(e))
 
 
 def first_states():

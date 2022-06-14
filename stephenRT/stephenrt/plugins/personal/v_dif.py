@@ -14,6 +14,9 @@ import requests
 linhunyun = "https://api.linhun.vip/api/Littlesistervideo?type=json"  # linhunyun
 hot_girl = "https://imyshare.com/hot-girl"
 qiqu = "http://tool.qiquhao.com/jsdy/"
+suiji = "https://jiejie.de/xjj//get/get0.php"
+suiji1 = "https://mm.diskgirl.com/get/get1.php"
+
 
 hot_headers = {
     "cookie": "_ga=GA1.2.409272992.1654657681; _gid=GA1.2.19552097.1654657681; csrftoken=mbIbZueOzEtVkuhQyjvwMrwC8ie5oj8qfSZV8ChtKT9OnYAKY53NvpiNM3Mkhi6y; ShareID=s1livl5e1zmwrhj2fu8vmgitkda11j05; article_4_read=True; article_45_read=True; _gat_gtag_UA_165677247_1=1",
