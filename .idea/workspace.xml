@@ -2,8 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="3047aada-47d5-4ad8-a368-9e15af7b4bc7" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/stephenRT/stephenrt/plugins/personal/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/stephenRT/stephenrt/plugins/personal/__init__.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/stephenRT/stephenrt/plugins/personal/dGame.py" beforeDir="false" afterPath="$PROJECT_DIR$/stephenRT/stephenrt/plugins/personal/dGame.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -44,8 +42,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/stephenRT/stephenrt/plugins/personal/dGame.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="345">
-              <caret line="219" column="21" lean-forward="true" selection-start-line="219" selection-start-column="21" selection-end-line="219" selection-end-column="21" />
+            <state relative-caret-position="354">
+              <caret line="321" column="83" selection-start-line="321" selection-start-column="83" selection-end-line="321" selection-end-column="83" />
               <folding>
                 <element signature="e#233#254#0" expanded="true" />
               </folding>
@@ -590,7 +588,7 @@
       <workItem from="1654475411835" duration="23982000" />
       <workItem from="1654671513552" duration="18769000" />
       <workItem from="1655080112457" duration="4457000" />
-      <workItem from="1655193132057" duration="1159000" />
+      <workItem from="1655193132057" duration="1460000" />
     </task>
     <servers />
   </component>
@@ -603,7 +601,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="1120990000" />
+    <option name="totallyTimeSpent" value="1121291000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1043,8 +1041,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/stephenRT/stephenrt/plugins/personal/dGame.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="345">
-          <caret line="219" column="21" lean-forward="true" selection-start-line="219" selection-start-column="21" selection-end-line="219" selection-end-column="21" />
+        <state relative-caret-position="354">
+          <caret line="321" column="83" selection-start-line="321" selection-start-column="83" selection-end-line="321" selection-end-column="83" />
           <folding>
             <element signature="e#233#254#0" expanded="true" />
           </folding>
