@@ -318,7 +318,7 @@ async def game_info():
                 try:
                     # await bot.send_group_msg(group_id=group, message=omg_msg)
                     # await bot.send_private_msg(user_id=281016636, message=omg_msg)
-                    await bot.send_private_msg(user_id=281016636, message="这是什么鬼")
+                    await bot.send_private_msg(user_id=281016636, message=str(omg_msg))
                     # await bot.send_private_msg(user_id=281016636, message=pic)
                 except Exception as e:
                     await bot.send_private_msg(user_id=281016636, message="发送错误:" + str(e))

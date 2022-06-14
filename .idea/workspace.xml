@@ -42,8 +42,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/stephenRT/stephenrt/plugins/personal/dGame.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="234">
-              <caret line="306" column="37" selection-start-line="306" selection-start-column="37" selection-end-line="306" selection-end-column="37" />
+            <state relative-caret-position="219">
+              <caret line="320" column="85" selection-start-line="320" selection-start-column="85" selection-end-line="320" selection-end-column="85" />
               <folding>
                 <element signature="e#233#254#0" expanded="true" />
               </folding>
@@ -588,7 +588,7 @@
       <workItem from="1654475411835" duration="23982000" />
       <workItem from="1654671513552" duration="18769000" />
       <workItem from="1655080112457" duration="4457000" />
-      <workItem from="1655193132057" duration="2936000" />
+      <workItem from="1655193132057" duration="3435000" />
     </task>
     <servers />
   </component>
@@ -601,7 +601,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="1122767000" />
+    <option name="totallyTimeSpent" value="1123266000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1041,8 +1041,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/stephenRT/stephenrt/plugins/personal/dGame.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="234">
-          <caret line="306" column="37" selection-start-line="306" selection-start-column="37" selection-end-line="306" selection-end-column="37" />
+        <state relative-caret-position="219">
+          <caret line="320" column="85" selection-start-line="320" selection-start-column="85" selection-end-line="320" selection-end-column="85" />
           <folding>
             <element signature="e#233#254#0" expanded="true" />
           </folding>
