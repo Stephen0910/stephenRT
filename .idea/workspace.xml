@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="3047aada-47d5-4ad8-a368-9e15af7b4bc7" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/stephenRT/stephenrt/plugins/personal/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/stephenRT/stephenrt/plugins/personal/__init__.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/stephenRT/stephenrt/plugins/personal/dGame.py" beforeDir="false" afterPath="$PROJECT_DIR$/stephenRT/stephenrt/plugins/personal/dGame.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -43,8 +42,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/stephenRT/stephenrt/plugins/personal/dGame.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="432">
-              <caret line="323" column="58" lean-forward="true" selection-start-line="323" selection-start-column="58" selection-end-line="323" selection-end-column="58" />
+            <state relative-caret-position="234">
+              <caret line="306" column="37" selection-start-line="306" selection-start-column="37" selection-end-line="306" selection-end-column="37" />
               <folding>
                 <element signature="e#233#254#0" expanded="true" />
               </folding>
@@ -64,8 +63,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/stephenRT/stephenrt/plugins/personal/dm_pro/live.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="350">
-              <caret line="364" column="31" lean-forward="true" selection-start-line="364" selection-start-column="31" selection-end-line="364" selection-end-column="31" />
+            <state relative-caret-position="346">
+              <caret line="461" column="16" lean-forward="true" selection-start-line="461" selection-start-column="16" selection-end-line="461" selection-end-column="74" />
               <folding>
                 <element signature="e#234#259#0" expanded="true" />
               </folding>
@@ -129,7 +128,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>command</find>
       <find>await</find>
       <find>sleep</find>
       <find>room</find>
@@ -159,6 +157,7 @@
       <find>mp4</find>
       <find>etree</find>
       <find>热度</find>
+      <find>first</find>
     </findStrings>
     <replaceStrings>
       <replace>logger.debug</replace>
@@ -589,7 +588,7 @@
       <workItem from="1654475411835" duration="23982000" />
       <workItem from="1654671513552" duration="18769000" />
       <workItem from="1655080112457" duration="4457000" />
-      <workItem from="1655193132057" duration="2278000" />
+      <workItem from="1655193132057" duration="2936000" />
     </task>
     <servers />
   </component>
@@ -602,7 +601,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="1122109000" />
+    <option name="totallyTimeSpent" value="1122767000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -615,6 +614,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-1928" y="-8" width="1936" height="1056" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49837664" visible="true" weight="0.13447171" />
       <window_info id="Structure" order="1" sideWeight="0.5016234" side_tool="true" weight="0.14887941" />
@@ -1019,16 +1019,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/stephenRT/stephenrt/plugins/personal/dm_pro/live.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="350">
-          <caret line="364" column="31" lean-forward="true" selection-start-line="364" selection-start-column="31" selection-end-line="364" selection-end-column="31" />
-          <folding>
-            <element signature="e#234#259#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/stephenRT/stephenrt/plugins/personal/dm.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="465">
@@ -1039,10 +1029,20 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/stephenRT/stephenrt/plugins/personal/dm_pro/live.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="346">
+          <caret line="461" column="16" lean-forward="true" selection-start-line="461" selection-start-column="16" selection-end-line="461" selection-end-column="74" />
+          <folding>
+            <element signature="e#234#259#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/stephenRT/stephenrt/plugins/personal/dGame.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="432">
-          <caret line="323" column="58" lean-forward="true" selection-start-line="323" selection-start-column="58" selection-end-line="323" selection-end-column="58" />
+        <state relative-caret-position="234">
+          <caret line="306" column="37" selection-start-line="306" selection-start-column="37" selection-end-line="306" selection-end-column="37" />
           <folding>
             <element signature="e#233#254#0" expanded="true" />
           </folding>
