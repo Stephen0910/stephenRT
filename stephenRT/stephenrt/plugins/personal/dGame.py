@@ -215,8 +215,8 @@ ip = get_host_ip()
 matcher = on_metaevent()
 
 if ip == "10.10.10.8":
-    first_time = 1649837159
-    # first_time = int(time.time())
+    # first_time = 1649837159
+    first_time = int(time.time())
     group = 959822848
 else:
     # first_time = 1649837159
@@ -304,10 +304,10 @@ async def game_info():
                     people = "{0}排 ".format(users_chi[users])
 
             # 上面是人数
-            omg_msg = "报：" + g_type + people + is_win + " {0}分钟\n".format(omg_spend)
+            omg_msg = "报：" + g_type + people + is_win + " {0}分钟\n".format(omg_spend) + o_msg
 
             pic = "战绩图： https://www.09game.com/html/2020gamescore/web/gamedetail/21.html?sessid=0&gameid={0}".format(new_id)
-            omg_msg = omg_msg + pic + o_msg
+            omg_msg = omg_msg + pic
             print("omg_msg:", omg_msg)
             # print("o_msg:", o_msg)
 
