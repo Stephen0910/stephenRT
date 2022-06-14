@@ -319,7 +319,7 @@ async def game_info():
                     # await bot.send_group_msg(group_id=group, message=omg_msg)
                     await bot.send_private_msg(user_id=281016636, message=omg_msg)
                 except Exception as e:
-                    await bot.send_private_msg(user_id=281016636, message=str(omg_msg) + str(e))
+                    await bot.send_private_msg(user_id=281016636, message=str(e))
 
             # if is_win == "OMG 胜" and ip == "10.10.10.8":
             #     send = 0
