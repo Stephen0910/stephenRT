@@ -215,7 +215,8 @@ ip = get_host_ip()
 matcher = on_metaevent()
 
 if ip == "10.10.10.8":
-    first_time = int(time.time())
+    first_time = 1649837159
+    # first_time = int(time.time())
     group = 959822848
 else:
     # first_time = 1649837159
