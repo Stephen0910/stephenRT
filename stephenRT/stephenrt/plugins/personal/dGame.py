@@ -397,9 +397,9 @@ async def game_info():
             if len(dg_msg) > 1 and ip == "10.10.10.8":
                 print("send dg new msg")
                 try:
-                    # await bot.send_group_msg(group_id=group, message=dg_msg)
+                    await bot.send_group_msg(group_id=group, message=dg_msg)
 
-                    await bot.send_private_msg(user_id=281016636, message=dg_msg)
+                    # await bot.send_private_msg(user_id=281016636, message=dg_msg)
                 except Exception as e:
                     await bot.send_private_msg(user_id=281016636, message=str(dg_msg) + str(e))
 
