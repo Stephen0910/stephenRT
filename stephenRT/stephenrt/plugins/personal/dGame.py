@@ -304,11 +304,11 @@ async def game_info():
                     people = "{0}排 ".format(users_chi[users])
 
             # 上面是人数
-            omg_msg = "报：" + g_type + people + is_win + " {0}分钟\n".format(omg_spend) + o_msg
+            omg_msg = "报：" + g_type + people + is_win + " {0}分钟\n".format(omg_spend)
 
             pic = "战绩图： https://www.09game.com/html/2020gamescore/web/gamedetail/21.html?sessid=0&gameid={0}".format(new_id)
             # pic = '<a href="{0}">超链接</a>'.format(pic)
-            print("pic:", pic)
+            # print("pic:", pic)
             omg_msg = omg_msg + pic
             print(omg_msg, len(omg_msg))
 
@@ -317,9 +317,9 @@ async def game_info():
                 print("send the omg msg")
                 try:
                     # await bot.send_group_msg(group_id=group, message=omg_msg)
-                    # await bot.send_private_msg(user_id=281016636, message=omg_msg)
-                    await bot.send_private_msg(user_id=281016636, message=str(omg_msg))
-                    # await bot.send_private_msg(user_id=281016636, message=pic)
+                    await bot.send_private_msg(user_id=281016636, message=omg_msg)
+                    await bot.send_private_msg(user_id=281016636, message=o_msg)
+                    await bot.send_private_msg(user_id=281016636, message=pic)
                 except Exception as e:
                     await bot.send_private_msg(user_id=281016636, message="发送错误:" + str(e))
 
