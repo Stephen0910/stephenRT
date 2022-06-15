@@ -40,7 +40,29 @@ import urllib
 #   src = page_html.xpath("/html/body/div[2]//@src")[0]
 #   print(src)
 
+def transfer_time(timestamp):
+    timestamp = int(timestamp)
+    if timestamp > 3653284221:
+        query_time = round(timestamp / 1000)
+        nature = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(query_time))
+    else:
+        nature = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(timestamp))
+    return nature
 
-with requests.get("https://xjj.349457.xyz/video.php") as session:
-  a = session.text
-  print(a.encode())
+
+url = "https://china.nba.cn/stats2/season/schedule.json?countryCode=CN&days=7&locale=zh_CN&tz=+8"
+with requests.get(url) as session:
+    response = json.loads(session.text)
+    dates = response["payload"]["dates"]
+    for date in dates:
+        games = date["games"]
+        for game in games:
+            profile = game["profile"]  # 基本信息
+            boxscore = game["boxscore"]  # 比分信息
+            urls = game["urls"]  # 腾讯直播地址
+            broadcasters = game["broadcasters"]  # 其他直播地址
+            homeTeam = game["homeTeam"]  # 主场信息
+            awayTeam = game["awayTeam"]  # 客场信息
+            nature = transfer_time(profile["utcMillis"])
+
+            print("⬤  {0} 主场:{1} 客场:{2} \n".format(nature, homeTeam["profile"]["displayAbbr"], awayTeam["profile"]["displayAbbr"]))
