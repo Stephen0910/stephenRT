@@ -73,7 +73,7 @@ async def get_seasonInfo():
             homeTeam = game["homeTeam"]  # 主场信息
             awayTeam = game["awayTeam"]  # 客场信息
             nature = await transfer_time(profile["utcMillis"])
-            msg += "⬤  {0} 主场:{1} 客场:{2}\n".format(nature, homeTeam["profile"]["displayAbbr"],
+            msg += "⬤  {0} 【主场】{1} vs {2}\n".format(nature, homeTeam["profile"]["displayAbbr"],
                                                    awayTeam["profile"]["displayAbbr"])
     await nbaInfo.finish(msg)
 
