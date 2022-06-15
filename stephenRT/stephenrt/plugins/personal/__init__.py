@@ -29,7 +29,7 @@ def get_host_ip():
 # from .dGame import *
 # from .dm_pro.live import *
 # from .search_body import *
-from .nba.season import *
+# from .nba.season import *
 ip = str(get_host_ip())
 
 if ip == "10.10.10.8":
