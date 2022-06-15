@@ -144,8 +144,8 @@ class DyDanmu:
         # for key, value in self.price_dict.items():
         #     if value > 500000:
         #         print(self.gift_dict[str(key)], key, value)
-        print("礼物：", self.gift_dict)
-        print("价格：", self.price_dict)
+        # print("礼物：", self.gift_dict)
+        # print("价格：", self.price_dict)
         self.login_name = login_name
         self.login_id = login_id
         self.gift_dict_keys = self.gift_dict.keys()
@@ -444,4 +444,4 @@ if __name__ == '__main__':
     for key, value in rooms.items():
         thread = threading.Thread(target=main, args=(key,))
         thread.start()
-        print(thread.name)
+        # print(thread.name)

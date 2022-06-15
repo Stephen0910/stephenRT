@@ -13,9 +13,11 @@ import json
 import time
 from nonebot import on_command
 from nonebot.rule import to_me
-from nonebot.matcher import Matcher
-from nonebot.adapters import Message
-from nonebot.params import Arg, CommandArg
+from nonebot import get_bot
+# from nonebot.matcher import Matcher
+# from nonebot.adapters import Message
+# from nonebot.params import Arg, CommandArg
+from nonebot import on_metaevent
 from nonebot.permission import SUPERUSER
 
 season_url = "https://china.nba.cn/stats2/season/schedule.json?countryCode=CN&days=7&locale=zh_CN&tz=+8"
@@ -47,7 +49,7 @@ async def seasonInfo():
                 homeTeam = game["homeTeam"]  # 主场信息
                 awayTeam = game["awayTeam"]  # 客场信息
 
-                nature = transfer_time(profile["utcMillis"])
+                nature = await transfer_time(profile["utcMillis"])
                 # print("{0} 主场:{1} 客场:{2}".format(nature, homeTeam["profile"]["displayAbbr"], awayTeam["profile"]["displayAbbr"]))
         return dates
 
@@ -95,12 +97,12 @@ async def get_seasonInfo():
             nature = await transfer_time(profile["utcMillis"])
             # print(boxscore["status"])
             if boxscore["status"] == "0":
-                scores.append("⬤  {0}vs{1} {5}  实时比分 {2}:{3} 比赛时间 {4}".format(homeTeam["profile"]["displayAbbr"],
-                                                                              awayTeam["profile"]["displayAbbr"],
-                                                                              boxscore["homeScore"],
-                                                                              boxscore["awayScore"],
-                                                                              boxscore["gameLength"],
-                                                                              boxscore["statusDesc"]))
+                scores.append("⬤  {0} vs {1} {5}  实时比分 {2}:{3} 比赛时间 {4}".format(homeTeam["profile"]["displayAbbr"],
+                                                                                awayTeam["profile"]["displayAbbr"],
+                                                                                boxscore["homeScore"],
+                                                                                boxscore["awayScore"],
+                                                                                boxscore["gameLength"],
+                                                                                boxscore["statusDesc"]))
     print(scores)
     if len(scores) == 0:
         await nbaInfo.finish("当前无比赛")
@@ -109,3 +111,50 @@ async def get_seasonInfo():
         for score in scores:
             msg += score + "\n"
         await nbaInfo.finish(msg)
+
+
+noti = on_metaevent()
+trigger = 1
+livelist = []
+first_time = int(time.time())
+
+
+@noti.handle()
+async def live_noti():
+    global trigger
+    if trigger % 5 == 0:
+        bot = get_bot()
+        dates = await seasonInfo()
+        msg = "NBA实况信息:\n"
+        for date in dates:
+            games = date["games"]
+            for game in games:
+                profile = game["profile"]  # 基本信息
+                boxscore = game["boxscore"]  # 比分信息
+                urls = game["urls"]  # 腾讯直播地址
+                broadcasters = game["broadcasters"]  # 其他直播地址
+                homeTeam = game["homeTeam"]  # 主场信息
+                awayTeam = game["awayTeam"]  # 客场信息
+                nature = await transfer_time(profile["utcMillis"])
+                gameId = profile["gameId"]
+                if boxscore["status"] == "1":
+                    print("{0}未开始".format(gameId))
+                    continue
+                elif boxscore["status"] != "1" and gameId not in livelist and int(
+                        profile["utcMillis"]) > first_time * 1000:
+                    livelist.append(gameId)
+                    msg += "⬤  {0} vs {1} {5}  实时比分 {2}:{3} 比赛时间 {4}".format(homeTeam["profile"]["displayAbbr"],
+                                                                             awayTeam["profile"]["displayAbbr"],
+                                                                             boxscore["homeScore"],
+                                                                             boxscore["awayScore"],
+                                                                             boxscore["gameLength"],
+                                                                             boxscore["statusDesc"])
+
+                    await bot.send_private_msg(user_id=281016636, message=msg)
+                else:
+                    print("已经播报过了")
+
+
+    else:
+        print("nba trigger:{0}".format(trigger))
+    trigger += 1

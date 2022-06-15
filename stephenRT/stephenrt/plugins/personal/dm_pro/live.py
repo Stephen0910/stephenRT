@@ -112,6 +112,7 @@ def first_response():
                                                                              split_symbol)
             except:
                 print("获取room_status失败")
+                info += "获取room_status失败"
             finally:
                 index += 1
         else:
@@ -318,9 +319,6 @@ async def get_live(
             msg_dict = await get_roomInfo(room_id)
         except:
             await dy.finish("查询失败，重试")
-    # elif room_id == "90016":
-    #     msg_dict = await get_roomInfo(532152)
-
     else:
         try:
             msg_dict = await get_roomInfo(room_id)
