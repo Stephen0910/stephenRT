@@ -23,6 +23,11 @@ from nonebot.permission import SUPERUSER
 season_url = "https://china.nba.cn/stats2/season/schedule.json?countryCode=CN&days=7&locale=zh_CN&tz=+8"
 playof = "https://china.nba.cn/stats2/playoff/bracket.json?locale=zh_CN"
 seasonData = "https://china.nba.cn/stats2/season/conferencestanding.json?locale=zh_CN"
+team = "https://china.nba.cn/stats2/league/conferenceteamlist.json?locale=zh_CN"
+team_player = "https://china.nba.cn/stats2/team/roster.json?locale=zh_CN&teamCode=hawks"
+player = "https://china.nba.cn/stats2/player/stats.json?ds=career&locale=zh_CN&playerCode=stephen_curry"
+player_of = "https://china.nba.cn/stats2/player/historicalstats.json?locale=zh_CN&playerCode=alex_acker"
+kobe = "https://china.nba.cn/players/historical/#!/kobe_bryant"
 
 
 async def transfer_time(timestamp):
@@ -137,12 +142,13 @@ async def live_noti():
                 awayTeam = game["awayTeam"]  # 客场信息
                 nature = await transfer_time(profile["utcMillis"])
                 gameId = profile["gameId"]
+                status = str(gameId) + boxscore["status"]
                 if boxscore["status"] == "1":
                     print("{0}未开始".format(gameId))
                     continue
-                elif boxscore["status"] != "1" and gameId not in livelist and int(
+                elif boxscore["status"] != "1" and status not in livelist and int(
                         profile["utcMillis"]) > first_time * 1000:
-                    livelist.append(gameId)
+                    livelist.append(status)
                     msg += "⬤  {0} vs {1} {5}  实时比分 {2}:{3} 比赛时间 {4}".format(homeTeam["profile"]["displayAbbr"],
                                                                              awayTeam["profile"]["displayAbbr"],
                                                                              boxscore["homeScore"],
