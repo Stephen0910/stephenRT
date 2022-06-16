@@ -59,8 +59,6 @@ async def seasonInfo():
         return dates
 
 
-seasonInfo()
-
 nbaInfo = on_command("nba", rule=to_me(), aliases={"篮球", "NBA"}, priority=1, permission=SUPERUSER)
 
 
