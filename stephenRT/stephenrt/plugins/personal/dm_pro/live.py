@@ -285,7 +285,10 @@ async def get_roomInfo(room_id):
 dy = on_command("dy", rule=to_me(), aliases={"douyu", "直播", "zhibo", "zb"}, priority=1, permission=SUPERUSER)
 
 first_msg = []
-first_msg.append(first_response())  # 临时处理方案
+try:
+    first_msg.append(first_response())  # 临时处理方案
+except:
+    print("first error")
 
 
 @dy.handle()
