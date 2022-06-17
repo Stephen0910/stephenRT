@@ -12,6 +12,8 @@
 # 资源搜索
 import requests, json
 
+# 重名
+
 import http.client
 
 conn = http.client.HTTPSConnection("doc.htmcdn.com", 39988)
@@ -36,3 +38,17 @@ conn.request("POST", "/ad/list0", payload, headers)
 res = conn.getresponse()
 data = res.read()
 print(data.decode("utf-8"))
+
+
+# 判断安卓ios
+from infi.devicemanager import DeviceManager
+
+dm = DeviceManager()
+dm.root.rescan()
+devices = dm.all_devices
+for device in devices:
+    for i in device.children:
+        if "Android Composite ADB Interface" in str(i):
+            print("Android:", device.children)
+        if "Apple Mobile Device USB Composite Device" in str(i):
+            print("iOS:", device.children)

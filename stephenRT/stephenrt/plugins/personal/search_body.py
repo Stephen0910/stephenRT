@@ -137,7 +137,8 @@ async def get_pic(x: dict = Depends(depend)):
     if int(x["uid"]) in players:
         try:
             pic_url = await get_rPic()
-        except:
+        except Exception as e:
+            print("获取图片失败：", str(e))
             await picture.finish("图片获取失败")
         image = MessageSegment.image(pic_url)
         await picture.finish(image)

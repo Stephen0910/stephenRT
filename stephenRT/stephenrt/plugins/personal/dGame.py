@@ -104,7 +104,7 @@ def get_host_ip():
     return ip
 
 
-def get_response(url):
+async def get_response(url):
     response = requests.get(url, headers=fl_headers, verify=False, timeout=3)
     response.close()
     return response.content
@@ -113,7 +113,9 @@ def get_response(url):
 async def get_rPic():
     # 获取页数
     page_url = "https://fuliba2021.net/flhz"
-    page_html = etree.HTML(get_response(page_url).decode())
+    print("get_rPic")
+    res = await get_response(page_url).decode()
+    page_html = etree.HTML(res)
     # page = page_html.xpath("/html/body/section/div[1]/div/div[2]/ul/li[8]/span//text()")
     page = page_html.xpath("/html/body/section/div[1]/div/div[2]/ul/li[8]/span//text()")[0]
     print("page:", page)
