@@ -41,68 +41,28 @@ import urllib
 #   print(src)
 import subprocess
 
-fl_headers = {
-    "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9",
-    "Accept-Encoding": "gzip, deflate, br",
-    "Connection": "keep-alive",
-    "User-Agent": 'Mozilla/7.0 (compatible; ABrowse 0.4; Syllable)',
-    "Remote Address": "206.119.79.46:443",
-    "Referrer Policy": "strict-origin-when-cross-origin",
-    "host": "fuliba2021.net"
+import requests
+
+url = "https://china.nba.cn/stats2/season/schedule.json?countryCode=CN&days=7&locale=zh_CN&tz=%2B8"
+
+payload={}
+headers = {
+  'authority': 'china.nba.cn',
+  'accept': 'application/json, text/plain, */*',
+  'accept-language': 'zh-CN,zh;q=0.9,en-GB;q=0.8,en-US;q=0.7,en;q=0.6',
+  'cookie': 'i18next=zh_CN; locale=zh_CN; AMCVS_248F210755B762187F000101%40AdobeOrg=1; countryCode=CN; s_cc=true; privacyV2=true; s_sq=%5B%5BB%5D%5D; sensorsdata2015jssdkcross=%7B%22distinct_id%22%3A%22181662f9fd3e-01dbf86a314dbf9-26021b51-2073600-181662f9fd4ca%22%2C%22first_id%22%3A%22%22%2C%22props%22%3A%7B%22%24latest_traffic_source_type%22%3A%22%E7%9B%B4%E6%8E%A5%E6%B5%81%E9%87%8F%22%2C%22%24latest_search_keyword%22%3A%22%E6%9C%AA%E5%8F%96%E5%88%B0%E5%80%BC_%E7%9B%B4%E6%8E%A5%E6%89%93%E5%BC%80%22%2C%22%24latest_referrer%22%3A%22%22%7D%2C%22identities%22%3A%22eyIkaWRlbnRpdHlfY29va2llX2lkIjoiMTgxNjYyZjlmZDNlLTAxZGJmODZhMzE0ZGJmOS0yNjAyMWI1MS0yMDczNjAwLTE4MTY2MmY5ZmQ0Y2EifQ%3D%3D%22%2C%22history_login_id%22%3A%7B%22name%22%3A%22%22%2C%22value%22%3A%22%22%7D%2C%22%24device_id%22%3A%22181662f9fd3e-01dbf86a314dbf9-26021b51-2073600-181662f9fd4ca%22%7D; AMCV_248F210755B762187F000101%40AdobeOrg=-1712354808%7CMCIDTS%7C19161%7CMCMID%7C64061681013499296691299490953705543050%7CMCAAMLH-1656042813%7C11%7CMCAAMB-1656042813%7CRKhpRz8krg2tLO6pguXWp5olkAcUniQYPHaMWWgdJ3xzPWQmdj0y%7CMCOPTOUT-1655445213s%7CNONE%7CMCAID%7CNONE%7CvVersion%7C4.3.0; tp=2629; s_ppv=cn%253Astats%253Aplayers%253Astephen_curry%253Astats%2C36%2C36%2C937; s_gpv=no%20value; nbachina=MTY1NTQ0NDc2M3xrYXo5MFBnakpuS3N3NEdhTUVNenczTU9WRERoUnhNSVdua1B4d3dZaDVKNkJvTlQzTXprUm9LSTQ2NXFnYUJlNUNRYUNaY2V6TEd0eFFjVVB5aElxRFNvRFFONVJSR1l88A287OCivnKcLqlxhL4pij-LAmD0IF3bIITY7jica78=',
+  'if-none-match': '"2842-49b34a4123c3cff0131190f2a5d396d4dba099a9"',
+  'referer': 'https://china.nba.cn/schedule/',
+  'sec-ch-ua': '" Not A;Brand";v="99", "Chromium";v="102", "Google Chrome";v="102"',
+  'sec-ch-ua-mobile': '?0',
+  'sec-ch-ua-platform': '"Windows"',
+  'sec-fetch-dest': 'empty',
+  'sec-fetch-mode': 'cors',
+  'sec-fetch-site': 'same-origin',
+  'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.0.0 Safari/537.36'
 }
 
+response = requests.request("GET", url, headers=headers, data=payload)
 
-def get_response(url):
-    response = requests.get(url, headers=fl_headers, verify=False, timeout=3)
-    response.close()
-    return response.content
+print(response.text)
 
-
-def get_rPic():
-    # 获取页数
-    page_url = "https://fuliba2021.net/flhz"
-    print("get_rPic")
-    res = get_response(page_url).decode()
-    page_html = etree.HTML(res)
-    # page = page_html.xpath("/html/body/section/div[1]/div/div[2]/ul/li[8]/span//text()")
-    page = page_html.xpath("/html/body/section/div[1]/div/div[2]/ul/li[8]/span//text()")[0]
-    print("page:", page)
-
-    page_number = re.search("\d+", page).group()
-    # print(page_number)
-
-    pic_url = ""
-    while pic_url == "":  # 有可能获取失败，2021016前面的都不行
-        rand_page = random.randint(1, int(page_number))
-        # 获取某一期
-        index_url = "https://fuliba2021.net/flhz/page/" + str(rand_page)
-        html = etree.HTML(get_response(index_url).decode())
-        total = html.xpath("//article//h2//@href")
-        rand_index = random.choice(total)
-        # 获取页码
-        page_index = \
-            etree.HTML(get_response(rand_index).decode()).xpath("/html/body/section/div[1]/div/div[2]//text()")[-1]
-        # print("----------", page_index, len(page_index))
-        # 获取图片
-        page_m = rand_index + "/" + page_index
-        print("html:", page_m)
-        pics = etree.HTML(get_response(page_m).decode())
-        pics_xpath = pics.xpath("/html/body/section/div[1]/div/article/p[1]/img/@src")
-        try:
-            pic_url = random.choice(pics_xpath)
-            print("pic_url:", pic_url)
-        except:
-            print("pic_url为空")
-            print(pics_xpath)
-
-        if pic_url != "":
-            s = requests.get(pic_url, headers=fl_headers, verify=False, timeout=3)
-            response_code = s.status_code
-            result = s.url
-            if str(result).endswith("FileDeleted") or str(result).endswith("101") or response_code != 200:
-                pic_url = ""
-                print("文件不存在，重新找")
-                print(response_code)
-    return pic_url
-
-print(get_rPic())
