@@ -99,12 +99,12 @@ async def get_seasonInfo():
             awayTeam = game["awayTeam"]  # 客场信息
             nature = await transfer_time(profile["utcMillis"])
             # print(boxscore["status"])
-            if boxscore["status"] == "0":
-                scores.append("⬤  {0} vs {1} {5}  实时比分 {2}:{3} 比赛时间 {4}".format(homeTeam["profile"]["displayAbbr"],
+            if boxscore["status"] == "2":
+                scores.append("⬤  {0} vs {1}\n {2}:{3} {5}剩余时间 {4}".format(homeTeam["profile"]["displayAbbr"],
                                                                                 awayTeam["profile"]["displayAbbr"],
                                                                                 boxscore["homeScore"],
                                                                                 boxscore["awayScore"],
-                                                                                boxscore["gameLength"],
+                                                                                boxscore["periodClock"],
                                                                                 boxscore["statusDesc"]))
     print(scores)
     if len(scores) == 0:
