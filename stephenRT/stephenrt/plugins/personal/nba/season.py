@@ -110,7 +110,7 @@ async def get_seasonInfo():
             # print(boxscore["status"])
             if boxscore["status"] == "2":
                 boxscore = await now_score(gameId)
-                scores.append("⬤  {0} vs {1}  ({5} {4})\n 比分：{2}:{3}".format(homeTeam["profile"]["displayAbbr"],
+                scores.append("⬤  (主){0} vs {1}  ({5} {4})\n 比分：{2}:{3}".format(homeTeam["profile"]["displayAbbr"],
                                                                                awayTeam["profile"]["displayAbbr"],
                                                                                boxscore["homeScore"],
                                                                                boxscore["awayScore"],
@@ -164,7 +164,7 @@ async def live_noti():
                 elif boxscore["status"] != "1" and status not in livelist and int(
                         profile["utcMillis"]) > first_time * 1000:
                     livelist.append(status)
-                    msg += ("⬤  {0} vs {1}  ({5} {4})\n 比分：{2}:{3}".format(homeTeam["profile"]["displayAbbr"],
+                    msg += ("⬤  (主){0} vs {1}  ({5} {4})\n 比分：{2}:{3}".format(homeTeam["profile"]["displayAbbr"],
                                                                              awayTeam["profile"]["displayAbbr"],
                                                                              boxscore["homeScore"],
                                                                              boxscore["awayScore"],
