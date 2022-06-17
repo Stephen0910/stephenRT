@@ -30,7 +30,7 @@ v_url = "https://api.linhun.vip/api/Littlesistervideo?type=json"
 
 # names = ["Dream丶狗", "a824683653"]
 # names = ["宁心之殇", "你好尹天仇", "晴天眼神", "上海康恒", "再见柳飘飘", "求坑丶", "CG控", "小灰灰居然", "a824683653"]
-names = ["宁心之殇", "你好尹天仇", "晴天眼神", "上海康恒", "再见柳飘飘", "求坑丶"]
+names = ["宁心之殇", "你好尹天仇", "晴天眼神", "上海康恒", "再见柳飘飘", "求坑丶", "嘴很硬啊丶"]
 
 d_headers = {
     "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9",
@@ -324,8 +324,8 @@ async def game_info():
             if len(omg_msg) > 1:
                 print("send the omg msg--------------------------------------------------------------------------")
                 try:
-                    # await bot.send_group_msg(group_id=group, message=omg_msg)
-                    await bot.send_private_msg(user_id=281016636, message=omg_msg)
+                    await bot.send_group_msg(group_id=group, message=omg_msg)
+                    # await bot.send_private_msg(user_id=281016636, message=omg_msg)
                     # await bot.send_private_msg(user_id=281016636, message=o_msg)
                 except Exception as e:
                     await bot.send_private_msg(user_id=281016636, message="发送错误:" + str(e))

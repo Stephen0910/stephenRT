@@ -158,7 +158,7 @@ async def live_noti():
                 awayTeam = game["awayTeam"]  # 客场信息
                 nature = await transfer_time(profile["utcMillis"])
                 gameId = profile["gameId"]
-                status = str(gameId) + boxscore["status"]
+                status = str(gameId) + ":" +boxscore["status"]
                 if boxscore["status"] == "1":
                     print("{0}未开始".format(gameId))
                     continue
@@ -174,7 +174,7 @@ async def live_noti():
 
                     await bot.send_private_msg(user_id=281016636, message=msg)
                 else:
-                    print("已经播报过了")
+                    print("不播报:", status)
 
 
     else:
