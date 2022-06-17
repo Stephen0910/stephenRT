@@ -227,6 +227,12 @@ print("first_time:", first_time)
 time_list = [first_time]
 trigger = 1
 
+async def get_response(url):
+    with requests.get(url, verify=False, timeout=3) as session:
+        response = json.loads(session.content)
+        return response
+
+
 @matcher.handle()
 async def game_info():
     global trigger
@@ -261,9 +267,10 @@ async def game_info():
                 new_id, g_source)
             source_url = "https://cdn.09game.com/resources/game_skill/"
             omg_spend = int(data["time_length"]) // 60 + 1
-            response = requests.get(id_url, verify=False, timeout=3)
-            detail = json.loads(response.content)
-            response.close()
+            # response = requests.get(id_url, verify=False, timeout=3)
+            # detail = json.loads(response.content)
+            # response.close()
+            detail = await get_response(id_url)
             # print(json.dumps(detail))
             users = 0
             for data in detail["data"]:
@@ -368,9 +375,10 @@ async def game_info():
             id_url = "https://score.09game.com/RPG/GamePerformanceListJson?GameTypeID=142&gameid={0}&gamesource=".format(
                 new_id)
             dg_spend = int(dg_data["time_length"]) // 60 + 1
-            response = requests.get(id_url, verify=False, timeout=3)
-            dg_detail = json.loads(response.content)
-            response.close()
+            # response = requests.get(id_url, verify=False, timeout=3)
+            # dg_detail = json.loads(response.content)
+            dg_detail = await get_response(id_url)
+            # response.close()
             for data in dg_detail["data"]:
                 if data["user_name"] in ids.keys():
                     # 图片
