@@ -157,8 +157,11 @@ async def video_func(x: dict = Depends(depend)):
     if int(x["uid"]) in players:
         send = 0
         while send == 0:
-            video_url = await get_video()
-            pic_file = MessageSegment.video(file=video_url)
+            try:
+                video_url = await get_video()
+                pic_file = MessageSegment.video(file=video_url)
+            except Exception as e:
+                await video.finish("获取失败:"+str(e))
             try:
                 await video.send(message=pic_file)
                 send = 1

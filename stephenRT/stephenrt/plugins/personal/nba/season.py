@@ -147,12 +147,12 @@ async def live_noti():
                 elif boxscore["status"] != "1" and status not in livelist and int(
                         profile["utcMillis"]) > first_time * 1000:
                     livelist.append(status)
-                    msg += "⬤  {0} vs {1} {5}  实时比分 {2}:{3} 比赛时间 {4}".format(homeTeam["profile"]["displayAbbr"],
+                    msg += "⬤  {0} vs {1} {5}  实时比分 {2}:{3} 剩余时间 {4}".format(homeTeam["profile"]["displayAbbr"],
                                                                              awayTeam["profile"]["displayAbbr"],
                                                                              boxscore["homeScore"],
                                                                              boxscore["awayScore"],
                                                                              boxscore["gameLength"],
-                                                                             boxscore["statusDesc"])
+                                                                             boxscore["periodClock"])
 
                     await bot.send_private_msg(user_id=281016636, message=msg)
                 else:

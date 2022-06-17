@@ -39,4 +39,17 @@ import urllib
 #   page_html = etree.HTML(session.text)
 #   src = page_html.xpath("/html/body/div[2]//@src")[0]
 #   print(src)
+import subprocess
+
+from infi.devicemanager import DeviceManager
+
+dm = DeviceManager()
+dm.root.rescan()
+devices = dm.all_devices
+for device in devices:
+    for i in device.children:
+        if "Android Composite ADB Interface" in str(i):
+            print("Android:", device.children)
+        if "Apple Mobile Device USB Composite Device" in str(i):
+            print("iOS:", device.children)
 
