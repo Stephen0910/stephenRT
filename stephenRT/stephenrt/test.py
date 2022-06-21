@@ -40,29 +40,13 @@ import urllib
 #   src = page_html.xpath("/html/body/div[2]//@src")[0]
 #   print(src)
 import subprocess
+import re
 
-import requests
-
-url = "https://china.nba.cn/stats2/season/schedule.json?countryCode=CN&days=7&locale=zh_CN&tz=%2B8"
-
-payload={}
-headers = {
-  'authority': 'china.nba.cn',
-  'accept': 'application/json, text/plain, */*',
-  'accept-language': 'zh-CN,zh;q=0.9,en-GB;q=0.8,en-US;q=0.7,en;q=0.6',
-  'cookie': 'i18next=zh_CN; locale=zh_CN; AMCVS_248F210755B762187F000101%40AdobeOrg=1; countryCode=CN; s_cc=true; privacyV2=true; s_sq=%5B%5BB%5D%5D; sensorsdata2015jssdkcross=%7B%22distinct_id%22%3A%22181662f9fd3e-01dbf86a314dbf9-26021b51-2073600-181662f9fd4ca%22%2C%22first_id%22%3A%22%22%2C%22props%22%3A%7B%22%24latest_traffic_source_type%22%3A%22%E7%9B%B4%E6%8E%A5%E6%B5%81%E9%87%8F%22%2C%22%24latest_search_keyword%22%3A%22%E6%9C%AA%E5%8F%96%E5%88%B0%E5%80%BC_%E7%9B%B4%E6%8E%A5%E6%89%93%E5%BC%80%22%2C%22%24latest_referrer%22%3A%22%22%7D%2C%22identities%22%3A%22eyIkaWRlbnRpdHlfY29va2llX2lkIjoiMTgxNjYyZjlmZDNlLTAxZGJmODZhMzE0ZGJmOS0yNjAyMWI1MS0yMDczNjAwLTE4MTY2MmY5ZmQ0Y2EifQ%3D%3D%22%2C%22history_login_id%22%3A%7B%22name%22%3A%22%22%2C%22value%22%3A%22%22%7D%2C%22%24device_id%22%3A%22181662f9fd3e-01dbf86a314dbf9-26021b51-2073600-181662f9fd4ca%22%7D; AMCV_248F210755B762187F000101%40AdobeOrg=-1712354808%7CMCIDTS%7C19161%7CMCMID%7C64061681013499296691299490953705543050%7CMCAAMLH-1656042813%7C11%7CMCAAMB-1656042813%7CRKhpRz8krg2tLO6pguXWp5olkAcUniQYPHaMWWgdJ3xzPWQmdj0y%7CMCOPTOUT-1655445213s%7CNONE%7CMCAID%7CNONE%7CvVersion%7C4.3.0; tp=2629; s_ppv=cn%253Astats%253Aplayers%253Astephen_curry%253Astats%2C36%2C36%2C937; s_gpv=no%20value; nbachina=MTY1NTQ0NDc2M3xrYXo5MFBnakpuS3N3NEdhTUVNenczTU9WRERoUnhNSVdua1B4d3dZaDVKNkJvTlQzTXprUm9LSTQ2NXFnYUJlNUNRYUNaY2V6TEd0eFFjVVB5aElxRFNvRFFONVJSR1l88A287OCivnKcLqlxhL4pij-LAmD0IF3bIITY7jica78=',
-  'if-none-match': '"2842-49b34a4123c3cff0131190f2a5d396d4dba099a9"',
-  'referer': 'https://china.nba.cn/schedule/',
-  'sec-ch-ua': '" Not A;Brand";v="99", "Chromium";v="102", "Google Chrome";v="102"',
-  'sec-ch-ua-mobile': '?0',
-  'sec-ch-ua-platform': '"Windows"',
-  'sec-fetch-dest': 'empty',
-  'sec-fetch-mode': 'cors',
-  'sec-fetch-site': 'same-origin',
-  'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.0.0 Safari/537.36'
-}
-
-response = requests.request("GET", url, headers=headers, data=payload)
-
-print(response.text)
-
+with requests.get("http://tools.liumingye.cn/music/?page=audioPage&type=migu&name=将军") as session:
+    response = session.text
+    print(response)
+    page_html = etree.HTML(response)
+    path = "/html/body/div[2]/div[2]/div[3]/div[3]"
+    path1 = "/html/body/div[2]/div[2]/div[3]/div[3]/div/div"
+    data_element = page_html.xpath(path1)
+    print(data_element)

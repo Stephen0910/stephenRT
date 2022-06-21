@@ -16,6 +16,7 @@ hot_girl = "https://imyshare.com/hot-girl"
 qiqu = "http://tool.qiquhao.com/jsdy/"
 suiji = "https://jiejie.de/xjj//get/get0.php"
 suiji1 = "https://mm.diskgirl.com/get/get1.php"
+xjj = "https://xjiejie.vip/"
 
 
 hot_headers = {

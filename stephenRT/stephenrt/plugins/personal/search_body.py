@@ -19,6 +19,7 @@ import urllib, requests, json
 from .dGame import get_rPic
 from nonebot.adapters.onebot.v11.message import MessageSegment
 from nonebot.params import Depends
+from .p_diff import *
 
 players = [281016636, 659738900, 158709003, 726408753]
 v_url = "https://api.linhun.vip/api/Littlesistervideo?type=json"
@@ -128,7 +129,7 @@ async def depend(event: MessageEvent):  # 2.编写依赖函数
     return {"uid": event.get_user_id(), "nickname": event.sender.nickname}
 
 
-picture = on_command("st", rule=to_me(), aliases={"图", "pic"}, priority=1)
+picture = on_command("st", rule=to_me(), aliases={"setu", "pic"}, priority=1)
 
 
 @picture.handle()
@@ -136,7 +137,7 @@ async def get_pic(x: dict = Depends(depend)):
     print("pId:", x["uid"])
     if int(x["uid"]) in players:
         try:
-            pic_url = await get_rPic()
+            pic_url = await st1()
         except Exception as e:
             print("获取图片失败：", str(e))
             await picture.finish("图片获取失败")
