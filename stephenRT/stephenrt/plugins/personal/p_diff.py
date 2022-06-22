@@ -38,23 +38,20 @@ async def st1():
         "num": 2,
         "proxy": "i.pixiv.re"
     }
-    with requests.post(url=u1, json=data, headers=headers) as session:
+    with requests.post(url=u1, json=data, headers=headers, timeout=5) as session:
         response = json.loads(session.text)
         urls = []
         if response["error"] == "":
             for i in response["data"]:
-                # urls.append(i["urls"]["original"].replace("i.pixiv.cat", "i.pixiv.re"))
-                urls.append(i["urls"]["original"])
+                urls.append(i["urls"]["original"].replace("i.pixiv.cat", "i.pixiv.re"))
+                # urls.append(i["urls"]["original"])
             return urls[0]
         else:
             return response["error"]
+
 
 async def st2():
     with requests.get(u2) as session:
         response = json.loads(session.text)
         if response:
             return response["pic"][0]
-
-
-if __name__ == '__main__':
-    pass
