@@ -142,10 +142,13 @@ async def get_pic(x: dict = Depends(depend)):
             # print("获取图片失败：", str(e))
             await picture.finish("图片获取失败" + str(e))
         image = MessageSegment.image(pic_url)
+
         try:
+            print("发送中")
             await picture.finish(image)
-        except:
-            await picture.finish("图片发送失败")
+        except Exception as e:
+            if str(e) != "":
+                await picture.finish("图片发送失败" + str(e))
     else:
         print("无法操作")
         await picture.finish()

@@ -35,7 +35,7 @@ headers = {
 async def st1():
     data = {
         "r18": 1,
-        "num": 2,
+        "num": 1,
         "proxy": "i.pixiv.re"
     }
     with requests.post(url=u1, json=data, headers=headers, timeout=5) as session:
