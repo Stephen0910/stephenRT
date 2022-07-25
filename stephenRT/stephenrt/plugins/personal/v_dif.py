@@ -24,7 +24,6 @@ hot_headers = {
     "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.5005.63 Safari/537.36"
     }
 with requests.get(hot_girl, headers=hot_headers) as session:
-
     print(session.text)
     page_html = etree.HTML(session.text)
     src = page_html.xpath("/html/body/div[2]//@src")[0]

@@ -98,7 +98,7 @@ if ip == "10.10.10.8":
     pgsql = cfg
     save_sql = True
     free = False
-    debug = True
+    debug = False
 
 
 def isChinese(ch):
