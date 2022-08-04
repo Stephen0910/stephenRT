@@ -14,10 +14,12 @@ from bs4 import BeautifulSoup
 import requests, socket
 import json
 import time
+from urllib import parse
 from nonebot import on_command
 from nonebot.rule import to_me
 from nonebot import get_bot
 from nonebot import on_metaevent
+from nonebot.adapters.onebot.v11.message import MessageSegment
 
 k_url = "https://act.quark.cn/apps/qknewshours/routes/hot_news"
 detail = "https://iflow-news.quark.cn/r/quark-iflow/landing/?item_id="
@@ -109,45 +111,60 @@ async def news_list():
         return full
 
 
+async def get_news():
+    with requests.get(url=k_url, headers=k_headers) as session:
+        soup = BeautifulSoup(session.content, "html.parser")
+        all_contents = soup.find_all("div", attrs={"class": "rax-view-v2 aiticle-list-box"})  # 所有内容
+        times_soup = all_contents[0].find_all(name="div", attrs={"class": "rax-view-v2 date"})
+        some = all_contents[0].find_all(name="div", attrs={"data-c": "news"})
+        news = [x["data-exposure-extra"] for x in some]
+        every = all_contents[0].find_all(name="div", attrs={"class": "rax-view-v2 article-item-content"})
+        imgs = [img.find_all("img")[0]["src"] if re.search("http", img.find_all("img")[0]["src"]) else None for img in
+                every]
+        times = [time.text for time in times_soup]
+        urls = [parse.unquote(json.loads(url)["url"]) for url in news]
+        source_names = [(json.loads(source_name)["source_name"]) for source_name in news]
+        titles = [(json.loads(title)["title"]) for title in news]
+        return [times, titles, source_names, urls, imgs]
+
+
 news = on_metaevent()
 # first_time = 1659582303
 first_time = int(time.time())
 trigger = 1
-time_list = [first_time]
 
 ip = get_host_ip()
 if ip == "10.10.10.8":
-    # first_time = 1649837159
+    # first_time = 1659593905
     first_time = int(time.time())
     group = 959822848
 else:
-    # first_time = 1649837159
-    first_time = int(time.time())
+    first_time = 1659600925
+    # first_time = int(time.time())
     group = 755489024
 
 
 @news.handle()
 async def news_report():
-    global trigger, time_list
+    global trigger, first_time
     msg = ""
+    print("kuake trigger: {0}".format(trigger))
     if trigger % 6 == 0:
         bot = get_bot()
-        news = await news_list()
-        print(news)
-
+        # news = await news_list()
+        news = await get_news()
         for i in range(9):
-            if timestamp(news[i]) > time_list[-1]:
-                detail_url = detail + str(news[i + 30])
-                print(detail_url)
-                msg += "{0}\n{2}【{1}】\n{3}\n".format(news[i], news[i + 20], news[i + 10], detail_url)
+            if timestamp(news[0][i]) > first_time:
+                pic = MessageSegment.image(news[4][i])
+                msg = msg + "【{0} {2}】{1}".format(news[0][i], news[1][i], news[2][i]) + pic + "{0}\n".format(
+                    news[3][i])
             else:
                 break
-        if timestamp(news[0]) > time_list[-1]:
-            time_list.append(timestamp(news[0]))
-        # time_list = list(set(time_list))
-        print("msg")
+        if timestamp(news[0][0]) > first_time:
+            first_time = timestamp(news[0][0])
+
         print(msg)
-        print(time_list)
+
     if msg != "":
         # await bot.send_private_msg(user_id=281016636, message=msg)
         try:

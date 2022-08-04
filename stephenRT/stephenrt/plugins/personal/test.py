@@ -9,8 +9,10 @@
 # @Copyright:   (c) StephenZ 2022
 # @Licence  :     <@2022>
 
-import requests
+import requests, json
 from bs4 import BeautifulSoup
+from urllib import parse
+import re
 
 k_url = "https://act.quark.cn/apps/qknewshours/routes/hot_news"
 k_headers = {
@@ -34,38 +36,23 @@ link = "https://iflow-news.quark.cn/r/quark-iflow?&item_id="
 
 def news_list():
     with requests.get(url=k_url, headers=k_headers) as session:
-        full = []
         soup = BeautifulSoup(session.content, "html.parser")
-        times = soup.find_all(name='div', attrs={"class": "rax-view-v2 date"})
-        # month = soup.find(name="div", attrs={"class": "rax-view-v2 schedule-month"})
-        # day = soup.find_all(name="div", attrs={"class": "rax-view-v2 schedule-day"})
-        # print(day[-1].text)
+        all_contents = soup.find_all("div", attrs={"class": "rax-view-v2 aiticle-list-box"})  # 所有内容
+        times_soup = all_contents[0].find_all(name="div", attrs={"class": "rax-view-v2 date"})
+        some = all_contents[0].find_all(name="div", attrs={"data-c": "news"})
+        news = [x["data-exposure-extra"] for x in some]
+        every = all_contents[0].find_all(name="div", attrs={"class": "rax-view-v2 article-item-content"})
+        imgs = [img.find_all("img")[0]["src"] if re.search("http", img.find_all("img")[0]["src"]) else None for img in every ]
+        times = [time.text for time in times_soup]
+        urls = [parse.unquote(json.loads(url)["url"]) for url in news]
+        source_names = [(json.loads(source_name)["source_name"]) for source_name in news]
+        titles = [(json.loads(title)["title"]) for title in news]
+        print(times)
+        # print(urls)
+        # print(source_names)
+        # print(titles)
 
-        for p in times:
-            p_time = p.string
-            full.append(p_time)
 
-        titles = soup.find_all(name="div", attrs={"class": "rax-view-v2 article-item-title"})
-        for i in titles:
-            full.append(i.string)
-
-        # contents = soup.find_all(name="div", attrs={"class": "rax-view-v2 article-item-text", "style": ""})
-        # for index, i in enumerate(contents):
-        #     if i.string != None:
-        #         full.append(i.string)
-
-        sources = soup.find_all(name="div", attrs={"class": "rax-view-v2 article-item-source"})
-        for source in sources:
-            print(source.text[3:])
-            full.append(source.text)
-
-        # id = soup.find_all(name="div", attrs={"class": "rax-view-v2 article-item-container", "style": ""})
-        ids = soup.find_all(attrs={"class": "rax-view-v2 article-item-container", "style": ""})
-        for id in ids:
-            full.append(id["observeid"])
-
-        print(full)
-        # print(full[41])
 
 
 news_list()
