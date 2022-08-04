@@ -20,6 +20,7 @@ from nonebot.rule import to_me
 from nonebot import get_bot
 from nonebot import on_metaevent
 from nonebot.adapters.onebot.v11.message import MessageSegment
+import pyshorteners as ps
 
 k_url = "https://act.quark.cn/apps/qknewshours/routes/hot_news"
 detail = "https://iflow-news.quark.cn/r/quark-iflow/landing/?item_id="
@@ -156,7 +157,8 @@ async def news_report():
         for i in range(9):
             if timestamp(news[0][i]) > first_time:
                 pic = MessageSegment.image(news[4][i])
-                msg = msg + "【{0} {2}】{1}".format(news[0][i], news[1][i], news[2][i]) + pic + "{0}\n".format(
+                url = ps.Shortener().clckru.short(news[2][i])
+                msg = msg + "【{0} {2}】{1}\n".format(news[0][i], news[1][i], url) + pic + "{0}\n".format(
                     news[3][i])
             else:
                 break

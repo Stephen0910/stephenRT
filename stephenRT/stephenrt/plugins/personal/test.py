@@ -48,11 +48,15 @@ def news_list():
         source_names = [(json.loads(source_name)["source_name"]) for source_name in news]
         titles = [(json.loads(title)["title"]) for title in news]
         print(times)
-        # print(urls)
-        # print(source_names)
+        print(urls)
+        print(source_names)
         # print(titles)
 
 
 
 
-news_list()
+import pyshorteners as ps
+
+url = "https://iflow.uc.cn/webview/news?app=quarkdaily-iflow&aid=13672423774339871379&cid=0&zzd_from=quarkdaily-iflow&uc_param_str=dndsfrvesvntnwpfgicp&recoid=&rd_type=reco&sp_gz=0"
+u = ps.Shortener().clckru.short(url)
+print(u)
