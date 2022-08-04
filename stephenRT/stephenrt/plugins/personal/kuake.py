@@ -9,14 +9,12 @@
 # @Copyright:   (c) StephenZ 2022
 # @Licence  :     <@2022>
 
-import requests, re, time, datetime
+import re, datetime
 from bs4 import BeautifulSoup
 import requests, socket
 import json
-import time
+import time, random
 from urllib import parse
-from nonebot import on_command
-from nonebot.rule import to_me
 from nonebot import get_bot
 from nonebot import on_metaevent
 from nonebot.adapters.onebot.v11.message import MessageSegment
@@ -120,8 +118,17 @@ async def get_news():
         some = all_contents[0].find_all(name="div", attrs={"data-c": "news"})
         news = [x["data-exposure-extra"] for x in some]
         every = all_contents[0].find_all(name="div", attrs={"class": "rax-view-v2 article-item-content"})
-        imgs = [img.find_all("img")[0]["src"] if re.search("http", img.find_all("img")[0]["src"]) else None for img in
-                every]
+        # imgs = [img.find_all("img")[0]["src"] if re.search("http", img.find_all("img")[0]["src"]) else None for img in
+                # every]
+        every = all_contents[0].find_all(name="div", attrs={"class": "rax-view-v2 article-item-inner-text graphics-mode"})
+        imgs = []
+        for item in every:
+            try:
+                img = item.find_all("img")[0]["src"]
+            except:
+                img = ""
+            finally:
+                imgs.append(img)
         times = [time.text for time in times_soup]
         urls = [parse.unquote(json.loads(url)["url"]) for url in news]
         source_names = [(json.loads(source_name)["source_name"]) for source_name in news]
@@ -140,7 +147,7 @@ if ip == "10.10.10.8":
     first_time = int(time.time())
     group = 959822848
 else:
-    first_time = 1659600925
+    first_time = 1659603625
     # first_time = int(time.time())
     group = 755489024
 
@@ -150,16 +157,16 @@ async def news_report():
     global trigger, first_time
     msg = ""
     print("kuake trigger: {0}".format(trigger))
-    if trigger % 6 == 0:
+    a = random.randint(5, 6)
+    if trigger % a == 0:
         bot = get_bot()
         # news = await news_list()
         news = await get_news()
         for i in range(9):
             if timestamp(news[0][i]) > first_time:
-                pic = MessageSegment.image(news[4][i])
-                url = ps.Shortener().clckru.short(news[2][i])
-                msg = msg + "【{0} {2}】{1}\n".format(news[0][i], news[1][i], url) + pic + "{0}\n".format(
-                    news[3][i])
+                pic = MessageSegment.image(news[4][i]) if news[4][i] != "" else ""
+                # url = ps.Shortener().clckru.short(news[3][i]) # 无法识别
+                msg = msg + "【{0} {1}】{2}\n {3}".format(news[0][i], news[2][i], news[1][i], news[3][i]) + pic + "\n"
             else:
                 break
         if timestamp(news[0][0]) > first_time:

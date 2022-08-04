@@ -12,7 +12,7 @@
 import requests, json
 from bs4 import BeautifulSoup
 from urllib import parse
-import re
+import re, random
 
 k_url = "https://act.quark.cn/apps/qknewshours/routes/hot_news"
 k_headers = {
@@ -41,22 +41,39 @@ def news_list():
         times_soup = all_contents[0].find_all(name="div", attrs={"class": "rax-view-v2 date"})
         some = all_contents[0].find_all(name="div", attrs={"data-c": "news"})
         news = [x["data-exposure-extra"] for x in some]
-        every = all_contents[0].find_all(name="div", attrs={"class": "rax-view-v2 article-item-content"})
-        imgs = [img.find_all("img")[0]["src"] if re.search("http", img.find_all("img")[0]["src"]) else None for img in every ]
+        every = all_contents[0].find_all(name="div", attrs={"class": "rax-view-v2 article-item-inner-text graphics-mode"})
+        imgs = []
+        for item in every:
+            try:
+                img = item.find_all("img")[0]["src"]
+            except:
+                img = ""
+            finally:
+                imgs.append(img)
+
+
+
+
+        # imgs = [img.find_all("img")[0]["src"] if re.search("http", img.find_all("img")[0]["src"]) else None for img in every]
+
+
+
+
+
+
+
         times = [time.text for time in times_soup]
         urls = [parse.unquote(json.loads(url)["url"]) for url in news]
         source_names = [(json.loads(source_name)["source_name"]) for source_name in news]
         titles = [(json.loads(title)["title"]) for title in news]
-        print(times)
-        print(urls)
-        print(source_names)
-        # print(titles)
+        # print(times)
+        # print(urls)
+        # print(source_names)
+        print(titles)
+        # for index, i in enumerate(imgs):
+        #     print(index, i)
 
 
 
 
-import pyshorteners as ps
-
-url = "https://iflow.uc.cn/webview/news?app=quarkdaily-iflow&aid=13672423774339871379&cid=0&zzd_from=quarkdaily-iflow&uc_param_str=dndsfrvesvntnwpfgicp&recoid=&rd_type=reco&sp_gz=0"
-u = ps.Shortener().clckru.short(url)
-print(u)
+news_list()
