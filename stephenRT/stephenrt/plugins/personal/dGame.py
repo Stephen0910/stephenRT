@@ -113,7 +113,7 @@ async def get_response(url):
 async def get_rPic():
     # 获取页数
     page_url = "https://fuliba2021.net/flhz"
-    print("get_rPic")
+    # print("get_rPic")
     res = await get_response(page_url).decode()
     page_html = etree.HTML(res)
     # page = page_html.xpath("/html/body/section/div[1]/div/div[2]/ul/li[8]/span//text()")

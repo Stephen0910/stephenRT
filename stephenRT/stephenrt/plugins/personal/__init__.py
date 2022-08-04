@@ -39,6 +39,7 @@ if ip == "10.10.10.8":
     from .dm_pro.live import *
     from .dm_pro.giftNoti import *
     from .nba.season import *
+    from .kuake import *
 
 
 
