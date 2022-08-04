@@ -98,6 +98,10 @@ async def news_list():
 
         #  img 暂停
 
+        sources = soup.find_all(name="div", attrs={"class": "rax-view-v2 article-item-source"})
+        for source in sources:
+            full.append(source.text[3:])
+
         ids = soup.find_all(attrs={"class": "rax-view-v2 article-item-container", "style": ""})
         for id in ids:
             full.append(id["observeid"])
@@ -133,9 +137,9 @@ async def news_report():
 
         for i in range(9):
             if timestamp(news[i]) > time_list[-1]:
-                detail_url = detail + str(news[i + 20])
+                detail_url = detail + str(news[i + 30])
                 print(detail_url)
-                msg += "{0}\n{1}\n{2}\n\n".format(news[i], news[i + 10], detail_url)
+                msg += "{2}【{1}】-{0}\n{3}\n".format(news[i], news[i + 20], news[i + 10], detail_url)
             else:
                 break
         if timestamp(news[0]) > time_list[-1]:

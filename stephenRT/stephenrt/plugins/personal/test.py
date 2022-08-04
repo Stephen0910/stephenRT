@@ -49,10 +49,15 @@ def news_list():
         for i in titles:
             full.append(i.string)
 
-        contents = soup.find_all(name="div", attrs={"class": "rax-view-v2 article-item-text", "style": ""})
-        for index, i in enumerate(contents):
-            if i.string != None:
-                full.append(i.string)
+        # contents = soup.find_all(name="div", attrs={"class": "rax-view-v2 article-item-text", "style": ""})
+        # for index, i in enumerate(contents):
+        #     if i.string != None:
+        #         full.append(i.string)
+
+        sources = soup.find_all(name="div", attrs={"class": "rax-view-v2 article-item-source"})
+        for source in sources:
+            print(source.text[3:])
+            full.append(source.text)
 
         # id = soup.find_all(name="div", attrs={"class": "rax-view-v2 article-item-container", "style": ""})
         ids = soup.find_all(attrs={"class": "rax-view-v2 article-item-container", "style": ""})
@@ -60,7 +65,7 @@ def news_list():
             full.append(id["observeid"])
 
         print(full)
-        print(full[41])
+        # print(full[41])
 
 
 news_list()
