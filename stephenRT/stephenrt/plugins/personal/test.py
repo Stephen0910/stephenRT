@@ -60,6 +60,7 @@ def news_list():
             full.append(id["observeid"])
 
         print(full)
+        print(full[41])
 
 
 news_list()

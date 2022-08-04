@@ -11,7 +11,7 @@
 
 import requests, re, time, datetime
 from bs4 import BeautifulSoup
-import requests
+import requests, socket
 import json
 import time
 from nonebot import on_command
@@ -38,6 +38,21 @@ k_headers = {
     'upgrade-insecure-requests': '1',
     'user-agent': 'Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Mobile Safari/537.36'
 }
+
+
+def get_host_ip():
+    """
+    查询本机ip地址
+    :return: ip
+    """
+    try:
+        s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+        s.connect(('8.8.8.8', 80))
+        ip = s.getsockname()[0]
+    finally:
+        s.close()
+
+    return ip
 
 
 def timestamp(string):
@@ -75,10 +90,11 @@ async def news_list():
         for i in titles:
             full.append(i.string)
 
-        contents = soup.find_all(name="div", attrs={"class": "rax-view-v2 article-item-text", "style": ""})
-        for index, i in enumerate(contents):
-            if i.string != None:
-                full.append(i.string)
+        # content 有bug
+        # contents = soup.find_all(name="div", attrs={"class": "rax-view-v2 article-item-text", "style": ""})
+        # for index, i in enumerate(contents):
+        #     if i.string != None:
+        #         full.append(i.string)
 
         #  img 暂停
 
@@ -95,6 +111,16 @@ first_time = int(time.time())
 trigger = 1
 time_list = [first_time]
 
+ip = get_host_ip()
+if ip == "10.10.10.8":
+    # first_time = 1649837159
+    first_time = int(time.time())
+    group = 959822848
+else:
+    # first_time = 1649837159
+    first_time = int(time.time())
+    group = 755489024
+
 
 @news.handle()
 async def news_report():
@@ -107,7 +133,8 @@ async def news_report():
 
         for i in range(9):
             if timestamp(news[i]) > time_list[-1]:
-                detail_url = detail + str(news[i + 30])
+                detail_url = detail + str(news[i + 20])
+                print(detail_url)
                 msg += "{0}\n{1}\n{2}\n\n".format(news[i], news[i + 10], detail_url)
             else:
                 break
@@ -120,7 +147,7 @@ async def news_report():
     if msg != "":
         # await bot.send_private_msg(user_id=281016636, message=msg)
         try:
-            await bot.send_group_msg(group_id=959822848, message=msg)
+            await bot.send_group_msg(group_id=group, message=msg)
         except Exception as e:
             await bot.send_private_msg(user_id=281016636, message=msg + str(e))
     trigger += 1
