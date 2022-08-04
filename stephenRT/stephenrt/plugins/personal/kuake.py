@@ -139,7 +139,7 @@ async def news_report():
             if timestamp(news[i]) > time_list[-1]:
                 detail_url = detail + str(news[i + 30])
                 print(detail_url)
-                msg += "{2}【{1}】-{0}\n{3}\n".format(news[i], news[i + 20], news[i + 10], detail_url)
+                msg += "{0}\n{2}【{1}】\n{3}\n".format(news[i], news[i + 20], news[i + 10], detail_url)
             else:
                 break
         if timestamp(news[0]) > time_list[-1]:

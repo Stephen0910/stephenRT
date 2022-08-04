@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="BookmarkManager">
+    <bookmark url="file://$PROJECT_DIR$/stephenRT/stephenrt/plugins/personal/music.py" line="31" mnemonic="9" />
+  </component>
   <component name="ChangeListManager">
     <list default="true" id="3047aada-47d5-4ad8-a368-9e15af7b4bc7" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/stephenRT/stephenrt/plugins/personal/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/stephenRT/stephenrt/plugins/personal/__init__.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/stephenRT/stephenrt/plugins/personal/kuake.py" beforeDir="false" afterPath="$PROJECT_DIR$/stephenRT/stephenrt/plugins/personal/kuake.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/stephenRT/stephenrt/plugins/personal/test.py" beforeDir="false" afterPath="$PROJECT_DIR$/stephenRT/stephenrt/plugins/personal/test.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -20,8 +21,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/stephenRT/stephenrt/plugins/personal/kuake.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="855">
-              <caret line="102" column="38" selection-start-line="102" selection-start-column="38" selection-end-line="102" selection-end-column="38" />
+            <state relative-caret-position="345">
+              <caret line="145" column="48" lean-forward="true" selection-start-line="145" selection-start-column="48" selection-end-line="145" selection-end-column="48" />
               <folding>
                 <element signature="e#233#268#0" expanded="true" />
               </folding>
@@ -56,7 +57,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/stephenRT/stephenrt/plugins/personal/test.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="300">
+            <state relative-caret-position="375">
               <caret line="59" column="35" selection-start-line="59" selection-start-column="35" selection-end-line="59" selection-end-column="35" />
               <folding>
                 <element signature="e#232#247#0" expanded="true" />
@@ -69,7 +70,7 @@
         <entry file="file://$PROJECT_DIR$/stephenRT/stephenrt/plugins/personal/__init__.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="495">
-              <caret line="33" column="20" lean-forward="true" selection-start-line="33" selection-start-column="20" selection-end-line="33" selection-end-column="20" />
+              <caret line="33" column="22" lean-forward="true" selection-start-line="33" selection-start-column="22" selection-end-line="33" selection-end-column="22" />
             </state>
           </provider>
         </entry>
@@ -187,8 +188,8 @@
         <option value="$PROJECT_DIR$/stephenRT/stephenrt/plugins/personal/dm.py" />
         <option value="$USER_HOME$/Desktop/test.py" />
         <option value="$PROJECT_DIR$/stephenRT/stephenrt/plugins/personal/dGame.py" />
-        <option value="$PROJECT_DIR$/stephenRT/stephenrt/plugins/personal/__init__.py" />
         <option value="$PROJECT_DIR$/stephenRT/stephenrt/plugins/personal/test.py" />
+        <option value="$PROJECT_DIR$/stephenRT/stephenrt/plugins/personal/__init__.py" />
         <option value="$PROJECT_DIR$/stephenRT/stephenrt/plugins/personal/kuake.py" />
       </list>
     </option>
@@ -534,7 +535,7 @@
       <workItem from="1658735746160" duration="2037000" />
       <workItem from="1659008494650" duration="2436000" />
       <workItem from="1659498068994" duration="663000" />
-      <workItem from="1659515697105" duration="21603000" />
+      <workItem from="1659515697105" duration="21919000" />
     </task>
     <servers />
   </component>
@@ -547,7 +548,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="1268488000" />
+    <option name="totallyTimeSpent" value="1268804000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -990,16 +991,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/stephenRT/stephenrt/plugins/personal/dGame.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="128">
-          <caret line="218" selection-start-line="218" selection-end-line="225" selection-end-column="21" />
-          <folding>
-            <element signature="e#233#254#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/stephenRT/stephenrt/plugins/personal/nba/season.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="405">
@@ -1010,16 +1001,19 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/stephenRT/stephenrt/plugins/personal/__init__.py">
+    <entry file="file://$PROJECT_DIR$/stephenRT/stephenrt/plugins/personal/dGame.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="495">
-          <caret line="33" column="20" lean-forward="true" selection-start-line="33" selection-start-column="20" selection-end-line="33" selection-end-column="20" />
+        <state relative-caret-position="128">
+          <caret line="218" selection-start-line="218" selection-end-line="225" selection-end-column="21" />
+          <folding>
+            <element signature="e#233#254#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/stephenRT/stephenrt/plugins/personal/test.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="300">
+        <state relative-caret-position="375">
           <caret line="59" column="35" selection-start-line="59" selection-start-column="35" selection-end-line="59" selection-end-column="35" />
           <folding>
             <element signature="e#232#247#0" expanded="true" />
@@ -1027,10 +1021,17 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/stephenRT/stephenrt/plugins/personal/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="495">
+          <caret line="33" column="22" lean-forward="true" selection-start-line="33" selection-start-column="22" selection-end-line="33" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/stephenRT/stephenrt/plugins/personal/kuake.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="855">
-          <caret line="102" column="38" selection-start-line="102" selection-start-column="38" selection-end-line="102" selection-end-column="38" />
+        <state relative-caret-position="345">
+          <caret line="145" column="48" lean-forward="true" selection-start-line="145" selection-start-column="48" selection-end-line="145" selection-end-column="48" />
           <folding>
             <element signature="e#233#268#0" expanded="true" />
           </folding>
