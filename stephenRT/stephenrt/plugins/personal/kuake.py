@@ -150,7 +150,7 @@ if ip == "10.10.10.8":
     first_time = int(time.time())
     group = 959822848
 else:
-    first_time = 1659658036
+    first_time = 1659667001
     # first_time = int(time.time())
     group = 755489024
 
@@ -161,7 +161,7 @@ async def news_report():
     msg = ""
     print("kuake trigger: {0}".format(trigger))
     a = random.randint(5, 6)
-    if trigger % a == 0:
+    if trigger % 6 == 0:
         print("push report")
         bot = get_bot()
         # news = await news_list()
@@ -171,7 +171,7 @@ async def news_report():
                 pic = MessageSegment.image(news[4][i]) if news[4][i] != "" else ""
                 # url = ps.Shortener().clckru.short(news[3][i]) # 无法识别
                 url = base_url + news[5][i]
-                msg = msg + "【{0} {1}】{2}\n {3}".format(news[0][i], news[2][i], news[1][i], url) + pic + "\n"
+                msg = msg + "【{1} {0}】{2}\n {3}".format(news[0][i], news[2][i], news[1][i], url) + pic + "\n"
             else:
                 break
         if timestamp(news[0][0]) > first_time:
