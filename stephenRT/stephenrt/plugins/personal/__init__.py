@@ -28,9 +28,10 @@ def get_host_ip():
 
 # from .dGame import *
 # from .dm_pro.live import *
-from .search_body import *
-from .nba.season import *
-from .kuake import *
+# from .search_body import *
+# from .nba.season import *
+# from .kuake import *
+# from .wPublic import *
 ip = str(get_host_ip())
 
 if ip == "10.10.10.8":
@@ -41,6 +42,7 @@ if ip == "10.10.10.8":
     from .dm_pro.giftNoti import *
     from .nba.season import *
     from .kuake import *
+    # from .wPublic import *
 
 
 

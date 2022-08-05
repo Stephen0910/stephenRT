@@ -160,7 +160,7 @@ async def news_report():
     global trigger, first_time
     msg = ""
     print("kuake trigger: {0}".format(trigger))
-    a = random.randint(5, 6)
+    a = random.randint(5, 6)  # 交替可能很近。
     if trigger % 6 == 0:
         print("push report")
         bot = get_bot()

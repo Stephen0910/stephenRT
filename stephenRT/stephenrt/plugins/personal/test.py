@@ -12,6 +12,7 @@
 import requests, json
 from bs4 import BeautifulSoup
 from urllib import parse
+import base64
 import re, random
 
 k_url = "https://act.quark.cn/apps/qknewshours/routes/hot_news"
@@ -78,4 +79,9 @@ def news_list():
         for url in urls:
             print(url)
 
-news_list()
+
+a = """
+https://mp.weixin.qq.com/s?__biz=MzA4MTg1NzYyNQ==&mid=2652452745&idx=1&sn=bc236e0fa6fbe1af9d7f4912644d1c2b&chksm=84630abfb31483a98dfc4260589c97d68cf6036061a0d1191e2a83ea9f6808787f562e9dd515#rd
+"""
+print(a.split("&chksm")[0])
+
