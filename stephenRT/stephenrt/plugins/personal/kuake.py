@@ -22,6 +22,8 @@ import pyshorteners as ps
 
 k_url = "https://act.quark.cn/apps/qknewshours/routes/hot_news"
 detail = "https://iflow-news.quark.cn/r/quark-iflow/landing/?item_id="
+base_url = "https://iflow.uc.cn/webview/news?app=&aid="
+base = "https://iflow.uczzd.cn/iflow/api/v1/article/aggregation?__t=1659609915000&aggregation_id=16665090098771297825&count=20"
 
 k_headers = {
     'authority': 'act.quark.cn',
@@ -133,7 +135,8 @@ async def get_news():
         urls = [parse.unquote(json.loads(url)["url"]) for url in news]
         source_names = [(json.loads(source_name)["source_name"]) for source_name in news]
         titles = [(json.loads(title)["title"]) for title in news]
-        return [times, titles, source_names, urls, imgs]
+        ids = [json.loads(id["data-exposure-extra"])["id"] for id in some]
+        return [times, titles, source_names, urls, imgs, ids]
 
 
 news = on_metaevent()
@@ -147,7 +150,7 @@ if ip == "10.10.10.8":
     first_time = int(time.time())
     group = 959822848
 else:
-    first_time = 1659603625
+    first_time = 1659658036
     # first_time = int(time.time())
     group = 755489024
 
@@ -159,6 +162,7 @@ async def news_report():
     print("kuake trigger: {0}".format(trigger))
     a = random.randint(5, 6)
     if trigger % a == 0:
+        print("push report")
         bot = get_bot()
         # news = await news_list()
         news = await get_news()
@@ -166,7 +170,8 @@ async def news_report():
             if timestamp(news[0][i]) > first_time:
                 pic = MessageSegment.image(news[4][i]) if news[4][i] != "" else ""
                 # url = ps.Shortener().clckru.short(news[3][i]) # 无法识别
-                msg = msg + "【{0} {1}】{2}\n {3}".format(news[0][i], news[2][i], news[1][i], news[3][i]) + pic + "\n"
+                url = base_url + news[5][i]
+                msg = msg + "【{0} {1}】{2}\n {3}".format(news[0][i], news[2][i], news[1][i], url) + pic + "\n"
             else:
                 break
         if timestamp(news[0][0]) > first_time:

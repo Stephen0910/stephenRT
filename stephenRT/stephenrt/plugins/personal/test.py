@@ -15,6 +15,7 @@ from urllib import parse
 import re, random
 
 k_url = "https://act.quark.cn/apps/qknewshours/routes/hot_news"
+base_url = "https://iflow.uc.cn/webview/news?app=&aid="
 k_headers = {
     'authority': 'act.quark.cn',
     'accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
@@ -51,29 +52,30 @@ def news_list():
             finally:
                 imgs.append(img)
 
-
-
-
-        # imgs = [img.find_all("img")[0]["src"] if re.search("http", img.find_all("img")[0]["src"]) else None for img in every]
-
-
-
-
-
-
-
         times = [time.text for time in times_soup]
         urls = [parse.unquote(json.loads(url)["url"]) for url in news]
         source_names = [(json.loads(source_name)["source_name"]) for source_name in news]
         titles = [(json.loads(title)["title"]) for title in news]
         # print(times)
         # print(urls)
+        for url in urls:
+            print(url)
         # print(source_names)
-        print(titles)
+        # print(titles)
         # for index, i in enumerate(imgs):
         #     print(index, i)
 
+        for i in some:
+            print(i["data-exposure-extra"])
 
+        for i in some:
+            print(json.loads(i["data-exposure-extra"])["id"])
 
+        ids = [json.loads(id["data-exposure-extra"])["id"] for id in some]
+        print(ids)
+
+        urls = [base_url+id  for id in ids]
+        for url in urls:
+            print(url)
 
 news_list()
