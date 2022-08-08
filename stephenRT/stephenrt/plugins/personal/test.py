@@ -17,6 +17,8 @@ import re, random
 
 k_url = "https://act.quark.cn/apps/qknewshours/routes/hot_news"
 base_url = "https://iflow.uc.cn/webview/news?app=&aid="
+base = "https://iflow.uczzd.cn/iflow/api/v1/article/aggregation?__t=1659609915000&aggregation_id=16665090098771297825&count=50"
+
 k_headers = {
     'authority': 'act.quark.cn',
     'accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
@@ -33,6 +35,24 @@ k_headers = {
     'upgrade-insecure-requests': '1',
     'user-agent': 'Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Mobile Safari/537.36'
 }
+
+u_headers = {
+  'authority': 'iflow.uc.cn',
+  'accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
+  'accept-language': 'zh-CN,zh;q=0.9,en-GB;q=0.8,en-US;q=0.7,en;q=0.6',
+  'cache-control': 'max-age=0',
+  'cookie': '__wpkreporterwid_=93d89238-09f4-4e51-bd55-77dbfee29f9b; cna=Qu0tGxxCmlgCAavdkbRFoQG9; ctoken=Ldk13z9-eEpjBsZiYAdyXiqc; sn=adfca447-bc88-4a55-aad2-ca314a28af79; isg=BHh4lZtWbiuax4K0F8Prw9ZhSSYK4dxr1fjDZrLpybNmzRi3WvRy-xHvgcX9m5RD',
+  'sec-ch-ua': '".Not/A)Brand";v="99", "Google Chrome";v="103", "Chromium";v="103"',
+  'sec-ch-ua-mobile': '?0',
+  'sec-ch-ua-platform': '"Windows"',
+  'sec-fetch-dest': 'document',
+  'sec-fetch-mode': 'navigate',
+  'sec-fetch-site': 'none',
+  'sec-fetch-user': '?1',
+  'upgrade-insecure-requests': '1',
+  'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36'
+}
+
 link = "https://iflow-news.quark.cn/r/quark-iflow?&item_id="
 
 
@@ -79,9 +99,7 @@ def news_list():
         for url in urls:
             print(url)
 
-
-a = """
-https://mp.weixin.qq.com/s?__biz=MzA4MTg1NzYyNQ==&mid=2652452745&idx=1&sn=bc236e0fa6fbe1af9d7f4912644d1c2b&chksm=84630abfb31483a98dfc4260589c97d68cf6036061a0d1191e2a83ea9f6808787f562e9dd515#rd
-"""
-print(a.split("&chksm")[0])
-
+with requests.get(base, headers=u_headers) as session:
+    articles = json.loads(session.content)["data"]["articles"]
+    for article in articles:
+        print(article["doc_ext_obj"]["is_breaking_news"], article["category"], article["title"])
