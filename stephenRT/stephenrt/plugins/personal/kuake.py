@@ -171,6 +171,7 @@ ip = get_host_ip()
 if ip == "10.10.10.8":
     # first_time = 1659593905
     first_time = int(time.time())
+    first_time = int(round(time.time() * 1000))
     group = 959822848
 else:
     first_time = 1659928665614
@@ -219,7 +220,7 @@ async def news_report():
                         pic = MessageSegment.image(pic_url)
                     else:
                         pic = ""
-                    msg = msg + "【{0} {1}】 {2}\n{3}\n{4}".format(source, nature, title, summary, url) + pic + "\n"
+                    msg = msg + "【{0} {1}】 {2}\n    {3}\n{4}".format(source, nature, title, summary, url) + pic + "\n"
                 else:
                     break
             else:
