@@ -175,8 +175,8 @@ if ip == "10.10.10.8":
     first_time = int(round(time.time() * 1000))
     group = 959822848
 else:
-    first_time = 1659931565291
-    # first_time = int(time.time())
+    # first_time = 1659938650000
+    first_time = int(round(time.time() * 1000))
     group = 755489024
 
 
@@ -211,7 +211,7 @@ async def news_report():
             # 条件
             if len(set(mis_category) & set(article["category"])) == 0 and article["doc_ext_obj"][
                 "is_breaking_news"] is True:
-                m_time = article["grab_time"]
+                m_time = article["publish_time"]
                 url = base_url + str(article["id"])
                 source = article["source_name"]
                 title = article["title"]
@@ -226,12 +226,13 @@ async def news_report():
                         pic = MessageSegment.image(pic_url)
                     else:
                         pic = ""
-                    msg = msg + "\n【{0} {1}】 {2}\n        {3}{4}".format(source, nature, title, summary, url) + pic
+                    msg = msg + "【{0} {1}】 {2}\n        {3}{4}".format(source, nature, title, summary, url) + pic + "\n"
                 else:
                     break
             else:
                 print("dislike:", article["title"])
-        first_time = articles[0]["grab_time"] if articles[0]["grab_time"] > first_time else first_time
+
+        first_time = articles[0]["publish_time"] if articles[0]["publish_time"] > first_time else first_time
 
         print("msg::", msg)
 

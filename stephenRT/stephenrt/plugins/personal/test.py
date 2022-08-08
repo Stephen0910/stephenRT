@@ -17,7 +17,7 @@ import re, random, datetime
 
 k_url = "https://act.quark.cn/apps/qknewshours/routes/hot_news"
 base_url = "https://iflow.uc.cn/webview/news?app=&aid="
-base = "https://iflow.uczzd.cn/iflow/api/v1/article/aggregation?__t=1659609915000&aggregation_id=16665090098771297825&count=10"
+base = "https://iflow.uczzd.cn/iflow/api/v1/article/aggregation?__t=1659609915000&aggregation_id=16665090098771297825&count=50"
 
 k_headers = {
     'authority': 'act.quark.cn',
@@ -99,12 +99,23 @@ def news_list():
         for url in urls:
             print(url)
 
-with requests.get(base, headers=u_headers) as session:
-    articles = json.loads(session.content)["data"]["articles"]
-    for article in articles:
-        break_new = "突发" if article["doc_ext_obj"]["is_breaking_news"] is True else "普通"
-        g_time = datetime.datetime.fromtimestamp(article["grab_time"] / 1000).strftime("%H:%M")
-        p_time =datetime.datetime.fromtimestamp(article["publish_time"] / 1000).strftime("%H:%M")
-        # print(break_new, ":", article["category"], article["merge_tags"], article["title"])
 
-        print(break_new, ":", "抓{0} 发{1}".format(g_time, p_time), article["title"])
+# with requests.get(base, headers=u_headers) as session:
+#     articles = json.loads(session.content)["data"]["articles"]
+#     print(articles)
+#     for article in articles:
+#         break_new = "突发" if article["doc_ext_obj"]["is_breaking_news"] is True else "普通"
+#         g_time = datetime.datetime.fromtimestamp(article["grab_time"] / 1000).strftime("%H:%M")
+#         p_time =datetime.datetime.fromtimestamp(article["publish_time"] / 1000).strftime("%H:%M")
+#         # print(break_new, ":", article["category"], article["merge_tags"], article["title"])
+#         if break_new == "普通":
+#             print(article["is_wemedia"], article["strategy"], article["title"])
+
+
+
+# url = "https://rsshub.app/wechat/mp/msgalbum/MzA3MDM3NjE5NQ==/1375870284640911361"
+# with requests.get(url) as session:
+#     print(session.text)
+
+
+

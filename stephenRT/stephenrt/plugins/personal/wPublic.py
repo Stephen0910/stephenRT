@@ -17,11 +17,17 @@ from urllib import parse
 from nonebot import get_bot
 from nonebot import on_metaevent
 from nonebot.adapters.onebot.v11.message import MessageSegment
+import stephenrt.privateCfg as cfg
+
+config = cfg.config_content
+cook = config["wcookie"]
+
 
 # msgs_url = "https://mp.data258.com/article/category/"
 # detail = "https://mp.data258.com"
 #
-query_names = ["成都本地宝", "成都发布"]
+query_names = ["成都本地宝", "成都发布", "蓉城政事"]
+token = "1928018217"
 #
 # headers = {
 #     'authority': 'mp.data258.com',
@@ -86,7 +92,7 @@ headers = {
     'authority': 'mp.weixin.qq.com',
     'accept': '*/*',
     'accept-language': 'zh-CN,zh;q=0.9,en-GB;q=0.8,en-US;q=0.7,en;q=0.6',
-    'cookie': 'appmsglist_action_3893097792=card; RK=QcOsQQ7xYJ; ptcz=fd9af81554cc3f6f5c3876beea21d67e4df9fda8632d228c28976a44c9a0705f; tvfe_boss_uuid=ff47cfc1329a5325; pgv_pvid=9212904821; fqm_pvqid=34f4b83f-73b4-4640-b8e1-8e9f2e00b8b0; ptui_loginuin=281016636@qq.com; pac_uid=0_c5d044dc9edfb; _ga=GA1.2.771449081.1656559089; _hjSessionUser_2765497=eyJpZCI6IjBiZDczNWZlLTE1MDctNTA5ZC1hN2EwLTg1ZDg5OWEzYWY4NCIsImNyZWF0ZWQiOjE2NTY1NTkwNzc1MDQsImV4aXN0aW5nIjp0cnVlfQ==; _tc_unionid=3d5869bb-ed10-4e4d-9992-c267f2c5c3dc; rewardsn=; wxtokenkey=777; wwapp.vid=; wwapp.cst=; wwapp.deviceid=; pgv_info=ssid=s7769012938; ua_id=Jl3o4YHGbRLnFjE7AAAAAFmattsrPSp13frIRDxDUcw=; wxuin=59669217409121; sig=h01a4e0e9d943eabf334056038cb339c167989f48d71ee231b45af0857f63105b2cef0c9720a7cf6746; uuid=536de88b9b012ec1c1c415e18add1016; rand_info=CAESIOBnaiWCzAcK0OrCyvDyj1/JAwk31dOsPd95drEWJpwc; slave_bizuin=3893097792; data_bizuin=3893097792; bizuin=3893097792; data_ticket=NpOXTqggApXhnKQam/izDiig46+wbjNJq+BDlk6Dp2BkXxb+t7hox643hrTq+LiT; slave_sid=aTlyUkxwMDNHbG1SbmJXZzd0OE04eUszaWp4UHBnVmtZaVNoY1BicW8xaGlLVEZWTFBpbHJNeWVFaU02RkJuVjBvdjhKNVU5VndxNFdZNVU4clJua1Zwbm1pa0hrZG9LRk5sTUE2Mnh5b2g2OGk3dVNkUTAxd2IzNDk3STltOGVJcTRnVHZhamNSS2FwNjFx; slave_user=gh_9a01da528413; xid=cb301f91311abe4d2d0e29e72a9a06f3; mm_lang=zh_CN; mmad_session=27e9c7de31753780540a176bf4669816061b49bc10a85b3c66af71e9d80c17f8de75628b3866cab03df709fe8d4fe75f9f726ebfe586540e350b7a759ef5bfb80833d3cde5928c689d7c24e8dccd4f613b105b6f407ae22bc21cc4769386f2b011de1c56c245721266e7088080fefde3; ts_last=mp.weixin.qq.com/cgi-bin/frame; ts_uid=9923057400',
+    'cookie': cook,
     'referer': 'https://mp.weixin.qq.com/cgi-bin/appmsg?t=media/appmsg_edit_v2&action=edit&isNew=1&type=10&token=321344637&lang=zh_CN',
     'sec-ch-ua': '".Not/A)Brand";v="99", "Google Chrome";v="103", "Chromium";v="103"',
     'sec-ch-ua-mobile': '?0',
@@ -127,15 +133,19 @@ async def search_public(names):
     search_names = []
     for name in names:
         try:
-            search_url = "https://mp.weixin.qq.com/cgi-bin/searchbiz?action=search_biz&begin=0&count=3&query={0}&token=321344637&lang=zh_CN&f=json&ajax=1".format(
+            search_url = "https://mp.weixin.qq.com/cgi-bin/searchbiz?action=search_biz&begin=0&count=3&query={1}&token={0}&lang=zh_CN&f=json&ajax=1".format(
+                token,
                 name)
+            # print("search_url:", search_url)
             with requests.get(search_url, headers=headers) as session:
                 response = json.loads(session.text)
                 print("res:", response)
                 fake_id = response["list"][0]["fakeid"]
 
-            artcles_url = "https://mp.weixin.qq.com/cgi-bin/appmsg?action=list_ex&begin=0&count=5&fakeid={0}&type=9&query=&token=321344637&lang=zh_CN&f=json&ajax=1".format(
+            artcles_url = "https://mp.weixin.qq.com/cgi-bin/appmsg?action=list_ex&begin=0&count=5&fakeid={1}&type=9&query=&token={0}&lang=zh_CN&f=json&ajax=1".format(
+                token,
                 fake_id)
+            # print("artcles_url:", artcles_url)
             with requests.get(artcles_url, headers=headers) as session:
                 response = json.loads(session.text)
             print(response)
@@ -150,6 +160,7 @@ async def search_public(names):
         except Exception as e:
             print("{0} 获取失败:{1}".format(name, e))
             continue
+        time.sleep(1)
         # for index, title in enumerate(titles):
         #     print(name, title, create_times[index], pics[index], urls[index])
     return [create_times, titles, urls, pics, search_names]
@@ -163,8 +174,8 @@ if ip == "10.10.10.8":
     first_time = int(time.time())
     group = 959822848
 else:
-    first_time = 1659667001
-    # first_time = int(time.time())
+    # first_time = 1659667001
+    first_time = int(time.time())
     group = 755489024
 
 public = on_metaevent()
@@ -175,11 +186,12 @@ async def public_push():
     global trigger, first_time
     msg = ""
     print("public trigger: {0}".format(trigger))
-    if trigger % 10 == 0:
+    if trigger % 60 == 0:
         print("push public")
         bot = get_bot()
         # news = await news_list()
         news = await search_public(query_names)
+        print("tttttt:\n", news)
         create_times, titles, urls, pics, names = news
         for index, create_time in enumerate(create_times):
             if create_time > first_time:
