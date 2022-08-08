@@ -45,21 +45,22 @@ k_headers = {
 mis_category = ["国际足球", "股票", "财经", "期货", "旅游"]
 
 u_headers = {
-  'authority': 'iflow.uc.cn',
-  'accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
-  'accept-language': 'zh-CN,zh;q=0.9,en-GB;q=0.8,en-US;q=0.7,en;q=0.6',
-  'cache-control': 'max-age=0',
-  'cookie': '__wpkreporterwid_=93d89238-09f4-4e51-bd55-77dbfee29f9b; cna=Qu0tGxxCmlgCAavdkbRFoQG9; ctoken=Ldk13z9-eEpjBsZiYAdyXiqc; sn=adfca447-bc88-4a55-aad2-ca314a28af79; isg=BHh4lZtWbiuax4K0F8Prw9ZhSSYK4dxr1fjDZrLpybNmzRi3WvRy-xHvgcX9m5RD',
-  'sec-ch-ua': '".Not/A)Brand";v="99", "Google Chrome";v="103", "Chromium";v="103"',
-  'sec-ch-ua-mobile': '?0',
-  'sec-ch-ua-platform': '"Windows"',
-  'sec-fetch-dest': 'document',
-  'sec-fetch-mode': 'navigate',
-  'sec-fetch-site': 'none',
-  'sec-fetch-user': '?1',
-  'upgrade-insecure-requests': '1',
-  'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36'
+    'authority': 'iflow.uc.cn',
+    'accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
+    'accept-language': 'zh-CN,zh;q=0.9,en-GB;q=0.8,en-US;q=0.7,en;q=0.6',
+    'cache-control': 'max-age=0',
+    'cookie': '__wpkreporterwid_=93d89238-09f4-4e51-bd55-77dbfee29f9b; cna=Qu0tGxxCmlgCAavdkbRFoQG9; ctoken=Ldk13z9-eEpjBsZiYAdyXiqc; sn=adfca447-bc88-4a55-aad2-ca314a28af79; isg=BHh4lZtWbiuax4K0F8Prw9ZhSSYK4dxr1fjDZrLpybNmzRi3WvRy-xHvgcX9m5RD',
+    'sec-ch-ua': '".Not/A)Brand";v="99", "Google Chrome";v="103", "Chromium";v="103"',
+    'sec-ch-ua-mobile': '?0',
+    'sec-ch-ua-platform': '"Windows"',
+    'sec-fetch-dest': 'document',
+    'sec-fetch-mode': 'navigate',
+    'sec-fetch-site': 'none',
+    'sec-fetch-user': '?1',
+    'upgrade-insecure-requests': '1',
+    'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36'
 }
+
 
 def get_host_ip():
     """
@@ -174,7 +175,7 @@ if ip == "10.10.10.8":
     first_time = int(round(time.time() * 1000))
     group = 959822848
 else:
-    first_time = 1659928665614
+    first_time = 1659931565291
     # first_time = int(time.time())
     group = 755489024
 
@@ -207,20 +208,25 @@ async def news_report():
 
         articles = response["data"]["articles"]
         for article in articles:
-            if len(set(mis_category) & set(article["category"])) == 0:
+            # 条件
+            if len(set(mis_category) & set(article["category"])) == 0 and article["doc_ext_obj"][
+                "is_breaking_news"] is True:
                 m_time = article["grab_time"]
                 url = base_url + str(article["id"])
                 source = article["source_name"]
                 title = article["title"]
                 summary = article["summary"]
-                pic_url = article["thumbnails"][0]["url"]
+                try:
+                    pic_url = article["thumbnails"][0]["url"]
+                except:
+                    pic_url = ""
                 if m_time > first_time:
                     nature = datetime.datetime.fromtimestamp(m_time / 1000).strftime("%H:%M")
                     if pic_url != "":
                         pic = MessageSegment.image(pic_url)
                     else:
                         pic = ""
-                    msg = msg + "【{0} {1}】 {2}\n    {3}\n{4}".format(source, nature, title, summary, url) + pic + "\n"
+                    msg = msg + "\n【{0} {1}】 {2}\n        {3}{4}".format(source, nature, title, summary, url) + pic
                 else:
                     break
             else:
