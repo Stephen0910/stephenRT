@@ -41,7 +41,7 @@ if ip == "10.10.10.8":
     from .dm_pro.live import *
     from .dm_pro.giftNoti import *
     from .nba.season import *
-    from .kuake import *
+    # from .kuake import * 暂时关闭
     # from .wPublic import *
 
 
