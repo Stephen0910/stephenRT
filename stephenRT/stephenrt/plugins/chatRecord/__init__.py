@@ -115,6 +115,7 @@ async def saveMsg(bot: Bot, event: GroupMessageEvent):
     groupInfo = await group_info(bot, groupId=msg.group_id)
     dateArray = datetime.datetime.utcfromtimestamp(msg.time)  # 时区加8 不加了
     msg_time = dateArray.strftime("%Y-%m-%d %H:%M:%S")
+
     sql = """INSERT INTO "public"."group"("message_id", "sender_name", "sender_id", "message", "group_id",
      "group_name", "group_card", "timestamp", "self_id", "post_type", "msg_type") 
      VALUES 
@@ -123,11 +124,15 @@ async def saveMsg(bot: Bot, event: GroupMessageEvent):
            str(msg.message).replace("\'", "\""), msg.group_id,
            groupInfo["group_name"],
            str(msg.sender.card).replace("\'", "\""), msg_time, msg.self_id, msg.post_type, msg_type)
-
-    try:
-        await executeSql(sql)
-    except Exception as e:
-        await send_private(bot, pgsql["user_id"], e)  # 如果保存失败，把sql发送到指定的qq号
+    self_id = msg.self_id
+    if str(self_id) == "3274888291":
+        print("save")
+        try:
+            await executeSql(sql)
+        except Exception as e:
+            await send_private(bot, pgsql["user_id"], e)  # 如果保存失败，把sql发送到指定的qq号
+    else:
+        print("not save")
 
 
 

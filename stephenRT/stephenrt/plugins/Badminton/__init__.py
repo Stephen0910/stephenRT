@@ -12,7 +12,7 @@ import socket
 
 from .sensitive import *
 # from .ban import *
-from .zendesk import *
+# from .zendesk import *
 from ._ban import *
 
 
