@@ -18,7 +18,7 @@ from urllib import parse
 from nonebot import get_bot
 from nonebot import on_metaevent
 from nonebot.adapters.onebot.v11.message import MessageSegment
-import pyshorteners as ps
+
 
 k_url = "https://act.quark.cn/apps/qknewshours/routes/hot_news"
 detail = "https://iflow-news.quark.cn/r/quark-iflow/landing/?item_id="
