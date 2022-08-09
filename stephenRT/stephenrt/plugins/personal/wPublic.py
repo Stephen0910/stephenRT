@@ -160,7 +160,7 @@ async def search_public(names):
         except Exception as e:
             print("{0} 获取失败:{1}".format(name, e))
             continue
-        time.sleep(1)
+
         # for index, title in enumerate(titles):
         #     print(name, title, create_times[index], pics[index], urls[index])
     return [create_times, titles, urls, pics, search_names]
@@ -186,7 +186,7 @@ async def public_push():
     global trigger, first_time
     msg = ""
     print("public trigger: {0}".format(trigger))
-    if trigger % 60 == 0:
+    if trigger % 120 == 0:
         print("push public")
         bot = get_bot()
         # news = await news_list()
