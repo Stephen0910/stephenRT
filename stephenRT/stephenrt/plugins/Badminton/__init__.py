@@ -10,10 +10,10 @@
 # @Licence  :     <@2022>
 import socket
 
-from .sensitive import *
+
 # from .ban import *
 # from .zendesk import *
-from ._ban import *
+
 
 
 def get_host_ip():
@@ -32,8 +32,17 @@ def get_host_ip():
 
 # from .autoBan import *
 
-if str(get_host_ip()) == "10.10.10.8":
+ip = str(get_host_ip())
+
+
+if ip == "10.10.10.8":
     print("本地内网")
     # from .autoBan import *  暂关闭
+    from ._ban import *
+    from .sensitive import *
 else:
     print("不加载chatRoom")
+
+
+if ip == "172.24.121.72":
+    print("不加载")

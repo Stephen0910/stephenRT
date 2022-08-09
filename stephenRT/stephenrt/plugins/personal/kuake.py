@@ -42,7 +42,6 @@ k_headers = {
     'user-agent': 'Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Mobile Safari/537.36'
 }
 
-mis_category = ["国际足球", "股票", "财经", "期货", "旅游"]
 
 u_headers = {
     'authority': 'iflow.uc.cn',
@@ -171,13 +170,20 @@ trigger = 1
 ip = get_host_ip()
 if ip == "10.10.10.8":
     # first_time = 1659593905
-    first_time = int(time.time())
+
     first_time = int(round(time.time() * 1000))
     group = 959822848
+    mis_category = ["国际足球", "股票", "财经", "期货", "旅游"]
+elif ip == "172.24.121.72":
+    first_time = int(round(time.time() * 1000))
+    group = 157875133
+    mis_category = []
+
 else:
     # first_time = 1659938650000
     first_time = int(round(time.time() * 1000))
     group = 755489024
+    mis_category = []
 
 
 @news.handle()

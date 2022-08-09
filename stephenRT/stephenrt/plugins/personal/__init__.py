@@ -9,7 +9,7 @@
 # @Copyright:   (c) StephenZ 2022
 # @Licence  :     <@2022>
 import socket
-
+import re
 
 def get_host_ip():
     """
@@ -25,14 +25,16 @@ def get_host_ip():
 
     return ip
 
-
-# from .dGame import *
-# from .dm_pro.live import *
-# from .search_body import *
-# from .nba.season import *
-# from .kuake import *
-from .wPublic import *
 ip = str(get_host_ip())
+
+if re.match("192.*", ip):
+    # from .dGame import *
+    # from .dm_pro.live import *
+    # from .search_body import *
+    # from .nba.season import *
+    # from .kuake import *
+    # from .wPublic import *
+    pass
 
 if ip == "10.10.10.8":
     print("本地内网")
@@ -44,6 +46,6 @@ if ip == "10.10.10.8":
     from .kuake import *  # 暂时关闭
     from .wPublic import *
 
-
-
+if ip == "172.24.121.72":
+    from .kuake import *
 
