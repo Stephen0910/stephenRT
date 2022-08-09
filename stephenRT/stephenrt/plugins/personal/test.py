@@ -113,7 +113,7 @@ def news_list():
 
 
 
-url = "https://rssfeed.today/weibo/rss/1649469284"
+url = "https://aegis.qq.com/collect/pv?id=uAkJVYKdpwlXyaiARK&uin=&version=1.38.14&aid=4943370e-35c5-4d7d-a304-bee69b6893d7&env=production&platform=3&netType=4&vp=967 * 937&sr=1920 * 1080&sessionId=session-1660019945678&from=https://weixin.sogou.com/weixin?type=2&query=TesterHome001&count=50&referer="
 with requests.get(url) as session:
     print(session.content)
 
