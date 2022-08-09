@@ -113,9 +113,9 @@ def news_list():
 
 
 
-# url = "https://rsshub.app/wechat/mp/msgalbum/MzA3MDM3NjE5NQ==/1375870284640911361"
-# with requests.get(url) as session:
-#     print(session.text)
+url = "https://rssfeed.today/weibo/rss/1649469284"
+with requests.get(url) as session:
+    print(session.content)
 
 
 
