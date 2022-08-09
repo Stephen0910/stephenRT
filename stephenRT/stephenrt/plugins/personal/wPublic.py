@@ -186,7 +186,7 @@ async def public_push():
     global trigger, first_time
     msg = ""
     print(time.strftime("%m-%d, %H:%M:%S", time.localtime(int(time.time()))), "public trigger: {0}".format(trigger))
-    if trigger % 600 == 0:
+    if trigger % 60 == 0:
         print("push public")
         bot = get_bot()
         # news = await news_list()
