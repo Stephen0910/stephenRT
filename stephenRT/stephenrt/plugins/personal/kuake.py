@@ -239,7 +239,7 @@ async def news_report():
     if msg != "":
         # await bot.send_private_msg(user_id=281016636, message=msg)
         try:
-            await bot.send_group_msg(group_id=group, message=msg)
+            await bot.send_group_msg(group_id=755489024, message=msg)
         except Exception as e:
             await bot.send_private_msg(user_id=281016636, message=msg + str(e))
     trigger += 1
