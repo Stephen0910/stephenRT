@@ -10,6 +10,7 @@
 # @Licence  :     <@2022>
 
 from .timestamp import *
+import socket
 
 def get_host_ip():
     """

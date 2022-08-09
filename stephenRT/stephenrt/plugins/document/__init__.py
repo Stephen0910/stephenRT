@@ -9,6 +9,8 @@
 # @Copyright:   (c) StephenZ 2022
 # @Licence  :     <@2022>
 
+import socket
+
 def get_host_ip():
     """
     查询本机ip地址
