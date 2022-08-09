@@ -31,7 +31,7 @@ def get_host_ip():
 # from .search_body import *
 # from .nba.season import *
 # from .kuake import *
-# from .wPublic import *
+from .wPublic import *
 ip = str(get_host_ip())
 
 if ip == "10.10.10.8":
@@ -39,7 +39,7 @@ if ip == "10.10.10.8":
     from .dGame import *
     from .search_body import *
     from .dm_pro.live import *
-    from .dm_pro.giftNoti import *
+    # from .dm_pro.giftNoti import *
     from .nba.season import *
     from .kuake import *  # 暂时关闭
     from .wPublic import *
