@@ -191,7 +191,7 @@ async def public_push():
         bot = get_bot()
         # news = await news_list()
         news = await search_public(query_names)
-        print("tttttt:\n", news)
+        print("tttttt:\n", time.strftime("%m-%d, %H:%M:%S", time.localtime(int(time.time()))), news)
         create_times, titles, urls, pics, names = news
         for index, create_time in enumerate(create_times):
             if create_time > first_time:
