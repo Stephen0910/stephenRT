@@ -26,7 +26,7 @@ sys.path.append("../../")
 import stephenrt.privateCfg as cfg
 from .report import *
 from .timer import group_name, deleteFile
-from stephenrt.plugins.chatCloud import timer
+# from stephenrt.plugins.chatCloud import timer
 
 config = cfg.config_content
 
