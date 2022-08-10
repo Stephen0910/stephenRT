@@ -142,12 +142,12 @@ async def public_push():
     global trigger, first_time
     msg = ""
     print(time.strftime("%m-%d, %H:%M:%S", time.localtime(int(time.time()))), "public trigger: {0}".format(trigger))
-    if trigger % 3 == 0:
+    if trigger % 10 == 0:
         print("push public")
         bot = get_bot()
         # news = await news_list()
         news = await get_news()
-        # print("tttttt:\n", time.strftime("%m-%d, %H:%M:%S", time.localtime(int(time.time()))), json.dumps(news))
+        print("tttttt:\n", time.strftime("%m-%d, %H:%M:%S", time.localtime(int(time.time()))), json.dumps(news))
         for key, value in news.items():
             news_list = value["list"]
             for each_new in news_list:
