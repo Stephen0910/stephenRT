@@ -106,6 +106,7 @@ async def get_news():
 
         with requests.get(url, headers=public_headers, data=payload) as session:
             response = session.text
+            print("response:", response)
 
         msg_contents = re.findall("msgList =.*?\';", response)[0]
         msg_str = msg_contents.replace("&quot;", "\'")[11:-2].replace("\'", "\"")
@@ -142,11 +143,15 @@ async def public_push():
     global trigger, first_time
     msg = ""
     print(time.strftime("%m-%d, %H:%M:%S", time.localtime(int(time.time()))), "public trigger: {0}".format(trigger))
-    if trigger % 10 == 0:
+    if trigger % 3 == 0:
         print("push public")
         bot = get_bot()
         # news = await news_list()
-        news = await get_news()
+        try:
+            news = await get_news()
+        except Exception as e:
+            print(e)
+            return
         print("tttttt:\n", time.strftime("%m-%d, %H:%M:%S", time.localtime(int(time.time()))), json.dumps(news))
         for key, value in news.items():
             news_list = value["list"]

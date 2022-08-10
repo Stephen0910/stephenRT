@@ -104,6 +104,17 @@ def news_list():
 """
 new
 """
-a = "http://mp.weixin.qq.com/s?__biz=MzA4MTg1NzYyNQ==&amp;amp;amp;mid=2652455874&amp;amp;amp;idx=1&amp;amp;amp;sn=405d4419c315ae53aa5a1f050a5eb7f5&amp;amp;amp;chksm=84637ef4b314f7e27e4a4ef37f7a59b403f70cc7cc162bef8eb8dc00ccf4e632eecc3ab56a7a&amp;amp;amp;scene=27#wechat_redirect"
-print(a.replace("amp;amp;amp;", ""))
 
+from bs4 import BeautifulSoup
+
+def get_biz(name):
+    sogou_url = "https://weixin.sogou.com/weixin?type=1&s_from=input&query="
+    with requests.get(sogou_url+name) as session:
+        soup = BeautifulSoup(session.content, "html.parser")
+        print(soup)
+        data = soup.find_all(name="a", attrs={"target": "_blank", "uigs": "account_article_0"})
+        print(data)
+
+
+a = get_biz("成都发布")
+print(a)
