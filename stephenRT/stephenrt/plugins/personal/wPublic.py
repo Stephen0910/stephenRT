@@ -22,92 +22,7 @@ import stephenrt.privateCfg as cfg
 config = cfg.config_content
 cook = config["wcookie"]
 
-
-# msgs_url = "https://mp.data258.com/article/category/"
-# detail = "https://mp.data258.com"
-#
-query_names = ["成都本地宝", "成都发布", "蓉城政事"]
-token = "1928018217"
-#
-# headers = {
-#     'authority': 'mp.data258.com',
-#     'accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
-#     'accept-language': 'zh-CN,zh;q=0.9,en-GB;q=0.8,en-US;q=0.7,en;q=0.6',
-#     'cache-control': 'max-age=0',
-#     'cookie': '_jpanonym="NTM4M2ExMmVkMTkxNjljZTMwODBjODcxYjQwOWZjYWMjMTY1OTY3MTUxMzcwMiMzMTUzNjAwMCNaRGMxT0daaE9HWXhNVEkzTkdObU5XSXdOR0l4TUdJd1lURXpPR05pTVRVPQ=="; Hm_lvt_fd96d661d046cdf677204a54cc6e59b6=1659671514; _jpuid="NDFjMmNiMWZjZDM4YThlZjY1ZjQwOTJmOTdkOTg3ZGIjMTY1OTY3MTk5NTY0NSMxNzI4MDAjT0RBNA=="; csrf_token=a222f5a7b4776b86e681753fb2b48476; Hm_lpvt_fd96d661d046cdf677204a54cc6e59b6=1659673511; csrf_token=a222f5a7b4776b86e681753fb2b48476',
-#     'sec-ch-ua': '".Not/A)Brand";v="99", "Google Chrome";v="103", "Chromium";v="103"',
-#     'sec-ch-ua-mobile': '?0',
-#     'sec-ch-ua-platform': '"Windows"',
-#     'sec-fetch-dest': 'document',
-#     'sec-fetch-mode': 'navigate',
-#     'sec-fetch-site': 'none',
-#     'sec-fetch-user': '?1',
-#     'upgrade-insecure-requests': '1',
-#     'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36'
-# }
-#
-#
-# def search_urls(names):
-#     ids = []
-#     for name in names:
-#         url = "https://mp.data258.com/mp/search?type=category&key={0}&sort=".format(parse.quote(name))
-#         with requests.get(url, headers=headers) as session:
-#             soup = BeautifulSoup(session.content, "html.parser")
-#         page = soup.find_all(name="a", attrs={"class": "mp-avatar"})
-#         id = page[0]["href"].split("/")[-1]
-#         ids.append(id)
-#     urls = [msgs_url + url for url in ids]
-#     return dict(zip(names, urls))
-#
-#
-# def transfer_time(orin_time):
-#     timeArray = time.strptime(orin_time, "%Y-%m-%d %H:%M")
-#     # 转换为时间戳:
-#     timestamp = int(time.mktime(timeArray))
-#     return timestamp
-#
-#
-# url_dict = search_urls(query_names)
-#
-#
-# def get_msgs():
-#     names = list(url_dict.keys())
-#     urls = list(url_dict.values())
-#     for index, url in enumerate(urls):
-#         print(names[index])
-#         with requests.get(url, headers=headers) as session:
-#             soup = BeautifulSoup(session.content, "html.parser")
-#             html = soup.select("body > div.layui-container > div > div > div > ul > li")
-#             # print(html)
-#             for i in html:
-#                 new = i.text
-#                 link_page = detail + i.find("a", attrs={"class": "jie-title"})["href"]
-#                 title, time = [info for info in new.split("\n") if info != ""]
-#                 print(time, transfer_time(time), title, link_page)
-
-search_url = "https://mp.weixin.qq.com/cgi-bin/searchbiz?action=search_biz&begin=0&count=5&query=成都发布&token=321344637&lang=zh_CN&f=json&ajax=1"
-p_articles = "https://mp.weixin.qq.com/cgi-bin/appmsg?action=list_ex&begin=0&count=5&fakeid=MzA4MTg1NzYyNQ==&type=9&query=&token=321344637&lang=zh_CN&f=json&ajax=1"
-
-headers = {
-    'authority': 'mp.weixin.qq.com',
-    'accept': '*/*',
-    'accept-language': 'zh-CN,zh;q=0.9,en-GB;q=0.8,en-US;q=0.7,en;q=0.6',
-    'cookie': cook,
-    'referer': 'https://mp.weixin.qq.com/cgi-bin/appmsg?t=media/appmsg_edit_v2&action=edit&isNew=1&type=10&token=321344637&lang=zh_CN',
-    'sec-ch-ua': '".Not/A)Brand";v="99", "Google Chrome";v="103", "Chromium";v="103"',
-    'sec-ch-ua-mobile': '?0',
-    'sec-ch-ua-platform': '"Windows"',
-    'sec-fetch-dest': 'empty',
-    'sec-fetch-mode': 'cors',
-    'sec-fetch-site': 'same-origin',
-    # 'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36',
-    'user-agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.95 Safari/537.36 MicroMessenger/6.5.2.501 NetType/WIFI WindowsWechat QBCore/3.43.27.400 QQBrowser/9.0.2524.400',
-    'x-requested-with': 'XMLHttpRequest'
-}
-
-
-def trasfer_timestamp():
-    pass
+query = {"成都发布": "MzA4MTg1NzYyNQ==", "成都本地宝": "MzA4NzA4MDY5OQ=="}
 
 
 def get_host_ip():
@@ -125,58 +40,99 @@ def get_host_ip():
     return ip
 
 
-async def search_public(names):
-    create_times = []
-    pics = []
-    titles = []
-    urls = []
-    search_names = []
-    for name in names:
-        try:
-            search_url = "https://mp.weixin.qq.com/cgi-bin/searchbiz?action=search_biz&begin=0&count=3&query={1}&token={0}&lang=zh_CN&f=json&ajax=1".format(
-                token,
-                name)
-            # print("search_url:", search_url)
-            with requests.get(search_url, headers=headers) as session:
-                response = json.loads(session.text)
-                print("res:", response)
-                fake_id = response["list"][0]["fakeid"]
+# async def search_public(names):
+#     create_times = []
+#     pics = []
+#     titles = []
+#     urls = []
+#     search_names = []
+#     for name in names:
+#         try:
+#             search_url = "https://mp.weixin.qq.com/cgi-bin/searchbiz?action=search_biz&begin=0&count=3&query={1}&token={0}&lang=zh_CN&f=json&ajax=1".format(
+#                 token,
+#                 name)
+#             # print("search_url:", search_url)
+#             with requests.get(search_url, headers=headers) as session:
+#                 response = json.loads(session.text)
+#                 print("res:", response)
+#                 fake_id = response["list"][0]["fakeid"]
+#
+#             artcles_url = "https://mp.weixin.qq.com/cgi-bin/appmsg?action=list_ex&begin=0&count=5&fakeid={1}&type=9&query=&token={0}&lang=zh_CN&f=json&ajax=1".format(
+#                 token,
+#                 fake_id)
+#             # print("artcles_url:", artcles_url)
+#             with requests.get(artcles_url, headers=headers) as session:
+#                 response = json.loads(session.text)
+#             print(response)
+#             for app_msg in response["app_msg_list"]:
+#                 create_time = app_msg["create_time"]
+#                 if create_time not in create_times:
+#                     titles.append(app_msg["title"])
+#                     urls.append(app_msg["link"])
+#                     pics.append(app_msg["cover"])
+#                     create_times.append(create_time)
+#                     search_names.append(name)
+#         except Exception as e:
+#             print("{0} 获取失败:{1}".format(name, e))
+#             continue
+#
+#         # for index, title in enumerate(titles):
+#         #     print(name, title, create_times[index], pics[index], urls[index])
+#     return [create_times, titles, urls, pics, search_names]
 
-            artcles_url = "https://mp.weixin.qq.com/cgi-bin/appmsg?action=list_ex&begin=0&count=5&fakeid={1}&type=9&query=&token={0}&lang=zh_CN&f=json&ajax=1".format(
-                token,
-                fake_id)
-            # print("artcles_url:", artcles_url)
-            with requests.get(artcles_url, headers=headers) as session:
-                response = json.loads(session.text)
-            print(response)
-            for app_msg in response["app_msg_list"]:
-                create_time = app_msg["create_time"]
-                if create_time not in create_times:
-                    titles.append(app_msg["title"])
-                    urls.append(app_msg["link"])
-                    pics.append(app_msg["cover"])
-                    create_times.append(create_time)
-                    search_names.append(name)
-        except Exception as e:
-            print("{0} 获取失败:{1}".format(name, e))
-            continue
+public_headers = {
+    'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
+    'Accept-Language': 'zh-CN,zh;q=0.9,en-GB;q=0.8,en-US;q=0.7,en;q=0.6',
+    'Cache-Control': 'max-age=0',
+    'Connection': 'keep-alive',
+    'Cookie': cook,
+    'Sec-Fetch-Dest': 'document',
+    'Sec-Fetch-Mode': 'navigate',
+    'Sec-Fetch-Site': 'none',
+    'Sec-Fetch-User': '?1',
+    'Upgrade-Insecure-Requests': '1',
+    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36',
+    'sec-ch-ua': '".Not/A)Brand";v="99", "Google Chrome";v="103", "Chromium";v="103"',
+    'sec-ch-ua-mobile': '?0',
+    'sec-ch-ua-platform': '"Windows"'
+}
 
-        # for index, title in enumerate(titles):
-        #     print(name, title, create_times[index], pics[index], urls[index])
-    return [create_times, titles, urls, pics, search_names]
+
+async def get_news():
+    result = {}
+    payload = {}
+    for key, value in query.items():
+        url = "https://mp.weixin.qq.com/mp/profile_ext?action=home&__biz={0}&scene=124&".format(value)
+
+        with requests.get(url, headers=public_headers, data=payload) as session:
+            response = session.text
+
+        msg_contents = re.findall("msgList =.*?\';", response)[0]
+        msg_str = msg_contents.replace("&quot;", "\'")[11:-2].replace("\'", "\"")
+        msg_json = json.loads(msg_str)
+        result[key] = msg_json
+    return result
 
 
 first_time = int(time.time())
 trigger = 1
 
 ip = get_host_ip()
+first_time = int(time.time())
+
 if ip == "10.10.10.8":
-    first_time = int(time.time())
-    group = 959822848
-else:
-    # first_time = 1659667001
-    first_time = int(time.time())
+    # group = 959822848  移除
     group = 755489024
+    mis_category = ["国际足球", "股票", "财经", "期货", "旅游"]
+elif ip == "172.24.121.72":
+    group = 755489024
+    mis_category = []
+
+else:
+    first_time = 1660098904
+    group = 755489024
+    mis_category = []
+
 
 public = on_metaevent()
 
@@ -186,22 +142,30 @@ async def public_push():
     global trigger, first_time
     msg = ""
     print(time.strftime("%m-%d, %H:%M:%S", time.localtime(int(time.time()))), "public trigger: {0}".format(trigger))
-    if trigger % 60 == 0:
+    if trigger % 3 == 0:
         print("push public")
         bot = get_bot()
         # news = await news_list()
-        news = await search_public(query_names)
-        print("tttttt:\n", time.strftime("%m-%d, %H:%M:%S", time.localtime(int(time.time()))), news)
-        create_times, titles, urls, pics, names = news
-        for index, create_time in enumerate(create_times):
-            if create_time > first_time:
-                pic = MessageSegment.image(pics[index])
-                nature = time.strftime("%H:%M", time.localtime(create_time))
-                url = urls[index].split("chksm")[0]
-                msg = msg + "【{0} {1}】 {2}\n{3}\n".format(names[index], nature, titles[index], url) + pic + "\n"
+        news = await get_news()
+        # print("tttttt:\n", time.strftime("%m-%d, %H:%M:%S", time.localtime(int(time.time()))), json.dumps(news))
+        for key, value in news.items():
+            news_list = value["list"]
+            for each_new in news_list:
+                comm_msg_info, app_msg_ext_info = each_new.values()
+                p_time = comm_msg_info["datetime"]
+                title = app_msg_ext_info["title"]
+                content_url = str(app_msg_ext_info["content_url"])
+                url = str(content_url).replace("amp;", "").replace("amp;", "").split("&chksm=")[0]
+                cover = app_msg_ext_info["cover"]
+                if p_time > first_time:
+                    pic = MessageSegment.image(cover)
+                    nature = time.strftime("%H:%M", time.localtime(p_time))
+                    msg = msg + "【公众号-{0} {1}】 {2}\n{3}\n".format(key, nature, title, url) + pic + "\n"
+                else:
+                    break
 
-        if max(create_times) > first_time:
-            first_time = max(create_times)
+            if value["list"][0]["comm_msg_info"]["datetime"] > first_time:
+                first_time = news_list[0]["comm_msg_info"]["datetime"]
 
         if msg != "":
             print(msg)

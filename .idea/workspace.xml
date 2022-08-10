@@ -5,7 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3047aada-47d5-4ad8-a368-9e15af7b4bc7" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/stephenRT/stephenrt/plugins/personal/kuake.py" beforeDir="false" afterPath="$PROJECT_DIR$/stephenRT/stephenrt/plugins/personal/kuake.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/stephenRT/stephenrt/plugins/Tools/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/stephenRT/stephenrt/plugins/Tools/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/stephenRT/stephenrt/plugins/personal/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/stephenRT/stephenrt/plugins/personal/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/stephenRT/stephenrt/plugins/personal/test.py" beforeDir="false" afterPath="$PROJECT_DIR$/stephenRT/stephenrt/plugins/personal/test.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/stephenRT/stephenrt/plugins/personal/wPublic.py" beforeDir="false" afterPath="$PROJECT_DIR$/stephenRT/stephenrt/plugins/personal/wPublic.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -32,11 +36,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/stephenRT/stephenrt/plugins/personal/__init__.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="421">
-              <caret line="47" lean-forward="true" selection-start-line="47" selection-end-line="47" />
+            <state relative-caret-position="482">
+              <caret line="52" lean-forward="true" selection-start-line="52" selection-end-line="52" />
               <folding>
                 <element signature="e#236#249#0" expanded="true" />
               </folding>
@@ -47,7 +51,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/stephenRT/stephenrt/plugins/document/helpFile.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="255">
+            <state relative-caret-position="317">
               <caret line="28" column="57" selection-start-line="28" selection-start-column="46" selection-end-line="28" selection-end-column="57" />
               <folding>
                 <element signature="e#237#285#0" expanded="true" />
@@ -59,8 +63,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/stephenRT/stephenrt/plugins/document/__init__.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="90">
-              <caret line="6" column="13" selection-start-line="6" selection-start-column="13" selection-end-line="6" selection-end-column="13" />
+            <state relative-caret-position="270">
+              <caret line="18" column="8" lean-forward="true" selection-start-line="18" selection-start-column="8" selection-end-line="18" selection-end-column="8" />
             </state>
           </provider>
         </entry>
@@ -70,13 +74,25 @@
           <provider selected="true" editor-type-id="text-editor" />
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/stephenRT/stephenrt/plugins/personal/kuake.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="250">
-              <caret line="178" column="35" lean-forward="true" selection-start-line="178" selection-start-column="35" selection-end-line="178" selection-end-column="35" />
+            <state relative-caret-position="137">
+              <caret line="170" selection-start-line="170" selection-end-line="187" />
               <folding>
                 <element signature="e#233#252#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/stephenRT/stephenrt/plugins/personal/test.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="453">
+              <caret line="107" column="35" lean-forward="true" selection-start-line="107" selection-start-column="8" selection-end-line="107" selection-end-column="35" />
+              <folding>
+                <element signature="e#232#253#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -99,8 +115,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/stephenRT/stephenrt/plugins/Tools/__init__.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="345">
-              <caret line="23" column="12" selection-start-line="23" selection-start-column="12" selection-end-line="23" selection-end-column="12" />
+            <state relative-caret-position="330">
+              <caret line="24" column="12" lean-forward="true" selection-start-line="24" selection-start-column="12" selection-end-line="24" selection-end-column="12" />
               <folding>
                 <element signature="e#236#260#0" expanded="true" />
               </folding>
@@ -111,22 +127,11 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/stephenRT/stephenrt/plugins/personal/wPublic.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="435">
-              <caret line="29" column="20" lean-forward="true" selection-start-line="29" selection-start-column="20" selection-end-line="29" selection-end-column="20" />
+            <state relative-caret-position="280">
+              <caret line="130" column="5" lean-forward="true" selection-start-line="130" selection-start-column="5" selection-end-line="130" selection-end-column="5" />
               <folding>
                 <element signature="e#234#253#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/stephenRT/stephenrt/plugins/personal/test.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="402">
-              <caret line="115" column="300" selection-start-line="115" selection-start-column="300" selection-end-line="115" selection-end-column="300" />
-              <folding>
-                <element signature="e#232#253#0" expanded="true" />
+                <element signature="e#5007#5040#0" />
               </folding>
             </state>
           </provider>
@@ -143,9 +148,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>14:</find>
-      <find>中国台湾网</find>
-      <find>:</find>
       <find>15:22</find>
       <find>15:</find>
       <find>img</find>
@@ -168,11 +170,14 @@
       <find>1659938043432</find>
       <find>sta</find>
       <find>push</find>
-      <find>本地</find>
       <find>cfg</find>
       <find>print</find>
       <find>省内往返</find>
       <find>not save</find>
+      <find>突破40</find>
+      <find>本地</find>
+      <find>成都7月</find>
+      <find>高温</find>
     </findStrings>
     <replaceStrings>
       <replace>logger.debug</replace>
@@ -243,12 +248,12 @@
         <option value="$PROJECT_DIR$/stephenRT/stephenrt/plugins/chatCloud/__init__.py" />
         <option value="$PROJECT_DIR$/stephenRT/stephenrt/plugins/chatCloud/timer.py" />
         <option value="$PROJECT_DIR$/stephenRT/stephenrt/plugins/Badminton/__init__.py" />
-        <option value="$PROJECT_DIR$/stephenRT/stephenrt/plugins/Tools/__init__.py" />
         <option value="$PROJECT_DIR$/stephenRT/stephenrt/plugins/document/__init__.py" />
-        <option value="$PROJECT_DIR$/stephenRT/stephenrt/plugins/personal/wPublic.py" />
-        <option value="$PROJECT_DIR$/stephenRT/stephenrt/plugins/personal/test.py" />
-        <option value="$PROJECT_DIR$/stephenRT/stephenrt/plugins/personal/__init__.py" />
         <option value="$PROJECT_DIR$/stephenRT/stephenrt/plugins/personal/kuake.py" />
+        <option value="$PROJECT_DIR$/stephenRT/stephenrt/plugins/Tools/__init__.py" />
+        <option value="$PROJECT_DIR$/stephenRT/stephenrt/plugins/personal/test.py" />
+        <option value="$PROJECT_DIR$/stephenRT/stephenrt/plugins/personal/wPublic.py" />
+        <option value="$PROJECT_DIR$/stephenRT/stephenrt/plugins/personal/__init__.py" />
       </list>
     </option>
   </component>
@@ -333,7 +338,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.test">
+  <component name="RunManager" selected="Python.bot">
     <configuration name="bot" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="stephenRT" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -473,9 +478,9 @@
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.bot" />
         <item itemvalue="Python.test" />
         <item itemvalue="Python.test (1)" />
-        <item itemvalue="Python.bot" />
         <item itemvalue="Python.wPublic" />
         <item itemvalue="Python.dm" />
       </list>
@@ -600,7 +605,9 @@
       <workItem from="1659498068994" duration="663000" />
       <workItem from="1659515697105" duration="60626000" />
       <workItem from="1659924205754" duration="31227000" />
-      <workItem from="1660014273580" duration="6131000" />
+      <workItem from="1660014273580" duration="8551000" />
+      <workItem from="1660028836191" duration="932000" />
+      <workItem from="1660036694258" duration="13735000" />
     </task>
     <servers />
   </component>
@@ -613,7 +620,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="1344869000" />
+    <option name="totallyTimeSpent" value="1361956000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -628,12 +635,12 @@
     <frame x="-1928" y="-8" width="1936" height="1056" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.49837664" visible="true" weight="0.16808964" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49837664" visible="true" weight="0.17129135" />
       <window_info id="Structure" order="1" sideWeight="0.5016234" side_tool="true" weight="0.14887941" />
       <window_info id="Favorites" order="2" sideWeight="0.5016234" side_tool="true" weight="0.14887941" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32897604" />
-      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.4994664" visible="true" weight="0.32135075" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.49893278" visible="true" weight="0.32026145" />
       <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.4994664" weight="0.39978212" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -641,8 +648,8 @@
       <window_info anchor="bottom" id="Version Control" order="7" weight="0.32897604" />
       <window_info anchor="bottom" id="TemplateSupport.ToolWindow" order="8" sideWeight="0.50053364" side_tool="true" weight="0.39978212" />
       <window_info anchor="bottom" id="Database Changes" order="9" />
-      <window_info anchor="bottom" id="Terminal" order="10" weight="0.32461873" />
-      <window_info anchor="bottom" id="Event Log" order="11" sideWeight="0.50053364" side_tool="true" weight="0.35947713" />
+      <window_info anchor="bottom" id="Terminal" order="10" sideWeight="0.4994664" weight="0.32461873" />
+      <window_info anchor="bottom" id="Event Log" order="11" sideWeight="0.50053364" side_tool="true" weight="0.32461873" />
       <window_info anchor="bottom" id="Python Console" order="12" weight="0.32897604" />
       <window_info anchor="bottom" id="TODO" order="13" weight="0.32897604" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
@@ -689,7 +696,7 @@
     <SUITE FILE_PATH="coverage/stephenRT$pytest_in_autoBan_py.coverage" NAME="pytest in autoBan.py Coverage Results" MODIFIED="1651137071688" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/stephenRT/stephenrt/plugins/Badminton" />
     <SUITE FILE_PATH="coverage/stephenRT$bmEncrypt.coverage" NAME="bmEncrypt Coverage Results" MODIFIED="1651054153557" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/stephenRT/stephenrt/plugins/projects" />
     <SUITE FILE_PATH="coverage/stephenRT$kuake.coverage" NAME="kuake Coverage Results" MODIFIED="1659577045074" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/stephenRT/stephenrt/plugins/personal" />
-    <SUITE FILE_PATH="coverage/stephenRT$bot.coverage" NAME="bot Coverage Results" MODIFIED="1660012071673" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/stephenRT" />
+    <SUITE FILE_PATH="coverage/stephenRT$bot.coverage" NAME="bot Coverage Results" MODIFIED="1660109692792" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/stephenRT" />
     <SUITE FILE_PATH="coverage/stephenRT$encrypt.coverage" NAME="encrypt Coverage Results" MODIFIED="1650785444317" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/stephenRT/stephenrt/plugins/projects" />
     <SUITE FILE_PATH="coverage/stephenRT$sensitive.coverage" NAME="sensitive Coverage Results" MODIFIED="1644917430897" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/stephenRT/stephenrt/plugins/Badminton" />
     <SUITE FILE_PATH="coverage/stephenRT$hot_star.coverage" NAME="hot_star Coverage Results" MODIFIED="1652082673607" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="D:/Tools/python3/Lib/site-packages/douyin_spider/enter" />
@@ -700,7 +707,7 @@
     <SUITE FILE_PATH="coverage/stephenRT$du_name.coverage" NAME="du_name Coverage Results" MODIFIED="1656057148718" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/stephenRT/stephenrt/plugins/Tools" />
     <SUITE FILE_PATH="coverage/stephenRT$outside.coverage" NAME="outside Coverage Results" MODIFIED="1650338869459" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/stephenRT/stephenrt/plugins/projects" />
     <SUITE FILE_PATH="coverage/stephenRT$__init__.coverage" NAME="__init__ Coverage Results" MODIFIED="1651194988561" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/stephenRT/stephenrt/plugins/Tools" />
-    <SUITE FILE_PATH="coverage/stephenRT$test.coverage" NAME="test Coverage Results" MODIFIED="1660020342237" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/stephenRT/stephenrt/plugins/personal" />
+    <SUITE FILE_PATH="coverage/stephenRT$test.coverage" NAME="test Coverage Results" MODIFIED="1660108518984" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/stephenRT/stephenrt/plugins/personal" />
     <SUITE FILE_PATH="coverage/stephenRT$aihelp.coverage" NAME="aihelp Coverage Results" MODIFIED="1656061540659" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/stephenRT/stephenrt/plugins/Badminton" />
     <SUITE FILE_PATH="coverage/stephenRT$many.coverage" NAME="many Coverage Results" MODIFIED="1655371527467" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/stephenRT/stephenrt/plugins/Tools" />
     <SUITE FILE_PATH="coverage/stephenRT$report.coverage" NAME="report Coverage Results" MODIFIED="1644479568662" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/stephenRT/stephenrt" />
@@ -1011,65 +1018,12 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/stephenRT/stephenrt/plugins/document/helpFile.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="28" column="57" selection-start-line="28" selection-start-column="46" selection-end-line="28" selection-end-column="57" />
-          <folding>
-            <element signature="e#237#285#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/stephenRT/stephenrt/plugins/nonebot_plugin_status/__init__.py">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/stephenRT/stephenrt/plugins/nonebot_plugin_status/config.py">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/stephenRT/stephenrt/plugins/document/__init__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="90">
-          <caret line="6" column="13" selection-start-line="6" selection-start-column="13" selection-end-line="6" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/stephenRT/stephenrt/test.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="347">
           <caret line="44" column="80" lean-forward="true" selection-start-line="44" selection-start-column="80" selection-end-line="44" selection-end-column="80" />
           <folding>
             <element signature="e#272#281#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/stephenRT/stephenrt/plugins/personal/test.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="402">
-          <caret line="115" column="300" selection-start-line="115" selection-start-column="300" selection-end-line="115" selection-end-column="300" />
-          <folding>
-            <element signature="e#232#253#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/stephenRT/stephenrt/plugins/Tools/__init__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="345">
-          <caret line="23" column="12" selection-start-line="23" selection-start-column="12" selection-end-line="23" selection-end-column="12" />
-          <folding>
-            <element signature="e#236#260#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/stephenRT/stephenrt/plugins/personal/wPublic.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="435">
-          <caret line="29" column="20" lean-forward="true" selection-start-line="29" selection-start-column="20" selection-end-line="29" selection-end-column="20" />
-          <folding>
-            <element signature="e#234#253#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1081,6 +1035,9 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/stephenRT/stephenrt/plugins/nonebot_plugin_status/config.py">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
     <entry file="file://$PROJECT_DIR$/stephenRT/stephenrt/plugins/nonebot_plugin_status/data_source.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="60">
@@ -1088,22 +1045,73 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/stephenRT/stephenrt/plugins/personal/__init__.py">
+    <entry file="file://$PROJECT_DIR$/stephenRT/stephenrt/plugins/nonebot_plugin_status/__init__.py">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/stephenRT/stephenrt/plugins/personal/kuake.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="421">
-          <caret line="47" lean-forward="true" selection-start-line="47" selection-end-line="47" />
+        <state relative-caret-position="137">
+          <caret line="170" selection-start-line="170" selection-end-line="187" />
           <folding>
-            <element signature="e#236#249#0" expanded="true" />
+            <element signature="e#233#252#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/stephenRT/stephenrt/plugins/personal/kuake.py">
+    <entry file="file://$PROJECT_DIR$/stephenRT/stephenrt/plugins/document/__init__.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="250">
-          <caret line="178" column="35" lean-forward="true" selection-start-line="178" selection-start-column="35" selection-end-line="178" selection-end-column="35" />
+        <state relative-caret-position="270">
+          <caret line="18" column="8" lean-forward="true" selection-start-line="18" selection-start-column="8" selection-end-line="18" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/stephenRT/stephenrt/plugins/Tools/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="330">
+          <caret line="24" column="12" lean-forward="true" selection-start-line="24" selection-start-column="12" selection-end-line="24" selection-end-column="12" />
           <folding>
-            <element signature="e#233#252#0" expanded="true" />
+            <element signature="e#236#260#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/stephenRT/stephenrt/plugins/personal/test.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="453">
+          <caret line="107" column="35" lean-forward="true" selection-start-line="107" selection-start-column="8" selection-end-line="107" selection-end-column="35" />
+          <folding>
+            <element signature="e#232#253#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/stephenRT/stephenrt/plugins/personal/wPublic.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="280">
+          <caret line="130" column="5" lean-forward="true" selection-start-line="130" selection-start-column="5" selection-end-line="130" selection-end-column="5" />
+          <folding>
+            <element signature="e#234#253#0" expanded="true" />
+            <element signature="e#5007#5040#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/stephenRT/stephenrt/plugins/document/helpFile.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="317">
+          <caret line="28" column="57" selection-start-line="28" selection-start-column="46" selection-end-line="28" selection-end-column="57" />
+          <folding>
+            <element signature="e#237#285#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/stephenRT/stephenrt/plugins/personal/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="482">
+          <caret line="52" lean-forward="true" selection-start-line="52" selection-end-line="52" />
+          <folding>
+            <element signature="e#236#249#0" expanded="true" />
           </folding>
         </state>
       </provider>

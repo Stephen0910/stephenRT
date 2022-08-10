@@ -12,6 +12,7 @@
 from .timestamp import *
 import socket
 
+
 def get_host_ip():
     """
     查询本机ip地址
@@ -26,10 +27,10 @@ def get_host_ip():
 
     return ip
 
+
 # from .autoBan import *
 
 ip = str(get_host_ip())
-
 
 if ip == "10.10.10.8":
     from .update import *
