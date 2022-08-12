@@ -10,11 +10,9 @@
 # @Licence  :     <@2022>
 
 import re, datetime
-from bs4 import BeautifulSoup
 import requests, socket
 import json
-import time, random
-from urllib import parse
+import time
 from nonebot import get_bot
 from nonebot import on_metaevent
 from nonebot.adapters.onebot.v11.message import MessageSegment
@@ -173,7 +171,8 @@ if ip == "10.10.10.8":
 
     first_time = int(round(time.time() * 1000))
     # group = 959822848  移除
-    group = 755489024
+    group = 796920373
+    # group = 755489024
     mis_category = ["国际足球", "股票", "财经", "期货", "旅游"]
 elif ip == "172.24.121.72":
     first_time = int(round(time.time() * 1000))

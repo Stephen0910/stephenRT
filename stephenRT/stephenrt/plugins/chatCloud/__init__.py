@@ -26,6 +26,7 @@ sys.path.append("../../")
 import stephenrt.privateCfg as cfg
 from .report import *
 from .timer import group_name, deleteFile
+
 # from stephenrt.plugins.chatCloud import timer
 
 config = cfg.config_content
@@ -37,7 +38,7 @@ async def getGroup(key):
     selectSql = """SELECT DISTINCT group_id, group_name FROM "group" WHERE "upper"(group_name) like "upper"('%{0}%') ORDER BY group_name;""".format(
         key)
     print(selectSql)
-    contents = await conn.fetch(selectSql)
+    contents = await conn.fetchall(selectSql)
     await conn.close()
     return contents
 
