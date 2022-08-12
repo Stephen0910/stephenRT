@@ -34,8 +34,9 @@ trigger = 0
 async def query_game():
     global trigger
     # 查询的项目信息
-    app_sql = "SELECT * FROM game_info WHERE is_pulish is True"
-    app_info = await select_data(app_sql)
 
-    if trigger % 30 == 0:
+
+    if trigger % 3 == 0:
+        app_sql = "SELECT * FROM game_info WHERE is_pulish is True"
+        app_info = await select_data(app_sql)
         logger.info(app_info)
