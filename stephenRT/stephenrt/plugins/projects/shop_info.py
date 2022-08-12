@@ -14,11 +14,16 @@ from bs4 import BeautifulSoup
 import asyncpg
 import asyncio
 import stephenrt.privateCfg as cfg
+pgsql = cfg.config_content
 import psycopg2
 import psycopg2.extras
+import logzero, logging
+from logzero import logger
+logzero.loglevel(logging.DEBUG)
 
 
-pgsql = cfg.config_content
+
+
 
 apps = {"决战羽毛球": {"country": "cn", "apple_id": "1546338773", "google_id": ""},
         "无尽噩梦：诡监狱": {"country": "cn", "apple_id": "1632164767", "google_id": ""},
@@ -48,9 +53,8 @@ async def asInfo(country, id):
         'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36'
     }
 
-    url = "https://apps.apple.com{0}/app/id{1}".format(country,
-                                                       id) if country == "" else "https://apps.apple.com/{0}/app/id{1}".format(
-        country, id)
+    url = "https://apps.apple.com/{0}/app/id{1}".format(country, id) if country != None else "https://apps.apple.com/app/id{0}".format(id)
+    logger.debug(url)
 
     with requests.get(url, headers=headers, data=payload, proxies=proxies) as session:
         response = session.content
@@ -60,9 +64,11 @@ async def asInfo(country, id):
         "\n")
     name, age = [x for x in name_info if len(x) > 0]
     update_date = soup.find(name="time", attrs={"data-test-we-datetime": ""}).text
-    version = \
-        soup.find(name="p", attrs={"class": "l-column small-6 medium-12 whats-new__latest__version"}).text.split(" ")[
-            -1]
+    try:
+        version = soup.find(name="p", attrs={"class": "l-column small-6 medium-12 whats-new__latest__version"}).text.split(" ")[-1]
+    except:
+        logger.error("获取版本失败，可能是第一个版本")
+        version = "0.0.0"
     rate = soup.find(name="span", attrs={"class": "we-customer-ratings__averages__display"}).text
     ver_infos = soup.find_all("div",
                               {"class": "information-list__item l-column small-12 medium-6 large-4 small-valign-top"})
@@ -88,7 +94,7 @@ async def asInfo(country, id):
 async def gpInfo(id):
     url = "https://play.google.com/store/apps/details?id=" + id
     proxies = {"http": "127.0.0.1:7890", "https": "127.0.0.1:7890"}
-
+    logger.debug(url)
     payload = {}
     headers = {
         'authority': 'play.google.com',
@@ -112,10 +118,12 @@ async def gpInfo(id):
         'upgrade-insecure-requests': '1',
         'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36'
     }
-
-    with requests.get(url, headers=headers, data=payload, proxies=proxies) as session:
-        response = session.text
-
+    try:
+        with requests.get(url, headers=headers, data=payload, proxies=proxies) as session:
+            response = session.text
+    except Exception as e:
+        logger.error("获取信息失败: {0}".format(str(e)))
+        return
     soup = BeautifulSoup(response, "html.parser")
     name = soup.find("h1", {"itemprop": "name"}).text
     age = soup.find("span", {"itemprop": "contentRating"}).text
@@ -123,7 +131,12 @@ async def gpInfo(id):
     # print(download)
     recent_update = soup.find("div", {"class": "xg1aie"}).text
     rate = re.match("\d+.\d+", soup.find("div", {"itemprop": "starRating"}).text).group()
-    version = re.search("\d+.\d+", re.search("\[\[\[\"\d+.\d+\"]]", response).group()).group()
+
+    # version = re.search("\d+.\d+", re.search("\[\[\[\"\d+.\d+\"]]", response).group()).group()
+    try:
+        version = re.search("\d+.\d+", re.search("\[\[\[\"\d+.\d+\"]]", response).group()).group()  # 两位版本号
+    except:
+        version = re.search("\d+.\d+.\d+", re.search("\[\[\[\"\d+.\d+.\d+\"]]", response).group()).group() # 三位
     info = re.search("\[\[\[\d+,\".*?[0-9].[0-9]\"]]", response).group().split(",")
     sdk_version = [re.search("\d\d|\d.\d", x).group() for x in info]
     sdk_min = sdk_version[::2][-1]
@@ -140,15 +153,6 @@ async def select_data(sql):
     await conn.close()
     return data
 
-def init_data(sql):
-    conn = psycopg2.connect(user=pgsql["user"], password=pgsql["password"], database=pgsql["database"],
-                                 host=pgsql["host"])
-    cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
-    cursor.execute(sql)
-    data = cursor.fetchall()
-    conn.close()
-    return data
-
 
 async def save_data(sql):
     """
@@ -159,7 +163,11 @@ async def save_data(sql):
     conn = await asyncpg.connect(user=pgsql["user"], password=pgsql["password"], database=pgsql["database"],
                                  host=pgsql["host"])
     # print("conn:", conn)
-    await conn.execute(sql)
+
+    try:
+        await conn.execute(sql)
+    except:
+        logger.error(sql)
     await conn.close()
 
 
@@ -172,8 +180,8 @@ if __name__ == '__main__':
     # b = json.dumps(gpInfo(apps[name]["google_id"]))
     # print(b)
     loop = asyncio.get_event_loop()
-    sql = "SELECT * FROM game_info WHERE is_pulish is True"
-    result = loop.run_until_complete(gpInfo("slots.machine.winning.android"))
+    # sql = "SELECT * FROM game_info WHERE is_pulish is True"
+    # result = loop.run_until_complete(gpInfo("texas.holdem.poker.winning.android"))
+    result = loop.run_until_complete(asInfo("ca", "1472473722"))
     loop.close()
     print(result)
-

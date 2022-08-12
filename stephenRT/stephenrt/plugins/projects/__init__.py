@@ -42,11 +42,11 @@ if re.match("192.*", ip):
     pass
 
 if ip == "10.10.10.8":
+    from .query_game import *
     pass
 
 
 if ip == "172.24.121.72":
-
     pass
 
 
