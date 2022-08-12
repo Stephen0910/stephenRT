@@ -21,7 +21,7 @@ from nonebot.adapters.onebot.v11.message import MessageSegment
 from nonebot.params import Depends
 from .p_diff import *
 
-players = [281016636, 659738900, 158709003, 726408753, 378282033, 675246207]
+players = [281016636, 659738900, 158709003, 726408753, 378282033, 675246207, 3274888291]
 v_url = "https://api.linhun.vip/api/Littlesistervideo?type=json"
 
 
