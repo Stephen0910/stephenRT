@@ -8,4 +8,4 @@
 # @Software : PyCharm
 # @Copyright:   (c) StephenZ 2022
 # @Licence  :     <@2022>
-from .query_game import *
+# from .query_game import *

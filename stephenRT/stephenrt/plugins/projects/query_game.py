@@ -37,5 +37,5 @@ async def query_game():
     app_sql = "SELECT * FROM game_info WHERE is_pulish is True"
     app_info = await select_data(app_sql)
 
-    if trigger % 3 == 0:
+    if trigger % 30 == 0:
         logger.info(app_info)
