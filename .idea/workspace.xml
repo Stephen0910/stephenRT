@@ -5,12 +5,7 @@
     <bookmark url="file://$PROJECT_DIR$/stephenRT/stephenrt/plugins/projects/shop_info.py" line="36" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3047aada-47d5-4ad8-a368-9e15af7b4bc7" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/stephenRT/stephenrt/plugins/personal/kuake.py" beforeDir="false" afterPath="$PROJECT_DIR$/stephenRT/stephenrt/plugins/personal/kuake.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/stephenRT/stephenrt/plugins/projects/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/stephenRT/stephenrt/plugins/projects/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/stephenRT/stephenrt/plugins/projects/query_game.py" beforeDir="false" afterPath="$PROJECT_DIR$/stephenRT/stephenrt/plugins/projects/query_game.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/stephenRT/stephenrt/plugins/projects/shop_info.py" beforeDir="false" afterPath="$PROJECT_DIR$/stephenRT/stephenrt/plugins/projects/shop_info.py" afterDir="false" />
-    </list>
+    <list default="true" id="3047aada-47d5-4ad8-a368-9e15af7b4bc7" name="Default Changelist" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -39,8 +34,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/stephenRT/stephenrt/plugins/projects/query_game.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="210">
-              <caret line="144" column="95" lean-forward="true" selection-start-line="144" selection-start-column="95" selection-end-line="144" selection-end-column="95" />
+            <state relative-caret-position="329">
+              <caret line="87" column="25" lean-forward="true" selection-start-line="87" selection-start-column="25" selection-end-line="87" selection-end-column="25" />
               <folding>
                 <element signature="e#238#257#0" expanded="true" />
               </folding>
@@ -612,7 +607,7 @@
       <workItem from="1660036694258" duration="20200000" />
       <workItem from="1660119294057" duration="3554000" />
       <workItem from="1660202943591" duration="14428000" />
-      <workItem from="1660263255225" duration="32250000" />
+      <workItem from="1660263255225" duration="32504000" />
     </task>
     <servers />
   </component>
@@ -625,7 +620,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="1418653000" />
+    <option name="totallyTimeSpent" value="1418907000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -637,7 +632,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-1928" y="-8" width="1936" height="1056" extended-state="7" />
+    <frame x="-1928" y="-8" width="1936" height="1056" extended-state="6" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49837664" visible="true" weight="0.17662753" />
       <window_info id="Structure" order="1" sideWeight="0.5016234" side_tool="true" weight="0.14887941" />
@@ -1119,8 +1114,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/stephenRT/stephenrt/plugins/projects/query_game.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="210">
-          <caret line="144" column="95" lean-forward="true" selection-start-line="144" selection-start-column="95" selection-end-line="144" selection-end-column="95" />
+        <state relative-caret-position="329">
+          <caret line="87" column="25" lean-forward="true" selection-start-line="87" selection-start-column="25" selection-end-line="87" selection-end-column="25" />
           <folding>
             <element signature="e#238#257#0" expanded="true" />
           </folding>
