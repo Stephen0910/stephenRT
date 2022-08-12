@@ -14,6 +14,9 @@ from bs4 import BeautifulSoup
 import asyncpg
 import asyncio
 import stephenrt.privateCfg as cfg
+import psycopg2
+import psycopg2.extras
+
 
 pgsql = cfg.config_content
 
@@ -123,8 +126,11 @@ async def gpInfo(id):
     version = re.search("\d+.\d+", re.search("\[\[\[\"\d+.\d+\"]]", response).group()).group()
     info = re.search("\[\[\[\d+,\".*?[0-9].[0-9]\"]]", response).group().split(",")
     sdk_version = [re.search("\d\d|\d.\d", x).group() for x in info]
+    sdk_min = sdk_version[::2][-1]
+    sdk_max = sdk_version[::2][0]
+
     return {"name": name, "age": age, "recent_update": recent_update, "version": version, "rate": rate,
-            "google_url": url, "gp_packageName": id, "sdk_version": sdk_version}
+            "google_url": url, "gp_packageName": id, "sdk_min": sdk_min, "sdk_max": sdk_max}
 
 
 async def select_data(sql):
@@ -132,6 +138,15 @@ async def select_data(sql):
                                  host=pgsql["host"])
     data = await conn.fetch(sql)
     await conn.close()
+    return data
+
+def init_data(sql):
+    conn = psycopg2.connect(user=pgsql["user"], password=pgsql["password"], database=pgsql["database"],
+                                 host=pgsql["host"])
+    cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
+    cursor.execute(sql)
+    data = cursor.fetchall()
+    conn.close()
     return data
 
 
@@ -158,7 +173,7 @@ if __name__ == '__main__':
     # print(b)
     loop = asyncio.get_event_loop()
     sql = "SELECT * FROM game_info WHERE is_pulish is True"
-    result = loop.run_until_complete(select_data(sql))
+    result = loop.run_until_complete(gpInfo("slots.machine.winning.android"))
     loop.close()
     print(result)
-    print(result[0]["game_id"])
+
