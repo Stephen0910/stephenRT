@@ -85,7 +85,7 @@ async def query_game():
     bot = get_bot()
     # 查询的项目信息
     logger.debug("game trigger:{0}".format(trigger))
-    if trigger % 5 == 0:
+    if trigger % 60 == 0:
         # 数据库里面配置到有信息就证明有包，没有存就写入，存了就比较
         app_sql = "SELECT * FROM game_info WHERE is_pulish is True"
         app_infos = await select_data(app_sql)
