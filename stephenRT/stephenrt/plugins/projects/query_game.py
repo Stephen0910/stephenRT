@@ -10,7 +10,7 @@
 # @Licence  :     <@2022>
 
 import re, datetime
-import requests, socket
+import socket
 import json
 import time
 from nonebot import get_bot
@@ -85,18 +85,19 @@ async def query_game():
     bot = get_bot()
     # 查询的项目信息
     logger.debug("game trigger:{0}".format(trigger))
-    if trigger % 60 == 0:
+    if trigger % 30 == 0:
         # 数据库里面配置到有信息就证明有包，没有存就写入，存了就比较
         app_sql = "SELECT * FROM game_info WHERE is_pulish is True"
         app_infos = await select_data(app_sql)
         for app_info in app_infos:
+            logger.info("SQL:", app_info["name"])
             game_id = app_info["game_id"]
             gp_package, as_id, country = app_info["gp_packageName"], app_info["as_id"], app_info["apple_country"]
             if gp_package != None and gp_package != "":  # 在gp有包
                 google_info = await select_data(
                     "SELECT * FROM gp_version WHERE game_id = {0} ORDER BY id DESC".format(game_id))
                 if google_info == []:  # 没有google版本信息，写入
-                    logger.info("没有google版本信息，写入")
+                    logger.info("没有google版本信息，写入：{0}".format(app_info["name"]))
                     try:
                         gp_info = await gpInfo(gp_package)
                     except:
@@ -136,7 +137,7 @@ VALUES
                                                                             gp_info["sdk_min"],
                                                                             gp_info["sdk_max"])
 
-                        msg = "【{0}】 有更新 from GooglePlay]\n版本:{1}||{3}\n{2}".format(gp_info["name"], gp_info["version"],
+                        msg = "【{0}】 有更新 from GooglePlay\n版本:{1}||{3}\n{2}".format(gp_info["name"], gp_info["version"],
                                                                                    gp_info["google_url"], last_version)
                         await save_data(sql)
                         try:
@@ -157,7 +158,7 @@ VALUES
                 apple_info_sql = await select_data(
                     "SELECT * FROM as_version WHERE as_id = {0} ORDER BY id DESC".format(as_id))
                 if apple_info_sql == []:  # 没有appStore 信息
-                    logger.info("没有appStore 信息，写入")
+                    logger.info("没有appStore 信息，写入:{0}".format(apple_info_sql["name"]))
                     try:
                         as_info_store = await asInfo(country, as_id)  # 从商店获取的
                     except:
