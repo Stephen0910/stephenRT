@@ -25,7 +25,7 @@ import asyncio
 import stephenrt.privateCfg as cfg
 pgsql = cfg.config_content
 
-import grequests
+
 import logzero, logging
 from logzero import logger
 
@@ -99,7 +99,7 @@ async def asInfo_abundon(country, id):
     logger.debug(url)
 
     # with requests.get(url, headers=headers, data=payload, proxies=proxies) as session:
-    with grequests.get(url, headers=gp_headers, data=payload, proxies=proxies) as session:
+    with requests.get(url, headers=gp_headers, data=payload, proxies=proxies) as session:
 
         response = session.content
     soup = BeautifulSoup(response, "html.parser")
