@@ -307,7 +307,7 @@ async def check_project(name, game_id, apple_country, as_id, gp_packageName, gp_
                         INSERT INTO gp_version ( "game_id", "name", "age", "recent_update", "version", "rate", "google_url", "gp_packageName", "sdk_min", sdk_max, "timestamp")
 VALUES	
 ({0}, '{1}', '{2}', '{3}', '{4}', '{5}', '{6}', '{7}', {8}, {9}, {10});""".format(game_id,
-                                                                                  name.replace("\'", "\""),
+                                                                                  gp_live["name"].replace("\'", "\""),
                                                                                   gp_live["age"],
                                                                                   gp_live["recent_update"],
                                                                                   gp_live["version"],
