@@ -10,6 +10,8 @@
 # @Licence  :     <@2022>
 
 from gevent import monkey
+from concurrent.futures import ThreadPoolExecutor
+import time
 
 monkey.patch_all(select=False)
 
@@ -19,10 +21,11 @@ import requests, json, re, httpx
 from bs4 import BeautifulSoup
 import asyncpg
 import asyncio
+
 import stephenrt.privateCfg as cfg
 pgsql = cfg.config_content
-import grequests
 
+import grequests
 import logzero, logging
 from logzero import logger
 
@@ -45,6 +48,22 @@ gp_headers = {
 }
 
 
+async def version_max(a, b):
+    """
+    比较版本
+    :param a: 新查询版本号
+    :param b: 数据库中的版本
+    :return:
+    """
+    if a == b:
+        return False
+    lista = str(a).split(".")
+    listb = str(b).split(".")
+    for index, i in enumerate(lista):
+        if int(i) > int(listb[index]):
+            return True
+
+
 async def select_data(sql):
     conn = await asyncpg.connect(user=pgsql["user"], password=pgsql["password"], database=pgsql["database"],
                                  host=pgsql["host"])
@@ -65,8 +84,8 @@ async def save_data(sql):
 
     try:
         await conn.execute(sql)
-    except:
-        logger.error(sql)
+    except Exception as e:
+        logger.error("sql执行失败：\n{0}\n{1}".format(str(e), sql))
     await conn.close()
 
 
@@ -178,6 +197,7 @@ async def gpInfo_aboundon(id):
 
 async def gpInfo(id):
     url = "https://play.google.com/store/apps/details?id=" + id
+    # logger.debug(url)
     con = aiohttp.TCPConnector(ssl=False)
     async with aiohttp.ClientSession(connector=con, trust_env=True) as session:
         async with session.get(url, proxy="http://127.0.0.1:7890") as resp:
@@ -190,52 +210,58 @@ async def gpInfo(id):
             download = [x.text for x in soup.find_all("div", {"class": "ClM7O"})]
             # print(download)
             recent_update = soup.find("div", {"class": "xg1aie"}).text
-            rate = re.match("\d+.\d+", soup.find("div", {"itemprop": "starRating"}).text).group()
-
+            try:
+                rate = re.match("\d+.\d+", soup.find("div", {"itemprop": "starRating"}).text).group()
+            except:
+                rate = "人数过少，无评分"
             # version = re.search("\d+.\d+", re.search("\[\[\[\"\d+.\d+\"]]", response).group()).group()
             try:
-                version = re.search("\d+.\d+", re.search("\[\[\[\"\d+.\d+\"]]", response).group()).group()  # 两位版本号
+                version = re.search("\d+.\d+.\d+.\d+|\d+.\d+.\d+|\d+.\d+",
+                                    re.search("\[\[\[\"\d+.\d+.*?]],", response).group()).group()  # 2-4位版本号
+                info = re.search("\[\[\[\d+,\".*?[0-9].[0-9]\"]]", response).group().split(",")
+                sdk_version = [re.search("\d\d|\d.\d", x).group() for x in info]
+                sdk_min = sdk_version[::2][-1]
+                sdk_max = sdk_version[::2][0]
             except:
-                version = re.search("\d+.\d+.\d+", re.search("\[\[\[\"\d+.\d+.\d+\"]]", response).group()).group()  # 三位
-            info = re.search("\[\[\[\d+,\".*?[0-9].[0-9]\"]]", response).group().split(",")
-            sdk_version = [re.search("\d\d|\d.\d", x).group() for x in info]
-            sdk_min = sdk_version[::2][-1]
-            sdk_max = sdk_version[::2][0]
+                # version = re.search("\d+.\d+.\d+", re.search("\[\[\[\"\d+.\d+.\d+\"]]", response).group()).group()  # 三位或四位
+                version = "0.0"
+                sdk_min = ""
+                sdk_max = ""
 
     return {"name": name, "age": age, "recent_update": recent_update, "version": version, "rate": rate,
             "google_url": url, "gp_packageName": id, "sdk_min": sdk_min, "sdk_max": sdk_max}
 
 
 async def asInfo(country, id):
-    proxies = {"http": "127.0.0.1:7890", "https": "127.0.0.1:7890"}
-    payload = {}
-
     url = "https://apps.apple.com/{0}/app/id{1}".format(country,
                                                         id) if country != None else "https://apps.apple.com/app/id{0}".format(
         id)
-    logger.debug(url)
+    # logger.debug(url)
 
     con = aiohttp.TCPConnector(ssl=False)
     async with aiohttp.ClientSession(connector=con, trust_env=True) as session:
         async with session.get(url, proxy="http://127.0.0.1:7890") as resp:
             response = await resp.text(encoding="utf-8")
             soup = BeautifulSoup(response, "html.parser")
-            name_info = soup.find(name="h1", attrs={"class": "product-header__title app-header__title"}).text.replace(" ",
-                                                                                                                      "").split(
+            name_info = soup.find(name="h1", attrs={"class": "product-header__title app-header__title"}).text.replace(
+                " ",
+                "").split(
                 "\n")
             name, age = [x for x in name_info if len(x) > 0]
             update_date = soup.find(name="time", attrs={"data-test-we-datetime": ""}).text
             try:
                 version = \
-                    soup.find(name="p", attrs={"class": "l-column small-6 medium-12 whats-new__latest__version"}).text.split(
+                    soup.find(name="p",
+                              attrs={"class": "l-column small-6 medium-12 whats-new__latest__version"}).text.split(
                         " ")[
                         -1]
             except:
                 logger.error("获取版本失败，可能是第一个版本")
-                version = "0.0.0"
+                version = "0.0"
             rate = soup.find(name="span", attrs={"class": "we-customer-ratings__averages__display"}).text
             ver_infos = soup.find_all("div",
-                                      {"class": "information-list__item l-column small-12 medium-6 large-4 small-valign-top"})
+                                      {
+                                          "class": "information-list__item l-column small-12 medium-6 large-4 small-valign-top"})
 
             verInfo_dict = {}
             for info in ver_infos:
@@ -255,18 +281,147 @@ async def asInfo(country, id):
             "version_info": verInfo_dict, "apple_url": url, "as_id": id}
 
 
+async def check_project(name, game_id, apple_country, as_id, gp_packageName, gp_version, as_version):
+    msg = ""
+
+    # 先处理GP
+    if gp_packageName == None or gp_packageName == "":
+        # logger.debug("没有谷歌包：{0}".format(name))
+        pass
+    else:
+        try:
+            gp_live = await gpInfo(gp_packageName)
+            live_version = gp_live["version"]
+            # logger.debug(name + ":" + live_version)
+
+            if gp_version == None:
+                # logger.debug("没有存:" + name)
+                gp_version = "0.0"
+            max_version = await version_max(live_version, gp_version)
+
+            # 写入
+            if max_version:
+                timestamp = str(int(time.time()))
+                game_package = gp_packageName
+                gp_sql = """
+                        INSERT INTO gp_version ( "game_id", "name", "age", "recent_update", "version", "rate", "google_url", "gp_packageName", "sdk_min", sdk_max, "timestamp")
+VALUES	
+({0}, '{1}', '{2}', '{3}', '{4}', '{5}', '{6}', '{7}', {8}, {9}, {10});""".format(game_id,
+                                                                                  name.replace("\'", "\""),
+                                                                                  gp_live["age"],
+                                                                                  gp_live["recent_update"],
+                                                                                  gp_live["version"],
+                                                                                  gp_live["rate"],
+                                                                                  gp_live["google_url"],
+                                                                                  gp_live["gp_packageName"],
+                                                                                  gp_live["sdk_min"],
+                                                                                  gp_live["sdk_max"],
+                                                                                  timestamp)
+
+                msg = msg + "【{0}】 有更新 from GooglePlay\n版本:{1}||{3}\n{2}\n".format(name, gp_live["version"],
+                                                                                 gp_live["google_url"], gp_version)
+                await save_data(gp_sql)
+                logger.debug(msg)
+
+        except Exception as e:
+            logger.debug("GP获取版本信息失败：{0}\n{1}".format(name, str(e)))
+
+    # 处理iOS
+    if as_id == None or as_id == "":
+        # logger.debug("没有iOS包：{0}".format(name))
+        pass
+    else:
+        try:
+            as_live = await asInfo(country=apple_country, id=as_id)
+            live_version = as_live["version"]
+            # logger.debug(name + ":" + live_version)
+
+            if as_version == None or as_version == "":
+                # logger.debug("没有存:" + name)
+                as_version = "0.0"
+            max_version = await version_max(live_version, as_version)
+
+            # 写入
+            if max_version:
+                timestamp = str(int(time.time()))
+                as_sql = """
+                    INSERT INTO as_version("game_id", "name", "age", "recent_update", "version", "rate", "version_info", "apple_url", "as_id", "timestamp")
+VALUES
+({0}, '{1}', '{2}', '{3}', '{4}', {5}, '{6}', '{7}', {8}, {9});""".format(game_id,
+                                                                          str(as_live["name"].replace("\'", "\"")),
+                                                                          as_live["age"],
+                                                                          as_live["recent_update"],
+                                                                          as_live["version"],
+                                                                          as_live["rate"],
+                                                                          json.dumps(as_live["version_info"]).replace(
+                                                                              "\'",
+                                                                              "\""),
+                                                                          as_live["apple_url"], as_live["as_id"],
+                                                                          timestamp)
+                msg = msg + "【{0}】 有更新 from AppStore\n版本:{1}||{3}\n{2}\n".format(str(as_live["name"]),
+                                                                               as_live["version"],
+                                                                               as_live["apple_url"],
+                                                                               as_version)
+
+                await save_data(as_sql)
+        except Exception as e:
+            logger.debug("AS获取版本信息失败：{0}\n{1}".format(name, str(e)))
+
+
+
+    return msg
+
+
+async def search_all():
+    app_sql = "SELECT * FROM game_info WHERE is_pulish is True"
+    app_infos = await select_data(app_sql)
+    names = [x["name"] for x in app_infos]
+    gp_packageNames = [x["gp_packageName"] for x in app_infos]
+    game_ids = [x["game_id"] for x in app_infos]
+    apple_countrys = [x["apple_country"] for x in app_infos]
+    as_ids = [x["as_id"] for x in app_infos]
+
+    sql1 = "SELECT game_id,version FROM gp_version AS A WHERE NOT EXISTS (SELECT 1 FROM gp_version AS b WHERE b.game_id = A.game_id AND b.id > A.id )"
+    sql2 = "SELECT game_id,version FROM as_version AS A WHERE NOT EXISTS (SELECT 1 FROM as_version AS b WHERE b.game_id = A.game_id AND b.id > A.id )"
+    versions_sql1 = await select_data(sql1)
+    versions_sql2 = await select_data(sql2)
+    gp_versions, as_versions = {}, {}
+    for index, i in enumerate(versions_sql1):
+        gp_versions[i["game_id"]] = i["version"]
+    for index, i in enumerate(versions_sql2):
+        as_versions[i["game_id"]] = i["version"]
+
+    tasks = []
+    CONCURRENCY = 5
+    semaphore = asyncio.Semaphore(CONCURRENCY)
+
+    for index, name in enumerate(names):
+        if game_ids[index] not in gp_versions.keys():
+            gp_version = None
+        else:
+            gp_version = gp_versions[game_ids[index]]
+        if game_ids[index] not in as_versions.keys():
+            as_version = None
+        else:
+            as_version = as_versions[game_ids[index]]
+
+
+        tasks.append(asyncio.ensure_future(
+            check_project(name=name, game_id=game_ids[index], gp_packageName=gp_packageNames[index], apple_country=apple_countrys[index],
+                          as_id=as_ids[index], gp_version=gp_version, as_version=as_version)))
+
+    msg = await asyncio.gather(*tasks)
+    return msg
 
 
 if __name__ == '__main__':
-    # name = "clubillion"
-    # country = apps[name]["country"]
-    # apple_id = apps[name]["apple_id"]
-    # b = asInfo(country, apple_id)
-    # print(json.dumps(b))
-    # b = json.dumps(gpInfo(apps[name]["google_id"]))
-    # print(b)
     loop = asyncio.get_event_loop()
-    result = loop.run_until_complete(main("endless.nightmare.shrine.horror.scary.free.android"))
-    # result = loop.run_until_complete(asInfo("ca", "1472473722"))
+
+    gp_package = "eightball.pool.live.eightballpool.billiards"
+    # result = loop.run_until_complete(gpInfo(gp_package))
+
+    result = loop.run_until_complete(search_all())
+
+    # result = loop.run_until_complete(asInfo("cn", "1517576080"))
     loop.close()
-    print(json.dumps(result))
+    print(result)

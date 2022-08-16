@@ -48,18 +48,22 @@ response = requests.request("GET", url, headers=headers, data=payload, proxies=p
 # print(response.text)
 
 
-import aiohttp
-import asyncio
+# import aiohttp
+# import asyncio
+#
+#
+# async def main():
+#     con = aiohttp.TCPConnector(ssl=False)
+#     async with aiohttp.ClientSession(connector=con, trust_env=True) as session:
+#         async with session.get(url, proxy="http://127.0.0.1:7890") as resp:
+#             response = await resp.text(encoding="utf-8")
+#             print(response)
+#
+# print(url)
+# loop = asyncio.get_event_loop()
+# loop.run_until_complete(main())
+# loop.close()
 
+a = """You can request that data be deleted"]]],null,null,null,[[["2.71.3188"]],[[[31,"12"]],[[[19,"4.4"]]]],[["May 19, 2022"]]],null,null,null,["May 19, 2022",[null,"* Game performance optimized, give you a better gaming experience! Have fun in gau003"""
 
-async def main():
-    con = aiohttp.TCPConnector(ssl=False)
-    async with aiohttp.ClientSession(connector=con, trust_env=True) as session:
-        async with session.get(url, proxy="http://127.0.0.1:7890") as resp:
-            response = await resp.text(encoding="utf-8")
-            print(response)
-
-print(url)
-loop = asyncio.get_event_loop()
-loop.run_until_complete(main())
-loop.close()
+print(re.search("\[\[\[\"\d+.\d+.*?]],", a))

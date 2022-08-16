@@ -33,7 +33,7 @@ requests.adapters.DEFAULT_RETRIES = 5
 
 print("live loading")
 
-rooms = {"5645739": "a824683653", "5264153": "肖璐s", "5106536": "599", "6566346": "paogod"}
+rooms = {"5645739": "a824683653", "5264153": "肖璐s"}
 show_status = {"0": "等待开播", "1": "直播中", "2": "直播结束"}
 
 dosee_headers = {
