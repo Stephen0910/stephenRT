@@ -28,7 +28,7 @@ def get_host_ip():
     return ip
 
 ip = str(get_host_ip())
-
+print(ip)
 
 
 if re.match("192.*", ip):
@@ -48,6 +48,7 @@ if ip == "10.10.10.8":
 
 if ip == "172.24.121.72":
     from .query_game import *
+    print("加载query成功！！！")
     pass
 
 
