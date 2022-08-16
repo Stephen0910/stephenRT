@@ -9,11 +9,11 @@
 # @Copyright:   (c) StephenZ 2022
 # @Licence  :     <@2022>
 
-from gevent import monkey
+# from gevent import monkey
 from concurrent.futures import ThreadPoolExecutor
 import time
 
-monkey.patch_all(select=False)
+# monkey.patch_all(select=False)
 
 import aiohttp
 
