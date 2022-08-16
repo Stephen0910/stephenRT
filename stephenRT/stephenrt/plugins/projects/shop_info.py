@@ -237,7 +237,6 @@ async def asInfo(country, id):
                                                         id) if country != None else "https://apps.apple.com/app/id{0}".format(
         id)
     # logger.debug(url)
-
     con = aiohttp.TCPConnector(ssl=False)
     async with aiohttp.ClientSession(connector=con, trust_env=True) as session:
         async with session.get(url, proxy="http://127.0.0.1:7890") as resp:
@@ -256,7 +255,7 @@ async def asInfo(country, id):
                         " ")[
                         -1]
             except:
-                logger.error("获取版本失败，可能是第一个版本")
+                print("AS获取版本失败，可能是第一个版本:{0}, {1}".format(name, url))  # logger有bug
                 version = "0.0"
             rate = soup.find(name="span", attrs={"class": "we-customer-ratings__averages__display"}).text
             ver_infos = soup.find_all("div",
@@ -299,10 +298,11 @@ async def check_project(name, game_id, apple_country, as_id, gp_packageName, gp_
                 gp_version = "0.0"
             max_version = await version_max(live_version, gp_version)
 
+
             # 写入
             if max_version:
+                logger.info(str(max_version) + ": " + name)
                 timestamp = str(int(time.time()))
-                game_package = gp_packageName
                 gp_sql = """
                         INSERT INTO gp_version ( "game_id", "name", "age", "recent_update", "version", "rate", "google_url", "gp_packageName", "sdk_min", sdk_max, "timestamp")
 VALUES	
@@ -324,7 +324,8 @@ VALUES
                 logger.debug(msg)
 
         except Exception as e:
-            logger.debug("GP获取版本信息失败：{0}\n{1}".format(name, str(e)))
+            url = "https://play.google.com/store/apps/details?id=" + gp_packageName
+            logger.debug("GP获取版本信息失败：{0}\n{1}, {2}".format(name, str(e)), url)
 
     # 处理iOS
     if as_id == None or as_id == "":
@@ -341,8 +342,11 @@ VALUES
                 as_version = "0.0"
             max_version = await version_max(live_version, as_version)
 
+
+
             # 写入
             if max_version:
+                logger.info(str(max_version) + ": " + name)
                 timestamp = str(int(time.time()))
                 as_sql = """
                     INSERT INTO as_version("game_id", "name", "age", "recent_update", "version", "rate", "version_info", "apple_url", "as_id", "timestamp")

@@ -38,7 +38,7 @@ if re.match("192.*", ip):
     # from .nba.season import *
     # from .kuake import *
     # from .wPublic import *
-    # from .query_game import *
+    from .query_game import *
     pass
 
 if ip == "10.10.10.8":

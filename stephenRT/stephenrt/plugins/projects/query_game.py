@@ -204,8 +204,10 @@ async def query_game():
     #
     #         logger.info("执行完成一轮查询")
 
-    if trigger % 60 == 0:
+    if trigger % 50 == 0:
+        trigger += 1  # 有肯能执行得满了，超过了5s，第二次轮询进来trigger还没加，所以在这里先加1 避免重复执行
         respon = await search_all()
+
         msg = "".join([x for x in list(set(respon)) if x != ""])
         if msg != "":
             print("msg++\n", msg)
@@ -213,5 +215,4 @@ async def query_game():
                 await bot.send_private_msg(user_id=281016636, message=msg)
             except Exception as e:
                 await bot.send_private_msg(user_id=281016636, message=str(e))
-
     trigger += 1
