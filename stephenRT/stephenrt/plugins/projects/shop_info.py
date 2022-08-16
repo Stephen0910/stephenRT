@@ -228,6 +228,7 @@ async def gpInfo(id):
                 sdk_min = ""
                 sdk_max = ""
             if re.search(".", str(version)) is False:  # 莫名其妙匹配到一些数字如1950
+                logger.error("{0} version: {1}".format(name, version))
                 version = "0.0"
 
     return {"name": name, "age": age, "recent_update": recent_update, "version": version, "rate": rate,
