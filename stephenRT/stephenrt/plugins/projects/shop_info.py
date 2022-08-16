@@ -227,6 +227,8 @@ async def gpInfo(id):
                 version = "0.0"
                 sdk_min = ""
                 sdk_max = ""
+            if re.search(".", str(version)) is False:  # 莫名其妙匹配到一些数字如1950
+                version = "0.0"
 
     return {"name": name, "age": age, "recent_update": recent_update, "version": version, "rate": rate,
             "google_url": url, "gp_packageName": id, "sdk_min": sdk_min, "sdk_max": sdk_max}
