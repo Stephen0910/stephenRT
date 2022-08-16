@@ -321,7 +321,7 @@ VALUES
                                                                                   gp_live["sdk_max"],
                                                                                   timestamp)
 
-                msg = msg + "【{0}】 有更新 from GooglePlay\n版本:{1}||{3}\n{2}\n".format(name, gp_live["version"],
+                msg = msg + "【{0}】 有更新 from GooglePlay\n版本:{1}||{3}\n{2}\n".format(gp_live["name"], gp_live["version"],
                                                                                  gp_live["google_url"], gp_version)
                 await save_data(gp_sql)
                 logger.debug(msg)
