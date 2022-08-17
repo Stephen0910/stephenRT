@@ -328,7 +328,7 @@ VALUES
 
         except Exception as e:
             url = "https://play.google.com/store/apps/details?id=" + gp_packageName
-            logger.debug("GP获取版本信息失败：{0}\n{1}, {2}".format(name, str(e)), url)
+            logger.debug("GP获取版本信息失败：{0}\n{1}, {2}".format(name, str(e), url))
 
     # 处理iOS
     if as_id == None or as_id == "":
