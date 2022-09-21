@@ -234,8 +234,11 @@ async def gpInfo(id):
                 sdk_max = ""
             logger.debug(version)
 
-    return {"name": name, "age": age, "recent_update": recent_update, "version": version, "rate": rate,
+    result = {"name": name, "age": age, "recent_update": recent_update, "version": version, "rate": rate,
             "google_url": url, "gp_packageName": id, "sdk_min": sdk_min, "sdk_max": sdk_max, "icon": icon}
+
+    logger.debug(result)
+    return result
 
 
 async def asInfo(country, id):
@@ -283,8 +286,11 @@ async def asInfo(country, id):
                         if index % 2 == 0:
                             new_dic[i] = base_value[index + 1]
                     verInfo_dict[each_info[0]] = new_dic
-    return {"name": name, "age": age, "recent_update": update_date, "version": version, "rate": rate,
+
+    result = {"name": name, "age": age, "recent_update": update_date, "version": version, "rate": rate,
             "version_info": verInfo_dict, "apple_url": url, "as_id": id, "icon": icon}
+    logger.debug(result)
+    return result
 
 
 async def check_project(name, game_id, apple_country, as_id, gp_packageName, gp_version, as_version):
