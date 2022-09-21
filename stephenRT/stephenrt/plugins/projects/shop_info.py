@@ -253,7 +253,7 @@ async def asInfo(country, id):
             response = await resp.text(encoding="utf-8")
             soup = BeautifulSoup(response, "html.parser")
             name_info = soup.find(name="h1", attrs={"class": "product-header__title app-header__title"}).text.replace(
-                " ",
+                "  ",
                 "").split(
                 "\n")
             name, age = [x for x in name_info if len(x) > 0]
@@ -275,7 +275,7 @@ async def asInfo(country, id):
 
             verInfo_dict = {}
             for info in ver_infos:
-                each_info = [x for x in info.text.split("\n") if len(x) > 0]
+                each_info = [x for x in info.text.replace("  ", "").split("\n") if len(x) > 0]
                 base_value = each_info[1:]
                 if len(base_value) == 1:
                     verInfo_dict[each_info[0]] = each_info[1]
@@ -435,11 +435,11 @@ if __name__ == '__main__':
     loop = asyncio.get_event_loop()
 
     # gp_package = "eightball.pool.live.eightballpool.billiards"
-    gp_package = "slots.machine.winning.android"
-    result = loop.run_until_complete(gpInfo(gp_package))
+    # gp_package = "slots.machine.winning.android"
+    # result = loop.run_until_complete(gpInfo(gp_package))
 
     # result = loop.run_until_complete(search_all())
 
-    # result = loop.run_until_complete(asInfo("cn", "1517576080"))
+    result = loop.run_until_complete(asInfo("", "1330550298"))
     loop.close()
     print(result)
