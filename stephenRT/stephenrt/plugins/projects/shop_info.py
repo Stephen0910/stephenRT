@@ -343,7 +343,7 @@ VALUES
                 for key in gp_live.keys():
                     logger.debug(f"{key}")
                     logger.debug(f"{result[key]}, {gp_live[key]}")
-                    if str(result[key]) != str(gp_live[key]):
+                    if str(result[key]) != str(gp_live[key]) and key != "version":
                         diff_msg = diff_msg + f"{key} diff: {gp_live[key]} | {result[key]} \n"
 
                 msg = msg + "【{0}】 有更新 from GooglePlay\n版本:{1}||{3}\n{2}\n".format(gp_live["name"], gp_live["version"],
@@ -406,7 +406,7 @@ VALUES
                 for key in as_live.keys():
                     logger.debug(f"{key}")
                     logger.debug(f"{result[key]}, {as_live[key]}")
-                    if str(result[key]) != str(as_live[key]):
+                    if str(result[key]) != str(as_live[key]) and key != "version":
                         diff_msg = diff_msg + f"{key} diff: {as_live[key]} | {result[key]} \n"
 
                 msg = msg + "【{0}】 有更新 from AppStore\n版本:{1}||{3}\n{2}\n".format(str(as_live["name"]),
