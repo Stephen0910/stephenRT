@@ -68,6 +68,3 @@ response = requests.request("GET", url, headers=headers, data=payload, proxies=p
 
 # print(re.search("\[\[\[\"\d+.\d+.*?]],", a))
 
-a = "631296"
-print(re.search("\d+.\d+.\d+.\d+|\d+.\d+.\d+|\d+.\d+",
-                                    re.search("\[\[\[\"\d+.\d+.*?]],", a).group()).group())

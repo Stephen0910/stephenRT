@@ -208,7 +208,7 @@ async def gpInfo(id):
 
             soup = BeautifulSoup(response, "html.parser")
             name = soup.find("h1", {"itemprop": "name"}).text
-            logger.debug(name)
+            # logger.debug(name)
             age = soup.find("span", {"itemprop": "contentRating"}).text
             icon = soup.find("img", {"class": "T75of cN0oRe fFmL2e"})["src"]
             download = [x.text for x in soup.find_all("div", {"class": "ClM7O"})]
@@ -228,7 +228,7 @@ async def gpInfo(id):
                 sdk_min = sdk_version[::2][-1]
                 sdk_max = sdk_version[::2][0]
             except Exception as e:
-                logger.error(e)
+                logger.error(f"{name}: {str(e)}")
                 # version = re.search("\d+.\d+.\d+", re.search("\[\[\[\"\d+.\d+.\d+\"]]", response).group()).group()  # 三位或四位
                 version = "0.0"
                 sdk_min = ""
@@ -236,9 +236,8 @@ async def gpInfo(id):
             logger.debug(version)
 
     result = {"name": name, "age": age, "recent_update": recent_update, "version": version, "rate": rate,
-            "google_url": url, "gp_packageName": id, "sdk_min": sdk_min, "sdk_max": sdk_max, "icon": icon}
+              "google_url": url, "gp_packageName": id, "sdk_min": sdk_min, "sdk_max": sdk_max, "icon": icon}
 
-    logger.debug(result)
     return result
 
 
@@ -289,8 +288,8 @@ async def asInfo(country, id):
                     verInfo_dict[each_info[0]] = new_dic
 
     result = {"name": name, "age": age, "recent_update": update_date, "version": version, "rate": rate,
-            "version_info": verInfo_dict, "apple_url": url, "as_id": id, "icon": icon}
-    logger.debug(result)
+              "version_info": verInfo_dict, "apple_url": url, "as_id": id, "icon": icon}
+    # logger.debug(result)
     return result
 
 
@@ -320,20 +319,36 @@ async def check_project(name, game_id, apple_country, as_id, gp_packageName, gp_
                         INSERT INTO gp_version ( "game_id", "name", "age", "recent_update", "version", "rate", "google_url", "gp_packageName", "sdk_min", sdk_max, "timestamp", "icon")
 VALUES	
 ({0}, '{1}', '{2}', '{3}', '{4}', '{5}', '{6}', '{7}', {8}, {9}, {10}, '{11}');""".format(game_id,
-                                                                                  gp_live["name"].replace("\'", "\""),
-                                                                                  gp_live["age"],
-                                                                                  gp_live["recent_update"],
-                                                                                  gp_live["version"],
-                                                                                  gp_live["rate"],
-                                                                                  gp_live["google_url"],
-                                                                                  gp_live["gp_packageName"],
-                                                                                  gp_live["sdk_min"],
-                                                                                  gp_live["sdk_max"],
-                                                                                  timestamp,
-                                                                                  gp_live["icon"])
+                                                                                          gp_live["name"].replace("\'",
+                                                                                                                  "\""),
+                                                                                          gp_live["age"],
+                                                                                          gp_live["recent_update"],
+                                                                                          gp_live["version"],
+                                                                                          gp_live["rate"],
+                                                                                          gp_live["google_url"],
+                                                                                          gp_live["gp_packageName"],
+                                                                                          gp_live["sdk_min"],
+                                                                                          gp_live["sdk_max"],
+                                                                                          timestamp,
+                                                                                          gp_live["icon"])
+
+                # 获取差别
+                logger.debug(json.dumps(gp_live))
+                diff_msg = ""
+                diff_sql = f'SELECT * FROM gp_version WHERE game_id = {game_id} ORDER BY "version" DESC limit 1'
+                sql_result = await select_data(diff_sql)
+                logger.debug(sql_result[0])
+                logger.debug(type(sql_result[0]))
+                result = dict(sql_result[0])
+                for key in gp_live.keys():
+                    logger.debug(f"{key}")
+                    logger.debug(f"{result[key]}, {gp_live[key]}")
+                    if str(result[key]) != str(gp_live[key]):
+                        diff_msg = diff_msg + f"{key} diff: {gp_live[key]} | {result[key]} \n"
 
                 msg = msg + "【{0}】 有更新 from GooglePlay\n版本:{1}||{3}\n{2}\n".format(gp_live["name"], gp_live["version"],
                                                                                    gp_live["google_url"], gp_version)
+                msg = msg + diff_msg
                 await save_data(gp_sql)
                 logger.debug(msg)
 
@@ -364,24 +379,41 @@ VALUES
                     INSERT INTO as_version("game_id", "name", "age", "recent_update", "version", "rate", "version_info", "apple_url", "as_id", "timestamp", "icon")
 VALUES
 ({0}, '{1}', '{2}', '{3}', '{4}', {5}, '{6}', '{7}', {8}, {9}, '{10}');""".format(game_id,
-                                                                                str(as_live["name"].replace("\'",
-                                                                                                            "\"")),
-                                                                                as_live["age"],
-                                                                                as_live["recent_update"],
-                                                                                as_live["version"],
-                                                                                as_live["rate"],
-                                                                                json.dumps(
-                                                                                    as_live["version_info"]).replace(
-                                                                                    "\'",
-                                                                                    "\""),
-                                                                                as_live["apple_url"], as_live["as_id"],
-                                                                                timestamp,
-                                                                                as_live["icon"])
+                                                                                  str(as_live["name"].replace("\'",
+                                                                                                              "\"")),
+                                                                                  as_live["age"],
+                                                                                  as_live["recent_update"],
+                                                                                  as_live["version"],
+                                                                                  as_live["rate"],
+                                                                                  json.dumps(
+                                                                                      as_live["version_info"]).replace(
+                                                                                      "\'",
+                                                                                      "\""),
+                                                                                  as_live["apple_url"],
+                                                                                  as_live["as_id"],
+                                                                                  timestamp,
+                                                                                  as_live["icon"])
+
+                # 获取差别
+                # 获取差别
+                logger.debug(json.dumps(as_live))
+                diff_msg = ""
+                diff_sql = f'SELECT * FROM as_version WHERE game_id = {game_id} ORDER BY "version" DESC limit 1'
+                sql_result = await select_data(diff_sql)
+                logger.debug(sql_result[0])
+                logger.debug(type(sql_result[0]))
+                result = dict(sql_result[0])
+                for key in as_live.keys():
+                    logger.debug(f"{key}")
+                    logger.debug(f"{result[key]}, {as_live[key]}")
+                    if str(result[key]) != str(as_live[key]):
+                        diff_msg = diff_msg + f"{key} diff: {as_live[key]} | {result[key]} \n"
+
                 msg = msg + "【{0}】 有更新 from AppStore\n版本:{1}||{3}\n{2}\n".format(str(as_live["name"]),
                                                                                  as_live["version"],
                                                                                  as_live["apple_url"],
                                                                                  as_version)
-
+                msg = msg + diff_msg
                 await save_data(as_sql)
         except Exception as e:
             logger.debug("AS获取版本信息失败：{0}\n{1}".format(name, str(e)))
