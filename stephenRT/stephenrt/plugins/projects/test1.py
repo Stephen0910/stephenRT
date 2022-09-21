@@ -64,6 +64,10 @@ response = requests.request("GET", url, headers=headers, data=payload, proxies=p
 # loop.run_until_complete(main())
 # loop.close()
 
-a = """You can request that data be deleted"]]],null,null,null,[[["2.71.3188"]],[[[31,"12"]],[[[19,"4.4"]]]],[["May 19, 2022"]]],null,null,null,["May 19, 2022",[null,"* Game performance optimized, give you a better gaming experience! Have fun in gau003"""
+# a = """You can request that data be deleted"]]],null,null,null,[[["2.71.3188"]],[[[31,"12"]],[[[19,"4.4"]]]],[["May 19, 2022"]]],null,null,null,["May 19, 2022",[null,"* Game performance optimized, give you a better gaming experience! Have fun in gau003"""
 
-print(re.search("\[\[\[\"\d+.\d+.*?]],", a))
+# print(re.search("\[\[\[\"\d+.\d+.*?]],", a))
+
+a = "631296"
+print(re.search("\d+.\d+.\d+.\d+|\d+.\d+.\d+|\d+.\d+",
+                                    re.search("\[\[\[\"\d+.\d+.*?]],", a).group()).group())

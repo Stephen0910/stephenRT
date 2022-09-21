@@ -22,9 +22,12 @@ from bs4 import BeautifulSoup
 import asyncpg
 import asyncio
 
-import stephenrt.privateCfg as cfg
-pgsql = cfg.config_content
+if __name__ == '__main__':
+    import stephenRT.stephenrt.privateCfg as cfg
+else:
+    import stephenrt.privateCfg as cfg
 
+pgsql = cfg.config_content
 
 import logzero, logging
 from logzero import logger
@@ -206,7 +209,7 @@ async def gpInfo(id):
             soup = BeautifulSoup(response, "html.parser")
             name = soup.find("h1", {"itemprop": "name"}).text
             age = soup.find("span", {"itemprop": "contentRating"}).text
-
+            icon = soup.find("img", {"class": "T75of cN0oRe fFmL2e"})["src"]
             download = [x.text for x in soup.find_all("div", {"class": "ClM7O"})]
             # print(download)
             recent_update = soup.find("div", {"class": "xg1aie"}).text
@@ -217,22 +220,22 @@ async def gpInfo(id):
             # version = re.search("\d+.\d+", re.search("\[\[\[\"\d+.\d+\"]]", response).group()).group()
             try:
                 version = re.search("\d+.\d+.\d+.\d+|\d+.\d+.\d+|\d+.\d+",
-                                    re.search("\[\[\[\"\d+.\d+.*?]],", response).group()).group()  # 2-4位版本号
+                                    re.search("\[\[\[\"\d+\.\d+.*?]],", response).group()).group()  # 2-4位版本号
+                # version = re.search("\[\[\[\"\d+\.\d+", response).group()
                 info = re.search("\[\[\[\d+,\".*?[0-9].[0-9]\"]]", response).group().split(",")
                 sdk_version = [re.search("\d\d|\d.\d", x).group() for x in info]
                 sdk_min = sdk_version[::2][-1]
                 sdk_max = sdk_version[::2][0]
-            except:
+            except Exception as e:
+                logger.error(e)
                 # version = re.search("\d+.\d+.\d+", re.search("\[\[\[\"\d+.\d+.\d+\"]]", response).group()).group()  # 三位或四位
                 version = "0.0"
                 sdk_min = ""
                 sdk_max = ""
-            if re.search(".", str(version)) is False:  # 莫名其妙匹配到一些数字如1950
-                logger.error("{0} version: {1}".format(name, version))
-                version = "0.0"
+            logger.debug(version)
 
     return {"name": name, "age": age, "recent_update": recent_update, "version": version, "rate": rate,
-            "google_url": url, "gp_packageName": id, "sdk_min": sdk_min, "sdk_max": sdk_max}
+            "google_url": url, "gp_packageName": id, "sdk_min": sdk_min, "sdk_max": sdk_max, "icon": icon}
 
 
 async def asInfo(country, id):
@@ -251,14 +254,15 @@ async def asInfo(country, id):
                 "\n")
             name, age = [x for x in name_info if len(x) > 0]
             update_date = soup.find(name="time", attrs={"data-test-we-datetime": ""}).text
+            icon = soup.find(name="source", attrs={"type": "image/png"})["srcset"].split(" ")[0]
             try:
                 version = \
                     soup.find(name="p",
                               attrs={"class": "l-column small-6 medium-12 whats-new__latest__version"}).text.split(
                         " ")[
                         -1]
-            except:
-                print("AS获取版本失败，可能是第一个版本:{0}, {1}".format(name, url))  # logger有bug
+            except Exception as e:
+                print("AS获取版本失败，可能是第一个版本:{0}, {1}: {2}".format(name, url, str(e)))  # logger有bug
                 version = "0.0"
             rate = soup.find(name="span", attrs={"class": "we-customer-ratings__averages__display"}).text
             ver_infos = soup.find_all("div",
@@ -280,7 +284,7 @@ async def asInfo(country, id):
                             new_dic[i] = base_value[index + 1]
                     verInfo_dict[each_info[0]] = new_dic
     return {"name": name, "age": age, "recent_update": update_date, "version": version, "rate": rate,
-            "version_info": verInfo_dict, "apple_url": url, "as_id": id}
+            "version_info": verInfo_dict, "apple_url": url, "as_id": id, "icon": icon}
 
 
 async def check_project(name, game_id, apple_country, as_id, gp_packageName, gp_version, as_version):
@@ -301,13 +305,12 @@ async def check_project(name, game_id, apple_country, as_id, gp_packageName, gp_
                 gp_version = "0.0"
             max_version = await version_max(live_version, gp_version)
 
-
             # 写入
             if max_version:
                 logger.info(str(max_version) + ": " + name)
                 timestamp = str(int(time.time()))
                 gp_sql = """
-                        INSERT INTO gp_version ( "game_id", "name", "age", "recent_update", "version", "rate", "google_url", "gp_packageName", "sdk_min", sdk_max, "timestamp")
+                        INSERT INTO gp_version ( "game_id", "name", "age", "recent_update", "version", "rate", "google_url", "gp_packageName", "sdk_min", sdk_max, "timestamp", "icon")
 VALUES	
 ({0}, '{1}', '{2}', '{3}', '{4}', '{5}', '{6}', '{7}', {8}, {9}, {10});""".format(game_id,
                                                                                   gp_live["name"].replace("\'", "\""),
@@ -319,10 +322,11 @@ VALUES
                                                                                   gp_live["gp_packageName"],
                                                                                   gp_live["sdk_min"],
                                                                                   gp_live["sdk_max"],
-                                                                                  timestamp)
+                                                                                  timestamp,
+                                                                                  gp_live["icon"])
 
                 msg = msg + "【{0}】 有更新 from GooglePlay\n版本:{1}||{3}\n{2}\n".format(gp_live["name"], gp_live["version"],
-                                                                                 gp_live["google_url"], gp_version)
+                                                                                   gp_live["google_url"], gp_version)
                 await save_data(gp_sql)
                 logger.debug(msg)
 
@@ -345,8 +349,6 @@ VALUES
                 as_version = "0.0"
             max_version = await version_max(live_version, as_version)
 
-
-
             # 写入
             if max_version:
                 logger.info(str(max_version) + ": " + name)
@@ -354,27 +356,28 @@ VALUES
                 as_sql = """
                     INSERT INTO as_version("game_id", "name", "age", "recent_update", "version", "rate", "version_info", "apple_url", "as_id", "timestamp")
 VALUES
-({0}, '{1}', '{2}', '{3}', '{4}', {5}, '{6}', '{7}', {8}, {9});""".format(game_id,
-                                                                          str(as_live["name"].replace("\'", "\"")),
-                                                                          as_live["age"],
-                                                                          as_live["recent_update"],
-                                                                          as_live["version"],
-                                                                          as_live["rate"],
-                                                                          json.dumps(as_live["version_info"]).replace(
-                                                                              "\'",
-                                                                              "\""),
-                                                                          as_live["apple_url"], as_live["as_id"],
-                                                                          timestamp)
+({0}, '{1}', '{2}', '{3}', '{4}', {5}, '{6}', '{7}', {8}, {9}, {10});""".format(game_id,
+                                                                                str(as_live["name"].replace("\'",
+                                                                                                            "\"")),
+                                                                                as_live["age"],
+                                                                                as_live["recent_update"],
+                                                                                as_live["version"],
+                                                                                as_live["rate"],
+                                                                                json.dumps(
+                                                                                    as_live["version_info"]).replace(
+                                                                                    "\'",
+                                                                                    "\""),
+                                                                                as_live["apple_url"], as_live["as_id"],
+                                                                                timestamp,
+                                                                                as_live["icon"])
                 msg = msg + "【{0}】 有更新 from AppStore\n版本:{1}||{3}\n{2}\n".format(str(as_live["name"]),
-                                                                               as_live["version"],
-                                                                               as_live["apple_url"],
-                                                                               as_version)
+                                                                                 as_live["version"],
+                                                                                 as_live["apple_url"],
+                                                                                 as_version)
 
                 await save_data(as_sql)
         except Exception as e:
             logger.debug("AS获取版本信息失败：{0}\n{1}".format(name, str(e)))
-
-
 
     return msg
 
@@ -412,9 +415,9 @@ async def search_all():
         else:
             as_version = as_versions[game_ids[index]]
 
-
         tasks.append(asyncio.ensure_future(
-            check_project(name=name, game_id=game_ids[index], gp_packageName=gp_packageNames[index], apple_country=apple_countrys[index],
+            check_project(name=name, game_id=game_ids[index], gp_packageName=gp_packageNames[index],
+                          apple_country=apple_countrys[index],
                           as_id=as_ids[index], gp_version=gp_version, as_version=as_version)))
 
     msg = await asyncio.gather(*tasks)
@@ -424,11 +427,12 @@ async def search_all():
 if __name__ == '__main__':
     loop = asyncio.get_event_loop()
 
-    gp_package = "eightball.pool.live.eightballpool.billiards"
+    # gp_package = "eightball.pool.live.eightballpool.billiards"
+    # gp_package = "slots.machine.winning.android"
     # result = loop.run_until_complete(gpInfo(gp_package))
 
-    result = loop.run_until_complete(search_all())
+    # result = loop.run_until_complete(search_all())
 
-    # result = loop.run_until_complete(asInfo("cn", "1517576080"))
+    result = loop.run_until_complete(asInfo("cn", "1517576080"))
     loop.close()
     print(result)
