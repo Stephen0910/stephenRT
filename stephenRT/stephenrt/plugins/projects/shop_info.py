@@ -198,6 +198,20 @@ async def gpInfo_aboundon(id):
             "google_url": url, "gp_packageName": id, "sdk_min": sdk_min, "sdk_max": sdk_max}
 
 
+async def get_size(id):
+    url = f"https://apksos.com/app/{id}"
+    with requests.get(url) as session:
+        response = session.text
+        soup = BeautifulSoup(response, "html.parser")
+        data = soup.find("button", {"class": "primary"}).text
+        size = re.search("\d+.\d+MB", data).group()
+        version = soup.find("ul", {"class": "list-unstyled"}).text.split(" ")[2]
+        # version = re.search("Version:.*?\d<", version)
+        logger.debug(size)
+        logger.debug(version)
+        return [version, size]
+
+
 async def gpInfo(id):
     url = "https://play.google.com/store/apps/details?id=" + id
     # logger.debug(url)
@@ -235,13 +249,27 @@ async def gpInfo(id):
                 sdk_max = ""
             logger.debug(version)
 
+    # 获取size
+    size_data = await get_size(id=id)
+    if size_data[0] == str(version):
+        size = size_data[1]
+    else:
+        size = "0"
+
+
     result = {"name": name, "age": age, "recent_update": recent_update, "version": version, "rate": rate,
-              "google_url": url, "gp_packageName": id, "sdk_min": sdk_min, "sdk_max": sdk_max, "icon": icon}
+              "google_url": url, "gp_packageName": id, "sdk_min": sdk_min, "sdk_max": sdk_max, "icon": icon, "size": size}
 
     return result
 
 
 async def asInfo(country, id):
+    """
+    api: https://itunes.apple.com/lookup?id=1330550298
+    :param country:
+    :param id:
+    :return:
+    """
     url = "https://apps.apple.com/{0}/app/id{1}".format(country,
                                                         id) if country != None else "https://apps.apple.com/app/id{0}".format(
         id)
@@ -318,7 +346,7 @@ async def check_project(name, game_id, apple_country, as_id, gp_packageName, gp_
                 gp_sql = """
                         INSERT INTO gp_version ( "game_id", "name", "age", "recent_update", "version", "rate", "google_url", "gp_packageName", "sdk_min", sdk_max, "timestamp", "icon")
 VALUES	
-({0}, '{1}', '{2}', '{3}', '{4}', '{5}', '{6}', '{7}', {8}, {9}, {10}, '{11}');""".format(game_id,
+({0}, '{1}', '{2}', '{3}', '{4}', '{5}', '{6}', '{7}', {8}, {9}, {10}, '{11}', '{12}');""".format(game_id,
                                                                                           gp_live["name"].replace("\'",
                                                                                                                   "\""),
                                                                                           gp_live["age"],
@@ -330,7 +358,8 @@ VALUES
                                                                                           gp_live["sdk_min"],
                                                                                           gp_live["sdk_max"],
                                                                                           timestamp,
-                                                                                          gp_live["icon"])
+                                                                                          gp_live["icon"],
+                                                                                                  gp_live["size"])
 
                 # 获取差别
                 logger.debug(json.dumps(gp_live))
@@ -466,12 +495,14 @@ async def search_all():
 if __name__ == '__main__':
     loop = asyncio.get_event_loop()
 
+
+    gp_package = "com.miniclip.eightballpool"
     # gp_package = "eightball.pool.live.eightballpool.billiards"
     # gp_package = "slots.machine.winning.android"
-    # result = loop.run_until_complete(gpInfo(gp_package))
+    result = loop.run_until_complete(gpInfo(gp_package))
 
     # result = loop.run_until_complete(search_all())
 
-    result = loop.run_until_complete(asInfo("", "1330550298"))
+    # result = loop.run_until_complete(asInfo("", "1330550298"))
     loop.close()
     print(result)
