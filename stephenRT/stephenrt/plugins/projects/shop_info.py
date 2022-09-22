@@ -344,7 +344,7 @@ async def check_project(name, game_id, apple_country, as_id, gp_packageName, gp_
                 logger.info(str(max_version) + ": " + name)
                 timestamp = str(int(time.time()))
                 gp_sql = """
-                        INSERT INTO gp_version ( "game_id", "name", "age", "recent_update", "version", "rate", "google_url", "gp_packageName", "sdk_min", sdk_max, "timestamp", "icon")
+                        INSERT INTO gp_version ( "game_id", "name", "age", "recent_update", "version", "rate", "google_url", "gp_packageName", "sdk_min", sdk_max, "timestamp", "icon", "size")
 VALUES	
 ({0}, '{1}', '{2}', '{3}', '{4}', '{5}', '{6}', '{7}', {8}, {9}, {10}, '{11}', '{12}');""".format(game_id,
                                                                                           gp_live["name"].replace("\'",
