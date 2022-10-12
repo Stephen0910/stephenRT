@@ -234,7 +234,7 @@ def check_project(game_id):
             # logger.debug(msg)
         else:
             info = json.dumps(gp_live)
-            update_sql = f"""UPDATE gp_versions SET info = '{info.replace("'", "''")}' where game_id = {game_id} AND version = {gp_version};"""
+            update_sql = f"""UPDATE gp_versions SET info = '{info.replace("'", "''")}' where game_id = {game_id} AND version = '{gp_version}';"""
             save_data(update_sql)
 
     # 处理iOS
