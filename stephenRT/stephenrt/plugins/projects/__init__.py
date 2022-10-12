@@ -49,7 +49,7 @@ if ip == "10.10.10.8":
     pass
 
 
-if ip == "172.24.121.72":
+if re.search("172.*", ip):
     from .query_game import *
     print("加载query成功！！！")
     pass
