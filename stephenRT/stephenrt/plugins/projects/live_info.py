@@ -185,6 +185,7 @@ def check_project(game_id):
         try:
             gp_version = versions1[0]["version"]
         except Exception as e:
+            gp_version = ""
             logger.error(f"{name} 数据库获取google版本失败: {e} {versions1}")
         # 直接使用接口
         gp_live = app_google(gp_packageName)
@@ -238,6 +239,7 @@ def check_project(game_id):
             as_version = versions2[0]["version"]
         except Exception as e:
             logger.error(f"{name} 获取iOS版本失败: {e}")
+            as_version = ""
         try:
             as_live = app_apple(country=apple_country, id=as_id)
             live_version = as_live["version"]
