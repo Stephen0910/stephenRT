@@ -9,24 +9,18 @@
 # @Copyright:   (c) StephenZ 2022
 # @Licence  :     <@2022>
 
-import requests, json
-import websockets
-import asyncio
-import re
-import os, subprocess
+import json
 
 
+pk = "slots.machine.winning.android"
 
-from requests_html import HTMLSession
-session = HTMLSession()
-proxy="http://127.0.0.1:7890"
+import socks
+import socket
+
+socks.set_default_proxy(socks.SOCKS5, '127.0.0.1', 7891)
+socket.socket = socks.socksocket
 
 
-from bs4 import BeautifulSoup
-import requests, lxml, re, json
-from datetime import datetime
-
-# user-agent headers to act as a "real" user visit
-
-with requests.session("https://accounts.google.com/", password) as session:
-    print(session.text)
+from google_play_scraper import app
+app = app(pk)
+print(json.dumps(app))

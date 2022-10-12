@@ -35,7 +35,6 @@ nonebot.init(apscheduler_autostart=True, apscheduler_config={
     "apscheduler.timezone": "Asia/Shanghai"
 })
 
-
 # Modify some config / config depends on loaded configs
 # 
 # config = driver.config

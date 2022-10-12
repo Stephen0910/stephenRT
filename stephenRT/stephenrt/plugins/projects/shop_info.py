@@ -21,6 +21,14 @@ import requests, json, re, httpx
 from bs4 import BeautifulSoup
 import asyncpg
 import asyncio
+import logzero, logging
+from logzero import logger
+
+logzero.loglevel(logging.DEBUG)
+import socks
+import socket
+
+logger.debug("设置完毕")
 
 if __name__ == '__main__':
     import stephenRT.stephenrt.privateCfg as cfg
@@ -231,7 +239,7 @@ async def gpInfo(id):
             try:
                 rate = re.match("\d+.\d+", soup.find("div", {"itemprop": "starRating"}).text).group()
             except:
-                rate = "人数过少，无评分"
+                rate = 0
             # version = re.search("\d+.\d+", re.search("\[\[\[\"\d+.\d+\"]]", response).group()).group()
             try:
                 version = re.search("\d+.\d+.\d+.\d+|\d+.\d+.\d+|\d+.\d+",
@@ -242,25 +250,34 @@ async def gpInfo(id):
                 sdk_min = sdk_version[::2][-1]
                 sdk_max = sdk_version[::2][0]
             except Exception as e:
-                logger.error(f"{name}: {str(e)}")
+                logger.error(f"{id} {name}: {str(e)}")
                 # version = re.search("\d+.\d+.\d+", re.search("\[\[\[\"\d+.\d+.\d+\"]]", response).group()).group()  # 三位或四位
                 version = "0.0"
                 sdk_min = ""
                 sdk_max = ""
             logger.debug(version)
 
-    # 获取size
-    size_data = await get_size(id=id)
-    if size_data[0] == str(version):
-        size = size_data[1]
-    else:
-        size = "0"
-
+    # 获取size -  影响速度
+    # size_data = await get_size(id=id)
+    # if size_data[0] == str(version):
+    #     size = size_data[1]
+    # else:
+    #     size = "0"
 
     result = {"name": name, "age": age, "recent_update": recent_update, "version": version, "rate": rate,
-              "google_url": url, "gp_packageName": id, "sdk_min": sdk_min, "sdk_max": sdk_max, "icon": icon, "size": size}
+              "google_url": url, "gp_packageName": id, "sdk_min": sdk_min, "sdk_max": sdk_max, "icon": icon}
 
     return result
+
+
+import google_play_scraper
+
+
+async def gp_info_new(id):
+    socks.set_default_proxy(socks.SOCKS5, '127.0.0.1', 7891)
+    socket.socket = socks.socksocket
+    app = google_play_scraper.app(id)
+    return app
 
 
 async def asInfo(country, id):
@@ -270,13 +287,15 @@ async def asInfo(country, id):
     :param id:
     :return:
     """
+
     url = "https://apps.apple.com/{0}/app/id{1}".format(country,
                                                         id) if country != None else "https://apps.apple.com/app/id{0}".format(
         id)
     # logger.debug(url)
     con = aiohttp.TCPConnector(ssl=False)
     async with aiohttp.ClientSession(connector=con, trust_env=True) as session:
-        async with session.get(url, proxy="http://127.0.0.1:7890") as resp:
+        # async with session.get(url, proxy="http://127.0.0.1:7890") as resp:
+        async with session.get(url) as resp:
             response = await resp.text(encoding="utf-8")
             soup = BeautifulSoup(response, "html.parser")
             name_info = soup.find(name="h1", attrs={"class": "product-header__title app-header__title"}).text.replace(
@@ -329,61 +348,47 @@ async def check_project(name, game_id, apple_country, as_id, gp_packageName, gp_
         # logger.debug("没有谷歌包：{0}".format(name))
         pass
     else:
+        # 直接使用接口
+        gp_live = await gp_info_new(gp_packageName)
+        logger.debug(f"gp_live: {json.dumps(gp_live)}")
         try:
-            gp_live = await gpInfo(gp_packageName)
             live_version = gp_live["version"]
-            # logger.debug(name + ":" + live_version)
-
-            if gp_version == None:
-                # logger.debug("没有存:" + name)
-                gp_version = "0.0"
-            max_version = await version_max(live_version, gp_version)
-
-            # 写入
-            if max_version:
-                logger.info(str(max_version) + ": " + name)
-                timestamp = str(int(time.time()))
-                gp_sql = """
-                        INSERT INTO gp_version ( "game_id", "name", "age", "recent_update", "version", "rate", "google_url", "gp_packageName", "sdk_min", sdk_max, "timestamp", "icon", "size")
-VALUES	
-({0}, '{1}', '{2}', '{3}', '{4}', '{5}', '{6}', '{7}', {8}, {9}, {10}, '{11}', '{12}');""".format(game_id,
-                                                                                          gp_live["name"].replace("\'",
-                                                                                                                  "\""),
-                                                                                          gp_live["age"],
-                                                                                          gp_live["recent_update"],
-                                                                                          gp_live["version"],
-                                                                                          gp_live["rate"],
-                                                                                          gp_live["google_url"],
-                                                                                          gp_live["gp_packageName"],
-                                                                                          gp_live["sdk_min"],
-                                                                                          gp_live["sdk_max"],
-                                                                                          timestamp,
-                                                                                          gp_live["icon"],
-                                                                                                  gp_live["size"])
-
-                # 获取差别
-                logger.debug(json.dumps(gp_live))
-                diff_msg = ""
-                diff_sql = f'SELECT * FROM gp_version WHERE game_id = {game_id} ORDER BY "version" DESC limit 1'
-                sql_result = await select_data(diff_sql)
-                logger.debug(sql_result[0])
-                logger.debug(type(sql_result[0]))
-                result = dict(sql_result[0])
-                for key in gp_live.keys():
-                    logger.debug(f"{key}")
-                    logger.debug(f"{result[key]}, {gp_live[key]}")
-                    if str(result[key]) != str(gp_live[key]) and key != "version":
-                        diff_msg = diff_msg + f"{key} diff: {gp_live[key]} | {result[key]} \n"
-
-                msg = msg + "【{0}】 有更新 from GooglePlay\n版本:{1}||{3}\n{2}\n".format(gp_live["name"], gp_live["version"],
-                                                                                   gp_live["google_url"], gp_version)
-                msg = msg + diff_msg
-                await save_data(gp_sql)
-                logger.debug(msg)
-
         except Exception as e:
-            url = "https://play.google.com/store/apps/details?id=" + gp_packageName
-            logger.debug("GP获取版本信息失败：{0}\n{1}, {2}".format(name, str(e), url))
+            logger.error(f"{name} 获取gp version 失败: {e}")
+
+        if gp_version == None:
+            gp_version == "0.0"  # 第一个版本
+        max_version = await version_max(live_version, gp_version)
+        logger.debug(max_version)
+        if max_version:
+            logger.debug(f"{name} gp发现新版本 {live_version}")
+            gp_sql = f"""INSERT INTO gp_version ("apple_id", "title", "realInstalls", "score", "inAppProductPrice", "genre",
+             "icon", "contentRating", "released", "updated", "version", "url")
+            VALUES {gp_live["apple_id"], gp_live["title"], gp_live["realInstalls"], gp_live["score"], gp_live[
+                "inAppProductPrice"], gp_live["genre"], gp_live["icon"], gp_live["contentRating"],
+                    gp_live["released"],
+                    gp_live["updated"], gp_live["version"], gp_live["url"]};"""
+            logger.debug(gp_sql)
+
+            # 获取差别
+            logger.debug(json.dumps(gp_live))
+            diff_msg = ""
+            diff_sql = f'SELECT * FROM gp_version WHERE game_id = {game_id} ORDER BY "version" DESC limit 1'
+            sql_result = await select_data(diff_sql)
+            logger.debug(sql_result[0])
+            logger.debug(type(sql_result[0]))
+            result = dict(sql_result[0])
+            for key in gp_live.keys():
+                logger.debug(f"{key}")
+                logger.debug(f"{result[key]}, {gp_live[key]}")
+                if str(result[key]) != str(gp_live[key]) and key != "version":
+                    diff_msg = diff_msg + f"{key} diff: {gp_live[key]} | {result[key]} \n"
+
+            msg = msg + "【{0}】 有更新 from GooglePlay\n版本:{1}||{3}\n{2}\n".format(gp_live["name"], gp_live["version"],
+                                                                               gp_live["google_url"], gp_version)
+            msg = msg + diff_msg
+            # await save_data(gp_sql)
+            logger.debug(msg)
 
     # 处理iOS
     if as_id == None or as_id == "":
@@ -407,23 +412,23 @@ VALUES
                 as_sql = """
                     INSERT INTO as_version("game_id", "name", "age", "recent_update", "version", "rate", "version_info", "apple_url", "as_id", "timestamp", "icon")
 VALUES
-({0}, '{1}', '{2}', '{3}', '{4}', {5}, '{6}', '{7}', {8}, {9}, '{10}');""".format(game_id,
-                                                                                  str(as_live["name"].replace("\'",
-                                                                                                              "\"")),
-                                                                                  as_live["age"],
-                                                                                  as_live["recent_update"],
-                                                                                  as_live["version"],
-                                                                                  as_live["rate"],
-                                                                                  json.dumps(
-                                                                                      as_live["version_info"]).replace(
-                                                                                      "\'",
-                                                                                      "\""),
-                                                                                  as_live["apple_url"],
-                                                                                  as_live["as_id"],
-                                                                                  timestamp,
-                                                                                  as_live["icon"])
+({0}, '{1}', '{2}', '{3}', '{4}', {5}, '{6}', '{7}', {8}, {9}, '{10}');""" \
+                    .format(game_id,
+                            str(as_live["name"].replace("\'",
+                                                        "\"")),
+                            as_live["age"],
+                            as_live["recent_update"],
+                            as_live["version"],
+                            as_live["rate"],
+                            json.dumps(
+                                as_live["version_info"]).replace(
+                                "\'",
+                                "\""),
+                            as_live["apple_url"],
+                            as_live["as_id"],
+                            timestamp,
+                            as_live["icon"])
 
-                # 获取差别
                 # 获取差别
                 logger.debug(json.dumps(as_live))
                 diff_msg = ""
@@ -446,7 +451,6 @@ VALUES
                 await save_data(as_sql)
         except Exception as e:
             logger.debug("AS获取版本信息失败：{0}\n{1}".format(name, str(e)))
-
     return msg
 
 
@@ -468,12 +472,16 @@ async def search_all():
         gp_versions[i["game_id"]] = i["version"]
     for index, i in enumerate(versions_sql2):
         as_versions[i["game_id"]] = i["version"]
-
+    logger.debug(gp_versions)
+    logger.debug(as_versions)
     tasks = []
-    CONCURRENCY = 5
-    semaphore = asyncio.Semaphore(CONCURRENCY)
-
+    # CONCURRENCY = 10
+    # semaphore = asyncio.Semaphore(CONCURRENCY)
+    msg = ""
+    from multiprocessing.dummy import Pool
+    pool = Pool(4)
     for index, name in enumerate(names):
+        # logger.debug(f"{index} {name}")
         if game_ids[index] not in gp_versions.keys():
             gp_version = None
         else:
@@ -483,26 +491,39 @@ async def search_all():
         else:
             as_version = as_versions[game_ids[index]]
 
-        tasks.append(asyncio.ensure_future(
-            check_project(name=name, game_id=game_ids[index], gp_packageName=gp_packageNames[index],
-                          apple_country=apple_countrys[index],
-                          as_id=as_ids[index], gp_version=gp_version, as_version=as_version)))
+        # tasks.append(asyncio.ensure_future(
+        #     check_project(name=name, game_id=game_ids[index], gp_packageName=gp_packageNames[index],
+        #                   apple_country=apple_countrys[index],
+        #                   as_id=as_ids[index], gp_version=gp_version, as_version=as_version)))
+        # single_msg = await check_project(name=name, game_id=game_ids[index], gp_packageName=gp_packageNames[index],
+        #                            apple_country=apple_countrys[index],
+        #                            as_id=as_ids[index], gp_version=gp_version, as_version=as_version)
+        args = (name, game_ids[index], gp_packageNames[index],apple_countrys[index], as_ids[index], gp_version, as_version)
+        pool.map(check_project, list(args))
 
-    msg = await asyncio.gather(*tasks)
+    # msg = await asyncio.gather(*tasks)
     return msg
 
 
 if __name__ == '__main__':
     loop = asyncio.get_event_loop()
+    #
+    #
+    gp_package = "slots.machine.winning.android"
+    gp_package1 = "candy.craze.match3.free.android"
+    country = ""
+    as_id = 1521595172
 
-
-    gp_package = "com.miniclip.eightballpool"
-    # gp_package = "eightball.pool.live.eightballpool.billiards"
-    # gp_package = "slots.machine.winning.android"
-    result = loop.run_until_complete(gpInfo(gp_package))
-
-    # result = loop.run_until_complete(search_all())
-
-    # result = loop.run_until_complete(asInfo("", "1330550298"))
+    # result = loop.run_until_complete(gp_info_new(gp_package1))
+    # print(result)
+    # result1 = loop.run_until_complete(asInfo(country, as_id))
+    # print(result1)
+    result = loop.run_until_complete(search_all())
     loop.close()
-    print(result)
+    # socks.set_default_proxy(socks.SOCKS5, '127.0.0.1', 7891)
+    # socket.socket = socks.socksocket
+    #
+    # from google_play_scraper import app
+    #
+    # app = app(gp_package)
+    # print(json.dumps(app))

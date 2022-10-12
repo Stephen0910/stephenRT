@@ -18,6 +18,7 @@ from nonebot import on_metaevent
 from nonebot.adapters.onebot.v11.message import MessageSegment
 import logzero, logging
 from logzero import logger
+from .live_info import *
 
 from .shop_info import *
 
@@ -206,13 +207,14 @@ async def query_game():
 
     if trigger % 10 == 0:
         trigger += 1  # 有可能执行得满了，超过了5s，第二次轮询进来trigger还没加，所以在这里先加1 避免重复执行
-        respon = await search_all()
-
+        respon = await run()
+        logger.info(respon)
         msg = "".join([x for x in list(set(respon)) if x != ""])
         if msg != "":
             print("msg++\n", msg)
             try:
                 await bot.send_private_msg(user_id=281016636, message=msg)
             except Exception as e:
+                logger.error(str(e))
                 await bot.send_private_msg(user_id=281016636, message=str(e))
     trigger += 1

@@ -9,9 +9,12 @@
 # @Copyright:   (c) StephenZ 2022
 # @Licence  :     <@2022>
 
-
 import socket
 import re
+import logzero, logging
+from logzero import logger
+logzero.loglevel(logging.DEBUG)
+import asyncio
 
 def get_host_ip():
     """
@@ -38,7 +41,7 @@ if re.match("192.*", ip):
     # from .nba.season import *
     # from .kuake import *
     # from .wPublic import *
-    # from .query_game import *
+    from .query_game import *
     pass
 
 if ip == "10.10.10.8":
