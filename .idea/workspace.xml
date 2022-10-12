@@ -5,10 +5,7 @@
     <bookmark url="file://$PROJECT_DIR$/stephenRT/stephenrt/plugins/projects/shop_info.py" line="102" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3047aada-47d5-4ad8-a368-9e15af7b4bc7" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/stephenRT/stephenrt/plugins/projects/live_info.py" beforeDir="false" afterPath="$PROJECT_DIR$/stephenRT/stephenrt/plugins/projects/live_info.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/stephenRT/stephenrt/plugins/projects/query_game.py" beforeDir="false" afterPath="$PROJECT_DIR$/stephenRT/stephenrt/plugins/projects/query_game.py" afterDir="false" />
-    </list>
+    <list default="true" id="3047aada-47d5-4ad8-a368-9e15af7b4bc7" name="Default Changelist" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -46,8 +43,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/stephenRT/stephenrt/plugins/projects/live_info.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="181">
-              <caret line="300" column="138" selection-start-line="300" selection-start-column="138" selection-end-line="300" selection-end-column="138" />
+            <state relative-caret-position="286">
+              <caret line="242" column="12" lean-forward="true" selection-start-line="242" selection-start-column="12" selection-end-line="242" selection-end-column="12" />
               <folding>
                 <element signature="e#239#260#0" expanded="true" />
               </folding>
@@ -654,7 +651,7 @@
       <workItem from="1665386546108" duration="715000" />
       <workItem from="1665451271440" duration="20212000" />
       <workItem from="1665535588480" duration="20532000" />
-      <workItem from="1665567816948" duration="3664000" />
+      <workItem from="1665567816948" duration="3934000" />
     </task>
     <servers />
   </component>
@@ -667,7 +664,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="1581660000" />
+    <option name="totallyTimeSpent" value="1581930000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1113,8 +1110,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/stephenRT/stephenrt/plugins/projects/live_info.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="181">
-          <caret line="300" column="138" selection-start-line="300" selection-start-column="138" selection-end-line="300" selection-end-column="138" />
+        <state relative-caret-position="286">
+          <caret line="242" column="12" lean-forward="true" selection-start-line="242" selection-start-column="12" selection-end-line="242" selection-end-column="12" />
           <folding>
             <element signature="e#239#260#0" expanded="true" />
           </folding>
