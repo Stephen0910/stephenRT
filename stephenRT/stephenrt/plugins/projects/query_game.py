@@ -205,7 +205,7 @@ async def query_game():
     #
     #         logger.info("执行完成一轮查询")
 
-    if trigger % 20 == 0:
+    if trigger % 3 == 0:
         trigger += 1  # 有可能执行得满了，超过了5s，第二次轮询进来trigger还没加，所以在这里先加1 避免重复执行
         respon = await run()
         logger.info(respon)

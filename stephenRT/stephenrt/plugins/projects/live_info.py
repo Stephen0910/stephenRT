@@ -298,7 +298,7 @@ VALUES
                 msg = msg + f"【{name}】 有更新 from AppStore\n版本:{live_version}||{as_version}\n"
                 save_data(as_sql)
             else:
-                update_sql = f"""UPDATE as_version SET rank = {as_live["rank"]} where game_id = {game_id} and version = {live_version}"""
+                update_sql = f"""UPDATE as_version SET rank = '{as_live["rank"]}' where game_id = {game_id} and version = '{live_version}'"""
                 save_data(update_sql)
         except Exception as e:
             logger.error("app store获取版本信息失败：{0}\n{1}".format(name, str(e)))
