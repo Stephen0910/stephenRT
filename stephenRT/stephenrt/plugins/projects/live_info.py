@@ -117,6 +117,11 @@ def app_apple(country, id):
             "\n")
         name, age = [x for x in name_info if len(x) > 0]
         update_date = soup.find(name="time", attrs={"data-test-we-datetime": ""}).text
+        try:
+            rank = soup.find(name="a", attrs={"class": "inline-list__item"}).text.strip()
+        except:
+            rank = ""
+        # logger.debug(rank)
         icon = soup.find(name="source", attrs={"type": "image/png"})["srcset"].split(" ")[0]
         try:
             version = \
@@ -150,8 +155,8 @@ def app_apple(country, id):
                 verInfo_dict[each_info[0]] = new_dic
 
     result = {"name": name, "age": age, "recent_update": update_date, "version": version, "rate": rate,
-              "version_info": verInfo_dict, "apple_url": url, "as_id": id, "icon": icon}
-    # logger.debug(f"apple_info: {result}")
+              "version_info": verInfo_dict, "apple_url": url, "as_id": id, "icon": icon, "rank": rank}
+    logger.debug(f"apple_info: {result}")
     return result
 
 def check_project(game_id):
@@ -179,7 +184,7 @@ def check_project(game_id):
         # logger.debug("没有谷歌包：{0}".format(name))
         pass
     else:
-        version_sql1 = f"SELECT game_id,info, version FROM gp_versions WHERE game_id = {game_id} ORDER BY id DESC LIMIT 1;"
+        version_sql1 = f"SELECT game_id, info, version FROM gp_versions WHERE game_id = {game_id} ORDER BY id DESC LIMIT 1;"
         versions1 = select_data(version_sql1)
         # logger.debug(version_sql1)
         try:
@@ -189,7 +194,7 @@ def check_project(game_id):
             logger.error(f"{name} 数据库获取google版本失败: {e} {versions1}")
         # 直接使用接口
         gp_live = app_google(gp_packageName)
-        logger.debug(f"gp_info: {json.dumps(gp_live)}")
+        # logger.debug(f"gp_info: {json.dumps(gp_live)}")
         try:
             live_version = gp_live["version"]
         except Exception as e:
@@ -227,6 +232,10 @@ def check_project(game_id):
             # msg = msg + diff_msg
             # # await save_data(gp_sql)
             # logger.debug(msg)
+        else:
+            info = json.dumps(gp_live)
+            update_sql = f"""UPDATE gp_versions SET info = '{info.replace("'", "''")}' where game_id = {game_id} AND version = {gp_version};"""
+            save_data(update_sql)
 
     # 处理iOS
     if as_id == None or as_id == "":
@@ -254,9 +263,9 @@ def check_project(game_id):
                 logger.info(f"{name} iOS发现新版本： {live_version} | {as_version}")
                 timestamp = str(int(time.time()))
                 as_sql = """
-                    INSERT INTO as_version("game_id", "name", "age", "recent_update", "version", "rate", "version_info", "apple_url", "as_id", "timestamp", "icon")
+                    INSERT INTO as_version("game_id", "name", "age", "recent_update", "version", "rate", "version_info", "apple_url", "as_id", "timestamp", "icon", "rank")
 VALUES
-({0}, '{1}', '{2}', '{3}', '{4}', {5}, '{6}', '{7}', {8}, {9}, '{10}');""" \
+({0}, '{1}', '{2}', '{3}', '{4}', {5}, '{6}', '{7}', {8}, {9}, '{10}', '{11}');""" \
                     .format(game_id,
                             str(as_live["name"].replace("\'",
                                                         "\"")),
@@ -271,7 +280,7 @@ VALUES
                             as_live["apple_url"],
                             as_live["as_id"],
                             timestamp,
-                            as_live["icon"])
+                            as_live["icon"], as_live["rank"])
                 # logger.debug(as_sql)
                 # 获取差别
                 # logger.debug(json.dumps(as_live))
@@ -288,6 +297,9 @@ VALUES
                 #                                                                  as_version)
                 msg = msg + f"【{name}】 有更新 from AppStore\n版本:{live_version}||{as_version}\n"
                 save_data(as_sql)
+            else:
+                update_sql = f"""UPDATE as_version SET rank = {as_live["rank"]}"""
+                save_data(update_sql)
         except Exception as e:
             logger.error("app store获取版本信息失败：{0}\n{1}".format(name, str(e)))
     logger.debug(f"{name} 耗时 {timer() - time1} s")
@@ -313,12 +325,14 @@ if __name__ == '__main__':
     pk = "slots.machine.winning.android"
     app_id = "1546338773"
     country = "cn"
+    app_id1 = "1330550298"
+    country1 = ""
     # loop = asyncio.get_event_loop()
     # loop.run_until_complete(app_google(pk))
     # loop.run_until_complete(app_apple(country, app_id))
 
-    # app_apple(country, app_id)
-    check_project(608)
+    app_apple(country, app_id)
+    # check_project(608)
     # app_google(pk)
 
     # loop.run_until_complete(run())
