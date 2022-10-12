@@ -25,8 +25,6 @@ import aiohttp
 from bs4 import BeautifulSoup
 import psycopg2, psycopg2.extras
 from psycopg2.extras import RealDictCursor
-import func_timeout
-from func_timeout import func_set_timeout
 from multiprocessing.dummy import Pool
 
 
