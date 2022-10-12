@@ -12,9 +12,9 @@
 import json, os
 
 # 正式
-# up_dir = os.path.abspath(os.path.join(os.getcwd(), "../../"))
+up_dir = os.path.abspath(os.path.join(os.getcwd(), "../../"))
 # 调试
-up_dir = os.path.abspath(os.path.join(os.getcwd(), "../../../../../"))
+# up_dir = os.path.abspath(os.path.join(os.getcwd(), "../../../../../"))
 print(up_dir)
 config_path = os.path.join(up_dir, "config.json")
 

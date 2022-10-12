@@ -12,6 +12,6 @@
 if __name__ == '__main__':
     import stephenRT.stephenrt.privateCfg as cfg
 else:
-    import stephenRT.stephenrt.privateCfg as cfg
+    import stephenrt.privateCfg as cfg
 
 pgsql = cfg.config_content
