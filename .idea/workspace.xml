@@ -50,8 +50,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/stephenRT/stephenrt/plugins/projects/live_info.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="323">
-              <caret line="300" column="91" lean-forward="true" selection-start-line="300" selection-start-column="91" selection-end-line="300" selection-end-column="91" />
+            <state relative-caret-position="143">
+              <caret line="228" column="43" lean-forward="true" selection-start-line="228" selection-start-column="43" selection-end-line="228" selection-end-column="43" />
               <folding>
                 <element signature="e#239#260#0" expanded="true" />
               </folding>
@@ -671,7 +671,7 @@
       <workItem from="1665451271440" duration="20212000" />
       <workItem from="1665535588480" duration="20532000" />
       <workItem from="1665567816948" duration="4448000" />
-      <workItem from="1665627140845" duration="8720000" />
+      <workItem from="1665627140845" duration="8973000" />
     </task>
     <servers />
   </component>
@@ -684,7 +684,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="1591164000" />
+    <option name="totallyTimeSpent" value="1591417000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -696,7 +696,8 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-1928" y="-8" width="1936" height="1056" extended-state="6" />
+    <frame x="-1928" y="-8" width="1936" height="1056" extended-state="7" />
+    <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49837664" visible="true" weight="0.20971185" />
       <window_info id="Structure" order="1" sideWeight="0.5016234" side_tool="true" weight="0.14887941" />
@@ -1133,8 +1134,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/stephenRT/stephenrt/plugins/projects/live_info.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="323">
-          <caret line="300" column="91" lean-forward="true" selection-start-line="300" selection-start-column="91" selection-end-line="300" selection-end-column="91" />
+        <state relative-caret-position="143">
+          <caret line="228" column="43" lean-forward="true" selection-start-line="228" selection-start-column="43" selection-end-line="228" selection-end-column="43" />
           <folding>
             <element signature="e#239#260#0" expanded="true" />
           </folding>
