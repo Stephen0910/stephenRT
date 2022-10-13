@@ -15,6 +15,7 @@ import asyncio
 from google_play_scraper import app
 import logzero, logging
 from logzero import logger
+
 if __name__ == '__main__':
     from local_config import *
 else:
@@ -26,8 +27,7 @@ from bs4 import BeautifulSoup
 import psycopg2, psycopg2.extras
 from psycopg2.extras import RealDictCursor
 from multiprocessing.dummy import Pool
-
-
+import json_tools
 
 logzero.loglevel(logging.DEBUG)
 
@@ -37,6 +37,24 @@ import socket
 thread_num = 50
 pool = Pool(thread_num)
 
+
+def filter_values(value):
+    if isinstance(value, list):
+        return list(map(filter_values, value))
+    if isinstance(value, dict):
+        return {k: filter_values(v) for k, v in value}
+    if isinstance(value, str):
+        stripped = value.strip().replace('\\u0000', '').replace('\u0000', '').replace(u'\u0000', '')
+        while '\\-' in stripped:
+            stripped = stripped.replace('\\-', '-')
+        while '\\+' in stripped:
+            stripped = stripped.replace('\\+', '+')
+        while '\\E' in stripped:
+            stripped = stripped.replace('\\E', 'E')
+        while '\\&' in stripped:
+            stripped = stripped.replace('\\&', '&')
+        return stripped
+    return value
 
 def version_max(a, b):
     """
@@ -87,6 +105,7 @@ def app_google(gp_package):
     socket.socket = socks.socksocket
     # logger.debug("代理设置完成")
     app_info = app(gp_package)
+    # logger.debug(app_info)
     return app_info
 
 
@@ -119,6 +138,7 @@ def app_apple(country, id):
         update_date = soup.find(name="time", attrs={"data-test-we-datetime": ""}).text
         try:
             rank = soup.find(name="a", attrs={"class": "inline-list__item"}).text.strip()
+            rank = re.search("\d+", rank).group()
         except:
             rank = ""
         # logger.debug(rank)
@@ -137,9 +157,7 @@ def app_apple(country, id):
         ver_infos = soup.find_all("div",
                                   {
                                       "class": "information-list__item l-column small-12 medium-6 large-4 small-valign-top"})
-
         verInfo_dict = {}
-
         for info in ver_infos:
             each_info = [x for x in info.text.replace("  ", "").split("\n") if len(x) > 0]
             base_value = each_info[1:]
@@ -153,11 +171,12 @@ def app_apple(country, id):
                     if index % 2 == 0:
                         new_dic[i] = base_value[index + 1]
                 verInfo_dict[each_info[0]] = new_dic
-
+    verInfo_dict = filter_values(json.dumps(verInfo_dict).replace("'", "&#39;").replace("\\xa0", " "))
     result = {"name": name, "age": age, "recent_update": update_date, "version": version, "rate": rate,
               "version_info": verInfo_dict, "apple_url": url, "as_id": id, "icon": icon, "rank": rank}
-    logger.debug(f"apple_info: {result}")
+    # logger.debug(f"apple_info: {result}")
     return result
+
 
 def check_project(game_id):
     time1 = timer()
@@ -174,7 +193,6 @@ def check_project(game_id):
     name = project_info["name"]
     # 获取gp_version
     # version_sql1 = f"SELECT game_id,version FROM gp_version AS A WHERE NOT EXISTS (SELECT 1 FROM gp_version AS b WHERE b.game_id = A.game_id AND b.id > A.id ) and game_id = {game_id}"
-
 
     # logger.debug(gp_version)
     # logger.debug(as_version)
@@ -204,37 +222,21 @@ def check_project(game_id):
         if gp_version != live_version:
             logger.info(f"{name} gp发现新版本 {live_version}, 旧版本： {gp_version}")
             info = json.dumps(gp_live)
-            save_sql = f"""INSERT INTO gp_versions ("game_id", "info", "version") VALUES ({game_id}, '{info.replace("'", "''")}', '{live_version}');"""
+            save_sql = f"""INSERT INTO gp_versions ("game_id", "info", "version") VALUES ({game_id}, '{info.replace("'",
+                                                                                                                    "''")}', '{live_version}');"""
             save_data(save_sql)
-            # gp_sql = f"""INSERT INTO gp_version ("apple_id", "title", "realInstalls", "score", "inAppProductPrice", "genre",
-            #  "icon", "contentRating", "released", "updated", "version", "url")
-            # VALUES {gp_live["apple_id"], gp_live["title"], gp_live["realInstalls"], gp_live["score"], gp_live[
-            #     "inAppProductPrice"], gp_live["genre"], gp_live["icon"], gp_live["contentRating"],
-            #         gp_live["released"],
-            #         gp_live["updated"], gp_live["version"], gp_live["url"]};"""
-            # logger.debug(gp_sql)
-            #
-            # # 获取差别
-            # logger.debug(json.dumps(gp_live))
-            # diff_msg = ""
-            # diff_sql = f'SELECT * FROM gp_version WHERE game_id = {game_id} ORDER BY "version" DESC limit 1'
-            # sql_result = select_data(diff_sql)
-            # logger.debug(sql_result[0])
-            # logger.debug(type(sql_result[0]))
-            # result = dict(sql_result[0])
-            # for key in gp_live.keys():
-            #     logger.debug(f"{key}")
-            #     logger.debug(f"{result[key]}, {gp_live[key]}")
-            #     if str(result[key]) != str(gp_live[key]) and key != "version":
-            #         diff_msg = diff_msg + f"{key} diff: {gp_live[key]} | {result[key]} \n"
-            #
+            # 获取差异
+            sql_json = versions1[0]["info"]
+            diff = json_tools.diff(gp_live, sql_json)
             msg = msg + f"【{name}】 有更新 from GooglePlay\n版本:{live_version}||{gp_version}\n"
+            msg = msg + f"差异： {json.dumps(diff)}"
             # msg = msg + diff_msg
             # # await save_data(gp_sql)
             # logger.debug(msg)
         else:
             info = json.dumps(gp_live)
-            update_sql = f"""UPDATE gp_versions SET info = '{info.replace("'", "''")}' where game_id = {game_id} AND version = '{gp_version}';"""
+            update_sql = f"""UPDATE gp_versions SET info = '{info.replace("'",
+                                                                          "''")}' where game_id = {game_id} AND version = '{gp_version}';"""
             save_data(update_sql)
 
     # 处理iOS
@@ -247,7 +249,7 @@ def check_project(game_id):
         try:
             as_version = versions2[0]["version"]
         except Exception as e:
-            logger.error(f"{name} 获取iOS版本失败: {e}")
+            logger.error(f"{name} 数据库获取iOS版本失败: {e}")
             as_version = ""
         try:
             as_live = app_apple(country=apple_country, id=as_id)
@@ -262,6 +264,7 @@ def check_project(game_id):
             if as_version != live_version:
                 logger.info(f"{name} iOS发现新版本： {live_version} | {as_version}")
                 timestamp = str(int(time.time()))
+                # version_info = filter_values(json.dumps(as_live["version_info"]).replace("'", "&#39;").replace("\\xa0", " "))
                 as_sql = """
                     INSERT INTO as_version("game_id", "name", "age", "recent_update", "version", "rate", "version_info", "apple_url", "as_id", "timestamp", "icon", "rank")
 VALUES
@@ -273,10 +276,7 @@ VALUES
                             as_live["recent_update"],
                             as_live["version"],
                             as_live["rate"],
-                            json.dumps(
-                                as_live["version_info"]).replace(
-                                "\'",
-                                "\""),
+                            as_live["version_info"],
                             as_live["apple_url"],
                             as_live["as_id"],
                             timestamp,
@@ -287,18 +287,23 @@ VALUES
                 # diff_msg = ""
                 # diff_sql = f'SELECT * FROM as_version WHERE game_id = {game_id} ORDER BY "version" DESC limit 1'
                 # sql_result = select_data(diff_sql)
-                # logger.debug(sql_result[0])
+                # logger.debug(sql_result)
+                # if sql_result != []:
+                #     sql_json = dict(sql_result[0])
+                #     logger.debug(sql_json)
+                #     logger.debug(as_live)
+                #     diff = json_tools.diff(as_live, sql_json)
+                #     logger.error(json.dumps(diff))
+                # else:
+                #     diff = "新增游戏"
 
-
-
-                # msg = msg + "【{0}】 有更新 from AppStore\n版本:{1}||{3}\n{2}\n".format(str(as_live["name"]),
-                #                                                                  as_live["version"],
-                #                                                                  as_live["apple_url"],
-                #                                                                  as_version)
-                msg = msg + f"【{name}】 有更新 from AppStore\n版本:{live_version}||{as_version}\n"
                 save_data(as_sql)
+                msg = msg + f"【{name}】 有更新 from AppStore\n {live_version} | {as_version}"
+                # msg += str(diff)
+
             else:
-                update_sql = f"""UPDATE as_version SET rank = '{as_live["rank"]}' where game_id = {game_id} and version = '{live_version}'"""
+                update_sql = f"""UPDATE as_version SET rank = '{as_live[
+                    "rank"]}' where game_id = {game_id} and version = '{live_version}'"""
                 save_data(update_sql)
         except Exception as e:
             logger.error("app store获取版本信息失败：{0}\n{1}".format(name, str(e)))
@@ -331,8 +336,8 @@ if __name__ == '__main__':
     # loop.run_until_complete(app_google(pk))
     # loop.run_until_complete(app_apple(country, app_id))
 
-    app_apple(country, app_id)
-    # check_project(608)
+    # app_apple(country, app_id)
+    check_project(101)
     # app_google(pk)
 
     # loop.run_until_complete(run())
