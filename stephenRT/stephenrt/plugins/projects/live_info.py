@@ -298,7 +298,7 @@ VALUES
                 #     diff = "新增游戏"
 
                 save_data(as_sql)
-                msg = msg + f"【{name}】 有更新 from AppStore\n {live_version} | {as_version}"
+                msg = msg + f"【{name}】 有更新 from AppStore\n {live_version} | {as_version} \n {as_live['apple_url']}"
                 # msg += str(diff)
 
             else:
