@@ -302,8 +302,9 @@ VALUES
                 # msg += str(diff)
 
             else:
+                update_time = int(time.time())
                 update_sql = f"""UPDATE as_version SET rank = '{as_live[
-                    "rank"]}' where game_id = {game_id} and version = '{live_version}'"""
+                    "rank"]}', timestamp = {update_time} where game_id = {game_id} and version = '{live_version}'"""
                 save_data(update_sql)
         except Exception as e:
             logger.error("app store获取版本信息失败：{0}\n{1}".format(name, str(e)))
