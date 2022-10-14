@@ -6,7 +6,9 @@
     <bookmark url="file://$PROJECT_DIR$/stephenRT/stephenrt/plugins/projects/local_config.py" description="def get_host_ip():&#10;    &quot;&quot;&quot;&#10;    查询本机ip地址&#10;    :retur..." line="14" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3047aada-47d5-4ad8-a368-9e15af7b4bc7" name="Default Changelist" comment="" />
+    <list default="true" id="3047aada-47d5-4ad8-a368-9e15af7b4bc7" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/stephenRT/stephenrt/plugins/projects/live_info.py" beforeDir="false" afterPath="$PROJECT_DIR$/stephenRT/stephenrt/plugins/projects/live_info.py" afterDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -44,8 +46,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/stephenRT/stephenrt/plugins/projects/live_info.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1061">
-              <caret line="266" column="78" lean-forward="true" selection-start-line="266" selection-start-column="78" selection-end-line="266" selection-end-column="78" />
+            <state relative-caret-position="341">
+              <caret line="218" column="56" lean-forward="true" selection-start-line="218" selection-start-column="56" selection-end-line="218" selection-end-column="56" />
               <folding>
                 <element signature="e#239#260#0" expanded="true" />
               </folding>
@@ -688,7 +690,7 @@
       <workItem from="1665567816948" duration="4448000" />
       <workItem from="1665627140845" duration="9830000" />
       <workItem from="1665651969174" duration="1778000" />
-      <workItem from="1665706648657" duration="1227000" />
+      <workItem from="1665706648657" duration="1624000" />
     </task>
     <servers />
   </component>
@@ -701,7 +703,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="1595279000" />
+    <option name="totallyTimeSpent" value="1595676000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1148,8 +1150,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/stephenRT/stephenrt/plugins/projects/live_info.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1061">
-          <caret line="266" column="78" lean-forward="true" selection-start-line="266" selection-start-column="78" selection-end-line="266" selection-end-column="78" />
+        <state relative-caret-position="341">
+          <caret line="218" column="56" lean-forward="true" selection-start-line="218" selection-start-column="56" selection-end-line="218" selection-end-column="56" />
           <folding>
             <element signature="e#239#260#0" expanded="true" />
           </folding>
