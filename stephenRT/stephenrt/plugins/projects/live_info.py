@@ -256,6 +256,7 @@ def check_project(game_id):
             as_live = app_apple(country=apple_country, id=as_id)
             live_version = as_live["version"]
             # logger.debug(name + ":" + live_version)
+
             if as_version == None or as_version == "":
                 logger.debug("没有存:" + name)
                 as_version = "0.0"
