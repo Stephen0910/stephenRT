@@ -63,6 +63,8 @@ def version_max(a, b):
     :param b: 数据库中的版本
     :return:
     """
+    if b == -1:
+        return True
     if a == b:
         return False
     lista = str(a).split(".")
@@ -247,19 +249,14 @@ def check_project(game_id):
     else:
         version_sql2 = f"SELECT game_id,version FROM as_version AS A WHERE NOT EXISTS (SELECT 1 FROM as_version AS b WHERE b.game_id = A.game_id AND b.id > A.id ) and game_id = {game_id}"
         versions2 = select_data(version_sql2)
-        try:
+        if versions2 != []:
             as_version = versions2[0]["version"]
-        except Exception as e:
-            logger.error(f"{name} 数据库获取iOS版本失败: {e}")
-            as_version = ""
+        else:
+            as_version = -1
         try:
             as_live = app_apple(country=apple_country, id=as_id)
             live_version = as_live["version"]
-            # logger.debug(name + ":" + live_version)
-
-            if as_version == None or as_version == "":
-                logger.debug("没有存:" + name)
-                as_version = "0.0"
+            logger.debug(name + "线上版本:" + live_version)
 
             # 写入
             # if as_version != live_version:
@@ -322,6 +319,7 @@ async def run():
     # tasks = [check_project(game_id) for game_id in game_ids]
     res = pool.map(check_project, game_ids)
     logger.debug(res)
+    select_data("select pg_terminate_backend(pid) from pg_stat_activity where state='idle';")  # 清除空闲的连接
     # msg = ""
     # for i in res:
     #     if i != "":
