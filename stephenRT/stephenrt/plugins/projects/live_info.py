@@ -259,7 +259,7 @@ def check_project(game_id):
 
             if as_version == None or as_version == "":
                 logger.debug("没有存:" + name)
-                # as_version = "0.0"
+                as_version = "0.0"
 
             # 写入
             # if as_version != live_version:
