@@ -219,7 +219,8 @@ def check_project(game_id):
             logger.error(f"{name} 获取gp version 失败: {e}")
             return
 
-        if gp_version != live_version:
+        # if gp_version != live_version:
+        if gp_version == "" or version_max(live_version, gp_version):
             logger.info(f"{name} gp发现新版本 {live_version}, 旧版本： {gp_version}")
             info = json.dumps(gp_live)
             save_sql = f"""INSERT INTO gp_versions ("game_id", "info", "version") VALUES ({game_id}, '{info.replace("'",
@@ -261,7 +262,8 @@ def check_project(game_id):
                 # as_version = "0.0"
 
             # 写入
-            if as_version != live_version:
+            # if as_version != live_version:
+            if as_version == "" or version_max(live_version, as_version):
                 logger.info(f"{name} iOS发现新版本： {live_version} | {as_version}")
                 timestamp = str(int(time.time()))
                 # version_info = filter_values(json.dumps(as_live["version_info"]).replace("'", "&#39;").replace("\\xa0", " "))
