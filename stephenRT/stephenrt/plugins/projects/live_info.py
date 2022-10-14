@@ -257,13 +257,13 @@ def check_project(game_id):
             live_version = as_live["version"]
             # logger.debug(name + ":" + live_version)
 
-            if as_version == None or as_version == "":
-                logger.debug("没有存:" + name)
-                as_version = "0.0"
 
             # 写入
             # if as_version != live_version:
             if as_version == "" or version_max(live_version, as_version):
+                if as_version == None or as_version == "":
+                    logger.debug("没有存:" + name)
+                    as_version = "0.0"
                 logger.info(f"{name} iOS发现新版本： {live_version} | {as_version}")
                 timestamp = str(int(time.time()))
                 # version_info = filter_values(json.dumps(as_live["version_info"]).replace("'", "&#39;").replace("\\xa0", " "))
