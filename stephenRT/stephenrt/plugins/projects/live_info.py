@@ -313,7 +313,7 @@ VALUES
 
 async def run():
     # 获取所有game_id
-    app_sql = "SELECT * FROM game_info WHERE is_pulish is True order by game_id"
+    app_sql = "SELECT game_id FROM game_info WHERE is_pulish is True order by game_id"
     result = select_data(app_sql)
     game_ids = [x["game_id"] for x in result]
     # tasks = [check_project(game_id) for game_id in game_ids]

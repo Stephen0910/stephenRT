@@ -267,12 +267,13 @@ async def hand_find(
 
 """禁言-仅正式服"""
 
-ban = on_command("ban", rule=to_me(), aliases={"jy", "shut"}, priority=1, permission=SUPERUSER)
+# ban = on_command("ban", rule=to_me(), aliases={"jy", "shut"}, priority=1, permission=SUPERUSER)
+ban = on_command("ban", rule=to_me(), aliases={"jy", "shut"}, priority=1)
 
 
 @ban.handle()
 async def handle_first_receive(matcher: Matcher, args: Message = CommandArg()):
-    plain_text = args.extract_plain_text()  # 首次发送命令时跟随的参数，例：/天气 上海，则args为上海
+    plain_text = args.extract_plain_text()
     if plain_text:
         matcher.set_arg("user_id", args)  # 如果用户发送了参数则直接赋值
 

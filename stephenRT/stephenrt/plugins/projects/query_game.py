@@ -71,7 +71,7 @@ async def query_game():
     # 查询的项目信息
     logger.debug("project trigger:{0}".format(trigger))
 
-    if trigger % 40 == 0:
+    if trigger % 5 == 0:
         trigger += 1  # 有可能执行得满了，超过了5s，第二次轮询进来trigger还没加，所以在这里先加1 避免重复执行
         respon = await run()
         logger.info(respon)
