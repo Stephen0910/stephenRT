@@ -17,18 +17,21 @@ from nonebot.matcher import Matcher
 from nonebot.adapters import Message
 from nonebot.params import Arg, CommandArg
 from nonebot.permission import SUPERUSER
+from nonebot.adapters.onebot.v11 import MessageEvent
+from nonebot.params import Depends
 import stephenrt.privateCfg as cfg
 
 config = cfg.config_content
+players = [281016636, 659738900, 158709003, 726408753, 378282033, 675246207, 3274888291]
 
 openai.api_key = config["openai"]
 
 print("chatgpt 加载成功")
 
-chatgpt = on_command("op", rule=to_me(), aliases={"cg", "ai", "请问", "你知道", "知道", "知不知道", "问"}, priority=1, permission=SUPERUSER)
-
+chatgpt = on_command("op", rule=to_me(), aliases={"cg", "ai", "请问", "你知道", "知道", "知不知道", "问"}, priority=1 )
 
 model = "text-davinci-003"
+
 
 async def chat2opt(prompt):
     completions = openai.Completion.create(
@@ -44,6 +47,10 @@ async def chat2opt(prompt):
     return message
 
 
+async def depend(event: MessageEvent):  # 2.编写依赖函数
+    return {"uid": event.get_user_id(), "nickname": event.sender.nickname}
+
+
 @chatgpt.handle()
 async def handle_first_receive(matcher: Matcher, args: Message = CommandArg()):
     plain_text = args.extract_plain_text()  # 首次发送命令时跟随的参数，例：/天气 上海，则args为上海
@@ -53,26 +60,23 @@ async def handle_first_receive(matcher: Matcher, args: Message = CommandArg()):
 
 @chatgpt.got("question", prompt="你想问什么")
 async def handleuser(
-        question: Message = Arg()
+        question: Message = Arg(), x: dict = Depends(depend)
 ):
     question = str(question)
     print("输入为：{0}".format(question))
-    try:
-        answer = await chat2opt(question)
-        # answer = "answer" + question
-        # msg = f"model({model})回答：\n{answer}"
-        msg = answer
-    except Exception as e:
-        msg = f"发生错误： {str(e)}"
-    finally:
-        print(msg)
-        await chatgpt.finish(msg.strip().replace("\n\n", "\n"))
-
-
-
-
-
-
+    if int(x["uid"]) in players:
+        try:
+            answer = await chat2opt(question)
+            # answer = "answer" + question
+            # msg = f"model({model})回答：\n{answer}"
+            msg = answer
+        except Exception as e:
+            msg = f"发生错误： {str(e)}"
+        finally:
+            print(msg)
+            await chatgpt.finish(msg.strip().replace("\n\n", "\n"))
+    else:
+        print(str(x["uid"]) + "无权限")
 
 # while True:
 #     prompt = input("提问: ")
@@ -82,4 +86,3 @@ async def handleuser(
 #         response = str(e)
 #
 #     print("ChatGpt: ", response)
-
