@@ -24,6 +24,7 @@ import stephenrt.privateCfg as cfg
 config = cfg.config_content
 players = [281016636, 659738900, 158709003, 726408753, 378282033, 675246207, 3274888291]
 
+
 openai.api_key = config["openai"]
 
 print("chatgpt 加载成功")
@@ -58,12 +59,14 @@ async def handle_first_receive(matcher: Matcher, args: Message = CommandArg()):
         matcher.set_arg("question", args)  # 如果用户发送了参数则直接赋值
 
 
-@chatgpt.got("question", prompt="你想问什么")
+@chatgpt.got("question", prompt="你有什么问题？（输入取消/放弃 放弃会话）")
 async def handleuser(
         question: Message = Arg(), x: dict = Depends(depend)
 ):
     question = str(question)
     print("输入为：{0}".format(question))
+    if question in ["取消", "放弃"]:
+        await chatgpt.finish("已结束会话")
     if int(x["uid"]) in players:
         try:
             answer = await chat2opt(question)
