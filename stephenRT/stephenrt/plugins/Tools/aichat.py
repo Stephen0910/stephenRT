@@ -25,7 +25,7 @@ openai.api_key = config["openai"]
 
 print("chatgpt 加载成功")
 
-chatgpt = on_command("op", rule=to_me(), aliases={"cg", "ai", "请问", "你知道", "知道", "知不知道"}, priority=1, permission=SUPERUSER)
+chatgpt = on_command("op", rule=to_me(), aliases={"cg", "ai", "请问", "你知道", "知道", "知不知道", "问"}, priority=1, permission=SUPERUSER)
 
 
 model = "text-davinci-003"
@@ -66,7 +66,7 @@ async def handleuser(
         msg = f"发生错误： {str(e)}"
     finally:
         print(msg)
-        await chatgpt.finish(msg)
+        await chatgpt.finish(msg.strip().replace("\n\n", "\n"))
 
 
 
