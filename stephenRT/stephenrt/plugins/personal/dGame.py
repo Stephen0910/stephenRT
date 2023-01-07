@@ -249,11 +249,15 @@ async def game_info():
                 data = await get_recent_data(id)
             except:
                 data = ""
-            create_time = data["create_time"]
-            g_id = data["g_id"]
-            g_source = data["g_source"]
-            g_type = game_source[g_source]
-            t_create_time = int(time.mktime(time.strptime(create_time, "%Y-%m-%dT%H:%M:%S")))
+            try:
+                create_time = data["create_time"]
+                g_id = data["g_id"]
+                g_source = data["g_source"]
+                g_type = game_source[g_source]
+                t_create_time = int(time.mktime(time.strptime(create_time, "%Y-%m-%dT%H:%M:%S")))
+            except Exception as e:
+                print(f"获取信息失败：{str(e)}")
+                break
             # print(t_create_time)
             if t_create_time > time_list[-1]:
                 g_ids.append(g_id)
