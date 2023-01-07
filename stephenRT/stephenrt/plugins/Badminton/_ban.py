@@ -84,10 +84,10 @@ def transferMsg(response, long=True):
                          "rank", "totalPayMoney",
                          "plat_form",
                          "publish_channel", "client_version", "forbidden_speak",
-                         "account_ban","gold_num", "diamond_num", "login_time"]
+                         "account_ban", "gold_num", "diamond_num", "login_time"]
             msg = ""
         else:
-            key_words = ["number_user_id", "name", "modify_name","rank", "level"]
+            key_words = ["number_user_id", "name", "modify_name", "rank", "level"]
 
         # logger.debug("key_words:", key_words)
         # msg = "-" * 20 + "\n"
@@ -187,7 +187,6 @@ async def ban_user(id, ban_time, reason, env):
 
     # logger.info(response.content)
     return str(response.content).encode("utf-8")
-
 
 
 async def add_keyword(env, keyword):
@@ -330,6 +329,3 @@ async def addkey(
     else:
         result = await add_keyword(env=env, keyword=add_key)
         await addKey.finish(str(result))
-
-
-

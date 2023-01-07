@@ -54,7 +54,7 @@ else:
 
 def save_json(game_id, json_data):
     """
-    异步执行插入sql
+    执行插入sql
     :param sql:
     :return:
     """
@@ -85,6 +85,22 @@ def save_json(game_id, json_data):
                 logger.error("sql执行失败：\n{0}\n{1}".format(str(e), insert_sql))
 
 
+def select_data(sql):
+    """
+    执行select sql
+    :param sql:
+    :return:
+    """
+    # conn = psycopg2.connect(user=pgsql["user"], password=pgsql["password"], database=pgsql["database"],
+    #                              host=pgsql["host"])
+    with psycopg2.connect(user=pgsql["user"], password=pgsql["password"], database=pgsql["database"],
+                          host=pgsql["host"]) as conn:
+        with conn.cursor(cursor_factory=RealDictCursor) as cursor:
+            cursor.execute(sql)
+            data = cursor.fetchall()
+    return data
+
+
 def getYesterday():
     today = datetime.date.today()
     oneday = datetime.timedelta(days=1)
@@ -93,6 +109,12 @@ def getYesterday():
 
 
 def app_info(platform, app_id):
+    """
+    获取app信息
+    :param platform:
+    :param app_id:
+    :return:
+    """
     url = f"https://app.sensortower.com/api/{platform}/apps/{app_id}"
     with requests.get(url, data=payload, headers=headers, proxies=proxies) as response:
         if response.status_code == 200:
@@ -102,9 +124,15 @@ def app_info(platform, app_id):
         return data
 
 
-def rank_info(platform, app_id):
+def rank_info(platform, app_id, country="us"):
+    """
+    获取排行榜信息
+    :param platform:
+    :param app_id:
+    :param country:
+    :return:
+    """
     category_url = f"https://app.sensortower.com/api/{platform}/category/app_category_ranking_summary?app_ids={app_id}"
-
     with requests.get(category_url, data=payload, headers=headers, proxies=proxies) as response:
         if response.status_code == 200:
             data = json.loads(response.text)
@@ -112,7 +140,7 @@ def rank_info(platform, app_id):
             chart_types = data["chart_types"]
             rank_cate_elem = "".join([f"categories%5B%5D={x}&" for x in categories])
             chart_type_elem = "".join([f"chart_type_ids%5B%5D={x}&" for x in chart_types])
-            rank_url = f"https://app.sensortower.com/api/{platform}/category/category_history?app_ids%5B%5D={app_id}&{rank_cate_elem}&{chart_type_elem}&countries%5B%5D=US&end_date={str(datetime.date.today())}&start_date={getYesterday()}"
+            rank_url = f"https://app.sensortower.com/api/{platform}/category/category_history?app_ids%5B%5D={app_id}&{rank_cate_elem}&{chart_type_elem}&countries%5B%5D={country}&end_date={str(datetime.date.today())}&start_date={getYesterday()}"
             with requests.get(rank_url, data=payload, headers=headers, proxies=proxies) as response:
                 if response.status_code == 200:
                     data = json.loads(response.text)
@@ -124,11 +152,30 @@ def rank_info(platform, app_id):
             return f"{app_id}获取目录失败"
 
 
+def local_apps():
+    """
+    获取数据库的game_info
+    :return:
+    """
+    app_sql = "SELECT * FROM game_info WHERE is_pulish is True order by game_id"
+    result = select_data(app_sql)
+    # game_ids = [x["game_id"] for x in result]
+    # logger.debug(game_ids)
+    logger.debug(result)
+    return result
+
+
 if __name__ == '__main__':
     android = "slots.machine.winning.android"
     ios = "1330550298"
-    info = app_info("ios", ios)
-    save_json(101, info)
+    badminton = "1546338773"
+
+    # info = app_info("ios", ios)
+    # save_json(101, info)
+    local_apps()
+    # rank_info("android", "endless.nightmare.shrine.horror.scary.free.android", "IN")
+    # rank_info("ios", badminton, "cn")
+
     # android_info("ios", ios)
     # print(datetime.date.today())
     # print(getYesterday())

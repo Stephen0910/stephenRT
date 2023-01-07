@@ -29,8 +29,10 @@ def get_host_ip():
 
 
 # from .autoBan import *
+from .aichat import *
 
 ip = str(get_host_ip())
 
 if ip == "10.10.10.8":
     from .update import *
+
