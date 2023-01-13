@@ -31,8 +31,8 @@ print("chatgpt 加载成功")
 
 chatgpt = on_command("op", rule=to_me(), aliases={"cg", "ai", "请问", "你知道", "知道", "知不知道", "问"}, priority=1 )
 
-# model = "text-davinci-003"
-model = "text-davinci-002"
+model = "text-davinci-003"
+# model = "text-davinci-002"
 
 
 async def chat2opt(prompt):
