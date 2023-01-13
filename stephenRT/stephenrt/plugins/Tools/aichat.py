@@ -31,7 +31,8 @@ print("chatgpt 加载成功")
 
 chatgpt = on_command("op", rule=to_me(), aliases={"cg", "ai", "请问", "你知道", "知道", "知不知道", "问"}, priority=1 )
 
-model = "text-davinci-003"
+# model = "text-davinci-003"
+model = "text-davinci-002"
 
 
 async def chat2opt(prompt):
@@ -56,7 +57,7 @@ async def depend(event: MessageEvent):  # 2.编写依赖函数
 async def handle_first_receive(matcher: Matcher, args: Message = CommandArg()):
     plain_text = args.extract_plain_text()  # 首次发送命令时跟随的参数，例：/天气 上海，则args为上海
     if plain_text:
-        matcher.set_arg("question", args)  # 如果用户发送了参数则直接赋值
+        matcher.set_arg("question", args)  # 如果用户发送了参数则直接赋值  
 
 
 @chatgpt.got("question", prompt="你有什么问题？（输入取消/放弃 放弃会话）")
