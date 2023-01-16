@@ -28,7 +28,7 @@ def get_host_ip():
 ip = str(get_host_ip())
 
 if re.match("192.*", ip):
-    # from .dGame import *
+    from .dGame import *
     # from .dm_pro.live import *
     # from .search_body import *
     # from .nba.season import *

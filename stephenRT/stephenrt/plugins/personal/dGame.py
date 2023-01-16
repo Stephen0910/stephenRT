@@ -30,7 +30,8 @@ v_url = "https://api.linhun.vip/api/Littlesistervideo?type=json"
 
 # names = ["Dream丶狗", "a824683653"]
 # names = ["宁心之殇", "你好尹天仇", "晴天眼神", "上海康恒", "再见柳飘飘", "求坑丶", "CG控", "小灰灰居然", "a824683653", "嘴很硬啊丶"]
-names = ["宁心之殇", "你好尹天仇", "晴天眼神", "上海康恒", "再见柳飘飘", "求坑丶"]
+# names = ["宁心之殇", "你好尹天仇", "晴天眼神", "上海康恒", "再见柳飘飘", "求坑丶"]
+names = ["宁心之殇", "晴天眼神", "上海康恒", "再见柳飘飘", "求坑丶"]
 
 d_headers = {
     "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9",
@@ -249,15 +250,17 @@ async def game_info():
                 data = await get_recent_data(id)
             except:
                 data = ""
+            print("data:\n", name, id, json.dumps(data))
             try:
                 create_time = data["create_time"]
                 g_id = data["g_id"]
                 g_source = data["g_source"]
                 g_type = game_source[g_source]
+                # g_type = data["game_type"]
                 t_create_time = int(time.mktime(time.strptime(create_time, "%Y-%m-%dT%H:%M:%S")))
             except Exception as e:
-                print(f"获取信息失败：{str(e)}")
-                break
+                print(f"获取信息失败， 检索下一个id：{str(e)}")
+                continue
             # print(t_create_time)
             if t_create_time > time_list[-1]:
                 g_ids.append(g_id)
@@ -424,3 +427,9 @@ async def game_info():
     trigger += 1
 
 print("dGame started")
+
+if __name__ == '__main__':
+    id = 388624
+    loop = asyncio.get_event_loop()
+    loop.run_until_complete(get_recent_data(id))
+
