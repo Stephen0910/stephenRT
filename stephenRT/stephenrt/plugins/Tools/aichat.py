@@ -68,7 +68,8 @@ async def handleuser(
     print("输入为：{0}".format(question))
     if question in ["取消", "放弃"]:
         await chatgpt.finish("已结束会话")
-    if int(x["uid"]) in players:
+    # if int(x["uid"]) in players:
+    if "1" == "1":
         try:
             answer = await chat2opt(question)
             # answer = "answer" + question
