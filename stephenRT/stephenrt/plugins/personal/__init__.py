@@ -28,7 +28,7 @@ def get_host_ip():
 ip = str(get_host_ip())
 
 if re.match("192.*", ip):
-    from .dGame import *
+    # from .dGame import *
     # from .dm_pro.live import *
     # from .search_body import *
     # from .nba.season import *
@@ -40,7 +40,7 @@ if ip == "10.10.10.8":
     print("本地内网")
     from .dGame import *
     from .search_body import *
-    # from .dm_pro.live import *
+    from .dm_pro.live import *
     # from .dm_pro.giftNoti import *
     # from .nba.season import *
     from .kuake import *  # 暂时关闭
