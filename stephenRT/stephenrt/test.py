@@ -54,27 +54,37 @@ import re
 
 import openai
 
-test_api = ""
+openai.api_key = ""
 
-def openai_reply(content, apikey):
-    openai.api_key = test_api
-    response = openai.ChatCompletion.create(
-        model="gpt-3.5-turbo-0301",  # gpt-3.5-turbo-0301
-        messages=[
-            {"role": "user", "content": content}
-        ],
+
+
+
+import openai
+import time
+# 设置API密钥
+
+# 定义问题和上下文
+question = "What is the meaning of life?"
+context = "The meaning of life is a philosophical question concerning the significance of life or existence in general."
+# 循环对话
+while True:
+    # 发送请求并获取响应
+    response = openai.Completion.create(
+        engine="davinci",
+        prompt=context + "\nQ: " + question + "\nA:",
         temperature=0.5,
-        max_tokens=1000,
-        top_p=1,
-        frequency_penalty=0,
-        presence_penalty=0,
+        max_tokens=1024,
+        n=1,
+        stop=None,
+        timeout=60,
     )
-    # print(response)
-    return response.choices[0].message.content
+    # 解析响应并打印回答
+    answer = response.choices[0].text.strip()
+    print("A: " + answer)
+    # 提示下一个问题
+    question = input("Q: ")
+    # 等待一段时间，避免过于频繁地发送请求
+    time.sleep(1)
 
 
-if __name__ == '__main__':
-    content = '你是谁？'
-    ans = openai_reply(content, '你的APIKEY')
-    print(ans)
 
