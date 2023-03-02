@@ -42,11 +42,39 @@ import urllib
 import subprocess
 import re
 
-with requests.get("http://tools.liumingye.cn/music/?page=audioPage&type=migu&name=将军") as session:
-    response = session.text
-    print(response)
-    page_html = etree.HTML(response)
-    path = "/html/body/div[2]/div[2]/div[3]/div[3]"
-    path1 = "/html/body/div[2]/div[2]/div[3]/div[3]/div/div"
-    data_element = page_html.xpath(path1)
-    print(data_element)
+# with requests.get("http://tools.liumingye.cn/music/?page=audioPage&type=migu&name=将军") as session:
+#     response = session.text
+#     print(response)
+#     page_html = etree.HTML(response)
+#     path = "/html/body/div[2]/div[2]/div[3]/div[3]"
+#     path1 = "/html/body/div[2]/div[2]/div[3]/div[3]/div/div"
+#     data_element = page_html.xpath(path1)
+#     print(data_element)
+
+
+import openai
+
+test_api = ""
+
+def openai_reply(content, apikey):
+    openai.api_key = test_api
+    response = openai.ChatCompletion.create(
+        model="gpt-3.5-turbo-0301",  # gpt-3.5-turbo-0301
+        messages=[
+            {"role": "user", "content": content}
+        ],
+        temperature=0.5,
+        max_tokens=1000,
+        top_p=1,
+        frequency_penalty=0,
+        presence_penalty=0,
+    )
+    # print(response)
+    return response.choices[0].message.content
+
+
+if __name__ == '__main__':
+    content = '你是谁？'
+    ans = openai_reply(content, '你的APIKEY')
+    print(ans)
+

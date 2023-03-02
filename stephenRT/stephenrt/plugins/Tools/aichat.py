@@ -31,8 +31,8 @@ print("chatgpt 加载成功")
 
 chatgpt = on_command("op", rule=to_me(), aliases={"cg", "ai", "请问", "你知道", "知道", "知不知道", "问"}, priority=1 )
 
-model = "text-davinci-003"
-model = "gpt-3.5-turbo"
+# model = "text-davinci-003"
+model = "gpt-3.5-turbo-0301"
 # model = "text-davinci-002"
 
 
