@@ -32,6 +32,7 @@ print("chatgpt 加载成功")
 chatgpt = on_command("op", rule=to_me(), aliases={"cg", "ai", "请问", "你知道", "知道", "知不知道", "问"}, priority=1 )
 
 model = "text-davinci-003"
+model = "gpt-3.5-turbo"
 # model = "text-davinci-002"
 
 
@@ -83,11 +84,6 @@ async def handleuser(
     else:
         print(str(x["uid"]) + "无权限")
 
-# while True:
-#     prompt = input("提问: ")
-#     try:
-#         response = chat(prompt)
-#     except Exception as e:
-#         response = str(e)
-#
-#     print("ChatGpt: ", response)
+
+if __name__ == '__main__':
+    pass
