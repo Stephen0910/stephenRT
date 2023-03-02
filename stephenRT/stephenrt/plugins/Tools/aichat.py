@@ -37,17 +37,30 @@ model = "gpt-3.5-turbo-0301"
 
 
 async def chat2opt(prompt):
-    completions = openai.Completion.create(
-        engine=model,
-        prompt=prompt,
-        max_tokens=1024,
-        n=1,
-        stop=None,
-        temperature=0,
+    # completions = openai.Completion.create(
+#     #     engine=model,
+#     #     prompt=prompt,
+#     #     max_tokens=1024,
+#     #     n=1,
+#     #     stop=None,
+#     #     temperature=0,
+#     # )
+#     #
+#     # message = completions.choices[0].text
+#     # return message
+    response = openai.ChatCompletion.create(
+        model="gpt-3.5-turbo-0301",  # gpt-3.5-turbo-0301
+        messages=[
+            {"role": "user", "content": prompt}
+        ],
+        temperature=0.5,
+        max_tokens=1000,
+        top_p=1,
+        frequency_penalty=0,
+        presence_penalty=0,
     )
-
-    message = completions.choices[0].text
-    return message
+    # print(response)
+    return response.choices[0].message.content
 
 
 async def depend(event: MessageEvent):  # 2.编写依赖函数
