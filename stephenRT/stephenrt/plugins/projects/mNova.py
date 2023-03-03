@@ -32,35 +32,38 @@ command = on_command("matchNova", rule=to_me(), aliases={"Debug"}, priority=1, p
 split_symbol = "⬤"
 promot = (
         "机器人功能(请@我 输入指定序号功能 userId)：\n" + "{0}  1、新账号\n" +
-        "{0} 2、 变强套装（满级英雄、宝石、货币10000）\n" + "{0}  3、货币切换\n" + "{0}待定\n").format(
+        "{0}  2、 变强套装（满级英雄、宝石、货币10000）\n" + "{0}  3、货币切换\n" + "{0}  待定\n").format(
     split_symbol)
 
 
-async def exeSql(sql):
+async def exeSql(sqls):
     with psycopg2.connect(user=pgsql["novaUser"], password=pgsql["novaPassword"], database=pgsql["novaDatabase"],
                           host=pgsql["novaHost"]) as conn:
         with conn.cursor(cursor_factory=RealDictCursor) as cursor:
             try:
-                cursor.execute(sql)
+                [cursor.execute(sql) for sql in sqls]
+                # cursor.execute(sql)
                 conn.commit()
             except Exception as e:
-                logger.error("sql执行失败：\n{0}\n{1}".format(str(e), sql))
+                logger.error("sql执行失败：\n{0}".format(str(e)))
 
 
 async def deal_command(userInput):
     inputList = userInput.split(" ")
-    if not isinstance(inputList, list) or len(inputList) != 2:
-        message = f"输入错误: {userInput}"
+    # if not isinstance(inputList, list) or len(inputList) != 2:
+    #     message = f"输入错误: {userInput}"
+    # else:
+    op, user_id = str(inputList[0]), int(inputList[1])
+    if op == "1":
+        sqls = [f"DELETE from account_bind_info WHERE unique_id in (SELECT email_name FROM account_bind_info WHERE user_id = {user_id});", f"DELETE from device_info WHERE user_id = {user_id};"]
+        await exeSql(sqls)
+        message = "执行成功"
+    elif op == "2":
+        pass
+    elif op == "3":
+        pass
     else:
-        op, user_id = [str(x) for x in inputList]
-        if op == "1":
-            pass
-        elif op == "2":
-            pass
-        elif op == "3":
-            pass
-        else:
-            message = "操作方式错误"
+        message = "操作方式错误"
     return message
 
 
@@ -68,10 +71,10 @@ async def deal_command(userInput):
 async def handle_first_receive(matcher: Matcher, args: Message = CommandArg()):
     plain_text = args.extract_plain_text()  # 首次发送命令时跟随的参数
     if plain_text:
-        matcher.set_arg("orinTime", args)  # 如果用户发送了参数则直接赋值
+        matcher.set_arg("userInput", args)  # 如果用户发送了参数则直接赋值
 
 
-@command.got("orinTime", prompt=promot)
+@command.got("userInput", prompt=promot)
 async def handleuser(
         userInput: Message = Arg()
 ):
