@@ -66,7 +66,10 @@ async def add_resource(user_id, items):
 
 async def deal_command(userInput):
     inputList = userInput.split(" ")
-    op, user_id = str(inputList[0]), int(inputList[1])
+    try:
+        op, user_id = str(inputList[0]), int(inputList[1])
+    except:
+        return "输入参数错误"
     message = "执行成功"
     if op == "1":
         if len(inputList) != 2:
