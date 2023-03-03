@@ -129,7 +129,7 @@ async def depend(event: MessageEvent):  # 2.编写依赖函数
     return {"uid": event.get_user_id(), "nickname": event.sender.nickname}
 
 
-picture = on_command("st", rule=to_me(), aliases={"setu", "pic"}, priority=1)
+picture = on_command("superpicture", rule=to_me(), aliases={}, priority=1, permission=SUPERUSER)
 
 
 @picture.handle()
