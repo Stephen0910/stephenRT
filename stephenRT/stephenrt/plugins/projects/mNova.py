@@ -32,7 +32,7 @@ else:
 command = on_command("matchNova", rule=to_me(), aliases={"Debug"}, priority=1, permission=SUPERUSER)
 split_symbol = "⬤"
 promot = ("机器人功能(请@我)\n输入：序号 userId：\n" + "{0}  1、新账号\n" +
-          "{0}  2、变强套装（满级英雄、宝石、货币10000）\n" + "{0}  3、货币切换\n" + "{0}  待定\n").format(
+          "{0}  2、变强套装（满级英雄、宝石、货币）\n" + "{0}  3、货币切换\n" + "{0}  待定\n").format(
     split_symbol)
 
 
