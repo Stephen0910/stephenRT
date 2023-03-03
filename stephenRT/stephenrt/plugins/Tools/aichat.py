@@ -38,17 +38,17 @@ model = "gpt-3.5-turbo-0301"
 
 async def chat2opt(prompt):
     # completions = openai.Completion.create(
-#     #     engine=model,
-#     #     prompt=prompt,
-#     #     max_tokens=1024,
-#     #     n=1,
-#     #     stop=None,
-#     #     temperature=0,
-#     # )
-#     #
-#     # message = completions.choices[0].text
-#     # return message
-    response = openai.ChatCompletion.create(
+    #     #     engine=model,
+    #     #     prompt=prompt,
+    #     #     max_tokens=1024,
+    #     #     n=1,
+    #     #     stop=None,
+    #     #     temperature=0,
+    #     # )
+    #     #
+    #     # message = completions.choices[0].text
+    #     # return message
+    response = await openai.ChatCompletion.create(
         model="gpt-3.5-turbo-0301",  # gpt-3.5-turbo-0301
         messages=[
             {"role": "user", "content": prompt}
