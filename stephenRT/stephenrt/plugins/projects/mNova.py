@@ -28,14 +28,11 @@ if __name__ == '__main__':
 else:
     from .local_config import *
 
-
-
-
 command = on_command("matchNova", rule=to_me(), aliases={"Debug"}, priority=1, permission=SUPERUSER)
 split_symbol = "⬤"
 promot = (
         "机器人功能(请@我 输入指定序号功能 userId)：\n" + "{0}  1、新账号\n" +
-        "{0}2、 变强套装（满级英雄、宝石、货币10000）\n" + "{0}  3、货币切换\n" + "{0}待定\n").format(
+        "{0} 2、 变强套装（满级英雄、宝石、货币10000）\n" + "{0}  3、货币切换\n" + "{0}待定\n").format(
     split_symbol)
 
 
@@ -49,6 +46,24 @@ async def exeSql(sql):
             except Exception as e:
                 logger.error("sql执行失败：\n{0}\n{1}".format(str(e), sql))
 
+
+async def deal_command(userInput):
+    inputList = userInput.split(" ")
+    if not isinstance(inputList, list) or len(inputList) != 2:
+        message = f"输入错误: {userInput}"
+    else:
+        op, user_id = [str(x) for x in inputList]
+        if op == "1":
+            pass
+        elif op == "2":
+            pass
+        elif op == "3":
+            pass
+        else:
+            message = "操作方式错误"
+    return message
+
+
 @command.handle()
 async def handle_first_receive(matcher: Matcher, args: Message = CommandArg()):
     plain_text = args.extract_plain_text()  # 首次发送命令时跟随的参数
@@ -61,11 +76,12 @@ async def handleuser(
         userInput: Message = Arg()
 ):
     try:
-        userInput = userInput.split(" ")
+        userInput = str(userInput)
         print("userInput:", userInput)
+        response = await deal_command(userInput)
+        await command.finish(response)
     except Exception as e:
         await command.finish("输入错误：" + str(e))
-
 
     # orinTime = str(orinTime)
     # print("输入为：{0}".format(orinTime))
