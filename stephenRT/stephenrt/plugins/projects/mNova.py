@@ -31,7 +31,7 @@ else:
 
 command = on_command("matchNova", rule=to_me(), aliases={"Debug"}, priority=1, permission=SUPERUSER)
 split_symbol = "⬤"
-promot = ("机器人功能(请@我\n输入：序号 userId)：\n" + "{0}  1、新账号\n" +
+promot = ("机器人功能(请@我)\n输入：序号 userId：\n" + "{0}  1、新账号\n" +
           "{0}  2、变强套装（满级英雄、宝石、货币10000）\n" + "{0}  3、货币切换\n" + "{0}  待定\n").format(
     split_symbol)
 
@@ -69,12 +69,16 @@ async def deal_command(userInput):
     op, user_id = str(inputList[0]), int(inputList[1])
     message = "执行成功"
     if op == "1":
+        if len(inputList) != 2:
+            return "输入错误， 请按照正确格式输入"
         sqls = [
             f"DELETE from account_bind_info WHERE unique_id in (SELECT email_name FROM account_bind_info WHERE user_id = {user_id});",
             f"DELETE from device_info WHERE user_id = {user_id};"]
         await exeSql(sqls)
 
     elif op == "2":
+        if len(inputList) != 2:
+            return "输入错误， 请按照正确格式输入"
         items = [
             {
                 "type": 7,
@@ -83,22 +87,22 @@ async def deal_command(userInput):
             },
             {
                 "type": 8,
-                "num": 3,
+                "num": 4,
                 "id": 110
             },
             {
                 "type": 8,
-                "num": 3,
+                "num": 4,
                 "id": 210
             },
             {
                 "type": 8,
-                "num": 3,
+                "num": 4,
                 "id": 310
             },
             {
                 "type": 8,
-                "num": 3,
+                "num": 4,
                 "id": 410
             },
             {
@@ -145,7 +149,7 @@ async def deal_command(userInput):
         await add_resource(user_id, items)
 
         await exeSql(
-            [f"update user_info set ut = ut + 10000, gt = gt + 10000, bnb = bnb + 10000 where user_id = {user_id}",
+            [f"update user_info set ut = ut + 100000, gt = gt + 10000, bnb = bnb + 10000 where user_id = {user_id}",
              f"UPDATE hero_info SET level = 30, usable_points = 464 WHERE id in (SELECT id from hero_info where user_id = {user_id} and status = 1 ORDER BY id DESC LIMIT 4);"], )
         # messsage = "执行成功"
 
@@ -168,13 +172,13 @@ async def handle_first_receive(matcher: Matcher, args: Message = CommandArg()):
 async def handleuser(
         userInput: Message = Arg()
 ):
-    try:
-        userInput = str(userInput)
-        print("userInput:", userInput)
-        response = await deal_command(userInput)
-        await command.finish(response)
-    except Exception as e:
-        await command.finish("执行错误：" + str(e))
+    userInput = str(userInput)
+    print("userInput:", userInput)
+    response = await deal_command(userInput)
+    await command.finish(response)
+
+
+
 
     # orinTime = str(orinTime)
     # print("输入为：{0}".format(orinTime))

@@ -7,6 +7,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3047aada-47d5-4ad8-a368-9e15af7b4bc7" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/stephenRT/stephenrt/plugins/projects/mNova.py" beforeDir="false" afterPath="$PROJECT_DIR$/stephenRT/stephenrt/plugins/projects/mNova.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -118,8 +119,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/stephenRT/stephenrt/plugins/projects/mNova.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="504">
-              <caret line="154" column="10" selection-start-line="154" selection-start-column="10" selection-end-line="154" selection-end-column="10" />
+            <state relative-caret-position="367">
+              <caret line="171" column="33" selection-start-line="171" selection-start-column="24" selection-end-line="171" selection-end-column="33" />
               <folding>
                 <element signature="e#232#257#0" expanded="true" />
                 <element signature="e#2499#3388#0" />
@@ -151,7 +152,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>211</find>
       <find>304]</find>
       <find>warn</find>
       <find>realinstall</find>
@@ -181,6 +181,7 @@
       <find>common</find>
       <find>输入错误</find>
       <find>输入</find>
+      <find>message</find>
     </findStrings>
     <replaceStrings>
       <replace>logger.debug</replace>
@@ -637,7 +638,7 @@
       <workItem from="1673947811447" duration="612000" />
       <workItem from="1675240974686" duration="24000" />
       <workItem from="1677735367130" duration="2401000" />
-      <workItem from="1677800622198" duration="7294000" />
+      <workItem from="1677800622198" duration="8516000" />
     </task>
     <servers />
   </component>
@@ -650,7 +651,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="1677075000" />
+    <option name="totallyTimeSpent" value="1678297000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1092,8 +1093,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/stephenRT/stephenrt/plugins/projects/mNova.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="504">
-          <caret line="154" column="10" selection-start-line="154" selection-start-column="10" selection-end-line="154" selection-end-column="10" />
+        <state relative-caret-position="367">
+          <caret line="171" column="33" selection-start-line="171" selection-start-column="24" selection-end-line="171" selection-end-column="33" />
           <folding>
             <element signature="e#232#257#0" expanded="true" />
             <element signature="e#2499#3388#0" />
