@@ -118,8 +118,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/stephenRT/stephenrt/plugins/projects/mNova.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="431">
-              <caret line="59" column="24" lean-forward="true" selection-start-line="59" selection-start-column="24" selection-end-line="59" selection-end-column="24" />
+            <state relative-caret-position="773">
+              <caret line="91" column="152" selection-start-line="91" selection-start-column="152" selection-end-line="91" selection-end-column="152" />
               <folding>
                 <element signature="e#232#257#0" expanded="true" />
               </folding>
@@ -150,8 +150,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>int</find>
-      <find>0.0</find>
       <find>211</find>
       <find>304]</find>
       <find>warn</find>
@@ -180,6 +178,8 @@
       <find>commond</find>
       <find>command</find>
       <find>common</find>
+      <find>输入错误</find>
+      <find>输入</find>
     </findStrings>
     <replaceStrings>
       <replace>logger.debug</replace>
@@ -636,7 +636,7 @@
       <workItem from="1673947811447" duration="612000" />
       <workItem from="1675240974686" duration="24000" />
       <workItem from="1677735367130" duration="2401000" />
-      <workItem from="1677800622198" duration="4884000" />
+      <workItem from="1677800622198" duration="6037000" />
     </task>
     <servers />
   </component>
@@ -649,7 +649,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="1674665000" />
+    <option name="totallyTimeSpent" value="1675818000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1091,8 +1091,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/stephenRT/stephenrt/plugins/projects/mNova.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="431">
-          <caret line="59" column="24" lean-forward="true" selection-start-line="59" selection-start-column="24" selection-end-line="59" selection-end-column="24" />
+        <state relative-caret-position="773">
+          <caret line="91" column="152" selection-start-line="91" selection-start-column="152" selection-end-line="91" selection-end-column="152" />
           <folding>
             <element signature="e#232#257#0" expanded="true" />
           </folding>
