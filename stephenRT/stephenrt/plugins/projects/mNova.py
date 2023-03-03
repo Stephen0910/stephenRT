@@ -48,20 +48,14 @@ async def exeSql(sqls):
                 logger.error("sql执行失败：\n{0}".format(str(e)))
 
 
-async def add_resource(user_id, type, num, id):
+async def add_resource(user_id, items):
     import requests
     import json
     host = pgsql["novaHost"]
     url = f"http://{host}:26601/dev/ManageAddResource"
     payload = json.dumps({
         "userId": user_id,
-        "items": [
-            {
-                "type": type,
-                "num": num,
-                "id": id
-            }
-        ]
+        "items": items
     })
     headers = {
         'Content-Type': 'application/json'
@@ -73,31 +67,93 @@ async def add_resource(user_id, type, num, id):
 async def deal_command(userInput):
     inputList = userInput.split(" ")
     op, user_id = str(inputList[0]), int(inputList[1])
+    message = "执行成功"
     if op == "1":
         sqls = [
             f"DELETE from account_bind_info WHERE unique_id in (SELECT email_name FROM account_bind_info WHERE user_id = {user_id});",
             f"DELETE from device_info WHERE user_id = {user_id};"]
         await exeSql(sqls)
-        message = "执行成功"
+
     elif op == "2":
-        await add_resource(user_id, 7, 4, 10)
-        await add_resource(user_id, 8, 3, 110)
-        await add_resource(user_id, 8, 3, 210)
-        await add_resource(user_id, 8, 3, 310)
-        await add_resource(user_id, 8, 3, 410)
-        await add_resource(user_id, 9, 1, 105)
-        await add_resource(user_id, 9, 1, 205)
-        await add_resource(user_id, 9, 1, 305)
-        await add_resource(user_id, 9, 1, 405)
+        items = [
+            {
+                "type": 7,
+                "num": 4,
+                "id": 10
+            },
+            {
+                "type": 8,
+                "num": 3,
+                "id": 110
+            },
+            {
+                "type": 8,
+                "num": 3,
+                "id": 210
+            },
+            {
+                "type": 8,
+                "num": 3,
+                "id": 310
+            },
+            {
+                "type": 8,
+                "num": 3,
+                "id": 410
+            },
+            {
+                "type": 9,
+                "num": 1,
+                "id": 105
+            },
+            {
+                "type": 9,
+                "num": 1,
+                "id": 205
+            },
+            {
+                "type": 9,
+                "num": 1,
+                "id": 305
+            },
+            {
+                "type": 9,
+                "num": 1,
+                "id": 405
+            },
+            {
+                "type": 10,
+                "num": 2,
+                "id": 105
+            },
+            {
+                "type": 10,
+                "num": 2,
+                "id": 205
+            },
+            {
+                "type": 10,
+                "num": 2,
+                "id": 305
+            },
+            {
+                "type": 10,
+                "num": 2,
+                "id": 405
+            }
+        ]
+        await add_resource(user_id, items)
+
         await exeSql(
             [f"update user_info set ut = ut + 10000, gt = gt + 10000, bnb = bnb + 10000 where user_id = {user_id}",
-             f"UPDATE hero_info SET level = 30 WHERE id in (SELECT id from hero_info where user_id = {user_id} and status = 1 ORDER BY id DESC LIMIT 4);"])
-        messsage = "执行成功"
+             f"UPDATE hero_info SET level = 30, usable_points = 464 WHERE id in (SELECT id from hero_info where user_id = {user_id} and status = 1 ORDER BY id DESC LIMIT 4);"], )
+        # messsage = "执行成功"
 
     elif op == "3":
         pass
     else:
         message = "操作方式错误"
+
     return message
 
 
