@@ -144,8 +144,10 @@ def share_report(s, projectId):
 def reportDb(s, reportId):
     url = host + f"/api/test/plan/report/db/{reportId}"
     r = s.get(url).content.decode()
-    result = json.loads(r)["data"][0]
-    print(json.dumps(result))
+    try:
+        result = json.loads(r)["data"][0]
+    except:
+        print(json.loads(r)["data"])
     response = {}
     response["name"] = result["name"]
     response["caseCount"] = result["caseCount"]
