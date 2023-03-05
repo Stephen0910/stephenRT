@@ -70,11 +70,11 @@ async def get_report(s, reportId):
         endTime = report["endTime"]
         time.sleep(2)
     print(report)
-    msg = "Api test complete:\n"
+    msg = "【Api test complete】:\n"
     keyword = ["name", "passRate", "failName"]
     for key, value in report.items():
         if key in keyword:
-            msg = msg + str(key) + str(value) + "\n"
+            msg = msg + str(key) + "：" + str(value) + "\n"
     return msg
 
 
