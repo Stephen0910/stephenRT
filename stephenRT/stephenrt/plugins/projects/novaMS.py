@@ -159,7 +159,7 @@ def reportDb(s, reportId):
     response["endTime"] = result["endTime"]
     response["failCase"] = "\n"
     for i in response["failName"]:
-        response["failCase"] = "- " + i
+        response["failCase"] = response["failCase"] + "-   " + i + "\n"
     print(json.dumps(response))
     return response
 
