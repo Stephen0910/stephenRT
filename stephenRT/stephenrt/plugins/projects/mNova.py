@@ -200,6 +200,7 @@ async def handleuser(
         result = exec_run(access_key, secret_key, host, projectId, envId, testPlan_id)
         reportId, msg = result
         await command.send(msg)
+        setHeaders(s, access_key, secret_key)
         try:
             reportMsg = await get_report(s, reportId)
         except Exception as e:
