@@ -241,9 +241,9 @@ s = setHeaders(s, access_key, secret_key)
 project = project_info(s, "MatchNova")
 projectId = project["id"]
 env = env(s, projectId)[0]
-env = "daead9c9-4679-44e2-921d-28bb8015bf18"  # 按顺序取会变
+envId = "daead9c9-4679-44e2-921d-28bb8015bf18"  # 按顺序取会变
 # print(json.dumps(env))
-envId = env["id"]
+# envId = env["id"]
 testPlan_id = "cb29ef0f-6fd7-439f-9df4-75a8d7a930a2"
 
 if __name__ == '__main__':
