@@ -195,8 +195,8 @@ async def handleuser(
         result = exec_run(access_key, secret_key, host, projectId, envId, testPlan_id)
         reportId, msg = result
         await command.send(msg)
-        reportDB = await get_report(s, reportId)
-
+        reportMsg = await get_report(s, reportId)
+        await command.finish(reportMsg)
 
     response = await deal_command(userInput)
     await command.finish(response)
