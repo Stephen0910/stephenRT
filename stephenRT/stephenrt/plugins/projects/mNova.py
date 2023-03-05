@@ -74,7 +74,7 @@ async def get_report(s, reportId):
     keyword = ["name", "passRate", "failName"]
     for key, value in report.items():
         if key in keyword:
-            msg = msg + key + value + "\n"
+            msg = msg + str(key) + str(value) + "\n"
     return msg
 
 
