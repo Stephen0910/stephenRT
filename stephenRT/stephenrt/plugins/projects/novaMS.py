@@ -9,7 +9,7 @@
 # @Copyright:   (c) StephenZ 2023
 # @Licence  :     <@2022>
 
-from Cryptodome.Cipher import AES
+from Crypto.Cipher import AES
 import base64
 import time
 import uuid
