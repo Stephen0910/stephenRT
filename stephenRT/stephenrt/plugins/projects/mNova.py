@@ -68,10 +68,11 @@ async def get_report(s, reportId):
     while endTime == None:
         report = reportDb(s, reportId)
         endTime = report["endTime"]
+        time.sleep(2)
     print(report)
     msg = "Api test complete:\n"
     keyword = ["name", "passRate", "failName"]
-    for key, value in report:
+    for key, value in report.items():
         if key in keyword:
             msg = msg + key + value + "\n"
     return msg
