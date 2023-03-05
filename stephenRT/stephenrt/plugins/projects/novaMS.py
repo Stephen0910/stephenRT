@@ -124,7 +124,7 @@ def get_report_url_abundon(s, host, customData):
         print("没有返回值...")
 
 
-def get_report_url(s, host, reportId, accessKey, secretKey):
+def get_report_url(s, host, reportId, testPlanId, accessKey, secretKey):
     url = host + "/track/share/generate/expired"
     # url = host + f"/share/test/plan/case/list/all/{testPlan_id}"
     # body = {"customData": reportId, "shareType": "PLAN_DB_REPORT", "lang": None}
@@ -214,7 +214,7 @@ def exec_run(accessKey, secretKey, host, projectId, envId, testPlan_id):
     if json.loads(r)["success"] == True:
         data = json.loads(r)["data"]
     if data:
-        report_url = get_report_url(s, host, data, access_key, secret_key)  # 获取测试报告
+        report_url = get_report_url(s, host, data, projectId, access_key, secret_key)  # 获取测试报告
     msg = "API TEST EXECUTE SUCCESS：\n{}".format(report_url)
     print(msg)
     return [data, msg]

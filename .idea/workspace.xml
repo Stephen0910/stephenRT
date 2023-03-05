@@ -134,7 +134,7 @@
         <entry file="file://$PROJECT_DIR$/stephenRT/stephenrt/plugins/projects/novaMS.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="88">
-              <caret line="216" column="73" selection-start-line="216" selection-start-column="73" selection-end-line="216" selection-end-column="73" />
+              <caret line="216" column="84" selection-start-line="216" selection-start-column="84" selection-end-line="216" selection-end-column="84" />
             </state>
           </provider>
         </entry>
@@ -797,7 +797,7 @@
       <workItem from="1675240974686" duration="24000" />
       <workItem from="1677735367130" duration="2401000" />
       <workItem from="1677800622198" duration="11009000" />
-      <workItem from="1677980849491" duration="11978000" />
+      <workItem from="1677980849491" duration="12697000" />
     </task>
     <servers />
   </component>
@@ -822,7 +822,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="1692768000" />
+    <option name="totallyTimeSpent" value="1693487000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1266,7 +1266,7 @@
     <entry file="file://$PROJECT_DIR$/stephenRT/stephenrt/plugins/projects/novaMS.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="88">
-          <caret line="216" column="73" selection-start-line="216" selection-start-column="73" selection-end-line="216" selection-end-column="73" />
+          <caret line="216" column="84" selection-start-line="216" selection-start-column="84" selection-end-line="216" selection-end-column="84" />
         </state>
       </provider>
     </entry>
