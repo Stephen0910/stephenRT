@@ -2,6 +2,7 @@
 <project version="4">
   <component name="BookmarkManager">
     <bookmark url="file://$PROJECT_DIR$/stephenRT/stephenrt/plugins/personal/music.py" line="31" mnemonic="9" />
+    <bookmark url="file://$PROJECT_DIR$/stephenRT/stephenrt/plugins/projects/shop_info.py" line="102" />
     <bookmark url="file://$PROJECT_DIR$/stephenRT/stephenrt/plugins/projects/local_config.py" description="def get_host_ip():&#10;    &quot;&quot;&quot;&#10;    查询本机ip地址&#10;    :retur..." line="14" />
   </component>
   <component name="ChangeListManager">
@@ -121,8 +122,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/stephenRT/stephenrt/plugins/projects/mNova.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="114">
-              <caret line="34" column="102" selection-start-line="34" selection-start-column="102" selection-end-line="34" selection-end-column="102" />
+            <state relative-caret-position="133">
+              <caret line="77" column="8" lean-forward="true" selection-start-line="77" selection-start-column="8" selection-end-line="77" selection-end-column="8" />
               <folding>
                 <element signature="e#232#257#0" expanded="true" />
                 <element signature="e#2559#3976#0" />
@@ -134,8 +135,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/stephenRT/stephenrt/plugins/projects/novaMS.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="195">
-              <caret line="163" column="19" lean-forward="true" selection-start-line="163" selection-start-column="19" selection-end-line="163" selection-end-column="19" />
+            <state relative-caret-position="105">
+              <caret line="152" column="62" selection-start-line="152" selection-start-column="62" selection-end-line="152" selection-end-column="62" />
               <folding>
                 <element signature="e#234#267#0" expanded="true" />
               </folding>
@@ -801,7 +802,7 @@
       <workItem from="1675240974686" duration="24000" />
       <workItem from="1677735367130" duration="2401000" />
       <workItem from="1677800622198" duration="11009000" />
-      <workItem from="1677980849491" duration="7668000" />
+      <workItem from="1677980849491" duration="8456000" />
     </task>
     <servers />
   </component>
@@ -826,7 +827,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="1688458000" />
+    <option name="totallyTimeSpent" value="1689246000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1259,8 +1260,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/stephenRT/stephenrt/plugins/projects/novaMS.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="195">
-          <caret line="163" column="19" lean-forward="true" selection-start-line="163" selection-start-column="19" selection-end-line="163" selection-end-column="19" />
+        <state relative-caret-position="105">
+          <caret line="152" column="62" selection-start-line="152" selection-start-column="62" selection-end-line="152" selection-end-column="62" />
           <folding>
             <element signature="e#234#267#0" expanded="true" />
           </folding>
@@ -1269,8 +1270,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/stephenRT/stephenrt/plugins/projects/mNova.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="114">
-          <caret line="34" column="102" selection-start-line="34" selection-start-column="102" selection-end-line="34" selection-end-column="102" />
+        <state relative-caret-position="133">
+          <caret line="77" column="8" lean-forward="true" selection-start-line="77" selection-start-column="8" selection-end-line="77" selection-end-column="8" />
           <folding>
             <element signature="e#232#257#0" expanded="true" />
             <element signature="e#2559#3976#0" />

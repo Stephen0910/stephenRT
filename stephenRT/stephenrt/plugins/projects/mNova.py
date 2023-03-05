@@ -22,6 +22,7 @@ from logzero import logger
 from psycopg2.extras import RealDictCursor
 import requests, json
 from .novaMS import *
+
 logzero.loglevel(logging.DEBUG)
 
 if __name__ == '__main__':
@@ -63,6 +64,7 @@ async def add_resource(user_id, items):
     response = requests.request("POST", url, headers=headers, data=payload)
     response.close()
 
+
 async def get_report(s, reportId):
     endTime = None
     while endTime == None:
@@ -71,10 +73,11 @@ async def get_report(s, reportId):
         time.sleep(2)
     print(report)
     msg = "【API TEST complete】:\n"
-    keyword = ["name", "passRate", "failCase"]
-    for key, value in report.items():
-        if key in keyword:
-            msg = msg + str(key) + "：" + str(value) + "\n"
+    keyword = ["name", "cost", "passRate", "failCase"]
+    report["cost"] = f"{report['endTime']} - {report['startTime']} s"
+            
+    for key in keyword:
+        msg = msg + str(key) + "：" + str(report[key]) + "\n"
     return msg
 
 
@@ -201,9 +204,6 @@ async def handleuser(
 
     response = await deal_command(userInput)
     await command.finish(response)
-
-
-
 
     # orinTime = str(orinTime)
     # print("输入为：{0}".format(orinTime))

@@ -147,10 +147,10 @@ def reportDb(s, reportId):
     result = json.loads(r)["data"][0]
     print(json.dumps(result))
     response = {}
+    response["name"] = result["name"]
     response["caseCount"] = result["caseCount"]
     response["executeRate"] = result["executeRate"]
     response["passRate"] = "{:.2%}".format(result["passRate"])
-    response["name"] = result["name"]
     response["apiScenarioData"] = result["apiResult"]["apiScenarioData"][0]
     # response["errorCase"] = [x["name"] for x in result["scenarioAllCases"] if x["lastResult"] == "ERROR"]
     response["scenarioFailureCases"] = result["scenarioFailureCases"]
