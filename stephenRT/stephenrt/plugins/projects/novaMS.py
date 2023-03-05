@@ -157,7 +157,7 @@ def reportDb(s, reportId):
     response["failName"] = [x["name"] for x in response["scenarioFailureCases"]]
     response["startTime"] = result["startTime"]
     response["endTime"] = result["endTime"]
-    response["fail"] = "    \n".join(response["failName"])
+    response["failCase"] = "    \n".join(response["failName"])
     print(json.dumps(response))
     return response
 
@@ -207,7 +207,7 @@ def exec_run(accessKey, secretKey, host, projectId, envId, testPlan_id):
         data = json.loads(r)["data"]
     if data:
         report_url = get_report_url(s, host, data, projectId)  # 获取测试报告
-    msg = "测试计划接口调用成功,测试计划报告地址为: {}".format(report_url)
+    msg = "API TEST EXECUTE SUCCESS:\n{}".format(report_url)
     print(msg)
     return [data, msg]
 
