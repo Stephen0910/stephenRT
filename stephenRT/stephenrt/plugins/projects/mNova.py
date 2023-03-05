@@ -21,7 +21,7 @@ import logzero, logging
 from logzero import logger
 from psycopg2.extras import RealDictCursor
 import requests, json
-
+from .novaMS import *
 logzero.loglevel(logging.DEBUG)
 
 if __name__ == '__main__':
@@ -32,7 +32,7 @@ else:
 command = on_command("matchNova", rule=to_me(), aliases={"Debug"}, priority=1, permission=SUPERUSER)
 split_symbol = "⬤"
 promot = ("机器人功能(请@我)\n输入：序号 userId：\n" + "{0}  1、新账号\n" +
-          "{0}  2、变强套装（满级英雄、宝石、货币）\n" + "{0}  3、货币切换\n" + "{0}  待定\n").format(
+          "{0}  2、变强套装（满级英雄、宝石、货币）\n" + "{0}  3、执行sql(progress)\n" + "{0}  4、切指定账号-progress\n" + "{0}  test 执行接口测试-无参数\n").format(
     split_symbol)
 
 
@@ -62,6 +62,19 @@ async def add_resource(user_id, items):
     }
     response = requests.request("POST", url, headers=headers, data=payload)
     response.close()
+
+async def get_report(s, reportId):
+    endTime = None
+    while endTime == None:
+        report = reportDb(s, reportId)
+        endTime = report["endTime"]
+    print(report)
+    msg = "Api test complete:\n"
+    keyword = ["name", "passRate", "failName"]
+    for key, value in report:
+        if key in keyword:
+            msg = msg + key + value + "\n"
+    return msg
 
 
 async def deal_command(userInput):
@@ -157,7 +170,8 @@ async def deal_command(userInput):
         # messsage = "执行成功"
 
     elif op == "3":
-        pass
+
+        return ""
     else:
         message = "操作方式错误"
 
@@ -177,6 +191,13 @@ async def handleuser(
 ):
     userInput = str(userInput)
     print("userInput:", userInput)
+    if userInput == "test":
+        result = exec_run(access_key, secret_key, host, projectId, envId, testPlan_id)
+        reportId, msg = result
+        await command.send(msg)
+        reportDB = await get_report(s, reportId)
+
+
     response = await deal_command(userInput)
     await command.finish(response)
 

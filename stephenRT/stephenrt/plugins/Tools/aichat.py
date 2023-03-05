@@ -35,6 +35,12 @@ chatgpt = on_command("op", rule=to_me(), aliases={"cg", "ai", "请问", "你知�
 model = "gpt-3.5-turbo-0301"
 # model = "text-davinci-002"
 
+proxies = {
+    'http': '127.0.0.1:7890',
+    'https': 'https://<proxy_host>:<proxy_port>'
+}
+
+
 
 async def chat2opt(prompt):
     # completions = openai.Completion.create(
@@ -58,6 +64,7 @@ async def chat2opt(prompt):
         top_p=1,
         frequency_penalty=0,
         presence_penalty=0,
+        proxies = proxies
     )
     # print(response)
     return response.choices[0].message.content
