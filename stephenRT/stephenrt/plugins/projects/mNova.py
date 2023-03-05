@@ -200,7 +200,10 @@ async def handleuser(
         result = exec_run(access_key, secret_key, host, projectId, envId, testPlan_id)
         reportId, msg = result
         await command.send(msg)
-        reportMsg = await get_report(s, reportId)
+        try:
+            reportMsg = await get_report(s, reportId)
+        except Exception as e:
+            reportMsg = f"内部错误： {str(e)}"
         await command.finish(reportMsg)
 
     response = await deal_command(userInput)

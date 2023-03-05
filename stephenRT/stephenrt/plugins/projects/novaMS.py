@@ -8,8 +8,11 @@
 # @Software : PyCharm
 # @Copyright:   (c) StephenZ 2023
 # @Licence  :     <@2022>
-
-from Crypto.Cipher import AES
+import sys
+if sys.platform == "win32":
+    from Cryptodome.Cipher import AES
+else:
+    from Crypto.Cipher import AES
 import base64
 import time
 import uuid
@@ -147,7 +150,7 @@ def reportDb(s, reportId):
     try:
         result = json.loads(r)["data"][0]
     except:
-        print(json.loads(r)["data"])
+        print("result错误, r: ", r)
     response = {}
     response["name"] = result["name"]
     response["caseCount"] = result["caseCount"]
