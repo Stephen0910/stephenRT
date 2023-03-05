@@ -74,8 +74,9 @@ async def get_report(s, reportId):
     print(report)
     msg = "【API TEST complete】:\n"
     keyword = ["name", "cost", "passRate", "failCase"]
-    report["cost"] = f"{report['endTime']} - {report['startTime']} s"
-            
+    cost = report['endTime'] - report['startTime']
+    report["cost"] = f"{cost} s"
+
     for key in keyword:
         msg = msg + str(key) + "：" + str(report[key]) + "\n"
     return msg
