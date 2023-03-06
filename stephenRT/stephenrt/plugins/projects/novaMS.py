@@ -164,15 +164,7 @@ def reportDb(s, reportId):
     response["startTime"] = result["startTime"]
     response["endTime"] = result["endTime"]
     response["failCase"] = "\n"
-    for i in response["apiScenarioData"]:
-        print(i)
-        if i["status"] == "ERROR":
-            errorStep = i["count"]
-            break
-    allStep = response["caseRate"] = sum([int(x["count"]) for x in response["apiScenarioData"]])
-    stepRate = (allStep - int(errorStep)) / allStep
-    stepRate = "{:.2%}".format(stepRate)
-    response["stepRate"] = stepRate
+
     for i in response["failName"]:
         response["failCase"] = response["failCase"] + "-   " + i + "\n"
     print(json.dumps(response))

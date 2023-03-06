@@ -71,7 +71,17 @@ async def get_report(s, reportId):
         report = reportDb(s, reportId)
         endTime = report["endTime"]
         time.sleep(2)
-    print(report)
+
+    for i in report["apiScenarioData"]:
+        if i["status"] == "ERROR":
+            errorStep = i["count"]
+            break
+    allStep = report["caseRate"] = sum([int(x["count"]) for x in report["apiScenarioData"]])
+    stepRate = (allStep - int(errorStep)) / allStep
+    stepRate = "{:.2%}".format(stepRate)
+    report["stepRate"] = stepRate
+
+
     msg = "【API TEST complete】:\n"
     keyword = ["name", "cost", "caseRate", "stepRate", "failCase"]
     cost = (report['endTime'] - report['startTime']) / 1000
