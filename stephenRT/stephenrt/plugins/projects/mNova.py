@@ -76,7 +76,9 @@ async def get_report(s, reportId):
         if i["status"] == "ERROR":
             errorStep = i["count"]
             break
-    allStep = report["caseRate"] = sum([int(x["count"]) for x in report["apiScenarioData"]])
+    else:
+        errorStep = 0
+    allStep = sum([int(x["count"]) for x in report["apiScenarioData"]])
     stepRate = (allStep - int(errorStep)) / allStep
     stepRate = "{:.2%}".format(stepRate)
     report["stepRate"] = stepRate
