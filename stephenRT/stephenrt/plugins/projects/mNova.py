@@ -73,7 +73,7 @@ async def get_report(s, reportId):
         time.sleep(2)
     print(report)
     msg = "【API TEST complete】:\n"
-    keyword = ["name", "cost", "passRate", "failCase"]
+    keyword = ["name", "cost", "caseRate", "stepRate", "failCase"]
     cost = (report['endTime'] - report['startTime']) / 1000
     report["cost"] = f"{cost} s"
 

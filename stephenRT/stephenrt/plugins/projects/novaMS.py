@@ -156,14 +156,18 @@ def reportDb(s, reportId):
     response["name"] = result["name"]
     response["caseCount"] = result["caseCount"]
     response["executeRate"] = result["executeRate"]
-    response["passRate"] = "{:.2%}".format(result["passRate"])
-    response["apiScenarioData"] = result["apiResult"]["apiScenarioData"][0]
+    response["caseRate"] = "{:.2%}".format(result["passRate"])
+    response["apiScenarioData"] = result["apiResult"]["apiScenarioData"]
     # response["errorCase"] = [x["name"] for x in result["scenarioAllCases"] if x["lastResult"] == "ERROR"]
     response["scenarioFailureCases"] = result["scenarioFailureCases"]
     response["failName"] = [x["name"] for x in response["scenarioFailureCases"]]
     response["startTime"] = result["startTime"]
     response["endTime"] = result["endTime"]
     response["failCase"] = "\n"
+    errorStep = response["caseRate"] = response["apiScenarioData"]["ERROR"]
+    allStep = response["caseRate"] = sum([int(x["count"]) for x in response["apiScenarioData"]])
+    stepRate = errorStep / allStep
+    stepRate = "{:.2%}".format(stepRate)
     for i in response["failName"]:
         response["failCase"] = response["failCase"] + "-   " + i + "\n"
     print(json.dumps(response))
