@@ -119,8 +119,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/stephenRT/stephenrt/plugins/projects/mNova.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="450">
-              <caret line="75" column="54" selection-start-line="75" selection-start-column="54" selection-end-line="75" selection-end-column="54" />
+            <state relative-caret-position="447">
+              <caret line="77" column="32" lean-forward="true" selection-start-line="77" selection-start-column="32" selection-end-line="77" selection-end-column="32" />
               <folding>
                 <element signature="e#232#257#0" expanded="true" />
               </folding>
@@ -131,8 +131,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/stephenRT/stephenrt/plugins/projects/novaMS.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="495">
-              <caret line="158" column="22" selection-start-line="158" selection-start-column="22" selection-end-line="158" selection-end-column="22" />
+            <state relative-caret-position="510">
+              <caret line="159" column="72" lean-forward="true" selection-start-line="159" selection-start-column="72" selection-end-line="159" selection-end-column="72" />
             </state>
           </provider>
         </entry>
@@ -253,8 +253,8 @@
         <option value="$PROJECT_DIR$/stephenRT/stephenrt/plugins/projects/__init__.py" />
         <option value="$PROJECT_DIR$/stephenRT/stephenrt/plugins/Tools/aichat.py" />
         <option value="$PROJECT_DIR$/stephenRT/stephenrt/privateCfg.py" />
-        <option value="$PROJECT_DIR$/stephenRT/stephenrt/plugins/projects/mNova.py" />
         <option value="$PROJECT_DIR$/stephenRT/stephenrt/plugins/projects/novaMS.py" />
+        <option value="$PROJECT_DIR$/stephenRT/stephenrt/plugins/projects/mNova.py" />
       </list>
     </option>
   </component>
@@ -797,7 +797,7 @@
       <workItem from="1677800622198" duration="11009000" />
       <workItem from="1677980849491" duration="15279000" />
       <workItem from="1678072549791" duration="10000" />
-      <workItem from="1678090810921" duration="561000" />
+      <workItem from="1678090810921" duration="816000" />
     </task>
     <servers />
   </component>
@@ -822,7 +822,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="1696640000" />
+    <option name="totallyTimeSpent" value="1696895000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1255,8 +1255,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/stephenRT/stephenrt/plugins/projects/mNova.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="450">
-          <caret line="75" column="54" selection-start-line="75" selection-start-column="54" selection-end-line="75" selection-end-column="54" />
+        <state relative-caret-position="447">
+          <caret line="77" column="32" lean-forward="true" selection-start-line="77" selection-start-column="32" selection-end-line="77" selection-end-column="32" />
           <folding>
             <element signature="e#232#257#0" expanded="true" />
           </folding>
@@ -1265,8 +1265,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/stephenRT/stephenrt/plugins/projects/novaMS.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="495">
-          <caret line="158" column="22" selection-start-line="158" selection-start-column="22" selection-end-line="158" selection-end-column="22" />
+        <state relative-caret-position="510">
+          <caret line="159" column="72" lean-forward="true" selection-start-line="159" selection-start-column="72" selection-end-line="159" selection-end-column="72" />
         </state>
       </provider>
     </entry>
