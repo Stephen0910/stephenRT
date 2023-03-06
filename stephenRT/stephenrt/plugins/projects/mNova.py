@@ -72,7 +72,7 @@ async def get_report(s, reportId):
         endTime = report["endTime"]
         time.sleep(2)
 
-    for i in report["apiScenarioData"]:
+    for i in report["apiScenarioStepData"]:
         if i["status"] == "ERROR":
             errorStep = i["count"]
             break

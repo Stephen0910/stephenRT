@@ -159,6 +159,7 @@ def reportDb(s, reportId):
     response["caseRate"] = "{:.2%}".format(result["passRate"])
     response["apiScenarioData"] = result["apiResult"]["apiScenarioData"]
     # response["errorCase"] = [x["name"] for x in result["scenarioAllCases"] if x["lastResult"] == "ERROR"]
+    response["apiScenarioStepData"] =  result["apiResult"]["apiScenarioStepData"]
     response["scenarioFailureCases"] = result["scenarioFailureCases"]
     response["failName"] = [x["name"] for x in response["scenarioFailureCases"]]
     response["startTime"] = result["startTime"]
