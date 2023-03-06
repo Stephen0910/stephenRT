@@ -71,6 +71,15 @@ async def get_report(s, reportId):
         report = reportDb(s, reportId)
         endTime = report["endTime"]
         time.sleep(2)
+    else:
+        errorStep = 0
+
+    for i in report["apiScenarioStepData"]:
+        if i["status"] == "PENDING":
+            pendingStep = i["count"]
+            break
+    else:
+        pendingStep = 0
 
     for i in report["apiScenarioStepData"]:
         if i["status"] == "ERROR":
@@ -78,8 +87,12 @@ async def get_report(s, reportId):
             break
     else:
         errorStep = 0
+
+
+
+
     allStep = sum([int(x["count"]) for x in report["apiScenarioStepData"]])
-    stepRate = (allStep - int(errorStep)) / allStep
+    stepRate = (allStep - int(errorStep - int(pendingStep))) / allStep
     stepRate = "{:.2%}".format(stepRate)
     report["stepRate"] = stepRate
 
