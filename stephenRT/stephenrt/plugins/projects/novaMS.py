@@ -165,6 +165,7 @@ def reportDb(s, reportId):
     response["endTime"] = result["endTime"]
     response["failCase"] = "\n"
     for i in response["apiScenarioData"]:
+        print(i)
         if i["status"] == "ERROR":
             errorStep = i["count"]
             break
