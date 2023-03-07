@@ -201,8 +201,8 @@ async def deal_command(userInput):
             userOld, userNew = int(inputList[1]), int(inputList[2])
         except:
             return "输入参数错误, 结束会话"
-        await exeSql([f"UPDATE account_bind_info SET user_id = {userNew} WHERE id = (SELECT bind_id FROM device_info WHERE user_id = {userOld} limit 1);"])
-        await exeSql([f"UPDATE account_bind_info SET user_id = {userOld} WHERE id = (SELECT bind_id FROM device_info WHERE user_id = {userNew} limit 1);"])
+        await exeSql([f"UPDATE account_bind_info SET user_id = {userNew} WHERE id in (SELECT bind_id FROM device_info WHERE user_id = {userOld});"])
+        await exeSql([f"UPDATE account_bind_info SET user_id = {userOld} WHERE id in (SELECT bind_id FROM device_info WHERE user_id = {userNew});"])
         return "执行成功"
     else:
         message = "操作方式错误"
