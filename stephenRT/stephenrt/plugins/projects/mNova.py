@@ -33,7 +33,7 @@ else:
 command = on_command("matchNova", rule=to_me(), aliases={"Debug"}, priority=1)
 split_symbol = "⬤"
 promot = ("机器人功能(请@我)\n输入：序号 userId\n" + "{0}  1、新账号\n" +
-          "{0}  2、变强套装（满级英雄、宝石、货币）\n" + "{0}  3、执行sql(progress)\n" + "{0}  4、切指定账号-progress\n" + "{0} test 执行接口测试-无参数\n").format(
+          "{0}  2、变强套装（满级英雄、宝石、货币）\n" + "{0}  3、切换指定账号 旧帐号 新账号\n" + "{0}  4、执行sql-progress\n" + "{0} test 执行接口测试-无参数\n").format(
     split_symbol)
 
 
@@ -109,7 +109,7 @@ async def deal_command(userInput):
     try:
         op, user_id = str(inputList[0]), int(inputList[1])
     except:
-        return "输入参数错误"
+        return "输入参数错误, 结束会话"
     message = "执行成功"
     if op == "1":
         if len(inputList) != 2:
@@ -197,8 +197,13 @@ async def deal_command(userInput):
         # messsage = "执行成功"
 
     elif op == "3":
-
-        return ""
+        try:
+            userOld, userNew = int(inputList[1]), int(inputList[2])
+        except:
+            return "输入参数错误, 结束会话"
+        await exeSql([f"UPDATE account_bind_info SET user_id = {userNew} WHERE id = (SELECT bind_id FROM device_info WHERE user_id = {userOld} limit 1);"])
+        await exeSql([f"UPDATE account_bind_info SET user_id = {userOld} WHERE id = (SELECT bind_id FROM device_info WHERE user_id = {userNew} limit 1);"])
+        return "执行成功"
     else:
         message = "操作方式错误"
 
@@ -226,7 +231,7 @@ async def handleuser(
         try:
             reportMsg = await get_report(s, reportId)
         except Exception as e:
-            reportMsg = f"内部错误： {str(e)}"
+            reportMsg = f"内部错误,结束会话： {str(e)}"
         await command.finish(reportMsg)
 
     response = await deal_command(userInput)
