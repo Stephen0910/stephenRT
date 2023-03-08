@@ -93,7 +93,6 @@ async def get_report(s, reportId):
     stepRate = "{:.2%}".format(stepRate)
     report["stepRate"] = stepRate
 
-
     msg = "【API TEST complete】:\n"
     keyword = ["name", "cost", "caseRate", "stepRate", "failCase"]
     cost = (report['endTime'] - report['startTime']) / 1000
@@ -199,10 +198,16 @@ async def deal_command(userInput):
     elif op == "3":
         try:
             userOld, userNew = int(inputList[1]), int(inputList[2])
+            sql = f"""
+                    UPDATE account_bind_info ac set user_id = (
+            	case when ac.user_id = {userOld} then {userNew} 
+              when ac.user_id = {userNew} then {userOld} end
+            ) where ac.user_id in ({userOld},{userNew}) returning id, user_id;
+                    """
         except:
             return "输入参数错误, 结束会话"
-        await exeSql([f"UPDATE account_bind_info SET user_id = {userNew} WHERE id in (SELECT bind_id FROM device_info WHERE user_id = {userOld});"])
-        # await exeSql([f"UPDATE account_bind_info SET user_id = {userOld} WHERE id in (SELECT bind_id FROM device_info WHERE user_id = {userNew});"])
+
+        await exeSql([sql])
         return "执行成功"
     else:
         message = "操作方式错误"
