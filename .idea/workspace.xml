@@ -6,7 +6,9 @@
     <bookmark url="file://$PROJECT_DIR$/stephenRT/stephenrt/plugins/projects/local_config.py" description="def get_host_ip():&#10;    &quot;&quot;&quot;&#10;    查询本机ip地址&#10;    :retur..." line="14" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3047aada-47d5-4ad8-a368-9e15af7b4bc7" name="Default Changelist" comment="" />
+    <list default="true" id="3047aada-47d5-4ad8-a368-9e15af7b4bc7" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/stephenRT/stephenrt/plugins/projects/mNova.py" beforeDir="false" afterPath="$PROJECT_DIR$/stephenRT/stephenrt/plugins/projects/mNova.py" afterDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -95,11 +97,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/stephenRT/stephenrt/plugins/projects/mNova.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="538">
-              <caret line="57" column="2" selection-start-line="57" selection-start-column="2" selection-end-line="57" selection-end-column="2" />
+            <state relative-caret-position="223">
+              <caret line="101" column="75" lean-forward="true" selection-start-line="101" selection-start-column="75" selection-end-line="101" selection-end-column="75" />
               <folding>
                 <element signature="e#232#257#0" expanded="true" />
                 <element signature="e#3682#5099#0" />
@@ -108,11 +110,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/stephenRT/stephenrt/plugins/projects/novaMS.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="493">
-              <caret line="181" column="19" lean-forward="true" selection-start-line="181" selection-start-column="19" selection-end-line="181" selection-end-column="19" />
+            <state relative-caret-position="718">
+              <caret line="178" column="34" lean-forward="true" selection-start-line="178" selection-start-column="34" selection-end-line="178" selection-end-column="34" />
               <folding>
                 <element signature="e#233#243#0" expanded="true" />
                 <element signature="e#7120#17502#0" />
@@ -150,9 +152,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>on_com</find>
-      <find>st</find>
-      <find>pic</find>
       <find>commond</find>
       <find>command</find>
       <find>common</find>
@@ -180,6 +179,9 @@
       <find>s</find>
       <find>failCase</find>
       <find>stepRate</find>
+      <find>覆盖</find>
+      <find>failC</find>
+      <find>失败场景</find>
     </findStrings>
     <replaceStrings>
       <replace>logger.debug</replace>
@@ -254,9 +256,9 @@
         <option value="$PROJECT_DIR$/stephenRT/stephenrt/plugins/projects/__init__.py" />
         <option value="$PROJECT_DIR$/stephenRT/stephenrt/plugins/Tools/aichat.py" />
         <option value="$PROJECT_DIR$/stephenRT/stephenrt/plugins/projects/test1.py" />
-        <option value="$PROJECT_DIR$/stephenRT/stephenrt/plugins/projects/mNova.py" />
         <option value="$PROJECT_DIR$/stephenRT/stephenrt/privateCfg.py" />
         <option value="$PROJECT_DIR$/stephenRT/stephenrt/plugins/projects/novaMS.py" />
+        <option value="$PROJECT_DIR$/stephenRT/stephenrt/plugins/projects/mNova.py" />
       </list>
     </option>
   </component>
@@ -818,7 +820,7 @@
       <workItem from="1678090810921" duration="6061000" />
       <workItem from="1678183352239" duration="3096000" />
       <workItem from="1678259563119" duration="979000" />
-      <workItem from="1678669880897" duration="8155000" />
+      <workItem from="1678669880897" duration="8764000" />
     </task>
     <servers />
   </component>
@@ -843,7 +845,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="1714370000" />
+    <option name="totallyTimeSpent" value="1714979000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1261,17 +1263,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/stephenRT/stephenrt/plugins/projects/mNova.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="538">
-          <caret line="57" column="2" selection-start-line="57" selection-start-column="2" selection-end-line="57" selection-end-column="2" />
-          <folding>
-            <element signature="e#232#257#0" expanded="true" />
-            <element signature="e#3682#5099#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/stephenRT/stephenrt/plugins/projects/local_config.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="405">
@@ -1281,11 +1272,22 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/stephenRT/stephenrt/plugins/projects/novaMS.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="493">
-          <caret line="181" column="19" lean-forward="true" selection-start-line="181" selection-start-column="19" selection-end-line="181" selection-end-column="19" />
+        <state relative-caret-position="718">
+          <caret line="178" column="34" lean-forward="true" selection-start-line="178" selection-start-column="34" selection-end-line="178" selection-end-column="34" />
           <folding>
             <element signature="e#233#243#0" expanded="true" />
             <element signature="e#7120#17502#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/stephenRT/stephenrt/plugins/projects/mNova.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="223">
+          <caret line="101" column="75" lean-forward="true" selection-start-line="101" selection-start-column="75" selection-end-line="101" selection-end-column="75" />
+          <folding>
+            <element signature="e#232#257#0" expanded="true" />
+            <element signature="e#3682#5099#0" />
           </folding>
         </state>
       </provider>
