@@ -9,6 +9,8 @@
 # @Copyright:   (c) StephenZ 2023
 # @Licence  :     <@2022>
 import sys
+import websockets
+
 if sys.platform == "win32":
     from Cryptodome.Cipher import AES
 else:
@@ -18,11 +20,13 @@ import time
 import uuid
 import requests
 import json
+import asyncio
 
 if __name__ == '__main__':
     from local_config import *
 else:
     from .local_config import *
+
 
 def aesEncrypt(text, secretKey, iv):
     BS = AES.block_size  # 这个等于16
@@ -91,7 +95,6 @@ def post_method(s):
     print(r.content.decode("utf-8"))
 
 
-
 # 获取运行环境id
 def get_test_plan_env(s, host, projectId, name):
     # xx
@@ -139,11 +142,13 @@ def get_report_url(s, host, reportId, testPlanId, accessKey, secretKey):
     print(result)
     return result
 
+
 def share_report(s, projectId):
     url = host + f"/track/project_application/get/{projectId}/TRACK_SHARE_REPORT_TIME"
     r = s.get(url)
     response = r.content.decode()
     print(response)
+
 
 def reportDb(s, reportId):
     url = host + f"/api/test/plan/report/db/{reportId}"
@@ -152,22 +157,27 @@ def reportDb(s, reportId):
         result = json.loads(r)["data"][0]
     except:
         print("result错误, r: ", r)
+    print(json.dumps(result))
     response = {}
-    response["name"] = result["name"]
+    for i in result["apiAllCases"]:
+        if str(i["num"]) == "100001002":
+            response["interfaceReport"] = i["reportId"]
+            break
+    response["Name"] = result["name"]
     response["caseCount"] = result["caseCount"]
     response["executeRate"] = result["executeRate"]
-    response["caseRate"] = "{:.2%}".format(result["passRate"])
+    response["场景通过率"] = "{:.2%}".format(result["passRate"])
     response["apiScenarioData"] = result["apiResult"]["apiScenarioData"]
     # response["errorCase"] = [x["name"] for x in result["scenarioAllCases"] if x["lastResult"] == "ERROR"]
-    response["apiScenarioStepData"] =  result["apiResult"]["apiScenarioStepData"]
+    response["apiScenarioStepData"] = result["apiResult"]["apiScenarioStepData"]
     response["scenarioFailureCases"] = result["scenarioFailureCases"]
     response["failName"] = [x["name"] for x in response["scenarioFailureCases"]]
     response["startTime"] = result["startTime"]
     response["endTime"] = result["endTime"]
-    response["failCase"] = "\n"
+    response["失败场景"] = "\n"
 
     for i in response["failName"]:
-        response["failCase"] = response["failCase"] + "-   " + i + "\n"
+        response["失败场景"] = response["failCase"] + "-   " + i + "\n"
     print(json.dumps(response))
     return response
 
@@ -221,6 +231,348 @@ def exec_run(accessKey, secretKey, host, projectId, envId, testPlan_id):
     print(msg)
     return [data, msg]
 
+
+def api_cover(s, num, projectId):
+    """
+    已经录入的api合计
+    :param s:
+    :param num:
+    :param projectId:
+    :return:
+    """
+    url = host + f"/api/api/definition/list/1/{num}"
+    payload = json.dumps({
+        "components": [
+            {
+                "key": "id",
+                "name": "MsTableSearchInput",
+                "label": "ID",
+                "operator": {
+                    "options": [
+                        {
+                            "label": "commons.adv_search.operators.like",
+                            "value": "like"
+                        },
+                        {
+                            "label": "commons.adv_search.operators.not_like",
+                            "value": "not like"
+                        }
+                    ]
+                }
+            },
+            {
+                "key": "name",
+                "name": "MsTableSearchInput",
+                "label": "commons.name",
+                "operator": {
+                    "value": "like",
+                    "options": [
+                        {
+                            "label": "commons.adv_search.operators.like",
+                            "value": "like"
+                        },
+                        {
+                            "label": "commons.adv_search.operators.not_like",
+                            "value": "not like"
+                        }
+                    ]
+                }
+            },
+            {
+                "key": "method",
+                "name": "MsTableSearchSelect",
+                "label": "api_test.definition.api_type",
+                "operator": {
+                    "options": [
+                        {
+                            "label": "commons.adv_search.operators.in",
+                            "value": "in"
+                        },
+                        {
+                            "label": "commons.adv_search.operators.not_in",
+                            "value": "not in"
+                        }
+                    ]
+                },
+                "options": [
+                    {
+                        "text": "GET",
+                        "value": "GET"
+                    },
+                    {
+                        "text": "POST",
+                        "value": "POST"
+                    },
+                    {
+                        "text": "PUT",
+                        "value": "PUT"
+                    },
+                    {
+                        "text": "PATCH",
+                        "value": "PATCH"
+                    },
+                    {
+                        "text": "DELETE",
+                        "value": "DELETE"
+                    },
+                    {
+                        "text": "OPTIONS",
+                        "value": "OPTIONS"
+                    },
+                    {
+                        "text": "HEAD",
+                        "value": "HEAD"
+                    },
+                    {
+                        "text": "CONNECT",
+                        "value": "CONNECT"
+                    }
+                ],
+                "props": {
+                    "multiple": True
+                }
+            },
+            {
+                "key": "path",
+                "name": "MsTableSearchInput",
+                "label": "api_test.definition.api_path",
+                "operator": {
+                    "value": "like",
+                    "options": [
+                        {
+                            "label": "commons.adv_search.operators.like",
+                            "value": "like"
+                        },
+                        {
+                            "label": "commons.adv_search.operators.not_like",
+                            "value": "not like"
+                        }
+                    ]
+                }
+            },
+            {
+                "key": "status",
+                "name": "MsTableSearchSelect",
+                "label": "commons.status",
+                "operator": {
+                    "options": [
+                        {
+                            "label": "commons.adv_search.operators.in",
+                            "value": "in"
+                        },
+                        {
+                            "label": "commons.adv_search.operators.not_in",
+                            "value": "not in"
+                        }
+                    ]
+                },
+                "options": [
+                    {
+                        "value": "Prepare",
+                        "label": "test_track.plan.plan_status_prepare"
+                    },
+                    {
+                        "value": "Underway",
+                        "label": "test_track.plan.plan_status_running"
+                    },
+                    {
+                        "value": "Completed",
+                        "label": "test_track.plan.plan_status_completed"
+                    }
+                ],
+                "props": {
+                    "multiple": True
+                }
+            },
+            {
+                "key": "tags",
+                "name": "MsTableSearchInput",
+                "label": "commons.tag",
+                "operator": {
+                    "value": "like",
+                    "options": [
+                        {
+                            "label": "commons.adv_search.operators.like",
+                            "value": "like"
+                        },
+                        {
+                            "label": "commons.adv_search.operators.not_like",
+                            "value": "not like"
+                        }
+                    ]
+                }
+            },
+            {
+                "key": "updateTime",
+                "name": "MsTableSearchDateTimePicker",
+                "label": "commons.update_time",
+                "operator": {
+                    "options": [
+                        {
+                            "label": "commons.adv_search.operators.between",
+                            "value": "between"
+                        },
+                        {
+                            "label": "commons.adv_search.operators.gt",
+                            "value": "gt"
+                        },
+                        {
+                            "label": "commons.adv_search.operators.lt",
+                            "value": "lt"
+                        }
+                    ]
+                }
+            },
+            {
+                "key": "createTime",
+                "name": "MsTableSearchDateTimePicker",
+                "label": "commons.create_time",
+                "operator": {
+                    "options": [
+                        {
+                            "label": "commons.adv_search.operators.between",
+                            "value": "between"
+                        },
+                        {
+                            "label": "commons.adv_search.operators.gt",
+                            "value": "gt"
+                        },
+                        {
+                            "label": "commons.adv_search.operators.lt",
+                            "value": "lt"
+                        }
+                    ]
+                }
+            },
+            {
+                "key": "creator",
+                "name": "MsTableSearchSelect",
+                "label": "test_track.plan.plan_principal",
+                "operator": {
+                    "options": [
+                        {
+                            "label": "commons.adv_search.operators.in",
+                            "value": "in"
+                        },
+                        {
+                            "label": "commons.adv_search.operators.not_in",
+                            "value": "not in"
+                        },
+                        {
+                            "label": "commons.adv_search.operators.current_user",
+                            "value": "current user"
+                        }
+                    ]
+                },
+                "options": {
+                    "url": "/user/project/member/list",
+                    "labelKey": "name",
+                    "valueKey": "id"
+                },
+                "props": {
+                    "multiple": True
+                }
+            },
+            {
+                "key": "moduleIds",
+                "name": "MsTableSearchNodeTree",
+                "label": "test_track.case.module",
+                "operator": {
+                    "value": "in",
+                    "options": [
+                        {
+                            "label": "commons.adv_search.operators.in",
+                            "value": "in"
+                        },
+                        {
+                            "label": "commons.adv_search.operators.not_in",
+                            "value": "not in"
+                        }
+                    ]
+                },
+                "options": {
+                    "url": "/api/module/list",
+                    "type": "GET",
+                    "params": {
+                        "protocol": "HTTP"
+                    }
+                }
+            },
+            {
+                "key": "followPeople",
+                "name": "MsTableSearchSelect",
+                "label": "commons.follow_people",
+                "operator": {
+                    "options": [
+                        {
+                            "label": "commons.adv_search.operators.in",
+                            "value": "in"
+                        },
+                        {
+                            "label": "commons.adv_search.operators.current_user",
+                            "value": "current user"
+                        }
+                    ]
+                },
+                "options": {
+                    "url": "/user/ws/current/member/list",
+                    "labelKey": "name",
+                    "valueKey": "id"
+                },
+                "props": {
+                    "multiple": True
+                }
+            }
+        ],
+        "filters": {
+            "status": [
+                "Prepare",
+                "Underway",
+                "Completed"
+            ]
+        },
+        "orders": [],
+        "versionId": None,
+        "selectAll": False,
+        "unSelectIds": [],
+        "moduleIds": [],
+        "projectId": projectId,
+        "protocol": "HTTP",
+        "selectThisWeedData": False,
+        "apiCaseCoverage": None,
+        "apiCoverage": "covered",
+        "scenarioCoverage": None
+    })
+    r = s.post(url, data=payload)
+    if r.status_code != 200:
+        return "count api error"
+    else:
+        response = r.content.decode()
+        response = json.loads(response)["data"]["listObject"]
+        response = [x["path"] for x in response]
+        return response
+
+def get_interfaceList(s, id="e68c1c89-cbc0-41c7-9bc6-4be664093744"):
+    """
+    interfacelist 已经cover的route
+    :param s:
+    :param id:
+    :return:
+    """
+    url = host + f"/track/api/definition/report/get/{id}"
+    payload = {}
+    r = s.get(url, json=payload)
+    if r.status_code != 200:
+        print(r)
+    else:
+        response = r.content.decode()
+        response = json.loads(response)["data"]["content"]
+        response = json.loads(response)["responseResult"]["body"]
+        response = json.loads(response)["data"]["routeDictNoDomain"]
+        response = list(response.values())
+        return response
+
+
 access_key = pgsql["msAccess"]
 secret_key = pgsql["msSecret"]
 host = "http://10.10.10.8:8081"
@@ -253,5 +605,19 @@ if __name__ == '__main__':
     # report_id = result[0]
     # reportDb(s, report_id)
 
-    a = get_report_url(s, host, "edc1fd5c-0c84-4fef-8a55-42bdce01a410", testPlan_id)
-    print(a)
+    # a = get_report_url(s, host, "edc1fd5c-0c84-4fef-8a55-42bdce01a410", testPlan_id)
+    # print(a)
+    reportId = "73e87743-80b5-472b-81c6-508c226624b2"
+    # db = reportDb(s, "73e87743-80b5-472b-81c6-508c226624b2")
+    # print(db)
+    # a = get_interfaceList(s)
+    # print(a)
+    #
+    # r = api_cover(s, 200, projectId)
+    # print(json.dumps(r))
+    # print(len(r))
+    apis = get_interfaceList(s)
+    apiCover = api_cover(s, 200, projectId)
+    print(apiCover)
+    apiNot = list(set(apis) ^ set(apiCover))
+    print(apiNot)

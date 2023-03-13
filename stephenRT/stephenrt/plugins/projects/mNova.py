@@ -91,12 +91,19 @@ async def get_report(s, reportId):
     allStep = sum([int(x["count"]) for x in report["apiScenarioStepData"]])
     stepRate = (allStep - int(errorStep) - int(pendingStep)) / allStep
     stepRate = "{:.2%}".format(stepRate)
-    report["stepRate"] = stepRate
+    report["步骤通过率"] = stepRate
 
     msg = "【API TEST complete】:\n"
-    keyword = ["name", "cost", "caseRate", "stepRate", "failCase"]
+    apis = get_interfaceList(s, report["interfaceReport"])
+    apiCover = api_cover(s, 200, projectId)
+    apiNot = list(set(apis) ^ set(apiCover))
+
+    apiRate = "{:.2%}".format(len(apiCover)/len(apis))
+    report["接口覆盖率"] = f"{apiRate} [{len(apiCover)/len(apis)}]"
+    report["未覆盖接口"] = str(apiNot)
+    keyword = ["Name", "耗时", "接口覆盖率", "未覆盖接口", "场景通过率", "步骤通过率", "失败场景"]
     cost = (report['endTime'] - report['startTime']) / 1000
-    report["cost"] = f"{cost} s"
+    report["耗时"] = f"{cost} s"
 
     for key in keyword:
         msg = msg + str(key) + "：" + str(report[key]) + "\n"
@@ -241,37 +248,3 @@ async def handleuser(
 
     response = await deal_command(userInput)
     await command.finish(response)
-
-    # orinTime = str(orinTime)
-    # print("输入为：{0}".format(orinTime))
-    # if orinTime == "now":
-    #     sTime = int(time.time())
-    #     nature = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(sTime))
-    #     # mTime = int(round(sTime * 1000))
-    #     await command.finish("当前时间：{0}\n时间戳: {1}".format(nature, sTime))
-    # elif re.match("^\d+$", orinTime):
-    #     query_time = int(orinTime)
-    #     try:
-    #         if query_time > 3653284221:
-    #             query_time = round(query_time / 1000)
-    #         nature = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(query_time))
-    #     except Exception as e:
-    #         nature = "内部错误：" + str(e)
-    #     await command.finish(nature)
-    # else:
-    #     try:
-    #         input_time = re.findall("\d+", orinTime)
-    #         shijian = "-".join(input_time)
-    #         print(shijian)
-    #         timeArray = time.strptime(shijian, "%Y-%m-%d-%H-%M-%S")
-    #
-    #         # 转换为时间戳:
-    #
-    #         nature = int(time.mktime(timeArray))
-    #
-    #         await command.finish(str(nature))
-    #     except Exception as e:
-    #         if str(e) != "":
-    #             await command.finish(str(e))
-    #     finally:
-    #         pass
