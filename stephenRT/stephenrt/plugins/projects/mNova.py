@@ -102,7 +102,7 @@ async def get_report(s, reportId):
         if i not in apiCover:
             apiNot.append(i)
 
-    apiRate = "{:.2%}".format(len(apiCover) / len(apis))
+    apiRate = "{:.2%}".format((len(apis) - len(apiNot)) / len(apis))
     report["接口覆盖率"] = f"{apiRate} [{str(len(apiCover))}/{str(len(apis))}]"
     report["未覆盖接口"] = str(apiNot)
     keyword = ["测试计划", "耗时", "接口覆盖率", "场景通过率", "步骤通过率", "失败场景", "未覆盖接口"]
