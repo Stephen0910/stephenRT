@@ -100,8 +100,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/stephenRT/stephenrt/plugins/projects/mNova.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="223">
-              <caret line="101" column="75" lean-forward="true" selection-start-line="101" selection-start-column="75" selection-end-line="101" selection-end-column="75" />
+            <state relative-caret-position="313">
+              <caret line="102" column="33" lean-forward="true" selection-start-line="102" selection-start-column="33" selection-end-line="102" selection-end-column="33" />
               <folding>
                 <element signature="e#232#257#0" expanded="true" />
                 <element signature="e#3682#5099#0" />
@@ -820,7 +820,7 @@
       <workItem from="1678090810921" duration="6061000" />
       <workItem from="1678183352239" duration="3096000" />
       <workItem from="1678259563119" duration="979000" />
-      <workItem from="1678669880897" duration="8764000" />
+      <workItem from="1678669880897" duration="9235000" />
     </task>
     <servers />
   </component>
@@ -845,7 +845,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="1714979000" />
+    <option name="totallyTimeSpent" value="1715450000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1283,8 +1283,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/stephenRT/stephenrt/plugins/projects/mNova.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="223">
-          <caret line="101" column="75" lean-forward="true" selection-start-line="101" selection-start-column="75" selection-end-line="101" selection-end-column="75" />
+        <state relative-caret-position="313">
+          <caret line="102" column="33" lean-forward="true" selection-start-line="102" selection-start-column="33" selection-end-line="102" selection-end-column="33" />
           <folding>
             <element signature="e#232#257#0" expanded="true" />
             <element signature="e#3682#5099#0" />
