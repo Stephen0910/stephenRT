@@ -115,8 +115,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/stephenRT/stephenrt/plugins/projects/novaMS.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="652">
-              <caret line="168" column="50" lean-forward="true" selection-start-line="168" selection-start-column="50" selection-end-line="168" selection-end-column="50" />
+            <state relative-caret-position="802">
+              <caret line="178" lean-forward="true" selection-start-line="178" selection-end-line="178" />
               <folding>
                 <element signature="e#233#243#0" expanded="true" />
                 <element signature="e#7232#18064#0" />
@@ -823,7 +823,7 @@
       <workItem from="1678183352239" duration="3096000" />
       <workItem from="1678259563119" duration="979000" />
       <workItem from="1678669880897" duration="9818000" />
-      <workItem from="1678683105157" duration="230000" />
+      <workItem from="1678683105157" duration="946000" />
     </task>
     <servers />
   </component>
@@ -848,7 +848,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="1716460000" />
+    <option name="totallyTimeSpent" value="1716979000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">

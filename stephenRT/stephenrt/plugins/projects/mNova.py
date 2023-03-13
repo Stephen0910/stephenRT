@@ -96,7 +96,11 @@ async def get_report(s, reportId):
     msg = "【API TEST complete】:\n"
     apis = get_interfaceList(s, report["interfaceReport"])
     apiCover = api_cover(s, 200, projectId)
-    apiNot = list(set(apis) ^ set(apiCover))
+    # apiNot = list(set(apis) ^ set(apiCover))
+    apiNot = []
+    for i in apiCover:
+        if i not in apiCover:
+            apiNot.append(i)
 
     apiRate = "{:.2%}".format(len(apiCover) / len(apis))
     report["接口覆盖率"] = f"{apiRate} [{str(len(apiCover))}/{str(len(apis))}]"
