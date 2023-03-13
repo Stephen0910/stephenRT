@@ -98,7 +98,7 @@ async def get_report(s, reportId):
     apiCover = api_cover(s, 200, projectId)
     # apiNot = list(set(apis) ^ set(apiCover))
     apiNot = []
-    for i in apiCover:
+    for i in apis:
         if i not in apiCover:
             apiNot.append(i)
 
