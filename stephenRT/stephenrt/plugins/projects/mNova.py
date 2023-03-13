@@ -99,7 +99,7 @@ async def get_report(s, reportId):
     apiNot = list(set(apis) ^ set(apiCover))
 
     apiRate = "{:.2%}".format(len(apiCover)/len(apis))
-    report["接口覆盖率"] = f"{apiRate} [{len(apiCover)/len(apis)}]"
+    report["接口覆盖率"] = f"{apiRate} [{str(len(apiCover)) / str(len(apis))}]"
     report["未覆盖接口"] = str(apiNot)
     keyword = ["Name", "耗时", "接口覆盖率", "未覆盖接口", "场景通过率", "步骤通过率", "失败场景"]
     cost = (report['endTime'] - report['startTime']) / 1000
