@@ -91,7 +91,7 @@ async def get_report(s, reportId):
     allStep = sum([int(x["count"]) for x in report["apiScenarioStepData"]])
     stepRate = (allStep - int(errorStep) - int(pendingStep)) / allStep
     stepRate = "{:.2%}".format(stepRate)
-    report["步骤通过率"] = stepRate
+    report["步骤通过率"] = f"{stepRate} [{allStep - int(errorStep) - int(pendingStep)} / {allStep}]"
 
     msg = "【API TEST complete】:\n"
     apis = get_interfaceList(s, report["interfaceReport"])
@@ -101,7 +101,7 @@ async def get_report(s, reportId):
     apiRate = "{:.2%}".format(len(apiCover) / len(apis))
     report["接口覆盖率"] = f"{apiRate} [{str(len(apiCover))}/{str(len(apis))}]"
     report["未覆盖接口"] = str(apiNot)
-    keyword = ["Name", "耗时", "接口覆盖率", "场景通过率", "步骤通过率", "失败场景", "未覆盖接口"]
+    keyword = ["测试计划", "耗时", "接口覆盖率", "场景通过率", "步骤通过率", "失败场景", "未覆盖接口"]
     cost = (report['endTime'] - report['startTime']) / 1000
     report["耗时"] = f"{cost} s"
 

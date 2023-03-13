@@ -163,15 +163,16 @@ def reportDb(s, reportId):
         if str(i["num"]) == "100001002":
             response["interfaceReport"] = i["reportId"]
             break
-    response["Name"] = result["name"]
+    response["测试计划"] = result["name"]
     response["caseCount"] = result["caseCount"]
     response["executeRate"] = result["executeRate"]
-    response["场景通过率"] = "{:.2%}".format(result["passRate"])
     response["apiScenarioData"] = result["apiResult"]["apiScenarioData"]
     # response["errorCase"] = [x["name"] for x in result["scenarioAllCases"] if x["lastResult"] == "ERROR"]
     response["apiScenarioStepData"] = result["apiResult"]["apiScenarioStepData"]
     response["scenarioFailureCases"] = result["scenarioFailureCases"]
     response["failName"] = [x["name"] for x in response["scenarioFailureCases"]]
+    passRate = "{:.2%}".format(result["passRate"])
+    response["场景通过率"] = f'{passRate} [{result["caseCount"] - len(response["failName"])}/{result["caseCount"]}]'
     response["startTime"] = result["startTime"]
     response["endTime"] = result["endTime"]
     response["失败场景"] = "\n"
