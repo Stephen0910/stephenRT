@@ -208,6 +208,7 @@ def test_plan_run(s, host, testPlanId, projectId, envId, userId="admin"):
         "executionWay": "RUN",
         "testPlanDefaultEnvMap": {
             "e3de5c72-ff21-4517-99c4-efe82304dc97": [
+                "5fec81d0-56cf-42d1-af6c-1b755b42b22b",
                 "daead9c9-4679-44e2-921d-28bb8015bf18",
                 "58d9b5c6-07e3-4e08-80fb-32792ab91a3a"
             ]

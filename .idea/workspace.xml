@@ -6,9 +6,7 @@
     <bookmark url="file://$PROJECT_DIR$/stephenRT/stephenrt/plugins/projects/local_config.py" description="def get_host_ip():&#10;    &quot;&quot;&quot;&#10;    查询本机ip地址&#10;    :retur..." line="14" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3047aada-47d5-4ad8-a368-9e15af7b4bc7" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/stephenRT/stephenrt/plugins/projects/mNova.py" beforeDir="false" afterPath="$PROJECT_DIR$/stephenRT/stephenrt/plugins/projects/mNova.py" afterDir="false" />
-    </list>
+    <list default="true" id="3047aada-47d5-4ad8-a368-9e15af7b4bc7" name="Default Changelist" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -821,7 +819,7 @@
       <workItem from="1678259563119" duration="979000" />
       <workItem from="1678669880897" duration="9818000" />
       <workItem from="1678683105157" duration="946000" />
-      <workItem from="1678692040698" duration="977000" />
+      <workItem from="1678692040698" duration="1576000" />
     </task>
     <servers />
   </component>
@@ -846,7 +844,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="1717956000" />
+    <option name="totallyTimeSpent" value="1718555000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
