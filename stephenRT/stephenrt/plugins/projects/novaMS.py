@@ -157,7 +157,7 @@ def reportDb(s, reportId):
         result = json.loads(r)["data"][0]
     except:
         print("result错误, r: ", r)
-    print(json.dumps(result))
+    # print(json.dumps(result))
     response = {}
     for i in result["apiAllCases"]:
         if str(i["num"]) == "100001002":
@@ -207,7 +207,7 @@ def test_plan_run(s, host, testPlanId, projectId, envId, userId="admin"):
         "headlessEnabled": False,
         "executionWay": "RUN",
         "testPlanDefaultEnvMap": {
-            "e3de5c72-ff21-4517-99c4-efe82304dc97": [
+            projectId: [
                 "5fec81d0-56cf-42d1-af6c-1b755b42b22b",
                 "daead9c9-4679-44e2-921d-28bb8015bf18",
                 "58d9b5c6-07e3-4e08-80fb-32792ab91a3a"
@@ -609,17 +609,19 @@ if __name__ == '__main__':
 
     # a = get_report_url(s, host, "edc1fd5c-0c84-4fef-8a55-42bdce01a410", testPlan_id)
     # print(a)
-    reportId = "73e87743-80b5-472b-81c6-508c226624b2"
-    # db = reportDb(s, "73e87743-80b5-472b-81c6-508c226624b2")
+    # reportId = "73e87743-80b5-472b-81c6-508c226624b2"
+    # db = reportDb(s, "7477c8f5-853c-49e1-8b1d-6055db1c9938")
     # print(db)
+
     # a = get_interfaceList(s)
     # print(a)
     #
     # r = api_cover(s, 200, projectId)
     # print(json.dumps(r))
     # print(len(r))
-    apis = get_interfaceList(s)
-    apiCover = api_cover(s, 200, projectId)
-    print(apiCover)
-    apiNot = list(set(apis) ^ set(apiCover))
-    print(apiNot)
+    # apis = get_interfaceList(s)
+    # apiCover = api_cover(s, 200, projectId)
+    # print(apiCover)
+    # apiNot = list(set(apis) ^ set(apiCover))
+    # print(apiNot)
+    pass

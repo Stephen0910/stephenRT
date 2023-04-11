@@ -67,9 +67,14 @@ async def add_resource(user_id, items):
 
 async def get_report(s, reportId):
     endTime = None
-    while endTime == None:
+    report = reportDb(s, reportId)
+    execute = "0"
+    # while endTime == None:  # 从endTime判定
+    while float(str(execute)) < 1.00:
         report = reportDb(s, reportId)
+        # logger.denig(str(report))
         endTime = report["endTime"]
+        execute = str(report["executeRate"])
         time.sleep(2)
     else:
         errorStep = 0

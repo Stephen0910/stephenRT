@@ -35,6 +35,8 @@ print(ip)
 
 
 if re.match("192.*", ip):
+    from .mNova import *
+    print("mNova ok")
     # from .dGame import *
     # from .dm_pro.live import *
     # from .search_body import *
@@ -47,7 +49,7 @@ if re.match("192.*", ip):
 if ip == "10.10.10.8":
     # from .query_game import *
     from .mNova import *
-    pass
+    print("mNova ok")
 
 
 if re.search("172.*", ip):
