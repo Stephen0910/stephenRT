@@ -207,8 +207,8 @@ async def deal_command(userInput):
         await add_resource(user_id, items)
 
         await exeSql(
-            [f"update user_info set ut = ut + 100000, gt = gt + 10000, bnb = bnb + 10000 where user_id = {user_id}",
-             f"UPDATE hero_info SET level = 30, usable_points = 464 WHERE id in (SELECT id from hero_info where user_id = {user_id} and status = 1 ORDER BY id DESC LIMIT 4);"], )
+            [f"update user_info set ut = ut + 100000, gt = gt + 1, bnb = bnb + 10000 where user_id = {user_id}",
+             f"UPDATE hero_info SET level = 25, usable_points = 200 WHERE id in (SELECT id from hero_info where user_id = {user_id} and status = 1 ORDER BY id DESC LIMIT 4);"], )
         # messsage = "执行成功"
 
     elif op == "3":
